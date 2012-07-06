@@ -146,6 +146,7 @@
         
         // get checkins for all friends
         numberOfCheckinsRetrieved = [[DataManager shared].myFriends count];
+		
         [[FBService shared] friendsCheckinsWithDelegate:self];
         
         isInitialized = YES;
@@ -998,7 +999,15 @@
                 // convert checkins
                 [self convertCheckinsArray:checkins];
                 
-            }else if (numberOfCheckinsRetrieved == 0){
+            }else{
+				UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning!", nil) 
+																message:NSLocalizedString(@"Unfortunately, your friends did not shared locations. You can change the switcher above for watching all application users.", nil) 
+															   delegate:nil 
+													  cancelButtonTitle:NSLocalizedString(@"Okay.", nil) 
+													  otherButtonTitles:nil, nil];
+				[alert show];
+				[alert release];
+				
                 if(updateTimre == nil){
                     ++initState;
                     if(initState == 3){
