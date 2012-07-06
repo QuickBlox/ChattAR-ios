@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories
+END
+NSNumber+XMPP.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSNumber+XMPP.h
+END
+NSData+XMPP.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSData+XMPP.h
+END
+NSXMLElement+XMPP.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSXMLElement+XMPP.h
+END
+NSNumber+XMPP.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSNumber+XMPP.m
+END
+NSData+XMPP.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSData+XMPP.m
+END
+NSXMLElement+XMPP.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Categories/NSXMLElement+XMPP.m
+END

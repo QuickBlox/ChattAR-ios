@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/LocationService/Classes/Net/Answers/LocationService
+END
+QBLocationServiceAnswer.h
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/LocationService/Classes/Net/Answers/LocationService/QBLocationServiceAnswer.h
+END
+QBLocationServicePagedAnswer.h
+K 25
+svn:wc:ra_dav:version-url
+V 175
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/LocationService/Classes/Net/Answers/LocationService/QBLocationServicePagedAnswer.h
+END

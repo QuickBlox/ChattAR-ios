@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/MemoryStorage
+END
+XMPPResourceMemoryStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/MemoryStorage/XMPPResourceMemoryStorage.h
+END
+XMPPRosterMemoryStoragePrivate.h
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/MemoryStorage/XMPPRosterMemoryStoragePrivate.h
+END
+XMPPRosterMemoryStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 169
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/MemoryStorage/XMPPRosterMemoryStorage.h
+END
+XMPPUserMemoryStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/MemoryStorage/XMPPUserMemoryStorage.h
+END

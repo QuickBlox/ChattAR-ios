@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/source/fbradar/!svn/ver/218/trunk/FB_Radar/FB_Radar/Classes/Controllers
+END
+SettingsController.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/205/trunk/FB_Radar/FB_Radar/Classes/Controllers/SettingsController.m
+END
+FBChatViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/source/fbradar/!svn/ver/219/trunk/FB_Radar/FB_Radar/Classes/Controllers/FBChatViewController.m
+END
+MessagesViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/source/fbradar/!svn/ver/220/trunk/FB_Radar/FB_Radar/Classes/Controllers/MessagesViewController.m
+END
+WebViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/186/trunk/FB_Radar/FB_Radar/Classes/Controllers/WebViewController.h
+END
+SplashController.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/source/fbradar/!svn/ver/150/trunk/FB_Radar/FB_Radar/Classes/Controllers/SplashController.h
+END
+WebViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/205/trunk/FB_Radar/FB_Radar/Classes/Controllers/WebViewController.m
+END
+ContactsController.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/174/trunk/FB_Radar/FB_Radar/Classes/Controllers/ContactsController.h
+END
+SplashController.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/source/fbradar/!svn/ver/212/trunk/FB_Radar/FB_Radar/Classes/Controllers/SplashController.m
+END
+SettingsController.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/176/trunk/FB_Radar/FB_Radar/Classes/Controllers/SettingsController.h
+END
+FBChatViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/source/fbradar/!svn/ver/212/trunk/FB_Radar/FB_Radar/Classes/Controllers/FBChatViewController.h
+END
+MessagesViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/source/fbradar/!svn/ver/172/trunk/FB_Radar/FB_Radar/Classes/Controllers/MessagesViewController.h
+END
+ContactsController.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/source/fbradar/!svn/ver/204/trunk/FB_Radar/FB_Radar/Classes/Controllers/ContactsController.m
+END

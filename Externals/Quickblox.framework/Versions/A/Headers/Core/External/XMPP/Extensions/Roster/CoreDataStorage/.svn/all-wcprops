@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/CoreDataStorage
+END
+XMPPResourceCoreDataStorageObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 181
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/CoreDataStorage/XMPPResourceCoreDataStorageObject.h
+END
+XMPPRosterCoreDataStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/CoreDataStorage/XMPPRosterCoreDataStorage.h
+END
+XMPPGroupCoreDataStorageObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 178
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/CoreDataStorage/XMPPGroupCoreDataStorageObject.h
+END
+XMPPUserCoreDataStorageObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/CoreDataStorage/XMPPUserCoreDataStorageObject.h
+END

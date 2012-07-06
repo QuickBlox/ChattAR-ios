@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities
+END
+XMPPDigestAuthentication.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPDigestAuthentication.m
+END
+RFImageToDataTransformer.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/RFImageToDataTransformer.h
+END
+RFImageToDataTransformer.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/RFImageToDataTransformer.m
+END
+XMPPSRVResolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPSRVResolver.h
+END
+LibIDN.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/LibIDN.h
+END
+XMPPSRVResolver.m
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPSRVResolver.m
+END
+LibIDN.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/LibIDN.m
+END
+XMPPSASLAuthentication.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPSASLAuthentication.h
+END
+XMPPXFacebookPlatformAuthentication.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPXFacebookPlatformAuthentication.h
+END
+XMPPIDTracker.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPIDTracker.h
+END
+GCDMulticastDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/GCDMulticastDelegate.h
+END
+XMPPXFacebookPlatformAuthentication.m
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPXFacebookPlatformAuthentication.m
+END
+XMPPIDTracker.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPIDTracker.m
+END
+GCDMulticastDelegate.m
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/GCDMulticastDelegate.m
+END
+DDList.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/DDList.h
+END
+XMPPDigestAuthentication.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/XMPPDigestAuthentication.h
+END
+DDList.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Utilities/DDList.m
+END

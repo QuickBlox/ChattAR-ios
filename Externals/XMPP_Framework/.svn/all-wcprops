@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/source/fbradar/!svn/ver/218/trunk/FB_Radar/Externals/XMPP_Framework
+END
+libidn.a
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/source/fbradar/!svn/ver/132/trunk/FB_Radar/Externals/XMPP_Framework/libidn.a
+END
+stringprep.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/stringprep.h
+END
+idn-int.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/idn-int.h
+END

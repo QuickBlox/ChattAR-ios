@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/source/fbradar/!svn/ver/207/trunk/FB_Radar/FB_Radar/Classes/Objects
+END
+UserAnnotation.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/source/fbradar/!svn/ver/207/trunk/FB_Radar/FB_Radar/Classes/Objects/UserAnnotation.h
+END
+ARCoordinate.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/FB_Radar/Classes/Objects/ARCoordinate.h
+END
+ARGeoCoordinate.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/FB_Radar/Classes/Objects/ARGeoCoordinate.m
+END
+Conversation.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/198/trunk/FB_Radar/FB_Radar/Classes/Objects/Conversation.h
+END
+UserAnnotation.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/source/fbradar/!svn/ver/187/trunk/FB_Radar/FB_Radar/Classes/Objects/UserAnnotation.m
+END
+ARCoordinate.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/FB_Radar/Classes/Objects/ARCoordinate.m
+END
+Conversation.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/198/trunk/FB_Radar/FB_Radar/Classes/Objects/Conversation.m
+END
+CustomButtonWithQuote.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/188/trunk/FB_Radar/FB_Radar/Classes/Objects/CustomButtonWithQuote.h
+END
+ARGeoCoordinate.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/FB_Radar/Classes/Objects/ARGeoCoordinate.h
+END
+CustomButtonWithQuote.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/188/trunk/FB_Radar/FB_Radar/Classes/Objects/CustomButtonWithQuote.m
+END

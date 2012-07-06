@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster
+END
+XMPPResource.h
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/XMPPResource.h
+END
+XMPPRosterPrivate.h
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/XMPPRosterPrivate.h
+END
+XMPPRoster.h
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/XMPPRoster.h
+END
+XMPPUser.h
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/source/fbradar/!svn/ver/173/trunk/FB_Radar/Externals/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Extensions/Roster/XMPPUser.h
+END

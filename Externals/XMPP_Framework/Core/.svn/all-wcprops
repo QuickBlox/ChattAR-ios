@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core
+END
+XMPPMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPMessage.h
+END
+XMPPModule.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPModule.h
+END
+XMPPLogging.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPLogging.h
+END
+XMPPMessage.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPMessage.m
+END
+XMPPElement.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPElement.h
+END
+XMPPModule.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPModule.m
+END
+XMPPStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPStream.h
+END
+XMPPParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPParser.h
+END
+XMPPFramework.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPFramework.h
+END
+XMPPElement.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPElement.m
+END
+XMPPStream.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPStream.m
+END
+XMPPParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPParser.m
+END
+XMPPPresence.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPPresence.h
+END
+XMPPJID.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPJID.h
+END
+XMPPIQ.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPIQ.h
+END
+XMPPPresence.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPPresence.m
+END
+XMPPJID.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPJID.m
+END
+XMPPInternal.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPInternal.h
+END
+XMPPIQ.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPPIQ.m
+END
+XMPP.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/Core/XMPP.h
+END

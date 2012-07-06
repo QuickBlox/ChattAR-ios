@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/source/fbradar/!svn/ver/218/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack
+END
+DDLog.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDLog.h
+END
+DDASLLogger.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDASLLogger.m
+END
+DDFileLogger.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/source/fbradar/!svn/ver/218/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDFileLogger.m
+END
+DDTTYLogger.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/source/fbradar/!svn/ver/218/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDTTYLogger.m
+END
+DDLog.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDLog.m
+END
+DDAbstractDatabaseLogger.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDAbstractDatabaseLogger.h
+END
+DDAbstractDatabaseLogger.m
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDAbstractDatabaseLogger.m
+END
+DDASLLogger.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDASLLogger.h
+END
+DDFileLogger.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDFileLogger.h
+END
+DDTTYLogger.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/source/fbradar/!svn/ver/130/trunk/FB_Radar/Externals/XMPP_Framework/CocoaLumberjack/DDTTYLogger.h
+END
