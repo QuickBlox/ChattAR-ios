@@ -696,7 +696,6 @@ static void *finishedContext = @"finishedContext";
 {
     
     NSString * fullURL = [kGraphBaseURL stringByAppendingString:graphPath];
-	NSLog(@"fullURL == %@", params);
     return [self openUrl:fullURL
                   params:params
               httpMethod:httpMethod

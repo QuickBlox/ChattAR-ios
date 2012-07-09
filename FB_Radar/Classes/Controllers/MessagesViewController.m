@@ -70,13 +70,12 @@
         [self.tabBarController.view addSubview:HUD];
         HUD.dimBackground = YES;
         HUD.delegate = self;
-        HUD.labelText = @"Loading";
+        HUD.labelText = NSLocalizedString(@"Loading", nil);
         [HUD show:YES];
+    
+    }else{
+        [self showInboxMessages];
     }
-#warning finish sorting
-	[[DataManager shared] sortMessagesArray];
-	
-    [_messageTableView reloadData];
 }
 
 - (void)logoutDone{

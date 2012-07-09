@@ -60,9 +60,6 @@ static DataManager *instance = nil;
 			[formatter2 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
 			NSDate *timeStamp2 = [formatter2 dateFromString:date2];
 			[formatter2 release];
-			
-			NSLog(@"timeStamp1 == %@", timeStamp1);
-			NSLog(@"timeStamp2 == %@", timeStamp2);
 
 			if ([timeStamp1 compare:timeStamp2] == -1)
 			{

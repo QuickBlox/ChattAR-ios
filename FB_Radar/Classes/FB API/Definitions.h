@@ -63,6 +63,9 @@
 //Friends
 #define fbAPIMethodNameFriendsGet @"friends"
 
+#define maxRequestsInBatch 50
+#define fmaxRequestsInBatch 50.f
+
 
 // methods type
 

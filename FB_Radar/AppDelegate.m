@@ -53,6 +53,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
 	[UIApplication sharedApplication].statusBarHidden = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 	
 	UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotif) 
@@ -176,5 +179,10 @@
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void) checkMemory {
+	if (printMemoryInfo() < 3) {
+        [self showStartMemoryAlert];
+	} 
+}
 
 @end

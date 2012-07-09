@@ -121,17 +121,22 @@ static FBService *instance = nil;
 
 - (void) friendsCheckinsWithDelegate:(NSObject <FBServiceResultDelegate>*)delegate
 {
+    // http://developers.facebook.com/docs/reference/api/batch/
+    
+    
 	NSMutableString *batchRequestBody = [[NSMutableString alloc] initWithString:@"["];
-    
-    [batchRequestBody appendString:@"{ \"method\": \"GET\",  \"relative_url\": \"me/locations?with=location,id\" },"];
-    
     BOOL lastSend = NO;
+    int k = 1;
+    
+    
 	for(int i=0; i<[[DataManager shared].myFriends count]; ++i)
 	{
         // Limits
         // Facebook: "We currently limit the number of batch requests to 50."
-        if(i % 49 == 0 && i != 0){
+        if(i % maxRequestsInBatch == 0 && i != 0){
             lastSend = YES;
+            
+            ++k;
             
             [batchRequestBody deleteCharactersInRange:NSMakeRange([batchRequestBody length]-1, 1)]; // remove last ,
             [batchRequestBody appendString:@"]"];
@@ -142,16 +147,45 @@ static FBService *instance = nil;
             // Delegate
             [facebook requestWithGraphPath:@"" andParams:params andHttpMethod:@"POST" andDelegate:self andFBServiceDelegate:delegate type:FBQueriesTypesFriendsGetCheckins];
             
-            
             batchRequestBody = [[NSMutableString alloc] initWithString:@"["];
             NSDictionary *friend = [[DataManager shared].myFriends objectAtIndex:i];
-            [batchRequestBody appendFormat:@"{ \"method\": \"GET\",  \"relative_url\": \"%@/locations?with=location,id\" },", 
-             [friend objectForKey:kId]];
+            
+            [batchRequestBody appendFormat:@"{ \"method\": \"GET\", \
+                                               \"name\": \"%d\", \
+                                               \"omit_response_on_success\": false, \
+                                               \"relative_url\": \"%@/locations?with=location,id\" },", 
+                                i,
+                                [friend objectForKey:kId]];
+            
+        }else if((i == maxRequestsInBatch*k-1 || i== [[DataManager shared].myFriends count]-1) && i != 0){
+            NSDictionary *friend = [[DataManager shared].myFriends objectAtIndex:i];
+            [batchRequestBody appendFormat:@"{ \"method\": \"GET\", \
+                                               \"name\": \"%d\", \
+                                               \"depends_on\": \"%d\", \
+                                               \"relative_url\": \"%@/locations?with=location,id\" },", 
+                                i, 
+                                i-1, 
+                                [friend objectForKey:kId]];
+            
+        }else if(i == 0){
+            NSDictionary *friend = [[DataManager shared].myFriends objectAtIndex:i];
+            [batchRequestBody appendFormat:@"{ \"method\": \"GET\", \
+                                               \"name\": \"%d\", \
+                                               \"omit_response_on_success\": false, \
+                                               \"relative_url\": \"%@/locations?with=location,id\" },", 
+                                i, 
+                                [friend objectForKey:kId]];
             
         }else{
             NSDictionary *friend = [[DataManager shared].myFriends objectAtIndex:i];
-            [batchRequestBody appendFormat:@"{ \"method\": \"GET\",  \"relative_url\": \"%@/locations?with=location,id\" },", 
-             [friend objectForKey:kId]];
+            [batchRequestBody appendFormat:@"{ \"method\": \"GET\", \
+                                               \"name\": \"%d\", \
+                                               \"depends_on\": \"%d\", \
+                                               \"omit_response_on_success\": false, \
+                                               \"relative_url\": \"%@/locations?with=location,id\" },", 
+                                i, 
+                                i-1, 
+                                [friend objectForKey:kId]];
             
             lastSend = NO;
         }
@@ -211,31 +245,10 @@ static FBService *instance = nil;
 -(void)request:(FBRequest *)request didLoad:(id)result {
 	//	
 	FBServiceResult *parserResult = [[FBServiceResult alloc] init];
-	SBJsonParser *parser = [[SBJsonParser alloc] init];
-	
-    // get checkins messages
-    if (request.query == FBQueriesTypesFriendsGetCheckins){
-
-		for (int i =0;i < [result count]; i++){
-            NSDictionary *res = [result objectAtIndex:i];
-            if(![res isKindOfClass:NSDictionary.class]){
-                continue;
-            }
-			parserResult.body = [parser objectWithString:(NSString *)([res  objectForKey:@"body"])];
-			parserResult.queryType = request.query;
-			[request.del completedWithFBResult:parserResult];
-		}
-    
-    // Me
-	}else{
-        parserResult.body = result;
-        parserResult.queryType = request.query;
-        [request.del completedWithFBResult:parserResult];
-    }
-	
+    parserResult.body = result;
+    parserResult.queryType = request.query;
+    [request.del completedWithFBResult:parserResult];
 	[parserResult release];
-	[parser release];
-	
 }
 
 -(void)request: didFailWithError:(NSError *)error

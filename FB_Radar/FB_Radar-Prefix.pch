@@ -26,6 +26,7 @@
     #import "Definitions.h"
     #import "FBService.h"
     #import "Conversation.h"
+    #import "Extender.h"
 
     // categories
     #import "UIImage+ImageExtension.h"

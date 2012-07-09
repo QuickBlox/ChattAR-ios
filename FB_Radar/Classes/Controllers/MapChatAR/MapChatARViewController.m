@@ -145,7 +145,7 @@
         [self segmentValueDidChanged:segmentControl];
         
         // get checkins for all friends
-        numberOfCheckinsRetrieved = [[DataManager shared].myFriends count];
+        numberOfCheckinsRetrieved = ceil([[DataManager shared].myFriends count]/fmaxRequestsInBatch);
 		
         [[FBService shared] friendsCheckinsWithDelegate:self];
         
@@ -993,25 +993,30 @@
             --numberOfCheckinsRetrieved;
             NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
             
-            NSArray *checkins = [result.body objectForKey:kData];
-            
-            if ([checkins count]){
-                // convert checkins
-                [self convertCheckinsArray:checkins];
+            for(NSDictionary *checkinsResult in result.body){
+                NSLog(@"class=%@", checkinsResult.class);
+                SBJsonParser *parser = [[SBJsonParser alloc] init];
+                NSArray *checkins = [[parser objectWithString:(NSString *)([checkinsResult objectForKey:kBody])] objectForKey:kData];
+                [parser release];
                 
-            }else{
-				UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning!", nil) 
-																message:NSLocalizedString(@"Unfortunately, your friends did not shared locations. You can change the switcher above for watching all application users.", nil) 
-															   delegate:nil 
-													  cancelButtonTitle:NSLocalizedString(@"Okay.", nil) 
-													  otherButtonTitles:nil, nil];
-				[alert show];
-				[alert release];
-				
-                if(updateTimre == nil){
-                    ++initState;
-                    if(initState == 3){
-                        [self endOfRetrieveInitialData];
+                if ([checkins count]){
+                    // convert checkins
+                    [self convertCheckinsArray:checkins];
+                    
+                }else{
+                    //				UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning!", nil) 
+                    //																message:NSLocalizedString(@"Unfortunately, your friends did not shared locations. You can change the switcher above for watching all application users.", nil) 
+                    //															   delegate:nil 
+                    //													  cancelButtonTitle:NSLocalizedString(@"Okay.", nil) 
+                    //													  otherButtonTitles:nil, nil];
+                    //				[alert show];
+                    //				[alert release];
+                    
+                    if(updateTimre == nil){
+                        ++initState;
+                        if(initState == 3){
+                            [self endOfRetrieveInitialData];
+                        }
                     }
                 }
             }
