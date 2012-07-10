@@ -36,6 +36,7 @@
 @property (nonatomic, assign) double degreeRange;
 @property (nonatomic, assign) double latestHeading;
 @property (nonatomic, assign) float  viewAngle;
+@property (nonatomic, assign) UIActivityIndicatorView *activityIndicator;
 
 @property (readonly)          NSArray        *coordinates;
 @property (nonatomic, retain) NSMutableArray *coordinateViews;

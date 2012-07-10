@@ -66,8 +66,8 @@
     // YES when is getting new messages
 	isLoadingMoreMessages = NO;
     
-    [activityIndicator startAnimating];
     [messagesTableView setUserInteractionEnabled:NO];
+    [activityIndicator startAnimating];
 }
 
 - (void)removeQuote

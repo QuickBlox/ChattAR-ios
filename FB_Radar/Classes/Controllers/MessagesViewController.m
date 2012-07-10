@@ -60,6 +60,8 @@
 	
     // get inbox messages
     if(!isInitialized && [DataManager shared].currentFBUser){
+        [_messageTableView reloadData];
+        
         isInitialized = YES;
         
         // get inboxes messages

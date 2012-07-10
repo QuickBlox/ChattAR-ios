@@ -96,6 +96,21 @@
 
 - (void)logoutDone{
     isInitialized = NO;
+    
+    [allChatPoints removeAllObjects];
+	[allCheckins removeAllObjects];
+	[allMapPoints removeAllObjects];
+    
+    [mapPoints removeAllObjects];
+    [chatPoints removeAllObjects];
+    
+    [chatIDs removeAllObjects];
+    
+    
+    // clean controllers
+    [arViewController dissmisAR];
+    [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
+    [chatViewController.messagesTableView reloadData];
 }
 
 - (void)viewDidLoad
@@ -133,8 +148,14 @@
     if(!isInitialized){
         initState = 0;
         
-        // show wheel
+        // clean
+        [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
+        [chatViewController.messagesTableView reloadData];
+        
+        // show wheels
+        [arViewController.activityIndicator startAnimating];
         [mapViewController.activityIndicator startAnimating];
+        [chatViewController.activityIndicator startAnimating];
         //
         
         // get points from QuickBlox

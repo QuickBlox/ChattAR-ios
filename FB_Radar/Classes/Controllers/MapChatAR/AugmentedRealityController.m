@@ -38,6 +38,7 @@
 @synthesize latestHeading, viewAngle, coordinateViews;
 @synthesize captureSession;
 @synthesize delegate, allFriendsSwitch, distanceSlider, distanceLabel;
+@synthesize activityIndicator;
 
 
 #pragma mark - 
@@ -181,6 +182,12 @@
 	
 	[displayView setBackgroundColor:[UIColor clearColor]];
     //[activityIndicator release];
+}
+
+- (void)viewDidUnload{
+    [super viewDidUnload];
+    [activityIndicator release];
+    self.activityIndicator = nil;
 }
 
 - (void)dealloc {

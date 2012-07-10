@@ -114,12 +114,13 @@ static DataManager *instance = nil;
     self.currentQBUser = nil;
     self.currentFBUserId = nil;
     
-    // reset firends
+    // reset Friends
     self.myFriends = nil;
     self.myFriendsAsDictionary = nil;
     
-    // reset history
+    // reset Dialogs
     [historyConversation removeAllObjects];
+    [historyConversationAsArray removeAllObjects];
 }
 
 
