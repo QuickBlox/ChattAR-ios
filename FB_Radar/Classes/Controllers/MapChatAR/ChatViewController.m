@@ -138,12 +138,11 @@
 	// send push notification if this is quote
 	if (quoteMark){
 		// Create message
-        NSString *mesage = @"Your message in Chattar has been cited";
         //
         NSMutableDictionary *payload = [NSMutableDictionary dictionary];
         NSMutableDictionary *aps = [NSMutableDictionary dictionary];
         [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
-        [aps setObject:mesage forKey:QBMPushMessageAlertKey];
+        [aps setObject:quotePushMessageInChat forKey:QBMPushMessageAlertKey];
         [payload setObject:aps forKey:QBMPushMessageApsKey];
         //
         QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];

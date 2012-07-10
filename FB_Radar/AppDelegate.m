@@ -16,6 +16,8 @@
 #import "FBNavigationBar.h"
 #import "FBChatViewController.h"
 
+#import "Extender.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -34,21 +36,22 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-//    NSLog(@"didReceiveRemoteNotification userInfo=%@", userInfo);
-//    
-//	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", "") 
-//													message:@"FOO"
-//												   delegate:nil 
-//										  cancelButtonTitle:NSLocalizedString(@"OK", "") 
-//										  otherButtonTitles:nil];
-//	[alert show];
-//	[alert release];
-//
-//    // Receive push notifications
-//    NSString *message = [[userInfo objectForKey:QBMPushMessageApsKey] objectForKey:QBMPushMessageAlertKey];
-//    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:message, @"message", nil];
-//    
-//    [[NSNotificationCenter defaultCenter]  postNotificationName:@"pushDidReceived" object:nil userInfo:info];
+    NSLog(@"didReceiveRemoteNotification userInfo=%@", userInfo);
+
+    // Receive push notifications
+    NSString *message = [[userInfo objectForKey:QBMPushMessageApsKey] objectForKey:QBMPushMessageAlertKey];
+
+    if([message isEqualToString:quotePushMessageInChat] && [NotificationManager isPopUpEnabled] && self.tabBarController.selectedIndex != 1){
+        [NotificationManager playNotificationSoundAndVibrate];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "") 
+                                                        message:quotePushMessageInChat
+                                                       delegate:self 
+                                              cancelButtonTitle:NSLocalizedString(@"Ok", "OK") 
+                                              otherButtonTitles:NSLocalizedString(@"View", "View"), nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
@@ -180,9 +183,31 @@
 }
 
 - (void) checkMemory {
+#ifdef DEBUG
 	if (printMemoryInfo() < 3) {
-        [self showStartMemoryAlert];
+
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Attention","Title of alert")
+                                                        message:[NSString stringWithFormat:NSLocalizedString(@"ChattAR may crash  \n if you don't completely close \n other unused apps.", "Low memory alert"), appName]
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:NSLocalizedString(@"Go on working", "Button text"), nil];
+        [alert show];
+        [alert release];
 	} 
+#endif
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        // View
+        case 1:
+            // show chat
+            self.tabBarController.selectedIndex = 1;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

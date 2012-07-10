@@ -13,7 +13,7 @@
 #define FBAccessTokenKey @"FBAccessTokenKey"
 #define FBExpirationDateKey @"FBExpirationDateKey"
 //
-// Chattar
+// FB Chattar
 #define APP_ID @"464189473609303"
 #define APP_SECRET @"bee15c5e5d9db2d63c4499f5186f70aa"
 
@@ -26,5 +26,9 @@
 static NSUInteger const appID = 594;
 static NSString *const authKey = @"bQezEzQkjuJpnM3";
 static NSString *const authSecret = @"rqywXwAOAv3dnf6";
+
+// Strings
+#define quotePushMessageInChat @"Your message in Chattar has been cited"
+#define appName @"ChattAR"
 
 #endif
