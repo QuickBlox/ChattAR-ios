@@ -237,6 +237,7 @@
     [captureSession stopRunning];
     
     [displayView setImage:nil];
+    
     for(UIView *view in self.view.subviews){
         if(view == activityIndicator || [view isKindOfClass:[CustomSwitch class]] || view == distanceSlider || view == distanceLabel){
 			continue;

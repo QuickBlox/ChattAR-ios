@@ -106,6 +106,10 @@
     
     [chatIDs removeAllObjects];
     
+    [updateTimre invalidate];
+    [updateTimre release];
+    updateTimre = nil;
+    
     
     // clean controllers
     [arViewController dissmisAR];
@@ -149,10 +153,11 @@
         initState = 0;
         
         // clean
-        [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
-        [chatViewController.messagesTableView reloadData];
+//        [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
+//        [chatViewController.messagesTableView reloadData];
         
         // show wheels
+        [arViewController.view addSubview:arViewController.activityIndicator];
         [arViewController.activityIndicator startAnimating];
         [mapViewController.activityIndicator startAnimating];
         [chatViewController.activityIndicator startAnimating];
