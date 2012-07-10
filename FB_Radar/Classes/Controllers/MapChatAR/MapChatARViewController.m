@@ -548,6 +548,7 @@
 										destructiveButtonTitle:nil 
 											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
 						   NSLocalizedString(@"Reply with quote", nil), nil];
+        userActionSheet.tag = 1;
 	}
 	else 
 	{
@@ -555,8 +556,9 @@
 													  delegate:self 
 											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
 										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
-						   NSLocalizedString(@"Reply in public chat", nil), nil];
+											 otherButtonTitles:NSLocalizedString(@"Reply in public chat", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
+						    nil];
+        userActionSheet.tag = 2;
 	}
 	
 	UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 280, 15)];
@@ -1179,40 +1181,32 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     switch (buttonIndex) {
-        // Send message
         case 0:{ 
             
-            NSString *selectedFriendId = selectedUserAnnotation.fbUserId;
-            
-            // get conversation
-            Conversation *conversation = [[DataManager shared].historyConversation objectForKey:selectedFriendId];
-            if(conversation == nil){
-                // 1st message -> create conversation
+            // Send FB message
+            if(actionSheet.tag == 1){
+                [self actionSheetSendPrivateFBMessage];
                 
-                Conversation *newConversation = [[Conversation alloc] init];
+            // Reply in public chat
+            }else{
+                if(!chatViewController.view.superview)
+                {
+                    if (segmentControl.numberOfSegments == 2)
+                    {
+                        segmentControl.selectedSegmentIndex = 1;
+                    }
+                    else 
+                    {
+                        segmentControl.selectedSegmentIndex = 2;
+                    }
+                    
+                    [self showChat];
+                }
                 
-                // add to
-                NSMutableDictionary *to = [NSMutableDictionary dictionary];
-                [to setObject:selectedFriendId forKey:kId];
-                [to setObject:[selectedUserAnnotation.fbUser objectForKey:kName] forKey:kName];
-                newConversation.to = to;
-                
-                // add messages
-                NSMutableArray *emptryArray = [[NSMutableArray alloc] init];
-                newConversation.messages = emptryArray;
-                [emptryArray release];
-                
-                [[DataManager shared].historyConversation setObject:newConversation forKey:selectedFriendId];
-                [newConversation release];
-                
-                conversation = newConversation;
+                // quote action
+                [chatViewController addQuote];
+                [chatViewController.messageField becomeFirstResponder];
             }
-            
-            // show Chat
-            FBChatViewController *chatController = [[FBChatViewController alloc] initWithNibName:@"FBChatViewController" bundle:nil];
-            chatController.chatHistory = conversation;
-            [self.navigationController pushViewController:chatController animated:YES];
-            [chatController release];
         }
 
             break;
@@ -1220,35 +1214,44 @@
         // View personal fb page
         case 1: 
         {
-            // Show profile
-            NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
+            // View personal FB page
+            if(actionSheet.tag == 1){
+                // Show profile
+                NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
+                
+                WebViewController *webViewControleler = [[WebViewController alloc] init];
+                webViewControleler.urlAdress = url;
+                [self.navigationController pushViewController:webViewControleler animated:YES];
+                [webViewControleler autorelease];
+                
+            // Send FB message
+            }else{
+                [self actionSheetSendPrivateFBMessage];
+            }
             
-            WebViewController *webViewControleler = [[WebViewController alloc] init];
-            webViewControleler.urlAdress = url;
-            [self.navigationController pushViewController:webViewControleler animated:YES];
-            [webViewControleler autorelease];
+           
         }
             break;
 
         // Quote or Exit
         case 2: 
-			if(!chatViewController.view.superview)
-			{
-				if (segmentControl.numberOfSegments == 2)
-				{
-					segmentControl.selectedSegmentIndex = 1;
-				}
-				else 
-				{
-					segmentControl.selectedSegmentIndex = 2;
-				}
-				
-				[self showChat];
-			}
+            // reply with quote
+            if(actionSheet.tag == 1){
+                // quote action
+                [chatViewController addQuote];
+                [chatViewController.messageField becomeFirstResponder];
+                
+             // View personal FB page
+            }else{
+                // Show profile
+                NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
+                
+                WebViewController *webViewControleler = [[WebViewController alloc] init];
+                webViewControleler.urlAdress = url;
+                [self.navigationController pushViewController:webViewControleler animated:YES];
+                [webViewControleler autorelease];
+            }
 			
-			// quote action
-			[chatViewController addQuote];
-			[chatViewController.messageField becomeFirstResponder];
             break;
             
         default:
@@ -1259,6 +1262,41 @@
     userActionSheet = nil;
     
     self.selectedUserAnnotation = nil;
+}
+
+- (void) actionSheetSendPrivateFBMessage{
+    NSString *selectedFriendId = selectedUserAnnotation.fbUserId;
+    
+    // get conversation
+    Conversation *conversation = [[DataManager shared].historyConversation objectForKey:selectedFriendId];
+    if(conversation == nil){
+        // 1st message -> create conversation
+        
+        Conversation *newConversation = [[Conversation alloc] init];
+        
+        // add to
+        NSMutableDictionary *to = [NSMutableDictionary dictionary];
+        [to setObject:selectedFriendId forKey:kId];
+        [to setObject:[selectedUserAnnotation.fbUser objectForKey:kName] forKey:kName];
+        newConversation.to = to;
+        
+        // add messages
+        NSMutableArray *emptryArray = [[NSMutableArray alloc] init];
+        newConversation.messages = emptryArray;
+        [emptryArray release];
+        
+        [[DataManager shared].historyConversation setObject:newConversation forKey:selectedFriendId];
+        [newConversation release];
+        
+        conversation = newConversation;
+    }
+    
+    // show Chat
+    FBChatViewController *chatController = [[FBChatViewController alloc] initWithNibName:@"FBChatViewController" bundle:nil];
+    chatController.chatHistory = conversation;
+    [self.navigationController pushViewController:chatController animated:YES];
+    [chatController release];
+
 }
 
 @end

@@ -252,7 +252,7 @@
     annotation.userStatus = [sender.quote objectForKey:kMessage];
     annotation.userName = [sender.quote objectForKey:kName];
     annotation.createdAt = [sender.quote objectForKey:kDate];
-    annotation.qbUserID = [DataManager
+   // annotation.qbUserID = [DataManager
 
     ((MapChatARViewController *)delegate).selectedUserAnnotation = annotation;
     [annotation release];
