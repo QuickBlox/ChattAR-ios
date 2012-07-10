@@ -53,9 +53,13 @@
 	QBASessionCreationRequest *extendedAuthRequest = [[QBASessionCreationRequest alloc] init];
 	extendedAuthRequest.devicePlatorm = DevicePlatformiOS;
 	extendedAuthRequest.deviceUDID = [[UIDevice currentDevice] uniqueIdentifier];
+    if([DataManager shared].currentFBUser){
+        extendedAuthRequest.userLogin = [[NumberToLetterConverter instance] convertNumbersToLetters:[[DataManager shared].currentFBUser objectForKey:kId]];
+        extendedAuthRequest.userPassword = [NSString stringWithFormat:@"%u", [[[DataManager shared].currentFBUser objectForKey:kId] hash]];
+    }
 	
 	// QuickBlox application authorization
-	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:self];
+	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:nil];
 	
 	[extendedAuthRequest release];
 }

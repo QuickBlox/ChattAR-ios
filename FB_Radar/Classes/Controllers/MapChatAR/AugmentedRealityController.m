@@ -56,9 +56,8 @@
 
 	self.maximumScaleDistance = 1.3;
 	self.minimumScaleFactor = 0.3;
-    //self.minimumScaleFactor = 1.5;
     
-	self.scaleViewsBasedOnDistance = NO;
+	self.scaleViewsBasedOnDistance = YES;
     self.transparenViewsBasedOnDistance = YES;
 	self.rotateViewsBasedOnPerspective = NO;
     
@@ -605,6 +604,7 @@
 
             // scale view based on distance
 			if ([self scaleViewsBasedOnDistance]) {
+               // NSLog(@"item.radialDistance=%f", item.radialDistance);
 				scaleFactor = 1.0 - self.minimumScaleFactor * (item.radialDistance / self.maximumScaleDistance);
             }
             

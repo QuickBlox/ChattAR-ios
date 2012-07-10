@@ -15,7 +15,7 @@
 #import "SplashController.h"
 #import "FBNavigationBar.h"
 #import "FBChatViewController.h"
-
+#import "NumberToLetterConverter.h"
 #import "Extender.h"
 
 @implementation AppDelegate
@@ -154,13 +154,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-	
-	// request for access token again
-	// Create extended application authorization request (for push notifications)
+	// update access token (if it expired)
 	QBASessionCreationRequest *extendedAuthRequest = [[QBASessionCreationRequest alloc] init];
 	extendedAuthRequest.devicePlatorm = DevicePlatformiOS;
 	extendedAuthRequest.deviceUDID = [[UIDevice currentDevice] uniqueIdentifier];
+    if([DataManager shared].currentFBUser){
+        extendedAuthRequest.userLogin = [[NumberToLetterConverter instance] convertNumbersToLetters:[[DataManager shared].currentFBUser objectForKey:kId]];
+        extendedAuthRequest.userPassword = [NSString stringWithFormat:@"%u", [[[DataManager shared].currentFBUser objectForKey:kId] hash]];
+    }
 	
 	// QuickBlox application authorization
 	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:nil];
