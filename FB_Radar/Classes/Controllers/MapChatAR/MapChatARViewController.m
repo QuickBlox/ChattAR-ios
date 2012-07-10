@@ -1012,6 +1012,9 @@
             NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
             
             for(NSDictionary *checkinsResult in result.body){
+                if([checkinsResult isKindOfClass:NSNull.class]){
+                    continue;
+                }
                 SBJsonParser *parser = [[SBJsonParser alloc] init];
                 NSArray *checkins = [[parser objectWithString:(NSString *)([checkinsResult objectForKey:kBody])] objectForKey:kData];
                 [parser release];

@@ -147,10 +147,15 @@
         //
         QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
 		
+        BOOL isDevEnv = NO;
+#ifdef DEBUG
+        isDevEnv = YES;
+#endif
+        
         // Send push
         [QBMessagesService TSendPush:message
                               toUsers:[NSString stringWithFormat:@"%d",  messageField.rightView.tag] 
-               environmentDevelopment:NO 
+               environmentDevelopment:isDevEnv 
                              delegate:self];
 	}
     
@@ -247,6 +252,7 @@
     annotation.userStatus = [sender.quote objectForKey:kMessage];
     annotation.userName = [sender.quote objectForKey:kName];
     annotation.createdAt = [sender.quote objectForKey:kDate];
+    annotation.qbUserID = [DataManager
 
     ((MapChatARViewController *)delegate).selectedUserAnnotation = annotation;
     [annotation release];
