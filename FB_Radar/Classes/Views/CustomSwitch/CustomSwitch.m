@@ -13,14 +13,11 @@
     
 	CustomSwitch *switchView = [[CustomSwitch alloc] initWithFrame:CGRectZero];
 	
-	switchView.leftLabel.text = leftText;
-	switchView.rightLabel.text = rightText;
-	
 	return [switchView autorelease];
 }
 
 - (id) initWithFrame: (CGRect)rect{
-	if ((self=[super initWithFrame:CGRectMake(rect.origin.x,rect.origin.y,66,35)])){
+	if ((self=[super initWithFrame:CGRectMake(rect.origin.x,rect.origin.y,70,0)])){
 		[self awakeFromNib];
 	}
 	return self;
@@ -47,49 +44,6 @@
 	self.minimumValue = 0;
 	self.maximumValue = 1;
 	self.continuous = NO;
-	
-    // clip view
-	clippingView = [[UIView alloc] initWithFrame:CGRectMake(2,2,85,23)];
-	clippingView.clipsToBounds = YES;
-	clippingView.userInteractionEnabled = NO;
-	clippingView.backgroundColor = [UIColor clearColor];
-	[self addSubview:clippingView];
-	[clippingView release];
-	
-    
-    // left label
-	leftLabel = [[UILabel alloc] init];
-	leftLabel.frame = CGRectMake(0, 0, 48, 23);
-	leftLabel.textAlignment = UITextAlignmentCenter;
-	leftLabel.font = [UIFont boldSystemFontOfSize:10];
-	leftLabel.textColor = [UIColor whiteColor];
-	leftLabel.backgroundColor = [UIColor clearColor];
-	[clippingView addSubview:leftLabel];
-	[leftLabel release];
-	
-	
-    // right label
-	rightLabel = [[UILabel alloc] init];
-	rightLabel.frame = CGRectMake(92, 0, 48, 23);
-	rightLabel.textAlignment = UITextAlignmentCenter;
-	rightLabel.font = [UIFont boldSystemFontOfSize:12];
-	rightLabel.textColor = [UIColor whiteColor];
-	rightLabel.backgroundColor = [UIColor clearColor];
-	[clippingView addSubview:rightLabel];
-	[rightLabel release];
-	
-    
-    // center label
-    NSString * centerLabelText = NSLocalizedString(@"Switch","Label text");
-    centerLabel = [[UILabel alloc] init];
-	centerLabel.frame = CGRectMake(45, 0, 48, 23);
-	centerLabel.text = centerLabelText;
-	centerLabel.textAlignment = UITextAlignmentCenter;
-    centerLabel.font = [UIFont boldSystemFontOfSize:11];
-	centerLabel.textColor = [UIColor blackColor];
-	centerLabel.backgroundColor = [UIColor clearColor];
-	[clippingView addSubview:centerLabel];
-	[centerLabel release];
 }
 
 -(void)layoutSubviews{
@@ -97,20 +51,6 @@
 	
 	// move the labels to the front
     [self bringSubviewToFront:clippingView];
-	
-	CGFloat thumbWidth = self.currentThumbImage.size.width;
-	CGFloat switchWidth = self.bounds.size.width;
-	CGFloat labelWidth = switchWidth - thumbWidth;
-	CGFloat inset = self.clippingView.frame.origin.x;
-    
-	NSInteger xPos = self.value * labelWidth - labelWidth - inset;
-	self.leftLabel.frame = CGRectMake(xPos, 0, labelWidth, 23);
-	
-    xPos = CGRectGetMaxX(self.leftLabel.frame); 
-	self.centerLabel.frame = CGRectMake(xPos, 0, labelWidth, 23);
-    
-	xPos = switchWidth + (self.value * labelWidth - labelWidth) - inset-2; 
-	self.rightLabel.frame = CGRectMake(xPos, 0, labelWidth, 23);
 }
 
 - (void)scaleSwitch:(float)newSize {
