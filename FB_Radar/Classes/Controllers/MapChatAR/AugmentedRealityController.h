@@ -21,7 +21,9 @@
     UIActivityIndicatorView *activityIndicator;
     
     CGRect viewFrame;
-	double switchedDistance;
+	int switchedDistance;
+    
+    NSMutableArray *sliderNumbers;
 }
 
 @property (nonatomic, assign) BOOL scaleViewsBasedOnDistance;

@@ -520,7 +520,7 @@
 													  delegate:self 
 											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
 										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View personal FB page", nil),
+											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
 						   NSLocalizedString(@"Reply with quote", nil), nil];
 	}
 	else 
@@ -529,7 +529,7 @@
 													  delegate:self 
 											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
 										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View personal FB page", nil),
+											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
 						   NSLocalizedString(@"Reply in public chat", nil), nil];
 	}
 	

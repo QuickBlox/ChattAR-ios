@@ -70,6 +70,30 @@
     
     viewFrame = _viewFrame;
     
+    
+    
+    
+    // 1 km (все, кто в радиусе 1 км)
+    // 5 km
+    // 10 km
+    // 50 km
+    // 150 km
+    // 500 km 
+    // 1000 km
+    // 3000 km 
+    // 20000 km
+    sliderNumbers = [[NSMutableArray alloc] init];
+    [sliderNumbers addObject:[NSNumber numberWithInt:1000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:5000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:10000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:50000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:150000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:500000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:1000000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:3000000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:20000000]];
+    
+    
     return self;
 }
 
@@ -98,30 +122,36 @@
     
     // Distance views
 	distanceSlider = [[UISlider alloc] init];
-	[distanceSlider setFrame:CGRectMake(-120, 160, 300, 30)];
+	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
 	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
-	distanceSlider.maximumValue = 20000000; // 20,000 km
-	distanceSlider.minimumValue = 1;
+	distanceSlider.minimumValue =  0;
+	distanceSlider.maximumValue = [sliderNumbers count]-1;
+    distanceSlider.continuous = YES;
 	[self.view addSubview:distanceSlider];
-	[distanceSlider setValue:10000 animated:NO];
+	[distanceSlider setValue:2 animated:NO];
 	[distanceSlider release];
     
     distanceLabel = [[UILabel alloc] init];
-    [distanceLabel setFrame:CGRectMake(25, 340, 150, 20)];
+    [distanceLabel setFrame:CGRectMake(19, 335, 100, 20)];
     [distanceLabel setBackgroundColor:[UIColor clearColor]];
     [distanceLabel setFont:[UIFont systemFontOfSize:12]];
     [distanceLabel setTextColor:[UIColor whiteColor]];
-    distanceLabel.text = [NSString stringWithFormat:@"Distance: %0.00f km", distanceSlider.value/1000];
+    
+    distanceLabel.text = [NSString stringWithFormat:@"%d km", [[sliderNumbers objectAtIndex:distanceSlider.value] intValue]/1000];
     [self.view addSubview:distanceLabel];
     [distanceLabel release];
 }
 
--(void)distanceDidChanged:(id)sender
+-(void)distanceDidChanged:(UISlider *)slider
 {
-	float distance = (float)((UISlider*)sender).value;
-	switchedDistance = distance;
+    NSUInteger index = slider.value;
+    [slider setValue:index animated:NO];
+
     
-    distanceLabel.text = [NSString stringWithFormat:@"Distance: %0.00f km", distanceSlider.value/1000];
+    NSNumber *number = [sliderNumbers objectAtIndex:index]; // <-- This is the number you want.
+	switchedDistance = [number intValue];
+    
+    distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
 }
 
 // switch All/Friends
@@ -157,6 +187,8 @@
 	[coordinates release];
 	[captureSession release];
 	[centerLocation release];
+    
+    [sliderNumbers release];
 	
 	self.locationManager = nil;
 	self.coordinateViews = nil;
