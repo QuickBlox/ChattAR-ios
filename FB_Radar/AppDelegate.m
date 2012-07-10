@@ -48,7 +48,7 @@
                                                         message:quotePushMessageInChat
                                                        delegate:self 
                                               cancelButtonTitle:NSLocalizedString(@"Ok", "OK") 
-                                              otherButtonTitles:NSLocalizedString(@"View", "View"), nil];
+                                              otherButtonTitles:nil];
         [alert show];
         [alert release];
     }
@@ -59,14 +59,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-	
-	UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-    if (localNotif) 
-	{
-       // NSString *itemName = [localNotif.userInfo objectForKey:@"foo"];
-        application.applicationIconBadgeNumber = localNotif.applicationIconBadgeNumber-1;
-    }
-	application.applicationIconBadgeNumber = 0;
 	
 	// Register for Push Notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | 
@@ -198,17 +190,33 @@
 #endif
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    switch (buttonIndex) {
-        // View
-        case 1:
-            // show chat
-            self.tabBarController.selectedIndex = 1;
-            break;
-            
-        default:
-            break;
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    switch (buttonIndex) {
+//        // View
+//        case 1:
+//            // show chat
+//            self.tabBarController.selectedIndex = 1;
+//            
+//            MapChatARViewController *mapChatARViewController = (MapChatARViewController *)[[[[self.tabBarController viewControllers] objectAtIndex:1] viewControllers] objectAtIndex:0];
+//            
+//            if(!mapChatARViewController.chatViewController.view.superview)
+//            {
+//                if (mapChatARViewController.segmentControl.numberOfSegments == 2)
+//                {
+//                    mapChatARViewController.segmentControl.selectedSegmentIndex = 1;
+//                }
+//                else 
+//                {
+//                    mapChatARViewController.segmentControl.selectedSegmentIndex = 2;
+//                }
+//                
+//                [mapChatARViewController showChat];
+//            }
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//}
 
 @end

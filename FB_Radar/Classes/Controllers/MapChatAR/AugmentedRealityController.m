@@ -57,7 +57,7 @@
 	self.maximumScaleDistance = 1.3;
 	self.minimumScaleFactor = 0.3;
     
-	self.scaleViewsBasedOnDistance = YES;
+	self.scaleViewsBasedOnDistance = NO;
     self.transparenViewsBasedOnDistance = YES;
 	self.rotateViewsBasedOnPerspective = NO;
     

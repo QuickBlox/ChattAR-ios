@@ -343,8 +343,8 @@
                 [[DataManager shared] setFirstStartApp:NO];
                 
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil) 
-                                                                message:NSLocalizedString(@"You can see and chat with all users within 10km. \
-                                                                    Increase search radius using slider (left). \
+                                                                message:NSLocalizedString(@"You can see and chat with all \n users within 10km. \
+                                                                    Increase search radius using \nslider (left). \
                                                                                           Switch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil)    
                                                                delegate:nil 
                                                       cancelButtonTitle:NSLocalizedString(@"Ok", nil) 

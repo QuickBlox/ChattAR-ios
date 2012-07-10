@@ -32,12 +32,13 @@
         //[QBAuthService authorizeAppId:appID key:authKey secret:authSecret delegate:self];
         [activityIndicator startAnimating];
 		
-		NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:60*60*2-600 // Expiration date of access token is 2 hours. Repeat request for new token every 1 hour and 50 minutes.
+		[NSTimer scheduledTimerWithTimeInterval:60*60*2-600 // Expiration date of access token is 2 hours. Repeat request for new token every 1 hour and 50 minutes.
 														  target:self 
 														selector:@selector(createSession) 
 														userInfo:nil 
 														 repeats:YES];
-		[timer fire];
+        
+         [self createSessionWithDelegate:self];
 		
     }else{
         // show Login & Registrations buttons
@@ -47,9 +48,8 @@
     }        
 }
 
-- (void)createSession
-{
-	// Create extended application authorization request (for push notifications)
+- (void)createSessionWithDelegate:(id)delegate{
+  	// Create extended application authorization request (for push notifications)
 	QBASessionCreationRequest *extendedAuthRequest = [[QBASessionCreationRequest alloc] init];
 	extendedAuthRequest.devicePlatorm = DevicePlatformiOS;
 	extendedAuthRequest.deviceUDID = [[UIDevice currentDevice] uniqueIdentifier];
@@ -59,9 +59,14 @@
     }
 	
 	// QuickBlox application authorization
-	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:nil];
+	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:delegate];
 	
-	[extendedAuthRequest release];
+	[extendedAuthRequest release];  
+}
+
+- (void)createSession
+{
+    [self createSessionWithDelegate:nil];
 }
 
 - (void)viewDidUnload{
