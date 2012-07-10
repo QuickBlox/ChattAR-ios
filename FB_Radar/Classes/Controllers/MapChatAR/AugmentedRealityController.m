@@ -60,8 +60,6 @@
 	self.scaleViewsBasedOnDistance = NO;
     self.transparenViewsBasedOnDistance = YES;
 	self.rotateViewsBasedOnPerspective = NO;
-	
-	switchedDistance = 20000000; // 20,000 km
     
 	self.maximumRotationAngle = M_PI / 6.0;
     
@@ -71,8 +69,7 @@
     viewFrame = _viewFrame;
     
     
-    
-    
+
     // 1 km (все, кто в радиусе 1 км)
     // 5 km
     // 10 km
@@ -140,6 +137,10 @@
     distanceLabel.text = [NSString stringWithFormat:@"%d km", [[sliderNumbers objectAtIndex:distanceSlider.value] intValue]/1000];
     [self.view addSubview:distanceLabel];
     [distanceLabel release];
+    
+    // set dist
+    NSUInteger index = allFriendsSwitch.value;
+    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
 }
 
 -(void)distanceDidChanged:(UISlider *)slider
@@ -147,9 +148,8 @@
     NSUInteger index = slider.value;
     [slider setValue:index animated:NO];
 
-    
-    NSNumber *number = [sliderNumbers objectAtIndex:index]; // <-- This is the number you want.
-	switchedDistance = [number intValue];
+    // set dist
+    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
     
     distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
 }

@@ -51,7 +51,7 @@
 	allFriendsSwitch = [CustomSwitch switchWithLeftText:NSLocalizedString(@"","") andRight:NSLocalizedString(@"","")];
 	allFriendsSwitch.centerLabel.text = @"";
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
-    [allFriendsSwitch setCenter:CGPointMake(45, 22)];
+    [allFriendsSwitch setCenter:CGPointMake(280, 360)];
     [allFriendsSwitch setValue:1];
     [allFriendsSwitch scaleSwitch:0.9];
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
