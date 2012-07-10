@@ -26,6 +26,15 @@
 	return self;
 }
 
+- (void)setValue:(float)value{
+    [super setValue:value];
+    if(value == 1){
+        on = YES;
+    }else if (value == 0){
+        on = NO;
+    }
+}
+
 - (void) awakeFromNib {
 	[super awakeFromNib];
 	

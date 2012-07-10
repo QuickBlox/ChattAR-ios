@@ -233,30 +233,30 @@
 
 // switch All/Friends
 - (void)allFriendsSwitchValueDidChanged:(id)sender{
-    switch ((int)[(CustomSwitch *)sender value]) {
+    int value = (int)[(CustomSwitch *)sender value];
+    
+    switch (value) {
         // show all users
-        case 0:{
-			
+        case 1:{
 			
 			if ([arViewController.view superview])
 			{
-				[chatViewController.allFriendsSwitch setValue:0.0];
-				[mapViewController.allFriendsSwitch setValue:0.0];
+				[chatViewController.allFriendsSwitch setValue:value];
+				[mapViewController.allFriendsSwitch setValue:value];
 			}
 			else if ([chatViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:0.0];
-				[mapViewController.allFriendsSwitch setValue:0.0];
+				[arViewController.allFriendsSwitch setValue:value];
+				[mapViewController.allFriendsSwitch setValue:value];
 			}
 			else if ([mapViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:0.0];
-				[chatViewController.allFriendsSwitch setValue:0.0];
+				[arViewController.allFriendsSwitch setValue:value];
+				[chatViewController.allFriendsSwitch setValue:value];
 			}
 			
             NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
             [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
-            
             
             // Map/AR points
             //
@@ -292,7 +292,6 @@
             }
 			
 			
-			
             // Chat points
             //
             [chatPoints removeAllObjects]; 
@@ -317,8 +316,10 @@
             if([[DataManager shared] isFirstStartApp]){
                 [[DataManager shared] setFirstStartApp:NO];
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Chattar", nil) 
-                                                                message:NSLocalizedString(@"Only friend with the shared location will be shown", nil)    
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil) 
+                                                                message:NSLocalizedString(@"You can see and chat with all users within 10km. \
+                                                                    Increase search radius using slider (left). \
+                                                                                          Switch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil)    
                                                                delegate:nil 
                                                       cancelButtonTitle:NSLocalizedString(@"Ok", nil) 
                                                       otherButtonTitles:nil];
@@ -330,21 +331,21 @@
 	break;
             
         // show friends
-        case 1:{
+        case 0:{
 			if ([arViewController.view superview])
 			{
-				[chatViewController.allFriendsSwitch setValue:1.0];
-				[mapViewController.allFriendsSwitch setValue:1.0];
+				[chatViewController.allFriendsSwitch setValue:value];
+				[mapViewController.allFriendsSwitch setValue:value];
 			}
 			else if ([chatViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:1.0];
-				[mapViewController.allFriendsSwitch setValue:1.0];
+				[arViewController.allFriendsSwitch setValue:value];
+				[mapViewController.allFriendsSwitch setValue:value];
 			}
 			else if ([mapViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:1.0];
-				[chatViewController.allFriendsSwitch setValue:1.0];
+				[arViewController.allFriendsSwitch setValue:value];
+				[chatViewController.allFriendsSwitch setValue:value];
 			}
 			
 			
@@ -520,7 +521,7 @@
 											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
 										destructiveButtonTitle:nil 
 											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View personal FB page", nil),
-						   NSLocalizedString(@"Answer with quote", nil), nil];
+						   NSLocalizedString(@"Reply with quote", nil), nil];
 	}
 	else 
 	{
@@ -835,7 +836,6 @@
     
     // all data was retrieved
     ++initState;
-    NSLog(@"CHAT OK");
     if(initState == 3){
         [self endOfRetrieveInitialData];
     }
@@ -912,15 +912,6 @@
         [allCheckins addObject:checkinAnnotation];
         [checkinAnnotation release];
     }	
-	
-    // all data was retrieved
-    if(numberOfCheckinsRetrieved == 0){
-           NSLog(@"Checkin OK");
-        ++initState;
-        if(initState == 3){
-            [self endOfRetrieveInitialData];
-        }
-    }
 }
 
 - (void)endOfRetrieveInitialData{
@@ -991,10 +982,10 @@
         // Get Friends checkins
         case FBQueriesTypesFriendsGetCheckins:{
             --numberOfCheckinsRetrieved;
+            
             NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
             
             for(NSDictionary *checkinsResult in result.body){
-                NSLog(@"class=%@", checkinsResult.class);
                 SBJsonParser *parser = [[SBJsonParser alloc] init];
                 NSArray *checkins = [[parser objectWithString:(NSString *)([checkinsResult objectForKey:kBody])] objectForKey:kData];
                 [parser release];
@@ -1003,21 +994,31 @@
                     // convert checkins
                     [self convertCheckinsArray:checkins];
                     
-                }else{
-                    //				UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning!", nil) 
-                    //																message:NSLocalizedString(@"Unfortunately, your friends did not shared locations. You can change the switcher above for watching all application users.", nil) 
-                    //															   delegate:nil 
-                    //													  cancelButtonTitle:NSLocalizedString(@"Okay.", nil) 
-                    //													  otherButtonTitles:nil, nil];
-                    //				[alert show];
-                    //				[alert release];
-                    
-                    if(updateTimre == nil){
-                        ++initState;
-                        if(initState == 3){
-                            [self endOfRetrieveInitialData];
-                        }
+                }
+            }
+            
+            // if there isn't any checkins
+            if(numberOfCheckinsRetrieved == 0 && [allCheckins count] == 0){
+                UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning!", nil) 
+                                                                message:NSLocalizedString(@"Unfortunately, your friends did not shared locations. You can change the switcher above for watching all application users.", nil) 
+                                                                delegate:nil 
+                                                       cancelButtonTitle:NSLocalizedString(@"Okay.", nil) 
+                                                       otherButtonTitles:nil, nil];
+                [alert show];
+                [alert release];
+                
+                if(updateTimre == nil){
+                    ++initState;
+                    if(initState == 3){
+                        [self endOfRetrieveInitialData];
                     }
+                }
+                
+            // all data was retrieved
+            }else if(numberOfCheckinsRetrieved == 0){
+                ++initState;
+                if(initState == 3){
+                    [self endOfRetrieveInitialData];
                 }
             }
         }

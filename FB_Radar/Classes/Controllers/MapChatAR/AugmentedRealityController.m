@@ -88,9 +88,7 @@
 	allFriendsSwitch.centerLabel.text = @"";
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
     [allFriendsSwitch setCenter:CGPointMake(280, 360)];
-    [allFriendsSwitch setValue:0];
-    allFriendsSwitch.tag = 0;
-    allFriendsSwitch.hidden = NO;
+    [allFriendsSwitch setValue:1];
     [allFriendsSwitch scaleSwitch:0.9];
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
 	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
@@ -105,7 +103,7 @@
 	distanceSlider.maximumValue = 20000000; // 20,000 km
 	distanceSlider.minimumValue = 1;
 	[self.view addSubview:distanceSlider];
-	[distanceSlider setValue:20000000 animated:NO];
+	[distanceSlider setValue:10000 animated:NO];
 	[distanceSlider release];
     
     distanceLabel = [[UILabel alloc] init];

@@ -52,9 +52,7 @@
 	allFriendsSwitch.centerLabel.text = @"";
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
     [allFriendsSwitch setCenter:CGPointMake(45, 22)];
-    [allFriendsSwitch setValue:0];
-    allFriendsSwitch.tag = 0;
-    allFriendsSwitch.hidden = NO;
+    [allFriendsSwitch setValue:1];
     [allFriendsSwitch scaleSwitch:0.9];
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
 	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
