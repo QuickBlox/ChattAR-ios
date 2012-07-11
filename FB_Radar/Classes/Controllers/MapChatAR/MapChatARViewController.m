@@ -167,8 +167,11 @@
         
         // get checkins for all friends
         numberOfCheckinsRetrieved = ceil([[DataManager shared].myFriends count]/fmaxRequestsInBatch);
-		
-        [[FBService shared] friendsCheckinsWithDelegate:self];
+        if(numberOfCheckinsRetrieved != 0){
+            [[FBService shared] friendsCheckinsWithDelegate:self];
+        }else{
+            ++initState;
+        }
         
         isInitialized = YES;
         
@@ -680,7 +683,6 @@
     
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys]; 
     
-    NSLog(@"[self isAllShowed]=%d", [self isAllShowed]);
     
     // Add to Chat
     BOOL addedToCurrentChatState = NO;
@@ -823,7 +825,7 @@
 	
     // all data was retrieved
     ++initState;
-    NSLog(@"MAP OK");
+    NSLog(@"MAP INIT OK");
     if(initState == 3){
         [self endOfRetrieveInitialData];
     }
@@ -884,6 +886,7 @@
     
     // all data was retrieved
     ++initState;
+    NSLog(@"CHAT INIT OK");
     if(initState == 3){
         [self endOfRetrieveInitialData];
     }
