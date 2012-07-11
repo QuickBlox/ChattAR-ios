@@ -270,26 +270,32 @@
 
 // switch All/Friends
 - (void)allFriendsSwitchValueDidChanged:(id)sender{
-    int value = (int)[(CustomSwitch *)sender value];
+    float origValue = [(CustomSwitch *)sender value];
+    int stateValue;
+    if(origValue >= worldValue){
+        stateValue = 1;
+    }else if(origValue <= friendsValue){
+        stateValue = 0;
+    }
     
-    switch (value) {
+    switch (stateValue) {
         // show all users
         case 1:{
 			
 			if ([arViewController.view superview])
 			{
-				[chatViewController.allFriendsSwitch setValue:value];
-				[mapViewController.allFriendsSwitch setValue:value];
+				[chatViewController.allFriendsSwitch setValue:origValue];
+				[mapViewController.allFriendsSwitch setValue:origValue];
 			}
 			else if ([chatViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:value];
-				[mapViewController.allFriendsSwitch setValue:value];
+				[arViewController.allFriendsSwitch setValue:origValue];
+				[mapViewController.allFriendsSwitch setValue:origValue];
 			}
 			else if ([mapViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:value];
-				[chatViewController.allFriendsSwitch setValue:value];
+				[arViewController.allFriendsSwitch setValue:origValue];
+				[chatViewController.allFriendsSwitch setValue:origValue];
 			}
 			
             NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
@@ -353,18 +359,18 @@
         case 0:{
 			if ([arViewController.view superview])
 			{
-				[chatViewController.allFriendsSwitch setValue:value];
-				[mapViewController.allFriendsSwitch setValue:value];
+				[chatViewController.allFriendsSwitch setValue:origValue];
+				[mapViewController.allFriendsSwitch setValue:origValue];
 			}
 			else if ([chatViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:value];
-				[mapViewController.allFriendsSwitch setValue:value];
+				[arViewController.allFriendsSwitch setValue:origValue];
+				[mapViewController.allFriendsSwitch setValue:origValue];
 			}
 			else if ([mapViewController.view superview]) 
 			{
-				[arViewController.allFriendsSwitch setValue:value];
-				[chatViewController.allFriendsSwitch setValue:value];
+				[arViewController.allFriendsSwitch setValue:origValue];
+				[chatViewController.allFriendsSwitch setValue:origValue];
 			}
 			
 			
