@@ -152,10 +152,6 @@
     if(!isInitialized){
         initState = 0;
         
-        // clean
-//        [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
-//        [chatViewController.messagesTableView reloadData];
-        
         // show wheels
         [arViewController.view addSubview:arViewController.activityIndicator];
         [arViewController.activityIndicator startAnimating];
@@ -176,6 +172,21 @@
         [[FBService shared] friendsCheckinsWithDelegate:self];
         
         isInitialized = YES;
+        
+        
+        // show Alert with info at startapp
+        if([[DataManager shared] isFirstStartApp]){
+            [[DataManager shared] setFirstStartApp:NO];
+            
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil) 
+                                                            message:NSLocalizedString(@"You can see and chat with all\nusers within 10km. Increase\nsearch radius using slider (left). \nSwitch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil)    
+                                                           delegate:nil 
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil) 
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
     }    
 }
 
@@ -334,25 +345,7 @@
 			
             [mapViewController pointsUpdated];
             [arViewController pointsUpdated];
-            [chatViewController pointsUpdated];
-            
-            
-            
-            // show Alert with info at startapp
-            if([[DataManager shared] isFirstStartApp]){
-                [[DataManager shared] setFirstStartApp:NO];
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil) 
-                                                                message:NSLocalizedString(@"You can see and chat with all \n users within 10km. \
-                                                                    Increase search radius using \nslider (left). \
-                                                                                          Switch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil)    
-                                                               delegate:nil 
-                                                      cancelButtonTitle:NSLocalizedString(@"Ok", nil) 
-                                                      otherButtonTitles:nil];
-                [alert show];
-                [alert release];
-            }
-			
+            [chatViewController pointsUpdated];		
 	}         
 	break;
             
