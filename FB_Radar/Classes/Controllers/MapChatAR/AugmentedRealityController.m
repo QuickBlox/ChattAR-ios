@@ -146,6 +146,7 @@
     
     // set dist
     switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+    NSLog(@"switchedDistance=%d", switchedDistance);
     
     distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
 }
@@ -585,6 +586,8 @@
 		
 		ARMarkerView *viewToDraw = [coordinateViews objectAtIndex:index];
 		
+        NSLog(@"viewToDraw.distance=%d", viewToDraw.distance);
+        
 		if ([self viewportContainsView:viewToDraw forCoordinate:item] && (viewToDraw.distance < switchedDistance)) {
 			
             // mraker location
