@@ -1238,7 +1238,9 @@
 
         case 2: {
             // View personal FB page
-            [self actionSheetViewFBProfile];
+            if(buttonsNum != 3){
+                [self actionSheetViewFBProfile];
+            }
         }
 			
             break;
