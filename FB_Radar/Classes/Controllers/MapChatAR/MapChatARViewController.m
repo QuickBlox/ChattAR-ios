@@ -13,7 +13,6 @@
 #define chatFBUsers @"chatFBUsers"
 
 #import "MapChatARViewController.h"
-#import "ARManager.h"
 #import "ARMarkerView.h"
 #import "MessagesViewController.h"
 #import "WebViewController.h"

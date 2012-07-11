@@ -25,6 +25,7 @@
     #import "NotificationManager.h"
     #import "Definitions.h"
     #import "FBService.h"
+    #import "ARManager.h"
     #import "Conversation.h"
 
     // categories

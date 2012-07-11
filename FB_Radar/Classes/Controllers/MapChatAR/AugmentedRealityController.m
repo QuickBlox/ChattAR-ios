@@ -17,9 +17,6 @@
 #define radianToDegrees(x) ((x) * 180.0/M_PI)
 
 #define canvasFrame CGRectMake(0, 0, 320, 480)
-
-#define maxDistance 15000
-
 #pragma mark -
 
 @interface AugmentedRealityController (Private) 
@@ -57,7 +54,7 @@
 	self.maximumScaleDistance = 1.3;
 	self.minimumScaleFactor = 0.3;
     
-	self.scaleViewsBasedOnDistance = NO;
+	self.scaleViewsBasedOnDistance = YES;
     self.transparenViewsBasedOnDistance = YES;
 	self.rotateViewsBasedOnPerspective = NO;
     
@@ -88,7 +85,7 @@
     [sliderNumbers addObject:[NSNumber numberWithInt:500000]];
     [sliderNumbers addObject:[NSNumber numberWithInt:1000000]];
     [sliderNumbers addObject:[NSNumber numberWithInt:3000000]];
-    [sliderNumbers addObject:[NSNumber numberWithInt:20000000]];
+    [sliderNumbers addObject:[NSNumber numberWithInt:maxARDistance]];
     
     
     return self;
@@ -544,17 +541,8 @@
         
         // update distance
         ARMarkerView *marker = [coordinateViews objectAtIndex:index];
-        CLLocationDistance distance = [marker updateDistance:_centerLocation];
-        
-        // set alpha
-        if(transparenViewsBasedOnDistance){
-            float alpha = 1 - distance/1000.0 / maxDistance;
-            if(alpha < 0.1){
-                alpha = 0.1;
-            }
-            marker.alpha = alpha;
-        }
-        
+        [marker updateDistance:_centerLocation];
+
         ++index;
 	}
     
@@ -589,6 +577,8 @@
 	int index			= 0;
 	int totalDisplayed	= 0;
 	
+    int maxShowedMarkerDistance = 0;
+    
 	for (ARCoordinate *item in coordinates) {
 		
 		ARMarkerView *viewToDraw = [coordinateViews objectAtIndex:index];
@@ -598,13 +588,38 @@
             // mraker location
 			CGPoint locCenter = [self pointInView:self.displayView withView:viewToDraw forCoordinate:item];
             
+            CATransform3D transform = CATransform3DIdentity;
             
 			CGFloat scaleFactor = 1.0;
 
             // scale view based on distance
 			if ([self scaleViewsBasedOnDistance]) {
-               // NSLog(@"item.radialDistance=%f", item.radialDistance);
-				scaleFactor = 1.0 - self.minimumScaleFactor * (item.radialDistance / self.maximumScaleDistance);
+                // min scale: minARMarkerScale -> maxARDistance km
+                // max scale: 1   -> 1 km
+                //
+                
+                scaleFactor = 1.0 - viewToDraw.distance/1000 * scaleStep;
+                if(scaleFactor > 1){
+                    scaleFactor = 1.0;
+                }else if (scaleFactor < minARMarkerScale){
+                    scaleFactor = minARMarkerScale;
+                }
+                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, scaleFactor);
+            }
+            
+            // set alpha
+            if([self transparenViewsBasedOnDistance]){
+                // min alpha: minARMarkerAlpha -> maxARDistance km
+                // max alpha: 1   -> 1 km
+                //
+                
+                float alpha = 1.0 - viewToDraw.distance/1000.0 * alphaStep;
+                if(alpha > 1){
+                    alpha = 1.0;
+                }else if (alpha < minARMarkerAlpha){
+                    alpha = minARMarkerAlpha;
+                }
+                viewToDraw.alpha = alpha;
             }
             
 			
@@ -614,15 +629,7 @@
             int offset = totalDisplayed%2 ? totalDisplayed*25 : -totalDisplayed*25;
 			viewToDraw.frame = CGRectMake(locCenter.x - width / 2.0, locCenter.y - (height / 2.0) + offset, width, height);
 
-
 			totalDisplayed++;
-			
-			CATransform3D transform = CATransform3DIdentity;
-			
-			// Set the scale if it needs it. Scale the perspective transform if we have one.
-			if ([self scaleViewsBasedOnDistance]) {
-				transform = CATransform3DScale(transform, scaleFactor, scaleFactor, scaleFactor);
-            }
 			
             // rotate view based on perspective
 			if ([self rotateViewsBasedOnPerspective]) {
@@ -651,12 +658,19 @@
 				[self.displayView sendSubviewToBack:viewToDraw];
 			}
             
+            // save max distance
+            if(viewToDraw.distance > maxShowedMarkerDistance){
+                maxShowedMarkerDistance = viewToDraw.distance;
+            }
+            
         } else{ 
 			[viewToDraw removeFromSuperview];
         }
 		
 		index++;
 	}
+    
+    NSLog(@"maxShowedMarkerDistance=%d", maxShowedMarkerDistance);
     
 }
 

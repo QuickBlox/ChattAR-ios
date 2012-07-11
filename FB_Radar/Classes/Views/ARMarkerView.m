@@ -124,6 +124,7 @@
                 cos(lon2 - lon1)) * R;
 }
 
+
 // touch action
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     if([target respondsToSelector:action]){
