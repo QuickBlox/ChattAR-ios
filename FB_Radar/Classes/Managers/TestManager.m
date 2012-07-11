@@ -31,9 +31,12 @@ static TestManager *instance = nil;
         // point 1
         NSString *userID1 = @"100000349082603"; // Julia Sydorenko
         NSArray *coord1 = [NSArray arrayWithObjects:[NSNumber numberWithDouble:50.0], [NSNumber numberWithDouble:27.0], nil];// lat, lon
-
         
-        self.testLocations = [NSDictionary dictionaryWithObjectsAndKeys:coord1, userID1, nil];
+        // point 2
+        NSString *userID2 = @"100001992215125"; // Миклухо Маклай
+        NSArray *coord2 = [NSArray arrayWithObjects:[NSNumber numberWithDouble:-9.0], [NSNumber numberWithDouble:-41.0], nil];// lat, lon
+        
+        self.testLocations = [NSDictionary dictionaryWithObjectsAndKeys:coord1, userID1, coord2, userID2,nil];
     }
     
     return self;

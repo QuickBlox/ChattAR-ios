@@ -278,8 +278,8 @@
     }
     
     switch (stateValue) {
-        // show all users
-        case 1:{
+        // show friends
+        case 0:{
 			
 			if ([arViewController.view superview])
 			{
@@ -354,8 +354,8 @@
 	}         
 	break;
             
-        // show friends
-        case 0:{
+        // show All
+        case 1:{
 			if ([arViewController.view superview])
 			{
 				[chatViewController.allFriendsSwitch setValue:origValue];
@@ -425,7 +425,7 @@
 }
 
 - (BOOL)isAllShowed{
-    if(mapViewController.allFriendsSwitch.value == 0){
+    if(mapViewController.allFriendsSwitch.value == worldValue){
         return YES;
     }
     
@@ -658,6 +658,8 @@
     newAnnotation.distance  = [geoData.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
     
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys]; 
+    
+    NSLog(@"[self isAllShowed]=%d", [self isAllShowed]);
     
     // Add to Chat
     BOOL addedToCurrentChatState = NO;
