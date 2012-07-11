@@ -50,7 +50,7 @@
 	coordinates		= [[NSMutableArray alloc] init];
 	coordinateViews	= [[NSMutableArray alloc] init];
 	latestHeading	= -1.0f;
-
+    
 	self.maximumScaleDistance = 1.3;
 	self.minimumScaleFactor = 0.3;
     
@@ -66,7 +66,7 @@
     viewFrame = _viewFrame;
     
     
-
+    
     // 1 km (все, кто в радиусе 1 км)
     // 5 km
     // 10 km
@@ -143,7 +143,7 @@
 {
     NSUInteger index = slider.value;
     [slider setValue:index animated:NO];
-
+    
     // set dist
     switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
     
@@ -201,7 +201,7 @@
 // touch on marker
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *lastTouch = [touches anyObject];
-
+    
     for(int i=[self.view.subviews count]-1; i>=0; i--)
 	{
         ARMarkerView *marker = [self.view.subviews objectAtIndex:i];
@@ -237,7 +237,7 @@
         if(view == activityIndicator || [view isKindOfClass:[CustomSwitch class]] || view == distanceSlider || view == distanceLabel){
 			continue;
         }
-		            
+        
 		[view removeFromSuperview];
     }
     
@@ -255,7 +255,7 @@
 		[self.locationManager startUpdatingLocation];
 		self.locationManager.delegate = self;
 	}
-			
+    
 	if (!self.accelerometerManager) {
 		self.accelerometerManager = [UIAccelerometer sharedAccelerometer];
 		self.accelerometerManager.updateInterval = 0.1;
@@ -274,7 +274,7 @@
 		{
 			continue;
 		}
-
+        
 		[view removeFromSuperview];
 	}
 	
@@ -542,7 +542,7 @@
         // update distance
         ARMarkerView *marker = [coordinateViews objectAtIndex:index];
         [marker updateDistance:_centerLocation];
-
+        
         ++index;
 	}
     
@@ -578,6 +578,8 @@
 	int totalDisplayed	= 0;
 	
     int maxShowedMarkerDistance = 0;
+    int minShowedMarkerDistance = 100000000;
+    int count = 0;
     
 	for (ARCoordinate *item in coordinates) {
 		
@@ -588,70 +590,39 @@
             // mraker location
 			CGPoint locCenter = [self pointInView:self.displayView withView:viewToDraw forCoordinate:item];
             
-            CATransform3D transform = CATransform3DIdentity;
+//            CATransform3D transform = CATransform3DIdentity;
             
 			CGFloat scaleFactor = 1.0;
-
-            // scale view based on distance
-			if ([self scaleViewsBasedOnDistance]) {
-                // min scale: minARMarkerScale -> maxARDistance km
-                // max scale: 1   -> 1 km
-                //
-                
-                scaleFactor = 1.0 - viewToDraw.distance/1000 * scaleStep;
-                if(scaleFactor > 1){
-                    scaleFactor = 1.0;
-                }else if (scaleFactor < minARMarkerScale){
-                    scaleFactor = minARMarkerScale;
-                }
-                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, scaleFactor);
-            }
-            
-            // set alpha
-            if([self transparenViewsBasedOnDistance]){
-                // min alpha: minARMarkerAlpha -> maxARDistance km
-                // max alpha: 1   -> 1 km
-                //
-                
-                float alpha = 1.0 - viewToDraw.distance/1000.0 * alphaStep;
-                if(alpha > 1){
-                    alpha = 1.0;
-                }else if (alpha < minARMarkerAlpha){
-                    alpha = minARMarkerAlpha;
-                }
-                viewToDraw.alpha = alpha;
-            }
-            
 			
 			float width	 = viewToDraw.bounds.size.width  * scaleFactor;
 			float height = viewToDraw.bounds.size.height * scaleFactor;
 			
             int offset = totalDisplayed%2 ? totalDisplayed*25 : -totalDisplayed*25;
 			viewToDraw.frame = CGRectMake(locCenter.x - width / 2.0, locCenter.y - (height / 2.0) + offset, width, height);
-
+            
 			totalDisplayed++;
 			
-            // rotate view based on perspective
-			if ([self rotateViewsBasedOnPerspective]) {
-				transform.m34 = 1.0 / 300.0;
-				
-				double itemAzimuth		= item.azimuth;
-				double centerAzimuth	= self.centerCoordinate.azimuth;
-				
-				if (itemAzimuth - centerAzimuth > M_PI) 
-					centerAzimuth += 2 * M_PI;
-				
-				if (itemAzimuth - centerAzimuth < -M_PI) 
-					itemAzimuth  += 2 * M_PI;
-				
-				double angleDifference	= itemAzimuth - centerAzimuth;
-				transform				= CATransform3DRotate(transform, self.maximumRotationAngle * angleDifference / 0.3696f , 0, 1, 0);
-			}
-			
+//            // rotate view based on perspective
+//			if ([self rotateViewsBasedOnPerspective]) {
+//				transform.m34 = 1.0 / 300.0;
+//				
+//				double itemAzimuth		= item.azimuth;
+//				double centerAzimuth	= self.centerCoordinate.azimuth;
+//				
+//				if (itemAzimuth - centerAzimuth > M_PI) 
+//					centerAzimuth += 2 * M_PI;
+//				
+//				if (itemAzimuth - centerAzimuth < -M_PI) 
+//					itemAzimuth  += 2 * M_PI;
+//				
+//				double angleDifference	= itemAzimuth - centerAzimuth;
+//				transform				= CATransform3DRotate(transform, self.maximumRotationAngle * angleDifference / 0.3696f , 0, 1, 0);
+//			}
+//			
+//            
+//            // allow transform
+//			viewToDraw.layer.transform = transform;
             
-            // allow transform
-			viewToDraw.layer.transform = transform;
-
 			//if we don't have a superview, set it up.
 			if (!([viewToDraw superview])) {
 				[self.displayView addSubview:viewToDraw];
@@ -662,6 +633,11 @@
             if(viewToDraw.distance > maxShowedMarkerDistance){
                 maxShowedMarkerDistance = viewToDraw.distance;
             }
+            if(viewToDraw.distance < minShowedMarkerDistance){
+                minShowedMarkerDistance = viewToDraw.distance;
+            }
+            
+            ++count;
             
         } else{ 
 			[viewToDraw removeFromSuperview];
@@ -670,8 +646,50 @@
 		index++;
 	}
     
-    NSLog(@"maxShowedMarkerDistance=%d", maxShowedMarkerDistance);
-    
+    // Set Alpha & Size based on distance
+    if([self scaleViewsBasedOnDistance] || [self transparenViewsBasedOnDistance]){
+        for (ARMarkerView *viewToDraw in self.displayView.subviews) {
+            if(![viewToDraw isKindOfClass:ARMarkerView.class]){
+                continue;
+            }
+            
+            CATransform3D transform = CATransform3DIdentity;
+            
+			CGFloat scaleFactor = 1.0;
+            
+            // scale view based on distance
+            if ([self scaleViewsBasedOnDistance]) {
+                // min scale: minARMarkerScale -> maxARDistance km
+                // max scale: 1   -> 1 km
+                //
+                
+                scaleFactor = 1.0 - (viewToDraw.distance-minShowedMarkerDistance)/1000 * scaleStep((maxShowedMarkerDistance-minShowedMarkerDistance));
+                if(scaleFactor > 1){
+                    scaleFactor = 1.0;
+                }else if (scaleFactor < minARMarkerScale){
+                    scaleFactor = minARMarkerScale;
+                }
+
+                transform = CATransform3DScale(transform, scaleFactor, scaleFactor, scaleFactor);
+                viewToDraw.layer.transform = transform;
+            }
+            
+            // set alpha
+            if([self transparenViewsBasedOnDistance]){
+                // min alpha: minARMarkerAlpha -> maxARDistance km
+                // max alpha: 1   -> 1 km
+                //
+                
+                float alpha = 1.0 - (viewToDraw.distance-minShowedMarkerDistance)/1000.0 * alphaStep((maxShowedMarkerDistance-minShowedMarkerDistance));
+                if(alpha > 1){
+                    alpha = 1.0;
+                }else if (alpha < minARMarkerAlpha){
+                    alpha = minARMarkerAlpha;
+                }
+                viewToDraw.alpha = alpha;
+            }
+        }
+    }
 }
 
 
@@ -679,7 +697,7 @@
 #pragma mark Capture
 
 - (IBAction) initCapture {
-
+    
 	/*We setup the input*/
 	AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput 
 										  deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] 
