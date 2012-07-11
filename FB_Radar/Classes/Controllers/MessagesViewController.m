@@ -175,7 +175,7 @@
         [photoTap release];
         
         //create name of friend
-        name = [[UILabel alloc] initWithFrame:CGRectMake(60, 2, 200, 20)];
+        name = [[UILabel alloc] initWithFrame:CGRectMake(60, 2, 155, 20)];
         name.tag = 1102;
         [name setFont:[UIFont boldSystemFontOfSize:15]];
         [name setTextColor:[UIColor colorWithRed:0.172 green:0.278 blue:0.521 alpha:1]];

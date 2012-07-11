@@ -129,6 +129,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     chatInput.backgroundColor = [UIColor clearColor];
     [chatBar addSubview:chatInput];
     [chatInput release];
+    //
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
+    chatInput.leftViewMode = UITextFieldViewModeAlways;
+    chatInput.leftView = paddingView;
+    [paddingView release];
     
     // Create sendButton.
     sendButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
