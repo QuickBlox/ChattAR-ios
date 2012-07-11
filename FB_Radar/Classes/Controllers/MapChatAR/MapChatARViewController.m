@@ -539,8 +539,7 @@
 													  delegate:self 
 											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
 										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
-						   NSLocalizedString(@"Reply with quote", nil), nil];
+											 otherButtonTitles:NSLocalizedString(@"Reply with quote", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil), nil];
         userActionSheet.tag = 1;
 	}
 	else 
@@ -1175,75 +1174,41 @@
 
     switch (buttonIndex) {
         case 0:{ 
-            
-            // Send FB message
-            if(actionSheet.tag == 1){
-                [self actionSheetSendPrivateFBMessage];
-                
-            // Reply in public chat
-            }else{
-                if(!chatViewController.view.superview)
-                {
-                    if (segmentControl.numberOfSegments == 2)
-                    {
-                        segmentControl.selectedSegmentIndex = 1;
-                    }
-                    else 
-                    {
-                        segmentControl.selectedSegmentIndex = 2;
-                    }
-                    
-                    [self showChat];
+
+            // Reply in public chat/Reply with quote
+            if(!chatViewController.view.superview){
+                if (segmentControl.numberOfSegments == 2){
+                    segmentControl.selectedSegmentIndex = 1;
+                }else {
+                    segmentControl.selectedSegmentIndex = 2;
                 }
                 
-                // quote action
-                [chatViewController addQuote];
-                [chatViewController.messageField becomeFirstResponder];
+                [self showChat];
             }
+                
+            // quote action
+            [chatViewController addQuote];
+            [chatViewController.messageField becomeFirstResponder];
         }
 
             break;
             
-        // View personal fb page
-        case 1: 
-        {
-            // View personal FB page
-            if(actionSheet.tag == 1){
-                // Show profile
-                NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
-                
-                WebViewController *webViewControleler = [[WebViewController alloc] init];
-                webViewControleler.urlAdress = url;
-                [self.navigationController pushViewController:webViewControleler animated:YES];
-                [webViewControleler autorelease];
-                
+        case 1: {
             // Send FB message
-            }else{
-                [self actionSheetSendPrivateFBMessage];
-            }
-            
-           
+            [self actionSheetSendPrivateFBMessage];
         }
             break;
 
-        // Quote or Exit
-        case 2: 
-            // reply with quote
-            if(actionSheet.tag == 1){
-                // quote action
-                [chatViewController addQuote];
-                [chatViewController.messageField becomeFirstResponder];
-                
+        case 2: {
              // View personal FB page
-            }else{
-                // Show profile
-                NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
-                
-                WebViewController *webViewControleler = [[WebViewController alloc] init];
-                webViewControleler.urlAdress = url;
-                [self.navigationController pushViewController:webViewControleler animated:YES];
-                [webViewControleler autorelease];
-            }
+
+            NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
+            
+            WebViewController *webViewControleler = [[WebViewController alloc] init];
+            webViewControleler.urlAdress = url;
+            [self.navigationController pushViewController:webViewControleler animated:YES];
+            [webViewControleler autorelease];
+        }
 			
             break;
             

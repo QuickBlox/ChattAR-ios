@@ -75,6 +75,8 @@
     messageField.rightView = nil;
     quotePhotoTop = nil;
 	self.quoteMark = nil;
+    
+    [messageField resignFirstResponder];
 }
 
 - (void)viewDidUnload
