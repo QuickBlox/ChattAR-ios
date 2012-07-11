@@ -534,28 +534,49 @@
         return;
     }
     
+    // is this friend?
+    BOOL isThisFriend = YES;
+    if(![[[DataManager shared].myFriendsAsDictionary allKeys] containsObject:selectedUserAnnotation.fbUserId]){
+        isThisFriend = NO;
+    }
+    
     
     // show Action Sheet
     //
     // add "Quote" item only in Chat
 	if (chatViewController.view.superview)
 	{
-		userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
-													  delegate:self 
-											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
-										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Reply with quote", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil), nil];
-        userActionSheet.tag = 1;
+        if(isThisFriend){
+            userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
+                                                          delegate:self 
+                                                 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
+                                            destructiveButtonTitle:nil 
+                                                 otherButtonTitles:NSLocalizedString(@"Reply with quote", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil), nil];
+        }else{
+            userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
+                                                          delegate:self 
+                                                 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
+                                            destructiveButtonTitle:nil 
+                                                 otherButtonTitles:NSLocalizedString(@"Reply with quote", nil), NSLocalizedString(@"View FB profile", nil), nil];
+        }
 	}
 	else 
 	{
-		userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
-													  delegate:self 
-											 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
-										destructiveButtonTitle:nil 
-											 otherButtonTitles:NSLocalizedString(@"Reply in public chat", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
-						    nil];
-        userActionSheet.tag = 2;
+        if(isThisFriend){
+            userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
+                                                          delegate:self 
+                                                 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
+                                            destructiveButtonTitle:nil 
+                                                 otherButtonTitles:NSLocalizedString(@"Reply in public chat", nil), NSLocalizedString(@"Send private FB message", nil), NSLocalizedString(@"View FB profile", nil),
+                               nil];
+        }else{
+            userActionSheet = [[UIActionSheet alloc] initWithTitle:title 
+                                                          delegate:self 
+                                                 cancelButtonTitle:NSLocalizedString(@"Cancel", nil) 
+                                            destructiveButtonTitle:nil 
+                                                 otherButtonTitles:NSLocalizedString(@"Reply in public chat", nil), NSLocalizedString(@"View FB profile", nil),
+                               nil];
+        }
 	}
 	
 	UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 280, 15)];
@@ -1178,6 +1199,7 @@
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    int buttonsNum = actionSheet.numberOfButtons;
 
     switch (buttonIndex) {
         case 0:{ 
@@ -1201,20 +1223,19 @@
             break;
             
         case 1: {
-            // Send FB message
-            [self actionSheetSendPrivateFBMessage];
+            if(buttonsNum == 3){
+                // View personal FB page
+                [self actionSheetViewFBProfile];
+            }else{
+                // Send FB message
+                [self actionSheetSendPrivateFBMessage];
+            }
         }
             break;
 
         case 2: {
-             // View personal FB page
-
-            NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
-            
-            WebViewController *webViewControleler = [[WebViewController alloc] init];
-            webViewControleler.urlAdress = url;
-            [self.navigationController pushViewController:webViewControleler animated:YES];
-            [webViewControleler autorelease];
+            // View personal FB page
+            [self actionSheetViewFBProfile];
         }
 			
             break;
@@ -1227,6 +1248,17 @@
     userActionSheet = nil;
     
     self.selectedUserAnnotation = nil;
+}
+
+- (void)actionSheetViewFBProfile{
+    // View personal FB page
+    
+    NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@",selectedUserAnnotation.fbUserId];
+    
+    WebViewController *webViewControleler = [[WebViewController alloc] init];
+    webViewControleler.urlAdress = url;
+    [self.navigationController pushViewController:webViewControleler animated:YES];
+    [webViewControleler autorelease];
 }
 
 - (void) actionSheetSendPrivateFBMessage{
