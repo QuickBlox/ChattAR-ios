@@ -421,6 +421,20 @@
     if (result.queryType == FBQueriesTypesGetInboxMessages){
         
         NSArray *resultData = [result.body objectForKey:kData];
+        NSDictionary *resultError = [result.body objectForKey:kError];
+        if(resultError && !resultData){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Facebook: %@", [resultError objectForKey:@"type"]]
+                                                            message:[resultError objectForKey:@"message"]   
+                                                           delegate:nil 
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil) 
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            
+            [HUD hide:YES];
+            
+            return;
+        }
         
         // each inbox message
 		for(NSDictionary *inboxConversation in resultData)

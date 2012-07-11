@@ -43,6 +43,7 @@
 #define	kUpdatedTime		@"updated_time"
 #define kFavorites			@"favorites"
 #define kComments           @"comments"
+#define kError              @"error"
 
 #define kGET                @"GET"
 
