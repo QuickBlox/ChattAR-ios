@@ -713,7 +713,7 @@
     if(addedToCurrentChatState && reloadTable){
         NSIndexPath *newMessagePath = [NSIndexPath indexPathForRow:0 inSection:0];
         NSArray *newRows = [[NSArray alloc] initWithObjects:newMessagePath, nil];
-        [chatViewController.messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationNone];
+        [chatViewController.messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationFade];
         [newRows release];
     }
     //
@@ -974,6 +974,7 @@
 }
 
 - (void)endOfRetrieveInitialData{
+    NSLog(@"endOfRetrieveInitialData");
     
     // show all
     [self allFriendsSwitchValueDidChanged:mapViewController.allFriendsSwitch];

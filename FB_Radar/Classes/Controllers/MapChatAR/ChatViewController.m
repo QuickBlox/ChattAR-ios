@@ -657,15 +657,13 @@
     // add reply arrow
     [replyArrow setFrame:CGRectMake(72, 24, 11, 14)];
     [cell.contentView bringSubviewToFront:replyArrow];
-    
-    // set fb user id
-    cell.tag = [indexPath row];
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.tag = [indexPath row];
     [delegate performSelector:@selector(touchOnMarker:) withObject:cell];
 }
 
