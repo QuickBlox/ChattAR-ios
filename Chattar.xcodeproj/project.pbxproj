@@ -1334,8 +1334,8 @@
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "3BEEF54F-EEAE-4EBC-9A5B-9E615E13AFC5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3BEEF54F-EEAE-4EBC-9A5B-9E615E13AFC5";
+				PROVISIONING_PROFILE = "66D82A49-B9E3-4537-9262-A70017B772D8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "66D82A49-B9E3-4537-9262-A70017B772D8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1343,8 +1343,8 @@
 		636735FC1552CF590061BF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals\"",
@@ -1361,8 +1361,8 @@
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "385E8FD6-E71F-438D-A73C-C4CE183F65B3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "385E8FD6-E71F-438D-A73C-C4CE183F65B3";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

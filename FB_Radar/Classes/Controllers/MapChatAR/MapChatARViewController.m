@@ -167,6 +167,9 @@
         
         // get checkins for all friends
         numberOfCheckinsRetrieved = ceil([[DataManager shared].myFriends count]/fmaxRequestsInBatch);
+        
+        NSLog(@"INIT [[DataManager shared].myFriends count]=%d", [[DataManager shared].myFriends count]);
+        
         if(numberOfCheckinsRetrieved != 0){
             [[FBService shared] friendsCheckinsWithDelegate:self];
         }else{
@@ -232,8 +235,9 @@
 	searchRequest.status = YES;
     searchRequest.sortBy = GeoDataSortByKindCreatedAt;
     searchRequest.sortAsc = 1;
-    searchRequest.perPage = 15;
-    searchRequest.minCreatedAt = [NSDate dateWithTimeIntervalSinceNow:-20];
+    searchRequest.perPage = 50;
+    NSLog(@"last mesg=%@", [self lastChatMessage:YES]);
+    searchRequest.minCreatedAt = [self lastChatMessage:YES].createdAt;
 	[QBLocationService geoDataWithRequest:searchRequest delegate:self];
 	[searchRequest release];
 }
@@ -686,6 +690,8 @@
     
     // Add to Chat
     BOOL addedToCurrentChatState = NO;
+    
+    // New messages
 	if (toTop){
 		[allChatPoints insertObject:newAnnotation atIndex:0];
         if([self isAllShowed] || [friendsIds containsObject:newAnnotation.fbUserId] || 
@@ -693,6 +699,8 @@
             [chatPoints insertObject:newAnnotation atIndex:0];
             addedToCurrentChatState = YES;
         }
+        
+    // old messages
 	}else {
 		[allChatPoints insertObject:newAnnotation atIndex:[allChatPoints count]-1];
         if([self isAllShowed] || [friendsIds containsObject:newAnnotation.fbUserId] || 
@@ -977,6 +985,25 @@
     
     // start timer for check for new points
     updateTimre = [[NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewPoints:) userInfo:nil repeats:YES] retain];
+}
+
+
+#pragma mark-
+#pragma mark Helpers
+
+// Return last chat message
+- (UserAnnotation *)lastChatMessage:(BOOL)ignoreOwn{
+    if(ignoreOwn){
+        for(UserAnnotation *chatAnnotation in allChatPoints){
+            if(![chatAnnotation.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
+                return chatAnnotation;
+            }
+        }
+    }else{
+        return ((UserAnnotation *)[allChatPoints objectAtIndex:0]);
+    }
+    
+    return nil;
 }
 
 

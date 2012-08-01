@@ -386,12 +386,15 @@
         quotedMessageDate = [[UILabel alloc] init];
         quotedMessageDate.hidden = YES;
         quotedMessageDate.tag = 1111;
+        [quotedMessageDate setTextAlignment:UITextAlignmentRight];
         [quotedMessageDate setFont:[UIFont systemFontOfSize:11]];
         [quotedMessageDate setTextColor:[UIColor grayColor]];
         quotedMessageDate.numberOfLines = 1;
         [quotedMessageDate setBackgroundColor:[UIColor clearColor]];
         [cell.contentView addSubview:quotedMessageDate];
         [quotedMessageDate release];
+//        quotedMessageDate.layer.borderWidth = 1;
+//        quotedMessageDate.layer.borderColor = [[UIColor redColor] CGColor];
         
         // quoted user name
         quotedUserName = [[UILabel alloc] init];
@@ -401,9 +404,9 @@
         [quotedUserName setBackgroundColor:[UIColor clearColor]];
         [quotedUserName setTextColor:[UIColor grayColor]];
         [cell.contentView addSubview:quotedUserName];
+        [quotedUserName release];
 //        quotedUserName.layer.borderWidth = 1;
 //        quotedUserName.layer.borderColor = [[UIColor redColor] CGColor];
-        [quotedUserName release];
         
         //
         // user photo
@@ -451,19 +454,23 @@
         [userMessage setBackgroundColor:[UIColor clearColor]];
         [messageBGView addSubview:userMessage];
         [userMessage release];
+//        userMessage.layer.borderWidth = 1;
+//        userMessage.layer.borderColor = [[UIColor redColor] CGColor];
         
         
         // datetime
         datetime = [[UILabel alloc] init];
         datetime.tag = 1104;
-        [datetime setTextAlignment:UITextAlignmentCenter];
+        [datetime setTextAlignment:UITextAlignmentRight];
         datetime.numberOfLines = 1;
         [datetime setFont:[UIFont systemFontOfSize:11]];
         [datetime setBackgroundColor:[UIColor clearColor]];
         [datetime setTextColor:[UIColor grayColor]];
         [cell.contentView addSubview:datetime];
         [datetime release];
-        
+//        datetime.layer.borderWidth = 1;
+//        datetime.layer.borderColor = [[UIColor redColor] CGColor];
+//        
         // label
         userName = [[UILabel alloc] init];
         userName.tag = 1105;
@@ -471,6 +478,8 @@
         [userName setBackgroundColor:[UIColor clearColor]];
         [cell.contentView addSubview:userName];
         [userName release];
+//        userName.layer.borderWidth = 1;
+//        userName.layer.borderColor = [[UIColor redColor] CGColor];
         
         // quote BG
         quoteBG = [[CustomButtonWithQuote alloc] init];
@@ -492,6 +501,8 @@
         [quotedMessageText setBackgroundColor:[UIColor clearColor]];
         [quoteBG addSubview:quotedMessageText];
         [quotedMessageText release];
+//        quotedMessageText.layer.borderWidth = 1;
+//        quotedMessageText.layer.borderColor = [[UIColor redColor] CGColor];
         
         // add replay arroy
         replyArrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"replyArrow.png"]];
@@ -587,10 +598,10 @@
     [formatter setDateFormat:@"d MMMM HH:mm"];
     datetime.text = [formatter stringFromDate:firstDate];
     
-    [datetime setFrame:CGRectMake(messageWidth-15, 11+shift, 75, 12)];
+    [datetime setFrame:CGRectMake(messageWidth-41, 11+shift, 101, 12)];
     
     // set user name
-    [userName setFrame:CGRectMake(83, 10+shift, 200, 12)];
+    [userName setFrame:CGRectMake(83, 10+shift, 125, 12)];
     userName.text = currentAnnotation.userName;
     
     // set quote BG
@@ -621,7 +632,7 @@
     }
     
     // set date of quoted message
-    [quotedMessageDate setFrame:CGRectMake(datetime.frame.origin.x+2, quoteBG.frame.origin.y+12, 70, 12)];
+    [quotedMessageDate setFrame:CGRectMake(messageWidth-30, quoteBG.frame.origin.y+12, 90, 12)];
     
     NSTimeZone *qtz = [NSTimeZone defaultTimeZone];
     NSInteger qseconds = [qtz secondsFromGMTForDate: currentAnnotation.quotedMessageDate];
@@ -635,7 +646,7 @@
     [cell.contentView bringSubviewToFront:quotedMessageDate];
     
     // set quoted user name
-    [quotedUserName setFrame:CGRectMake(quotedUserPhoto.frame.origin.x+26, quotedUserPhoto.frame.origin.y+5, 105, 12)];
+    [quotedUserName setFrame:CGRectMake(quotedUserPhoto.frame.origin.x+26, quotedUserPhoto.frame.origin.y+5, 95, 12)];
     quotedUserName.text = currentAnnotation.quotedUserName;
     [cell.contentView bringSubviewToFront:quotedUserName];
     

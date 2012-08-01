@@ -586,7 +586,7 @@
 		
 		ARMarkerView *viewToDraw = [coordinateViews objectAtIndex:index];
 		
-        NSLog(@"viewToDraw.distance=%d", viewToDraw.distance);
+       // NSLog(@"viewToDraw.distance=%d", viewToDraw.distance);
         
 		if ([self viewportContainsView:viewToDraw forCoordinate:item] && (viewToDraw.distance < switchedDistance)) {
 			

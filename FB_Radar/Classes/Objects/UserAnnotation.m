@@ -29,4 +29,25 @@
     [super dealloc];
 }
 
+- (NSString *)description{
+    
+    NSString *desc = [NSString stringWithFormat:
+                      @"%@\
+                      \n\tuserName:%@\
+                      \n\tuserStatus:%@\
+                      \n\tfbUserId:%@\
+                      \n\tqbUserID:%u\
+                      \n\tcreatedAt:%@",
+                      
+                      [super description],
+                      userName,
+                      userStatus,
+                      fbUserId,
+                      qbUserID,
+                      createdAt];
+    
+    return desc;
+}
+
+
 @end
