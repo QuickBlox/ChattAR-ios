@@ -48,8 +48,7 @@
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
 	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
 	[self.mapView addSubview:allFriendsSwitch];
-    [allFriendsSwitch setEnabled:NO];
-	
+
 	MKCoordinateRegion region;
 	//Set Zoom level using Span
 	MKCoordinateSpan span;  

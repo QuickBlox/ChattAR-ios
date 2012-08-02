@@ -16,6 +16,7 @@
     #import <MapKit/MapKit.h> 
     #import <QuartzCore/QuartzCore.h>
     #import <CoreLocation/CoreLocation.h>
+    #import <CoreData/CoreData.h>
     #import <AudioToolbox/AudioToolbox.h>
     #import <AVFoundation/AVFoundation.h>
 

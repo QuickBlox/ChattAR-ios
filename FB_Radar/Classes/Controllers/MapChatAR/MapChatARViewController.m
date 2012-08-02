@@ -17,10 +17,18 @@
 #import "MessagesViewController.h"
 #import "WebViewController.h"
 
+#import "ChatMessage.h"
+#import "MapARPoint.h"
+#import "Checkin.h"
+
 
 @interface MapChatARViewController ()
 
 @property (nonatomic, retain) CLLocation* myCurrentLocation;
+
+- (UserAnnotation *)lastChatMessage:(BOOL)ignoreOwn;
+- (void)convertMapARArray:(NSArray*)fbUsers qbPoints:(NSArray *)qbPoints;
+- (void)convertChatArray:(NSArray*)fbUsers qbMessages:(NSArray *)qbMessages;
 
 @end
 
@@ -32,6 +40,7 @@
 @synthesize userActionSheet, allMapPoints, allCheckins, allChatPoints;
 @synthesize selectedUserAnnotation;
 @synthesize locationManager, myCurrentLocation;
+@synthesize initedFromCache;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,10 +56,19 @@
             arViewController.delegate = self;
         }
         
+        
+        // Main storage
+        allChatPoints = [[NSMutableArray alloc] init];
+        allMapPoints = [[NSMutableArray alloc] init];
+        allCheckins = [[NSMutableArray alloc] init];
+        
+        
+        // Storage based on switch World/Friends
         mapPoints = [[NSMutableArray alloc] init];
         chatPoints = [[NSMutableArray alloc] init];
 		
-		myCurrentLocation = [[CLLocation alloc] init];
+		
+        myCurrentLocation = [[CLLocation alloc] init];
         
         chatIDs = [[NSMutableArray alloc] init];
         
@@ -170,11 +188,11 @@
         
         NSLog(@"INIT [[DataManager shared].myFriends count]=%d", [[DataManager shared].myFriends count]);
         
-        if(numberOfCheckinsRetrieved != 0){
-            [[FBService shared] friendsCheckinsWithDelegate:self];
-        }else{
+//        if(numberOfCheckinsRetrieved != 0){
+//            [[FBService shared] friendsCheckinsWithDelegate:self];
+//        }else{
             ++initState;
-        }
+//        }
         
         isInitialized = YES;
         
@@ -197,6 +215,32 @@
 
 - (void)getQBGeodatas
 {
+    // get chat messages from cash
+    NSArray *cashedChatMessages = [[DataManager shared] chatMessagesFromStorage];
+    if([cashedChatMessages count] > 0){
+        for(ChatMessage *chatCashedMessage in cashedChatMessages){
+            [allChatPoints addObject:chatCashedMessage.body];
+        }
+    }
+    
+    // get map/ar points from cash
+    NSArray *cashedMapARPoints = [[DataManager shared] mapARPointsFromStorage];
+    if([cashedMapARPoints count] > 0){
+        for(ChatMessage *mapARCashedPoint in cashedMapARPoints){
+            [allMapPoints addObject:mapARCashedPoint.body];
+        }
+    }
+    
+    // If we have info from cashe - show them
+    if([allMapPoints count] > 0 || [allChatPoints count] > 0){
+        [self showWorld];
+        updateTimre = [[NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewPoints:) userInfo:nil repeats:YES] retain];
+    }else{
+        initedFromCache = YES;
+    }
+    
+    
+    
 	QBLGeoDataGetRequest *searchMapARPointsRequest = [[QBLGeoDataGetRequest alloc] init];
 	searchMapARPointsRequest.lastOnly = YES; // Only last location
 	searchMapARPointsRequest.perPage = kGetGeoDataCount; // Pins limit for each page
@@ -236,8 +280,7 @@
     searchRequest.sortBy = GeoDataSortByKindCreatedAt;
     searchRequest.sortAsc = 1;
     searchRequest.perPage = 50;
-    NSLog(@"last mesg=%@", [self lastChatMessage:YES]);
-    searchRequest.minCreatedAt = [self lastChatMessage:YES].createdAt;
+    searchRequest.minCreatedAt = ((UserAnnotation *)[self lastChatMessage:YES]).createdAt;
 	[QBLocationService geoDataWithRequest:searchRequest delegate:self];
 	[searchRequest release];
 }
@@ -304,60 +347,10 @@
 				[chatViewController.allFriendsSwitch setValue:origValue];
 			}
 			
-            NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
-            [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
             
-            // Map/AR points
-            //
-            [mapPoints removeAllObjects]; 
-            //
-			// add only friends QB points
-            NSMutableArray *friendsIdsWhoAlreadyAdded = [NSMutableArray array];
-            for(UserAnnotation *mapAnnotation in allMapPoints){
-                if([friendsIds containsObject:[mapAnnotation.fbUser objectForKey:kId]]){
-                    [mapPoints addObject:mapAnnotation];
-                    
-                    [friendsIdsWhoAlreadyAdded addObject:[mapAnnotation.fbUser objectForKey:kId]];
-                }
-            }
-            //
-			// add checkin 
-            for (UserAnnotation* checkin in allCheckins){
-                if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
-                    [mapPoints addObject:checkin];
-                    [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
-                }else{
-                    // compare datetimes - add newest
-                    NSDate *newCreateDateTime = checkin.createdAt;
-                    
-                    int index = [friendsIdsWhoAlreadyAdded indexOfObject:checkin.fbUserId];
-                    NSDate *currentCreateDateTime = ((UserAnnotation *)[mapPoints objectAtIndex:index]).createdAt;
-                    
-                    if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){ //The receiver(newCreateDateTime) is later in time than anotherDate, NSOrderedDescending
-                        [mapPoints replaceObjectAtIndex:index withObject:checkin];
-                        [friendsIdsWhoAlreadyAdded replaceObjectAtIndex:index withObject:checkin.fbUserId];
-                    }
-                }
-            }
-			
-			
-            // Chat points
-            //
-            [chatPoints removeAllObjects]; 
-            //
-			// add only friends QB points
-            for(UserAnnotation *mapAnnotation in allChatPoints){
-                if([friendsIds containsObject:[mapAnnotation.fbUser objectForKey:kId]]){
-                    [chatPoints addObject:mapAnnotation];
-                }
-            }
-			//
-			// add all checkins
-            [chatPoints addObjectsFromArray:allCheckins];
-			
-            [mapViewController pointsUpdated];
-            [arViewController pointsUpdated];
-            [chatViewController pointsUpdated];		
+            // Show Only friends
+            [self showFriends];
+            
 	}         
 	break;
             
@@ -379,56 +372,119 @@
 				[chatViewController.allFriendsSwitch setValue:origValue];
 			}
 			
-			
-            // Map/AR points
-            //
-            [mapPoints removeAllObjects]; 
-            //
-            // 1. add All from QB
-            NSMutableArray *friendsIdsWhoAlreadyAdded = [NSMutableArray array];
-            for(UserAnnotation *mapAnnotation in allMapPoints){
-                [mapPoints addObject:mapAnnotation];
-                [friendsIdsWhoAlreadyAdded addObject:mapAnnotation.fbUserId];
-            }
-            //
-			// add checkin 
-            for (UserAnnotation* checkin in allCheckins){
-                if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
-                    [mapPoints addObject:checkin];
-                    [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
-                }else{
-                    // compare datetimes - add newest
-                    NSDate *newCreateDateTime = checkin.createdAt;
-                    
-                    int index = [friendsIdsWhoAlreadyAdded indexOfObject:checkin.fbUserId];
-                    NSDate *currentCreateDateTime = ((UserAnnotation *)[mapPoints objectAtIndex:index]).createdAt;
-					
-                    if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){ //The receiver(newCreateDateTime) is later in time than anotherDate, NSOrderedDescending
-                        [mapPoints replaceObjectAtIndex:index withObject:checkin];
-                        [friendsIdsWhoAlreadyAdded replaceObjectAtIndex:index withObject:checkin.fbUserId];
-                    }
-                }
-            }
             
+            // show World
+			[self showWorld];
             
-            // Chat points
-            //
-            [chatPoints removeAllObjects];
-            //
-            // 2. add Friends from FB
-            [chatPoints addObjectsFromArray:allChatPoints];
-            //
-            // add all checkins
-            [chatPoints addObjectsFromArray:allCheckins];
-			
-            
-            
-            [mapViewController pointsUpdated];
-            [arViewController pointsUpdated];
-            [chatViewController pointsUpdated];
         }
 			break;
     }
+}
+
+- (void) showWorld{
+    // Map/AR points
+    //
+    [mapPoints removeAllObjects];
+    //
+    // 1. add All from QB
+    NSMutableArray *friendsIdsWhoAlreadyAdded = [NSMutableArray array];
+    for(UserAnnotation *mapAnnotation in allMapPoints){
+        [mapPoints addObject:mapAnnotation];
+        [friendsIdsWhoAlreadyAdded addObject:mapAnnotation.fbUserId];
+    }
+    //
+    // add checkin
+    for (UserAnnotation* checkin in allCheckins){
+        if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
+            [mapPoints addObject:checkin];
+            [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
+        }else{
+            // compare datetimes - add newest
+            NSDate *newCreateDateTime = checkin.createdAt;
+            
+            int index = [friendsIdsWhoAlreadyAdded indexOfObject:checkin.fbUserId];
+            NSDate *currentCreateDateTime = ((UserAnnotation *)[mapPoints objectAtIndex:index]).createdAt;
+            
+            if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){ //The receiver(newCreateDateTime) is later in time than anotherDate, NSOrderedDescending
+                [mapPoints replaceObjectAtIndex:index withObject:checkin];
+                [friendsIdsWhoAlreadyAdded replaceObjectAtIndex:index withObject:checkin.fbUserId];
+            }
+        }
+    }
+    
+    
+    // Chat points
+    //
+    [chatPoints removeAllObjects];
+    //
+    // 2. add Friends from FB
+    [chatPoints addObjectsFromArray:allChatPoints];
+    //
+    // add all checkins
+    [chatPoints addObjectsFromArray:allCheckins];
+    
+    
+    
+    [mapViewController pointsUpdated];
+    [arViewController pointsUpdated];
+    [chatViewController pointsUpdated];
+}
+
+- (void) showFriends{
+    NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
+    [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
+    
+    // Map/AR points
+    //
+    [mapPoints removeAllObjects];
+    //
+    // add only friends QB points
+    NSMutableArray *friendsIdsWhoAlreadyAdded = [NSMutableArray array];
+    for(UserAnnotation *mapAnnotation in allMapPoints){
+        if([friendsIds containsObject:[mapAnnotation.fbUser objectForKey:kId]]){
+            [mapPoints addObject:mapAnnotation];
+            
+            [friendsIdsWhoAlreadyAdded addObject:[mapAnnotation.fbUser objectForKey:kId]];
+        }
+    }
+    //
+    // add checkin
+    for (UserAnnotation* checkin in allCheckins){
+        if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
+            [mapPoints addObject:checkin];
+            [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
+        }else{
+            // compare datetimes - add newest
+            NSDate *newCreateDateTime = checkin.createdAt;
+            
+            int index = [friendsIdsWhoAlreadyAdded indexOfObject:checkin.fbUserId];
+            NSDate *currentCreateDateTime = ((UserAnnotation *)[mapPoints objectAtIndex:index]).createdAt;
+            
+            if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){ //The receiver(newCreateDateTime) is later in time than anotherDate, NSOrderedDescending
+                [mapPoints replaceObjectAtIndex:index withObject:checkin];
+                [friendsIdsWhoAlreadyAdded replaceObjectAtIndex:index withObject:checkin.fbUserId];
+            }
+        }
+    }
+    
+    
+    // Chat points
+    //
+    [chatPoints removeAllObjects];
+    //
+    // add only friends QB points
+    for(UserAnnotation *mapAnnotation in allChatPoints){
+        if([friendsIds containsObject:[mapAnnotation.fbUser objectForKey:kId]]){
+            [chatPoints addObject:mapAnnotation];
+        }
+    }
+    //
+    // add all checkins
+    [chatPoints addObjectsFromArray:allCheckins];
+    
+    [mapViewController pointsUpdated];
+    [arViewController pointsUpdated];
+    [chatViewController pointsUpdated];
 }
 
 - (BOOL)isAllShowed{
@@ -769,19 +825,24 @@
     }
 	
 	[newAnnotation release];
+    
+    
+    
+    // Add Map/AR, Chat point to Storage
+    // ...
+    // 
 }
 
 // convert map array of QBLGeoData objects to UserAnnotations a
-- (void)convertMapArray:(NSArray*)fbUsers;
-{
+- (void)convertMapARArray:(NSArray*)fbUsers qbPoints:(NSArray *)qbPoints{
 	
     CLLocationCoordinate2D coordinate;
     int index = 0;
     
-    NSArray *mapPointsCopy = [NSArray arrayWithArray:allMapPoints];
+    NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
     
 	// look through array for geodatas
-	for (QBLGeoData *geodata in mapPointsCopy) 
+	for (QBLGeoData *geodata in qbPoints) 
 	{	
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
@@ -812,7 +873,7 @@
         mapAnnotation.fbUser = fbUser;
         mapAnnotation.qbUserID = geodata.user.ID;
         mapAnnotation.createdAt = geodata.createdAt;
-        [allMapPoints replaceObjectAtIndex:index withObject:mapAnnotation];
+        [mapPointsMutable replaceObjectAtIndex:index withObject:mapAnnotation];
         
         // own centered
         if([[mapAnnotation.fbUser objectForKey:kId] isEqualToString:[[DataManager shared].currentFBUser objectForKey:kId]]){
@@ -830,6 +891,15 @@
         
         ++index;
 	}
+    
+    
+    // save Map/AR points
+    [allMapPoints addObjectsFromArray:mapPointsMutable];
+    //
+    // add to Storage
+    [[DataManager shared] addMapARPointsToStorage:mapPointsMutable];
+    [mapPointsMutable release];
+    
 	
     // all data was retrieved
     ++initState;
@@ -840,13 +910,14 @@
 }
 
 // convert chat array of QBLGeoData objects to UserAnnotations a
-- (void)convertChatArray:(NSArray*)fbUsers;
-{
+- (void)convertChatArray:(NSArray*)fbUsers qbMessages:(NSArray *)qbMessages{
+    
     CLLocationCoordinate2D coordinate;
     int index = 0;
-    NSArray *chatPointsCopy = [NSArray arrayWithArray:allChatPoints];
     
-    for (QBLGeoData *geodata in chatPointsCopy) 
+    NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
+    
+    for (QBLGeoData *geodata in qbMessages)
     {	
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
@@ -884,13 +955,22 @@
 
         chatAnnotation.distance  = [geodata.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
 		
-		[allChatPoints replaceObjectAtIndex:index withObject:chatAnnotation];
+		[qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
 		[chatAnnotation release];
 	
 		[chatIDs addObject:[NSString stringWithFormat:@"%d", geodata.ID]];
         
 		++index;
 	}
+    
+    
+    // save Chat messages
+    [allChatPoints addObjectsFromArray:qbMessagesMutable];
+    //
+    // add to Storage
+    [[DataManager shared] addChatMessagesToStorage:qbMessagesMutable];
+    [qbMessagesMutable release];
+
     
     // all data was retrieved
     ++initState;
@@ -904,12 +984,9 @@
 - (void)convertCheckinsArray:(NSArray *)checkins{
     
     CLLocationCoordinate2D coordinate;
-    
-    if(allCheckins == nil){
-        allCheckins = [[NSMutableArray alloc] init];
-    }
-    
+
     // Collect checkins
+    NSMutableArray *proccesedCheckins = [NSMutableArray array];
     for(NSDictionary *checkin in checkins){
         
         // get checkin's owner
@@ -968,9 +1045,16 @@
         checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
         [checkinLocation release];
         
-        [allCheckins addObject:checkinAnnotation];
+        [proccesedCheckins addObject:checkinAnnotation];
         [checkinAnnotation release];
-    }	
+    }
+    
+    
+    // save Checkins
+    [allChatPoints addObjectsFromArray:proccesedCheckins];
+    //
+    // add to Storage
+    [[DataManager shared] addCheckinsToStorage:proccesedCheckins];
 }
 
 - (void)endOfRetrieveInitialData{
@@ -985,6 +1069,10 @@
     
     
     // start timer for check for new points
+    if(updateTimre){
+        [updateTimre invalidate];
+        [updateTimre release];
+    }
     updateTimre = [[NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewPoints:) userInfo:nil repeats:YES] retain];
 }
 
@@ -1016,18 +1104,26 @@
             
         // get Users profiles
         case FBQueriesTypesUsersProfiles:{
-            NSString *ctx = (NSString *)context;
+            NSArray *contextArray = nil;
+            NSString *contextType = nil;
+            NSArray *points = nil;
+            if([context isKindOfClass:NSArray.class]){
+                contextArray = (NSArray *)context;
+                contextType = [contextArray objectAtIndex:0];
+                points = [contextArray objectAtIndex:1];
+            }
             
             // Map init
-            if([context isKindOfClass:NSString.class] && [ctx isEqualToString:mapFBUsers]){
+            if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:mapFBUsers]){
                 
-                // convertation
-                [self convertMapArray:[result.body allValues]];
+                // conversation
+                [self convertMapARArray:[result.body allValues] qbPoints:points];
                 
             // Chat init
-            }else if([context isKindOfClass:NSString.class] && [ctx isEqualToString:chatFBUsers]){
-                // convertation
-                [self convertChatArray:[result.body allValues]];
+            }else if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:chatFBUsers]){
+                
+                // conversation
+                [self convertChatArray:[result.body allValues] qbMessages:points];
                 
             // check new one
             }else{
@@ -1125,13 +1221,11 @@
             // update map
             if([((NSString *)contextInfo) isEqualToString:mapSearch]){
 				
-				// store all map points
-                [allMapPoints release];
-                allMapPoints = [geoDataSearchResult.geodata mutableCopy];
+                NSArray *newQBMapARPoints = [geoDataSearchResult.geodata mutableCopy];
                 
                 // get string of fb users ids
                 NSMutableArray *fbMapUsersIds = [[NSMutableArray alloc] init];
-                for (QBLGeoData *geodata in geoDataSearchResult.geodata){
+                for (QBLGeoData *geodata in newQBMapARPoints){
                     [fbMapUsersIds addObject:geodata.user.facebookID];
                 }
                 //
@@ -1141,10 +1235,14 @@
 					[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
 				}
 				
+                
+                NSArray *context = [NSArray arrayWithObjects:mapFBUsers, newQBMapARPoints, nil];
+                
+                
 				// get FB info for obtained QB locations
 				[[FBService shared] usersProfilesWithIds:[ids substringToIndex:[ids length]-1] 
                                                 delegate:self 
-                                                 context:mapFBUsers];
+                                                 context:context];
                 
                 [fbMapUsersIds release];
 				[ids release];
@@ -1152,13 +1250,11 @@
             // update chat
             }else if([((NSString *)contextInfo) isEqualToString:chatSearch]){
                 
-                // store all chat points
-                [allChatPoints release];
-                allChatPoints = [geoDataSearchResult.geodata mutableCopy];
+                NSArray *newQBChatMesages = geoDataSearchResult.geodata;
                 
                 // get fb users info
                 NSMutableSet *fbChatUsersIds = [[NSMutableSet alloc] init];
-                for (QBLGeoData *geodata in geoDataSearchResult.geodata){
+                for (QBLGeoData *geodata in newQBChatMesages){
                     [fbChatUsersIds addObject:geodata.user.facebookID];
                 }
                 //
@@ -1167,11 +1263,15 @@
 				{
 					[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
 				}
+                
+                
+                NSArray *context = [NSArray arrayWithObjects:chatFBUsers, newQBChatMesages, nil];
+                
 
                 // get FB info for obtained QB chat messages
 				[[FBService shared] usersProfilesWithIds:[ids substringToIndex:[ids length]-1] 
                                                 delegate:self 
-                                                 context:chatFBUsers];
+                                                 context:context];
                 [fbChatUsersIds release];
                 [ids release];
             }

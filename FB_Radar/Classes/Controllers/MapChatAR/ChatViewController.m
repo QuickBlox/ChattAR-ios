@@ -56,7 +56,6 @@
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
 	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
 	[self.view addSubview:allFriendsSwitch];
-    [allFriendsSwitch setEnabled:NO];
     
 
     // current page of geodata

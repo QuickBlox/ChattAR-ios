@@ -9,7 +9,26 @@
 #import <UIKit/UIKit.h>
 
 /** Map Annotation class */
-@interface UserAnnotation : NSObject <MKAnnotation>{
+@interface UserAnnotation : NSObject <MKAnnotation, NSCoding>{
+    NSString *userPhotoUrl;
+    NSString *userName;
+    NSString *userStatus;
+    CLLocationCoordinate2D coordinate;
+    NSDate *createdAt;
+    
+    NSDictionary *fbUser;
+    NSString *fbUserId;
+    NSUInteger geoDataID;
+    NSUInteger qbUserID;
+    
+    NSInteger distance;
+    
+    // quote
+    NSString* quotedUserFBId;
+    NSString* quotedUserPhotoURL;
+    NSString* quotedUserName;
+    NSDate* quotedMessageDate;
+    NSString* quotedMessageText;
 }
 
 @property (nonatomic, retain) NSString *userPhotoUrl;
@@ -24,7 +43,6 @@
 @property (nonatomic, assign) NSUInteger qbUserID;
 
 @property (nonatomic, assign) NSInteger distance;
-
 
 // quote
 @property (nonatomic, retain) NSString* quotedUserFBId;

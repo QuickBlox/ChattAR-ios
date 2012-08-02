@@ -190,33 +190,4 @@
 #endif
 }
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    switch (buttonIndex) {
-//        // View
-//        case 1:
-//            // show chat
-//            self.tabBarController.selectedIndex = 1;
-//            
-//            MapChatARViewController *mapChatARViewController = (MapChatARViewController *)[[[[self.tabBarController viewControllers] objectAtIndex:1] viewControllers] objectAtIndex:0];
-//            
-//            if(!mapChatARViewController.chatViewController.view.superview)
-//            {
-//                if (mapChatARViewController.segmentControl.numberOfSegments == 2)
-//                {
-//                    mapChatARViewController.segmentControl.selectedSegmentIndex = 1;
-//                }
-//                else 
-//                {
-//                    mapChatARViewController.segmentControl.selectedSegmentIndex = 2;
-//                }
-//                
-//                [mapChatARViewController showChat];
-//            }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}
-
 @end

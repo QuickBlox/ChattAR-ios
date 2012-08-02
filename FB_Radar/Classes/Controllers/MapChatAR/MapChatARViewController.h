@@ -47,6 +47,8 @@
 
 @property (nonatomic, retain) UserAnnotation *selectedUserAnnotation;
 
+@property (nonatomic, assign) BOOL initedFromCache;
+
 
 - (void)segmentValueDidChanged:(id)sender;
 - (void)showRadar;

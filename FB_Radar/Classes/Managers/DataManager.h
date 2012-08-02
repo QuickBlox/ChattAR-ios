@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DataManager : NSObject
+@interface DataManager : NSObject{
+    // Core Data
+    NSManagedObjectModel *managedObjectModel;
+    NSManagedObjectContext *managedObjectContext;
+    NSPersistentStoreCoordinator *persistentStoreCoordinator;
+}
 
+// FB access
 @property (nonatomic, retain) NSString				*accessToken;
 @property (nonatomic, retain) NSDate				*expirationDate;
 
@@ -25,6 +31,11 @@
 // messages
 @property (nonatomic, retain) NSMutableDictionary	*historyConversation;
 @property (nonatomic, retain) NSMutableArray	*historyConversationAsArray;
+
+// Core Data
+@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 + (DataManager *) shared;
 
@@ -65,5 +76,21 @@
 
 - (NSString *)originMessageFromQuote:(NSString *)quote;
 - (NSString *)messageFromQuote:(NSString *)quote;
+
+
+#pragma mark -
+#pragma mark Core Data api
+
+-(void)saveFriendsToStorage:(NSArray*)friends;
+-(NSArray *)friendsFromStorage;
+
+-(NSArray *)chatMessagesFromStorage;
+-(void)addChatMessagesToStorage:(NSArray *)chatMessages;
+
+-(NSArray *)mapARPointsFromStorage;
+-(void)addMapARPointsToStorage:(NSArray *)chatMessages;
+
+-(NSArray *)checkinsFromStorage;
+-(void)addCheckinsToStorage:(NSArray *)chatMessages;
 
 @end
