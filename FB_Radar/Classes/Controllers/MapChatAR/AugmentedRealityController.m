@@ -34,8 +34,7 @@
 @synthesize locationManager, accelerometerManager, displayView, centerCoordinate, scaleViewsBasedOnDistance, transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
 @synthesize latestHeading, viewAngle, coordinateViews;
 @synthesize captureSession;
-@synthesize delegate, allFriendsSwitch, distanceSlider, distanceLabel;
-@synthesize activityIndicator;
+@synthesize delegate, distanceSlider, distanceLabel;
 
 
 #pragma mark - 
@@ -101,17 +100,6 @@
     [displayView release];
 	
     
-    // All/Friends switch
-	allFriendsSwitch = [CustomSwitch customSwitch];
-    [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
-    [allFriendsSwitch setCenter:CGPointMake(280, 360)];
-    [allFriendsSwitch setValue:worldValue];
-    [allFriendsSwitch scaleSwitch:0.9];
-    [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
-	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
-	[self.view addSubview:allFriendsSwitch];
-	
-    
     // Distance views
 	distanceSlider = [[UISlider alloc] init];
 	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
@@ -134,7 +122,7 @@
     [distanceLabel release];
     
     // set dist
-    NSUInteger index = allFriendsSwitch.value;
+    NSUInteger index = distanceSlider.value;
     switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
 }
 
@@ -161,28 +149,14 @@
 	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
     
-	[self.view bringSubviewToFront:allFriendsSwitch];
 	[self.view bringSubviewToFront:distanceSlider];
     [self.view bringSubviewToFront:distanceLabel];
-    
-    // show activity indicator
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [activityIndicator setColor:[UIColor grayColor]];
-    activityIndicator.hidesWhenStopped = YES;
-    CGPoint center = self.view.center;
-    center.y -= 50;
-    [activityIndicator setCenter:center];
-    [self.view addSubview:activityIndicator];
-    [activityIndicator startAnimating];
 	
 	[displayView setBackgroundColor:[UIColor clearColor]];
-    //[activityIndicator release];
 }
 
 - (void)viewDidUnload{
     [super viewDidUnload];
-    [activityIndicator release];
-    self.activityIndicator = nil;
 }
 
 - (void)dealloc {
@@ -234,7 +208,7 @@
     [displayView setImage:nil];
     
     for(UIView *view in self.view.subviews){
-        if(view == activityIndicator || [view isKindOfClass:[CustomSwitch class]] || view == distanceSlider || view == distanceLabel){
+        if([view isKindOfClass:[CustomSwitch class]] || view == distanceSlider || view == distanceLabel){
 			continue;
         }
         
@@ -294,9 +268,6 @@
 			}
         }
     }
-    
-    // remove activity indicator
-    [activityIndicator performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.3];
     
     // update markers positions
     [self updateMarkersPositionsForCenterLocation:centerLocation];

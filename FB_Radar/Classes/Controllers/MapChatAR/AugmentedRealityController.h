@@ -18,8 +18,6 @@
 @private
 	NSMutableArray		*coordinates;
     
-    UIActivityIndicatorView *activityIndicator;
-    
     CGRect viewFrame;
 	int switchedDistance;
     
@@ -36,7 +34,6 @@
 @property (nonatomic, assign) double degreeRange;
 @property (nonatomic, assign) double latestHeading;
 @property (nonatomic, assign) float  viewAngle;
-@property (nonatomic, assign) UIActivityIndicatorView *activityIndicator;
 
 @property (readonly)          NSArray        *coordinates;
 @property (nonatomic, retain) NSMutableArray *coordinateViews;
@@ -50,7 +47,6 @@
 
 @property (nonatomic, assign) id delegate;
 
-@property (nonatomic, assign) CustomSwitch *allFriendsSwitch;
 @property (nonatomic, assign) UISlider* distanceSlider;
 @property (nonatomic, assign) UILabel* distanceLabel;
 

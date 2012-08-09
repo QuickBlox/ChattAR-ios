@@ -123,7 +123,6 @@ static FBService *instance = nil;
 {
     // http://developers.facebook.com/docs/reference/api/batch/
     
-    
 	NSMutableString *batchRequestBody = [[NSMutableString alloc] initWithString:@"["];
     BOOL lastSend = NO;
     int k = 1;
@@ -144,8 +143,10 @@ static FBService *instance = nil;
             NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:batchRequestBody forKey:@"batch"];
             [batchRequestBody release];
             
-            // Delegate
-            [facebook requestWithGraphPath:@"" andParams:params andHttpMethod:@"POST" andDelegate:self andFBServiceDelegate:delegate type:FBQueriesTypesFriendsGetCheckins];
+            
+            // request checkins with delay
+            [self performSelector:@selector(requestCheckins:) withObject:[NSArray arrayWithObjects:params, delegate, nil] afterDelay:0.3];
+            
             
             batchRequestBody = [[NSMutableString alloc] initWithString:@"["];
             NSDictionary *friend = [[DataManager shared].myFriends objectAtIndex:i];
@@ -198,9 +199,15 @@ static FBService *instance = nil;
         NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:batchRequestBody forKey:@"batch"];
         [batchRequestBody release];
         
-        // Delegate
-        [facebook requestWithGraphPath:@"" andParams:params andHttpMethod:@"POST" andDelegate:self andFBServiceDelegate:delegate type:FBQueriesTypesFriendsGetCheckins];
+        // request checkins with delay
+        [self performSelector:@selector(requestCheckins:) withObject:[NSArray arrayWithObjects:params, delegate, nil] afterDelay:0.3];
     }
+}
+
+- (void)requestCheckins:(NSArray *)params{
+    [facebook requestWithGraphPath:@"" andParams:[params objectAtIndex:0] andHttpMethod:@"POST" andDelegate:self andFBServiceDelegate:[params objectAtIndex:1] type:FBQueriesTypesFriendsGetCheckins];
+    
+    NSLog(@"requestCheckins");
 }
 
 

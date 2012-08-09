@@ -27,9 +27,7 @@
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) IBOutlet UITextField *messageField;
 @property (nonatomic, retain) IBOutlet UITableView *messagesTableView;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *sendMessageActivityIndicator;
-@property (nonatomic, assign) CustomSwitch *allFriendsSwitch;
 
 @property (nonatomic, retain) NSString* quoteMark;
 @property (nonatomic, retain) AsyncImageView* quotePhotoTop;

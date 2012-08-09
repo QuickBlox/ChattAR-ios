@@ -15,8 +15,6 @@
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IBOutlet MKMapView *mapView;
-@property (nonatomic, assign) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, assign) CustomSwitch *allFriendsSwitch;
 
 - (void)pointsUpdated;
 

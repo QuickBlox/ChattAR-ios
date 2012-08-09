@@ -21,18 +21,9 @@
 
 @implementation ChatViewController
 
-@synthesize messageField, messagesTableView, activityIndicator, sendMessageActivityIndicator; 
+@synthesize messageField, messagesTableView, sendMessageActivityIndicator;
 @synthesize quoteMark, quotePhotoTop;
-@synthesize delegate, allFriendsSwitch;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize delegate;
 
 - (void)viewDidLoad
 {
@@ -46,18 +37,6 @@
     // message bubble
     messageBGImage = [[[UIImage imageNamed:@"cellBodyBG.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
 
-	
-	// add All/Friends switch
-	allFriendsSwitch = [CustomSwitch customSwitch];
-    [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
-    [allFriendsSwitch setCenter:CGPointMake(280, 360)];
-    [allFriendsSwitch setValue:worldValue];
-    [allFriendsSwitch scaleSwitch:0.9];
-    [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
-	[allFriendsSwitch setBackgroundColor:[UIColor clearColor]];
-	[self.view addSubview:allFriendsSwitch];
-    
-
     // current page of geodata
     page = 1;
 	
@@ -65,7 +44,6 @@
 	isLoadingMoreMessages = NO;
     
     [messagesTableView setUserInteractionEnabled:NO];
-    [activityIndicator startAnimating];
 }
 
 - (void)removeQuote
@@ -81,7 +59,6 @@
 {
     self.messageField = nil;
     self.messagesTableView = nil;
-    self.activityIndicator = nil;
     self.sendMessageActivityIndicator = nil;
 
     [messageBGImage release];
@@ -222,8 +199,6 @@
     messagesTableView.dataSource = self;
     [messagesTableView reloadData];
     [messagesTableView setUserInteractionEnabled:YES];
-	
-    [activityIndicator stopAnimating];
     
 	isLoadingMoreMessages = NO;
 }

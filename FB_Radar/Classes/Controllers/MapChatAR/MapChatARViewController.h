@@ -21,12 +21,14 @@
     NSMutableArray *chatIDs;
     NSTimer *updateTimre;
     
-    short initState; // 3 if all data(map/chat/checkins) was retrieved
+    short initState; // 2 if all data(map/chat) was retrieved
     short numberOfCheckinsRetrieved;
     
     BOOL isInitialized;
 	
 	CLLocationManager *locationManager;
+    
+    UIActivityIndicatorView *activityIndicator;
 }
 @property (nonatomic, retain) CLLocationManager *locationManager;  
 
@@ -48,6 +50,8 @@
 @property (nonatomic, retain) UserAnnotation *selectedUserAnnotation;
 
 @property (nonatomic, assign) BOOL initedFromCache;
+
+@property (nonatomic, assign) CustomSwitch *allFriendsSwitch;
 
 
 - (void)segmentValueDidChanged:(id)sender;
