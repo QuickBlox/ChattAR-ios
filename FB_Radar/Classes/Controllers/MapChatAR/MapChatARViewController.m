@@ -550,8 +550,10 @@
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable];
     [chatIDs addObject:[NSString stringWithFormat:@"%d", geoData.ID]];
     
+    
+    // Add to Map
+    [self addNewPointToMapAR:newAnnotation];
 	
-    	
 	[newAnnotation release];
     
     
@@ -1024,6 +1026,9 @@
         // show Message on Chat
         [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:YES];
     }
+    
+    // refresh chat
+    [chatViewController refresh];
     
     
     // save Checkins

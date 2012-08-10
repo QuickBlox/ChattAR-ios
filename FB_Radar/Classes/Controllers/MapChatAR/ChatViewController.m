@@ -204,10 +204,6 @@
 	isLoadingMoreMessages = NO;
 }
 
-- (void)addPoints:(NSArray *)mapPoints{
-    
-}
-
 - (void)getMoreMessages
 {
 	++page;
@@ -759,13 +755,7 @@
                                                                             withGeoData:geodata addToTop:NO withReloadTable:NO];
         }
         
-        
-        // sort chat cells in order of creation date
-        NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey: @"createdAt" ascending: NO] autorelease];
-        NSArray* sortedArray = [((MapChatARViewController *)delegate).chatPoints sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-        [((MapChatARViewController *)delegate).chatPoints removeAllObjects];
-        ((MapChatARViewController *)delegate).chatPoints = [sortedArray mutableCopy];
-        
+        // refresh table
         [self refresh];
     }
 }
