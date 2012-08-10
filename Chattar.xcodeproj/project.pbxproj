@@ -187,11 +187,11 @@
 		FAC31286158B5CE800A1ABE4 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC31284158B5CE800A1ABE4 /* camera.png */; };
 		FAC31287158B5CE800A1ABE4 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC31285158B5CE800A1ABE4 /* camera@2x.png */; };
 		FAC3128B158B8C0000A1ABE4 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC3128A158B8C0000A1ABE4 /* Conversation.m */; };
+		FAC6B84B15D5382900F3B10F /* MapARPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B84A15D5382900F3B10F /* MapARPoint.m */; };
+		FAC6B84E15D5382900F3B10F /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B84D15D5382900F3B10F /* ChatMessage.m */; };
 		FAE4E240158B29C400BBB219 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4E23F158B29C400BBB219 /* Quickblox.framework */; };
-		FAEA2B0215CAC328004E2B56 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEA2B0115CAC328004E2B56 /* ChatMessage.m */; };
 		FAEA2B0815CAC32A004E2B56 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEA2B0715CAC329004E2B56 /* Friend.m */; };
 		FAEA2B1115CAC385004E2B56 /* Checkin.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEA2B1015CAC385004E2B56 /* Checkin.m */; };
-		FAEF57B215CAEA9600614DBF /* MapARPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEF57B115CAEA9600614DBF /* MapARPoint.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -464,16 +464,16 @@
 		FAC31285158B5CE800A1ABE4 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
 		FAC31289158B8C0000A1ABE4 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		FAC3128A158B8C0000A1ABE4 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
+		FAC6B84915D5382900F3B10F /* MapARPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapARPoint.h; sourceTree = "<group>"; };
+		FAC6B84A15D5382900F3B10F /* MapARPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapARPoint.m; sourceTree = "<group>"; };
+		FAC6B84C15D5382900F3B10F /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		FAC6B84D15D5382900F3B10F /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		FAE4E23F158B29C400BBB219 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Externals/Quickblox.framework; sourceTree = "<group>"; };
-		FAEA2B0015CAC328004E2B56 /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
-		FAEA2B0115CAC328004E2B56 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		FAEA2B0615CAC329004E2B56 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		FAEA2B0715CAC329004E2B56 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
 		FAEA2B0F15CAC385004E2B56 /* Checkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkin.h; sourceTree = "<group>"; };
 		FAEA2B1015CAC385004E2B56 /* Checkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Checkin.m; sourceTree = "<group>"; };
 		FAEF57AF15CADF0100614DBF /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
-		FAEF57B015CAEA9600614DBF /* MapARPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapARPoint.h; sourceTree = "<group>"; };
-		FAEF57B115CAEA9600614DBF /* MapARPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapARPoint.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1064,12 +1064,12 @@
 			children = (
 				FAEA2B0615CAC329004E2B56 /* Friend.h */,
 				FAEA2B0715CAC329004E2B56 /* Friend.m */,
-				FAEA2B0015CAC328004E2B56 /* ChatMessage.h */,
-				FAEA2B0115CAC328004E2B56 /* ChatMessage.m */,
 				FAEA2B0F15CAC385004E2B56 /* Checkin.h */,
 				FAEA2B1015CAC385004E2B56 /* Checkin.m */,
-				FAEF57B015CAEA9600614DBF /* MapARPoint.h */,
-				FAEF57B115CAEA9600614DBF /* MapARPoint.m */,
+				FAC6B84C15D5382900F3B10F /* ChatMessage.h */,
+				FAC6B84D15D5382900F3B10F /* ChatMessage.m */,
+				FAC6B84915D5382900F3B10F /* MapARPoint.h */,
+				FAC6B84A15D5382900F3B10F /* MapARPoint.m */,
 			);
 			name = Models;
 			path = Classes/Models;
@@ -1296,10 +1296,10 @@
 				FA0BBF1115AD6114005F4D63 /* ViewTouch.m in Sources */,
 				FA99E78715C956BB0031F54F /* ChattARModel.xcdatamodeld in Sources */,
 				FA99E78A15C95BFB0031F54F /* CustomButtonWithQuote.m in Sources */,
-				FAEA2B0215CAC328004E2B56 /* ChatMessage.m in Sources */,
 				FAEA2B0815CAC32A004E2B56 /* Friend.m in Sources */,
 				FAEA2B1115CAC385004E2B56 /* Checkin.m in Sources */,
-				FAEF57B215CAEA9600614DBF /* MapARPoint.m in Sources */,
+				FAC6B84B15D5382900F3B10F /* MapARPoint.m in Sources */,
+				FAC6B84E15D5382900F3B10F /* ChatMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

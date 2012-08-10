@@ -9,6 +9,9 @@
 #import "DataManager.h"
 #import "UserAnnotation.h"
 
+#import "MapARPoint.h"
+#import "ChatMessage.h"
+
 #define kFavoritiesFriends [NSString stringWithFormat:@"kFavoritiesFriends_%@", [DataManager shared].currentFBUserId]
 #define kFavoritiesFriendsIds [NSString stringWithFormat:@"kFavoritiesFriendsIds_%@", [DataManager shared].currentFBUserId]
 
@@ -354,50 +357,70 @@ static DataManager *instance = nil;
 #pragma mark -
 #pragma mark Core Data api
 
-/**
- Friend:save,get
- */
--(NSArray *)friendsFromStorage{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Friend"
-                                                         inManagedObjectContext:[self managedObjectContext]];
-    
-    [fetchRequest setEntity:entityDescription];
-    
-    NSError *error;
-    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    [fetchRequest release];
-    return results;
-}
-//
--(void)saveFriendsToStorage:(NSArray*)friends{
-    
-    for(NSDictionary *friend in friends){
-    
-        NSManagedObject *friendObject = [NSEntityDescription insertNewObjectForEntityForName:@"Friend"
-                                                                    inManagedObjectContext:[self managedObjectContext]];
-        [friendObject setValue:friend forKey:@"body"];
-        
-        NSError *error = nil;
-        [[self managedObjectContext] save:&error];
-    }
-}
+///**
+// Friend:save,get
+// */
+//-(NSArray *)friendsFromStorage{
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Friend"
+//                                                         inManagedObjectContext:[self managedObjectContext]];
+//    
+//    [fetchRequest setEntity:entityDescription];
+//    
+//    NSError *error;
+//    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+//    [fetchRequest release];
+//    return results;
+//}
+////
+//-(void)saveFriendsToStorage:(NSArray*)friends{
+//    
+//    for(NSDictionary *friend in friends){
+//    
+//        NSManagedObject *friendObject = [NSEntityDescription insertNewObjectForEntityForName:@"Friend"
+//                                                                    inManagedObjectContext:[self managedObjectContext]];
+//        [friendObject setValue:friend forKey:@"body"];
+//        
+//        NSError *error = nil;
+//        [[self managedObjectContext] save:&error];
+//    }
+//}
 
 
 /**
  Chat messages: save, get
  */
--(void)addChatMessagesToStorage:(NSArray *)chatMessages{
+-(void)addChatMessagesToStorage:(NSArray *)messages{
     
-    for(UserAnnotation *message in chatMessages){
-        
-        NSManagedObject *messageObject = [NSEntityDescription insertNewObjectForEntityForName:@"ChatMessage"
-                                                                      inManagedObjectContext:[self managedObjectContext]];
-        [messageObject setValue:message forKey:@"body"];
-        
-        NSError *error = nil;
-        [[self managedObjectContext] save:&error];
+    for(UserAnnotation *message in messages){
+        [self addChatMessageToStorage:message];
     }
+}
+//
+-(void)addChatMessageToStorage:(UserAnnotation *)message{
+    
+    // Check if exist
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatMessage"
+											  inManagedObjectContext:[self managedObjectContext]];
+    [fetchRequest setEntity:entity];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",message.geoDataID]];
+	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+    [fetchRequest release];
+    
+    if(nil != results && [results count] > 0){
+        return;
+    }
+    
+    
+    // Insert
+    ChatMessage *messageObject = (ChatMessage *)[NSEntityDescription insertNewObjectForEntityForName:@"ChatMessage"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    messageObject.body = message;
+    messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
+    
+    NSError *error = nil;
+    [[self managedObjectContext] save:&error];
 }
 //
 -(NSArray *)chatMessagesFromStorage{
@@ -406,6 +429,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
+//    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
@@ -417,16 +441,36 @@ static DataManager *instance = nil;
 /**
  Map messages: save, get
  */
--(void)addMapARPointsToStorage:(NSArray *)chatMessages{
-    for(UserAnnotation *message in chatMessages){
-        
-        NSManagedObject *messageObject = [NSEntityDescription insertNewObjectForEntityForName:@"MapARPoint"
-                                                                       inManagedObjectContext:[self managedObjectContext]];
-        [messageObject setValue:message forKey:@"body"];
-        
-        NSError *error = nil;
-        [[self managedObjectContext] save:&error];
+-(void)addMapARPointsToStorage:(NSArray *)points{
+    for(UserAnnotation *point in points){
+        [self addMapARPointToStorage:point];
     }
+}
+//
+-(void)addMapARPointToStorage:(UserAnnotation *)point{
+    // Check if exist
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MapARPoint"
+											  inManagedObjectContext:[self managedObjectContext]];
+    [fetchRequest setEntity:entity];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",point.geoDataID]];
+	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+    [fetchRequest release];
+    
+    if(nil != results && [results count] > 0){
+        return;
+    }
+    
+    
+    // Insert
+    
+    MapARPoint *pointObject = (MapARPoint *)[NSEntityDescription insertNewObjectForEntityForName:@"MapARPoint"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    pointObject.body = point;
+    pointObject.geoDataID = [NSNumber numberWithInt:point.geoDataID];
+    
+    NSError *error = nil;
+    [[self managedObjectContext] save:&error];
 }
 //
 -(NSArray *)mapARPointsFromStorage{
@@ -435,6 +479,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
+    //    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
@@ -445,17 +490,21 @@ static DataManager *instance = nil;
 /**
  Checkins: save, get
  */
--(void)addCheckinsToStorage:(NSArray *)chatMessages{
-    for(UserAnnotation *message in chatMessages){
-        
-        NSManagedObject *messageObject = [NSEntityDescription insertNewObjectForEntityForName:@"Checkin"
-                                                                       inManagedObjectContext:[self managedObjectContext]];
-        [messageObject setValue:message forKey:@"body"];
-        [messageObject setValue:currentFBUserId forKey:@"accountFBUserID"];
-        
-        NSError *error = nil;
-        [[self managedObjectContext] save:&error];
+-(void)addCheckinsToStorage:(NSArray *)checkins{
+    for(UserAnnotation *message in checkins){
+        [self addCheckinToStorage:message];
     }
+}
+//
+-(void)addCheckinToStorage:(id)checkin{
+    NSManagedObject *messageObject = [NSEntityDescription insertNewObjectForEntityForName:@"Checkin"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+    [messageObject setValue:checkin forKey:@"body"];
+    [messageObject setValue:currentFBUserId forKey:@"accountFBUserID"];
+    
+    NSError *error = nil;
+    [[self managedObjectContext] save:&error];
+
 }
 //
 -(NSArray *)checkinsFromStorage{
@@ -464,6 +513,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
+    //    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];

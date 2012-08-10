@@ -18,19 +18,15 @@
 
 @interface MapChatARViewController : UIViewController <ActionStatusDelegate, FBServiceResultDelegate, UIActionSheetDelegate, FBRequestDelegate, CLLocationManagerDelegate>{
     
-    NSMutableArray *chatIDs;
     NSTimer *updateTimre;
     
     short initState; // 2 if all data(map/chat) was retrieved
     short numberOfCheckinsRetrieved;
     
     BOOL isInitialized;
-	
-	CLLocationManager *locationManager;
     
     UIActivityIndicatorView *activityIndicator;
 }
-@property (nonatomic, retain) CLLocationManager *locationManager;  
 
 @property (nonatomic, assign) NSMutableArray* allMapPoints;
 @property (nonatomic, assign) NSMutableArray* allChatPoints;
@@ -38,6 +34,13 @@
 
 @property (nonatomic, assign) NSMutableArray *mapPoints;
 @property (nonatomic, assign) NSMutableArray *chatPoints;
+
+@property (nonatomic, assign) NSMutableArray *chatMessagesIDs;
+@property (nonatomic, assign) NSMutableArray *mapPointsIDs;
+
+
+
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @property (nonatomic, retain) UIActionSheet *userActionSheet;
 

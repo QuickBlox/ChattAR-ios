@@ -37,6 +37,7 @@
 @synthesize mapViewController, chatViewController, arViewController;
 @synthesize segmentControl;
 @synthesize mapPoints, chatPoints;
+@synthesize chatMessagesIDs, mapPointsIDs;
 @synthesize userActionSheet, allMapPoints, allCheckins, allChatPoints;
 @synthesize selectedUserAnnotation;
 @synthesize locationManager, myCurrentLocation;
@@ -72,10 +73,15 @@
         mapPoints = [[NSMutableArray alloc] init];
         chatPoints = [[NSMutableArray alloc] init];
 		
-		
-        myCurrentLocation = [[CLLocation alloc] init];
         
-        chatIDs = [[NSMutableArray alloc] init];
+        // IDs
+        chatMessagesIDs = [[NSMutableArray alloc] init];
+        mapPointsIDs = [[NSMutableArray alloc] init];
+        
+        
+        
+        
+        myCurrentLocation = [[CLLocation alloc] init];
         
 		self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.delegate = self; // send loc updates to myself
@@ -106,8 +112,10 @@
     [mapPoints release];
     [chatPoints release];
     
+    [chatMessagesIDs release];
+    [mapPointsIDs release];
+    
     [userActionSheet release];
-    [chatIDs release];
 	
 	[locationManager release];
 	[myCurrentLocation release];
@@ -164,14 +172,6 @@
     if(!isInitialized){
         
         initState = 0;
-        
-        // show progress indicator
-        activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        activityIndicator.center = self.view.center;
-        activityIndicator.tag = 1101;
-        [self.view addSubview:activityIndicator];
-        [activityIndicator startAnimating];
-        
         
         // show ar/map
         [segmentControl setSelectedSegmentIndex:0];
@@ -460,35 +460,61 @@
 - (void)getQBGeodatas
 {
     // get chat messages from cash
-//    NSArray *cashedChatMessages = [[DataManager shared] chatMessagesFromStorage];
-//    if([cashedChatMessages count] > 0){
-//        for(ChatMessage *chatCashedMessage in cashedChatMessages){
-//            [allChatPoints addObject:chatCashedMessage.body];
-//        }
-//    }
-//    
-//    // get map/ar points from cash
-//    NSArray *cashedMapARPoints = [[DataManager shared] mapARPointsFromStorage];
-//    if([cashedMapARPoints count] > 0){
-//        for(ChatMessage *mapARCashedPoint in cashedMapARPoints){
-//            [allMapPoints addObject:mapARCashedPoint.body];
-//        }
-//    }
+    NSDate *lastMessageDate = nil;
+    NSArray *cashedChatMessages = [[DataManager shared] chatMessagesFromStorage];
+    NSLog(@"cashedChatMessages =%d", [cashedChatMessages count]);
+    if([cashedChatMessages count] > 0){
+        for(ChatMessage *chatCashedMessage in cashedChatMessages){
+            if(lastMessageDate == nil){
+                lastMessageDate = ((UserAnnotation *)chatCashedMessage.body).createdAt;
+            }
+            [allChatPoints addObject:chatCashedMessage.body];
+            [chatMessagesIDs addObject:[NSString stringWithFormat:@"%d", ((UserAnnotation *)chatCashedMessage.body).geoDataID]];
+             NSLog(@"CreatedAT=%@", ((UserAnnotation *)chatCashedMessage.body).createdAt);
+            NSLog(@"msg=%@", ((UserAnnotation *)chatCashedMessage.body).userStatus);
+        }
+    }
+    
+    // get map/ar points from cash
+    NSDate *lastPointDate = nil;
+    NSArray *cashedMapARPoints = [[DataManager shared] mapARPointsFromStorage];
+    if([cashedMapARPoints count] > 0){
+        for(ChatMessage *mapARCashedPoint in cashedMapARPoints){
+            if(lastPointDate == nil){
+                lastPointDate = ((UserAnnotation *)mapARCashedPoint.body).createdAt;
+            }
+            [allMapPoints addObject:mapARCashedPoint.body];
+            [mapPointsIDs addObject:[NSString stringWithFormat:@"%d", ((UserAnnotation *)mapARCashedPoint.body).geoDataID]];
+        }
+    }
     
     // If we have info from cashe - show them
     if([allMapPoints count] > 0 || [allChatPoints count] > 0){
         [self showWorld];
         updateTimre = [[NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkForNewPoints:) userInfo:nil repeats:YES] retain];
-    }else{
+        
         initedFromCache = YES;
+        
+    }else{
+        
+        // show progress indicator
+        activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        activityIndicator.center = self.view.center;
+        activityIndicator.tag = 1101;
+        [self.view addSubview:activityIndicator];
+        [activityIndicator startAnimating];
+        
+
     }
     
-    
-    
+
 	QBLGeoDataGetRequest *searchMapARPointsRequest = [[QBLGeoDataGetRequest alloc] init];
 	searchMapARPointsRequest.lastOnly = YES; // Only last location
 	searchMapARPointsRequest.perPage = kGetGeoDataCount; // Pins limit for each page
 	searchMapARPointsRequest.sortBy = GeoDataSortByKindCreatedAt;
+    if(lastPointDate){
+        searchMapARPointsRequest.minCreatedAt = lastPointDate;
+    }
 	[QBLocationService geoDataWithRequest:searchMapARPointsRequest delegate:self context:mapSearch];
 	[searchMapARPointsRequest release];
 	
@@ -497,6 +523,9 @@
 	searchChatMessagesRequest.perPage = kGetGeoDataCount; // Pins limit for each page
 	searchChatMessagesRequest.status = YES;
 	searchChatMessagesRequest.sortBy = GeoDataSortByKindCreatedAt;
+    if(lastMessageDate){
+        searchChatMessagesRequest.minCreatedAt = lastMessageDate;
+    }
 	[QBLocationService geoDataWithRequest:searchChatMessagesRequest delegate:self context:chatSearch];
 	[searchChatMessagesRequest release];
 }
@@ -548,7 +577,6 @@
     
     // Add to Chat
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable];
-    [chatIDs addObject:[NSString stringWithFormat:@"%d", geoData.ID]];
     
     
     // Add to Map
@@ -564,6 +592,7 @@
 }
 
 - (void)addNewPointToMapAR:(UserAnnotation *)point{
+    
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
     // Check for Map
@@ -601,7 +630,10 @@
     // new -> add to Map, AR
     if(!isExistPoint){
         BOOL addedToCurrentMapState = NO;
+        
         [allMapPoints addObject:point];
+        [mapPointsIDs addObject:[NSString stringWithFormat:@"%d", point.geoDataID]];
+        
         if([self isAllShowed] || [friendsIds containsObject:point.fbUserId]){
             [mapPoints addObject:point];
             addedToCurrentMapState = YES;
@@ -612,9 +644,16 @@
             [arViewController addPoint:point];
         }
     }
+    
+    // Save to cache
+    //
+    [[DataManager shared] addMapARPointToStorage:point];
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
+    
+    [chatMessagesIDs addObject:[NSString stringWithFormat:@"%d", message.geoDataID]];
+    
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
     // Add to Chat
@@ -645,6 +684,11 @@
         [chatViewController.messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationFade];
         [newRows release];
     }
+    
+    
+    // Save to cache
+    //
+    [[DataManager shared] addChatMessageToStorage:message];
 }
 
 - (void)endOfRetrieveInitialData{
@@ -930,16 +974,12 @@
 		[qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
 		[chatAnnotation release];
         
-		[chatIDs addObject:[NSString stringWithFormat:@"%d", geodata.ID]];
-        
 		++index;
         
         // show Message on Chat
         [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:YES];
 	}
-    
-    // add to Storage
-    [[DataManager shared] addChatMessagesToStorage:qbMessagesMutable];
+
     [qbMessagesMutable release];
     
     
@@ -1092,7 +1132,8 @@
     [mapPoints removeAllObjects];
     [chatPoints removeAllObjects];
     
-    [chatIDs removeAllObjects];
+    [chatMessagesIDs removeAllObjects];
+    [mapPointsIDs removeAllObjects];
     
     [updateTimre invalidate];
     [updateTimre release];
@@ -1225,8 +1266,16 @@
                 // get string of fb users ids
                 NSMutableArray *fbMapUsersIds = [[NSMutableArray alloc] init];
                 for (QBLGeoData *geodata in newQBMapARPoints){
+                    // skip if already exist
+                    if([mapPointsIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
+                        continue;
+                    }
                     [fbMapUsersIds addObject:geodata.user.facebookID];
                 }
+                if([fbMapUsersIds count] == 0){
+                    return;
+                }
+                
                 //
 				NSMutableString* ids = [[NSMutableString alloc] init];
 				for (NSString* userID in fbMapUsersIds)
@@ -1254,8 +1303,16 @@
                 // get fb users info
                 NSMutableSet *fbChatUsersIds = [[NSMutableSet alloc] init];
                 for (QBLGeoData *geodata in newQBChatMesages){
+                    // skip if already exist
+                    if([chatMessagesIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
+                        continue;
+                    }
                     [fbChatUsersIds addObject:geodata.user.facebookID];
                 }
+                if([fbChatUsersIds count] == 0){
+                    return;
+                }
+                
                 //
                 NSMutableString* ids = [[NSMutableString alloc] init];
 				for (NSString* userID in fbChatUsersIds)
@@ -1295,7 +1352,7 @@
             NSMutableArray *geodataProcessed = [NSMutableArray array];
             for (QBLGeoData *geodata in geoDataSearchResult.geodata){
                 // skip if already exist
-                if([chatIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
+                if([chatMessagesIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
                     continue;
                 }
                 

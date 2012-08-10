@@ -2,7 +2,7 @@
 //  MapARPoint.m
 //  Chattar
 //
-//  Created by IgorKh on 8/2/12.
+//  Created by IgorKh on 8/10/12.
 //
 //
 
@@ -12,5 +12,6 @@
 @implementation MapARPoint
 
 @dynamic body;
+@dynamic geoDataID;
 
 @end

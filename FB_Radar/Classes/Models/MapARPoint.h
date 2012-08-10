@@ -2,7 +2,7 @@
 //  MapARPoint.h
 //  Chattar
 //
-//  Created by IgorKh on 8/2/12.
+//  Created by IgorKh on 8/10/12.
 //
 //
 
@@ -13,5 +13,6 @@
 @interface MapARPoint : NSManagedObject
 
 @property (nonatomic, retain) id body;
+@property (nonatomic, retain) NSNumber * geoDataID;
 
 @end
