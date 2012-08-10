@@ -17,6 +17,9 @@
 
 @interface ChatViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, ActionStatusDelegate, UIScrollViewDelegate, FBServiceResultDelegate>{
     UIImage *messageBGImage;
+    UIImage *messageBGImage2;
+    UIImage *distanceImage;
+    UIImage *distanceImage2;
     
     ViewTouch *backView;
 	int page;

@@ -13,16 +13,18 @@
 /** Map Pin View class */
 @interface MapMarkerView : MKAnnotationView{
     UIView *container;
+    UIImage *nameImage;
+    UIImage *nameImage2;
 }
 @property (nonatomic, assign) AsyncImageView *userPhotoView;
 @property (nonatomic, assign) UILabel *userName;
 @property (nonatomic, assign) UILabel *userStatus;
 @property (nonatomic, retain) UserAnnotation *annotation;
+@property (nonatomic, retain) UIImageView *userNameBG;
 
 @property (assign, nonatomic) id target;
 @property SEL action;
 
 - (void)updateAnnotation:(UserAnnotation *)_annotation;
-- (void) updateContainer:(UserAnnotation *)_annotation;
 
 @end

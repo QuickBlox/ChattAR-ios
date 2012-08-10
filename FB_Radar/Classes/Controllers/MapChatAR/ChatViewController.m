@@ -44,8 +44,11 @@
     [paddingView release];
     
     // message bubble
-    messageBGImage = [[[UIImage imageNamed:@"cellBodyBG.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
-
+    messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    messageBGImage2 = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    
+    distanceImage = [[UIImage imageNamed:@"kmBG2.png"] retain];
+    distanceImage2 = [[UIImage imageNamed:@"kmBG.png"] retain];
 	
 	// add All/Friends switch
 	allFriendsSwitch = [CustomSwitch customSwitch];
@@ -340,7 +343,6 @@
     [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
     
     UserAnnotation *currentAnnotation = [[(MapChatARViewController *)delegate chatPoints] objectAtIndex:[indexPath row]];
-    UserAnnotation *ann = currentAnnotation;
     
     if ([currentAnnotation isKindOfClass:[UITableViewCell class]]){
 		return (UITableViewCell*)currentAnnotation;
@@ -422,15 +424,14 @@
         [userPhoto release];
         
         // distance BG
-        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
         {
-            messageBGImage = [[UIImage imageNamed:@"kmBG2.png"] retain]; 
+            distanceView = [[UIImageView alloc] initWithImage:distanceImage];
         }
         else
         {
-            messageBGImage = [[UIImage imageNamed:@"kmBG.png"] retain];
+            distanceView = [[UIImageView alloc] initWithImage:distanceImage2];
         }
-        distanceView = [[UIImageView alloc] initWithImage:messageBGImage];
         distanceView.layer.masksToBounds = YES;
         distanceView.userInteractionEnabled = YES;
         distanceView.tag = 1106;
@@ -451,18 +452,19 @@
         // user message
         //
         // background
-        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
-        {
-            messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain]; 
-        }
-        else
-        {
-            messageBGImage = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
-        }
         
         messageBGView = [[UIImageView alloc] init];
         messageBGView.tag = 1102;
-        [messageBGView setImage:messageBGImage];
+        
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
+        {
+             [messageBGView setImage:messageBGImage];
+        }
+        else
+        {
+            [messageBGView setImage:messageBGImage2];
+        }
+        
          messageBGView.userInteractionEnabled =YES;
         [cell.contentView addSubview:messageBGView];
         [messageBGView release];
@@ -548,20 +550,15 @@
         quotedUserName = (UILabel*)[cell.contentView viewWithTag:1112];
         replyArrow = (UIImageView*)[cell.contentView viewWithTag:1113];
         
-        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
         {
-            
-            messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
             [messageBGView setImage:messageBGImage];
-            messageBGImage = [[UIImage imageNamed:@"kmBG2.png"] retain];
-            [distanceView setImage:messageBGImage];
+            [distanceView setImage:distanceImage];
         }
         else
         {
-            messageBGImage = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
-            [messageBGView setImage:messageBGImage];
-            messageBGImage = [[UIImage imageNamed:@"kmBG.png"] retain];
-            [distanceView setImage:messageBGImage];
+            [messageBGView setImage:messageBGImage2];
+            [distanceView setImage:distanceImage2];
         }
     }
     
