@@ -66,8 +66,12 @@
 - (void)updateLocations;
 - (void)updateMarkersPositionsForCenterLocation:(CLLocation *)_centerLocation;
 
-- (void)pointsUpdated;
-- (void)addUserAnnotation:(UserAnnotation *)userAnnotation;
+// points
+- (void)refreshWithNewPoints:(NSArray *)mapPoints;
+- (void)addPoints:(NSArray *)mapPoints;
+- (void)addPoint:(UserAnnotation *)point;
+
+
 - (UIView *)viewForAnnotation:(UserAnnotation *)annotation;
 - (UIView *)viewForExistAnnotation:(UserAnnotation *)userAnnotation;
 

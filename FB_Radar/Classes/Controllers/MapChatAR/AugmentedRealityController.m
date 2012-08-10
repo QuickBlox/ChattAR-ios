@@ -240,31 +240,33 @@
 		self.centerCoordinate = [ARCoordinate coordinateWithRadialDistance:1.0 inclination:0 azimuth:0];
 }
 
-- (void)pointsUpdated{
-	// clear view
-	for (UIView* view in displayView.subviews)
-	{
-		if ([view isKindOfClass:[CustomSwitch class]] || view == distanceLabel || view == distanceSlider)
-		{
+- (void)refreshWithNewPoints:(NSArray *)mapPoints{
+	// remove old
+	for (UIView* view in displayView.subviews){
+		if ([view isKindOfClass:[CustomSwitch class]] || view == distanceLabel || view == distanceSlider){
 			continue;
 		}
         
 		[view removeFromSuperview];
 	}
-	
 	[coordinates removeAllObjects];
 	[coordinateViews removeAllObjects];
 	
-    // add markers
     
-    NSArray *points = [((MapChatARViewController *)delegate) mapPoints];
-    
-    if([points count] > 0){
-        for(UserAnnotation *userAnnotation in points ){
+    // add new
+    [self addPoints:mapPoints];
+}
+
+/*
+ Add users' annotations to AR environment
+ */
+- (void)addPoints:(NSArray *)mapPoints{
+    // add new
+    if([mapPoints count] > 0){
+        for(UserAnnotation *userAnnotation in mapPoints ){
             // add user annotation
-			if ([userAnnotation isKindOfClass:[UserAnnotation class]])
-			{
-				[self addUserAnnotation:userAnnotation];
+			if ([userAnnotation isKindOfClass:[UserAnnotation class]]){
+				[self addPoint:userAnnotation];
 			}
         }
     }
@@ -274,9 +276,9 @@
 }
 
 /*
- Add user annotation to AR environment
+ Add user's annotation to AR environment
  */
-- (void)addUserAnnotation:(UserAnnotation *)userAnnotation{
+- (void)addPoint:(UserAnnotation *)userAnnotation{
     
     // skip me
     if([userAnnotation.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){

@@ -49,18 +49,25 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)pointsUpdated{
+- (void)refreshWithNewPoints:(NSArray *)mapPoints{
+    // remove old
 	[mapView removeAnnotations:mapView.annotations];
 	
-	for (UserAnnotation* ann in [((MapChatARViewController *)delegate) mapPoints])
-	{
-		if ([ann isKindOfClass:[UserAnnotation class]])
-		{
+    // add new
+	[self addPoints:mapPoints];
+}
+
+- (void)addPoints:(NSArray *)mapPoints{
+    // add new
+	for (UserAnnotation* ann in mapPoints){
+		if ([ann isKindOfClass:[UserAnnotation class]]){
 			[mapView addAnnotation:ann];
 		}
 	}
-    
-    [mapView setUserInteractionEnabled:YES];
+}
+
+- (void)addPoint:(UserAnnotation *)mapPoint{
+    [mapView addAnnotation:mapPoint];
 }
 
 
@@ -75,7 +82,7 @@
         marker = [[[MapMarkerView alloc] initWithAnnotation:annotation 
                                     reuseIdentifier:reuseidentifier] autorelease];
     }else{
-        [marker updateAnnotation:annotation];
+        [marker updateAnnotation:(UserAnnotation *)annotation];
     }
     
     // set touch action

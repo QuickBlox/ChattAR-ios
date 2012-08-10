@@ -16,6 +16,8 @@
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IBOutlet MKMapView *mapView;
 
-- (void)pointsUpdated;
+- (void)refreshWithNewPoints:(NSArray *)mapPoints;
+- (void)addPoints:(NSArray *)mapPoints;
+- (void)addPoint:(UserAnnotation *)mapPoint;
 
 @end

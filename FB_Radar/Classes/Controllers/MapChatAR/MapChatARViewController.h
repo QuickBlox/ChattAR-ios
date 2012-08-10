@@ -62,7 +62,7 @@
 - (void)allFriendsSwitchValueDidChanged:(id)sender;
 - (BOOL)isAllShowed;
 
-- (void)addNewAnnotationToMapChatARForFBUser:(NSDictionary *)fbUser withGeoData:(QBLGeoData *)geoData addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable;
+- (void)createAndAddNewAnnotationToMapChatARForFBUser:(NSDictionary *)fbUser withGeoData:(QBLGeoData *)geoData addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable;
 
 - (void)touchOnMarker:(UIView *)marker;
 - (void)showActionSheetWithTitle:(NSString *)title andSubtitle:(NSString*)subtitle;

@@ -34,7 +34,8 @@
 
 - (IBAction)sendMessageDidPress:(id)sender;
 
-- (void)pointsUpdated;
+- (void)refresh;
+- (void)addPoints:(NSArray *)mapPoints;
 
 - (void)addQuote;
 

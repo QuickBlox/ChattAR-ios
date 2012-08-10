@@ -22,7 +22,7 @@
         
         // save annotation
         //
-        annotation = [_annotation retain];
+        annotation = (UserAnnotation *)[_annotation retain];
         
         // bg view for user name & status & photo
         //

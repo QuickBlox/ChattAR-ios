@@ -42,8 +42,6 @@
 	
     // YES when is getting new messages
 	isLoadingMoreMessages = NO;
-    
-    [messagesTableView setUserInteractionEnabled:NO];
 }
 
 - (void)removeQuote
@@ -188,10 +186,13 @@
     messageField.rightView.tag = [(MapChatARViewController *)delegate selectedUserAnnotation].qbUserID; 
 }
 
-- (void)pointsUpdated{
-	// sort chat messaged due to created date
+- (void)refresh{
+
+    // add new
+    // sort chat messaged due to created date
 	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey: @"createdAt" ascending: NO] autorelease];
 	NSArray* sortedArray = [[(MapChatARViewController *)delegate chatPoints] sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+
 	[[(MapChatARViewController *)delegate chatPoints] removeAllObjects];
 	[[(MapChatARViewController *)delegate chatPoints] addObjectsFromArray:sortedArray];
 	
@@ -201,6 +202,10 @@
     [messagesTableView setUserInteractionEnabled:YES];
     
 	isLoadingMoreMessages = NO;
+}
+
+- (void)addPoints:(NSArray *)mapPoints{
+    
 }
 
 - (void)getMoreMessages
@@ -706,7 +711,7 @@
             [messageField resignFirstResponder];
             
             // add new Annotation to map/chat/ar
-            [((MapChatARViewController *)delegate) addNewAnnotationToMapChatARForFBUser:[DataManager shared].currentFBUser  
+            [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:[DataManager shared].currentFBUser
                                                                             withGeoData:geoDataRes.geoData addToTop:YES withReloadTable:YES];
             
             [sendMessageActivityIndicator stopAnimating];
@@ -750,7 +755,7 @@
             }
             
             // add point
-            [((MapChatARViewController *)delegate) addNewAnnotationToMapChatARForFBUser:fbUser 
+            [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
                                                                             withGeoData:geodata addToTop:NO withReloadTable:NO];
         }
         
@@ -761,7 +766,7 @@
         [((MapChatARViewController *)delegate).chatPoints removeAllObjects];
         ((MapChatARViewController *)delegate).chatPoints = [sortedArray mutableCopy];
         
-        [self pointsUpdated];
+        [self refresh];
     }
 }
 
