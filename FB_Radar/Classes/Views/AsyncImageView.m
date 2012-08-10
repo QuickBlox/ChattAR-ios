@@ -157,6 +157,8 @@ static ImageCache *imageCache = nil;
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     if(linkedUrl){
         [[UIApplication sharedApplication] openURL:linkedUrl];
+    }else{
+        [super touchesEnded:touches withEvent:event];
     }
 }
 

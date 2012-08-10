@@ -579,6 +579,8 @@
     {
         distanceLabel.hidden = YES;
         distanceView.hidden = YES;
+        
+        [messageBGView setImage:messageBGImage];
 
     }else{
         distanceLabel.hidden = NO;
