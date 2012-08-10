@@ -336,7 +336,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
+    [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
+    
     UserAnnotation *currentAnnotation = [[(MapChatARViewController *)delegate chatPoints] objectAtIndex:[indexPath row]];
+    UserAnnotation *ann = currentAnnotation;
     
     if ([currentAnnotation isKindOfClass:[UITableViewCell class]]){
 		return (UITableViewCell*)currentAnnotation;
@@ -418,7 +422,15 @@
         [userPhoto release];
         
         // distance BG
-        distanceView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kmBG.png"]];
+        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
+        {
+            messageBGImage = [[UIImage imageNamed:@"kmBG2.png"] retain]; 
+        }
+        else
+        {
+            messageBGImage = [[UIImage imageNamed:@"kmBG.png"] retain];
+        }
+        distanceView = [[UIImageView alloc] initWithImage:messageBGImage];
         distanceView.layer.masksToBounds = YES;
         distanceView.userInteractionEnabled = YES;
         distanceView.tag = 1106;
@@ -439,6 +451,15 @@
         // user message
         //
         // background
+        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
+        {
+            messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain]; 
+        }
+        else
+        {
+            messageBGImage = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+        }
+        
         messageBGView = [[UIImageView alloc] init];
         messageBGView.tag = 1102;
         [messageBGView setImage:messageBGImage];
@@ -526,6 +547,22 @@
         quotedMessageDate = (UILabel*)[cell.contentView viewWithTag:1111];
         quotedUserName = (UILabel*)[cell.contentView viewWithTag:1112];
         replyArrow = (UIImageView*)[cell.contentView viewWithTag:1113];
+        
+        if([friendsIds containsObject:[ann.fbUser objectForKey:kId]])
+        {
+            
+            messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+            [messageBGView setImage:messageBGImage];
+            messageBGImage = [[UIImage imageNamed:@"kmBG2.png"] retain];
+            [distanceView setImage:messageBGImage];
+        }
+        else
+        {
+            messageBGImage = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+            [messageBGView setImage:messageBGImage];
+            messageBGImage = [[UIImage imageNamed:@"kmBG.png"] retain];
+            [distanceView setImage:messageBGImage];
+        }
     }
     
     int shift = 0;
@@ -658,6 +695,7 @@
     [replyArrow setFrame:CGRectMake(72, 24, 11, 14)];
     [cell.contentView bringSubviewToFront:replyArrow];
 
+    [friendsIds release];
     return cell;
 }
 

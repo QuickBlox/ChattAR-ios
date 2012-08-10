@@ -35,7 +35,15 @@
         UIImageView *container = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight)];
 		[container.layer setBorderColor:[[UIColor whiteColor] CGColor]];
 		[container.layer setBorderWidth:1.0];
-		[container setImage:[UIImage imageNamed:@"Marker.png"]];
+        
+		if(![[[DataManager shared].myFriendsAsDictionary allKeys] containsObject:self.userAnnotation.fbUserId])
+        {
+            [container setImage:[UIImage imageNamed:@"Marker2.png"]];
+        }
+        else
+        {
+            [container setImage:[UIImage imageNamed:@"Marker.png"]];
+        }
         container.layer.cornerRadius = 2;
         container.clipsToBounds = YES;
         [container setBackgroundColor:[UIColor clearColor]];

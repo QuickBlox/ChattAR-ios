@@ -20,82 +20,99 @@
         
         self.frame = CGRectMake(0, 0, markerWidth, markerHeight*2);
         
-        // save annotation
-        //
-        annotation = [_annotation retain];
-        
-        // bg view for user name & status & photo
-        //
-        container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight-10)];
-        container.layer.cornerRadius = 2;
-        container.clipsToBounds = YES;
-        [container setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:container];
-        [container release];
-        
-        
-        // add user photo 
-        //
-		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 45, 45)];
-		[userPhotoView loadImageFromURL:[NSURL URLWithString:annotation.userPhotoUrl]];
-		[container addSubview: userPhotoView];
-        [userPhotoView release];
-        
-        
-        // add userName
-        //
-        UIImageView *userNameBG = [[UIImageView alloc] init];
-        [userNameBG setFrame:CGRectMake(45, 0, 55, 23)];
-        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"]];
-        [container addSubview: userNameBG];
-        [userNameBG release];
-        //
-        userName = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, userNameBG.frame.size.width-3, userNameBG.frame.size.height)];
-        [userName setBackgroundColor:[UIColor clearColor]];
-        [userName setText:annotation.userName];
-        [userName setFont:[UIFont boldSystemFontOfSize:11]];
-        [userName setTextColor:[UIColor whiteColor]];
-        [userNameBG addSubview:userName];
-        [userName release];
-        
-        
-        // add userStatus
-        //
-        UIImageView *userStatusBG = [[UIImageView alloc] init];
-        [userStatusBG setFrame:CGRectMake(45, 23, 55, 22)];
-        [userStatusBG setImage:[UIImage imageNamed:@"radarMarkerStatus@2x.png"]]; 
-        [container addSubview: userStatusBG];
-        [userStatusBG release];
-        //
-        userStatus = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, userStatusBG.frame.size.width-3, userStatusBG.frame.size.height)];
-        [userStatus setFont:[UIFont systemFontOfSize:11]];
-        [userStatus setText:[[DataManager shared] messageFromQuote:annotation.userStatus]];
-        [userStatus setBackgroundColor:[UIColor clearColor]];
-        [userStatus setTextColor:[UIColor whiteColor]];
-        [userStatusBG addSubview:userStatus];
-        [userStatus release];
-        
-        // add arrow
-        //
-        UIImageView *arrow = [[UIImageView alloc] init];
-        [arrow setImage:[UIImage imageNamed:@"radarMarkerArrow@2x.png"]];
-        [arrow setFrame:CGRectMake(45, 45, 10, 8)];
-        [self addSubview: arrow];
-        [arrow release];
+        [self updateContainer:_annotation];
     }
     
     return self;
 }
-
-- (void)updateAnnotation:(UserAnnotation *)_annotation{
-    [annotation release];
+- (void) updateContainer:(UserAnnotation *)_annotation
+{
+    //self.frame = CGRectMake(0, 0, markerWidth, markerHeight*2);
+    // save annotation
+    //
+    if(annotation != nil)
+        [annotation release];
+    
     annotation = [_annotation retain];
     
-    [userPhotoView loadImageFromURL:[NSURL URLWithString:_annotation.userPhotoUrl]];
-
-    [userName setText:_annotation.userName];
+    // bg view for user name & status & photo
+    //
     
-    [userStatus setText:[[DataManager shared] messageFromQuote:_annotation.userStatus]];
+    
+    container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight-10)];
+    container.layer.cornerRadius = 2;
+    container.clipsToBounds = YES;
+    [container setBackgroundColor:[UIColor clearColor]];
+    [self addSubview:container];
+    [container release];
+    
+    
+    // add user photo 
+    //
+    userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 45, 45)];
+    [userPhotoView loadImageFromURL:[NSURL URLWithString:annotation.userPhotoUrl]];
+    [container addSubview: userPhotoView];
+    [userPhotoView release];
+    
+    
+    // add userName
+    //
+    UIImageView *userNameBG = [[UIImageView alloc] init];
+    [userNameBG setFrame:CGRectMake(45, 0, 55, 23)];
+    
+    
+    NSMutableArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] mutableCopy];
+    [friendsIds addObject:[DataManager shared].currentFBUserId];// add me
+    
+    if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]){
+        
+        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName@2x.png"]];   
+    }
+    else
+    {
+        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"]];
+    }
+    
+    [container addSubview: userNameBG];
+    [userNameBG release];
+    //
+    userName = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, userNameBG.frame.size.width-3, userNameBG.frame.size.height)];
+    [userName setBackgroundColor:[UIColor clearColor]];
+    [userName setText:annotation.userName];
+    [userName setFont:[UIFont boldSystemFontOfSize:11]];
+    [userName setTextColor:[UIColor whiteColor]];
+    [userNameBG addSubview:userName];
+    [userName release];
+    
+    
+    // add userStatus
+    //
+    UIImageView *userStatusBG = [[UIImageView alloc] init];
+    [userStatusBG setFrame:CGRectMake(45, 23, 55, 22)];
+    [userStatusBG setImage:[UIImage imageNamed:@"radarMarkerStatus@2x.png"]];
+    [container addSubview: userStatusBG];
+    [userStatusBG release];
+    //
+    userStatus = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, userStatusBG.frame.size.width-3, userStatusBG.frame.size.height)];
+    [userStatus setFont:[UIFont systemFontOfSize:11]];
+    [userStatus setText:[[DataManager shared] messageFromQuote:annotation.userStatus]];
+    [userStatus setBackgroundColor:[UIColor clearColor]];
+    [userStatus setTextColor:[UIColor whiteColor]];
+    [userStatusBG addSubview:userStatus];
+    [userStatus release];
+    
+    // add arrow
+    //
+    UIImageView *arrow = [[UIImageView alloc] init];
+    [arrow setImage:[UIImage imageNamed:@"radarMarkerArrow@2x.png"]];
+    [arrow setFrame:CGRectMake(45, 45, 10, 8)];
+    [self addSubview: arrow];
+    [arrow release];
+}
+
+- (void)updateAnnotation:(UserAnnotation *)_annotation{
+    
+    [self updateContainer:_annotation];
 }
 
 // touch action

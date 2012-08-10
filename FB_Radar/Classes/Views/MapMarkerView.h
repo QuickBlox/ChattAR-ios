@@ -23,5 +23,6 @@
 @property SEL action;
 
 - (void)updateAnnotation:(UserAnnotation *)_annotation;
+- (void) updateContainer:(UserAnnotation *)_annotation;
 
 @end
