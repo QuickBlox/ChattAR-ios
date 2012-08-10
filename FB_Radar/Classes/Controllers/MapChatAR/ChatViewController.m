@@ -35,8 +35,8 @@
     [paddingView release];
     
     // message bubble
-    messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
-    messageBGImage2 = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    messageBGImage = [[[UIImage imageNamed:@"cellBodyBG.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    messageBGImage2 = [[[UIImage imageNamed:@"cellBodyBG2.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
     
     distanceImage = [[UIImage imageNamed:@"kmBG.png"] retain];
     distanceImage2 = [[UIImage imageNamed:@"kmBG2.png"] retain];
