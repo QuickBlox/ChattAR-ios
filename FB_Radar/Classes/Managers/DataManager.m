@@ -17,6 +17,8 @@
 
 #define kFirstSwitchAllFriends [NSString stringWithFormat:@"kFirstSwitchAllFriends_%@", [DataManager shared].currentFBUserId]
 
+#define fetchLimit 50
+
 @implementation DataManager
 
 static DataManager *instance = nil;
@@ -357,36 +359,6 @@ static DataManager *instance = nil;
 #pragma mark -
 #pragma mark Core Data api
 
-///**
-// Friend:save,get
-// */
-//-(NSArray *)friendsFromStorage{
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Friend"
-//                                                         inManagedObjectContext:[self managedObjectContext]];
-//    
-//    [fetchRequest setEntity:entityDescription];
-//    
-//    NSError *error;
-//    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-//    [fetchRequest release];
-//    return results;
-//}
-////
-//-(void)saveFriendsToStorage:(NSArray*)friends{
-//    
-//    for(NSDictionary *friend in friends){
-//    
-//        NSManagedObject *friendObject = [NSEntityDescription insertNewObjectForEntityForName:@"Friend"
-//                                                                    inManagedObjectContext:[self managedObjectContext]];
-//        [friendObject setValue:friend forKey:@"body"];
-//        
-//        NSError *error = nil;
-//        [[self managedObjectContext] save:&error];
-//    }
-//}
-
-
 /**
  Chat messages: save, get
  */
@@ -418,9 +390,13 @@ static DataManager *instance = nil;
                                                                    inManagedObjectContext:[self managedObjectContext]];
     messageObject.body = message;
     messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
+    messageObject.timestamp = [NSNumber numberWithInt:[message.createdAt timeIntervalSince1970]];
     
     NSError *error = nil;
     [[self managedObjectContext] save:&error];
+    if(error){
+        NSLog(@"addChatMessageToStorage error=%@", error);
+    }
 }
 //
 -(NSArray *)chatMessagesFromStorage{
@@ -429,7 +405,9 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
-//    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
+    [fetchRequest setFetchLimit:fetchLimit];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
@@ -468,9 +446,13 @@ static DataManager *instance = nil;
                                                                    inManagedObjectContext:[self managedObjectContext]];
     pointObject.body = point;
     pointObject.geoDataID = [NSNumber numberWithInt:point.geoDataID];
+    pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
     
     NSError *error = nil;
     [[self managedObjectContext] save:&error];
+    if(error){
+        NSLog(@"addMapARPointToStorage error=%@", error);
+    }
 }
 //
 -(NSArray *)mapARPointsFromStorage{
@@ -479,7 +461,9 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
-    //    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
+    [fetchRequest setFetchLimit:fetchLimit];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
@@ -504,6 +488,9 @@ static DataManager *instance = nil;
     
     NSError *error = nil;
     [[self managedObjectContext] save:&error];
+    if(error){
+        NSLog(@"addCheckinToStorage error=%@", error);
+    }
 
 }
 //

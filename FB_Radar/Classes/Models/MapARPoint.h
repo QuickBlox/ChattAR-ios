@@ -14,5 +14,6 @@
 
 @property (nonatomic, retain) id body;
 @property (nonatomic, retain) NSNumber * geoDataID;
+@property (nonatomic, retain) NSNumber * timestamp;
 
 @end

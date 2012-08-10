@@ -38,8 +38,8 @@
     messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
     messageBGImage2 = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
     
-    distanceImage = [[UIImage imageNamed:@"kmBG2.png"] retain];
-    distanceImage2 = [[UIImage imageNamed:@"kmBG.png"] retain];
+    distanceImage = [[UIImage imageNamed:@"kmBG.png"] retain];
+    distanceImage2 = [[UIImage imageNamed:@"kmBG2.png"] retain];
 
     // current page of geodata
     page = 1;

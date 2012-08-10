@@ -81,9 +81,6 @@
 #pragma mark -
 #pragma mark Core Data api
 
-//-(void)saveFriendsToStorage:(NSArray*)friends;
-//-(NSArray *)friendsFromStorage;
-
 -(NSArray *)chatMessagesFromStorage;
 -(void)addChatMessagesToStorage:(NSArray *)messages;
 -(void)addChatMessageToStorage:(id)message;

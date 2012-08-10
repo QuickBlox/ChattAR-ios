@@ -13,5 +13,6 @@
 
 @dynamic body;
 @dynamic geoDataID;
+@dynamic timestamp;
 
 @end
