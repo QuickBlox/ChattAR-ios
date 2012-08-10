@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		436C0AF315D50EA90054D9BC /* Marker2.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF115D50EA90054D9BC /* Marker2.png */; };
+		436C0AF415D50EA90054D9BC /* Marker2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF215D50EA90054D9BC /* Marker2@2x.png */; };
+		436C0AF815D50EB80054D9BC /* kmBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF615D50EB80054D9BC /* kmBG.png */; };
+		436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF715D50EB80054D9BC /* kmBG@2x.png */; };
+		436C0AFC15D50EC90054D9BC /* bubble_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AFA15D50EC80054D9BC /* bubble_green.png */; };
+		436C0AFD15D50EC90054D9BC /* bubble_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AFB15D50EC80054D9BC /* bubble_blue.png */; };
 		6303E3461580A8DF00F6F0B0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6303E3441580A8DF00F6F0B0 /* WebViewController.m */; };
 		6303E34A1580B63900F6F0B0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6303E3491580B63900F6F0B0 /* WebViewController.xib */; };
 		632286FC1557D9FC005B964A /* FBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 632286FB1557D9FC005B964A /* FBService.m */; };
@@ -31,8 +37,8 @@
 		63F613E4155408D500D0A504 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F613E3155408D500D0A504 /* CoreLocation.framework */; };
 		63F613E6155408DB00D0A504 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F613E5155408DB00D0A504 /* libz.dylib */; };
 		8A21DBA81580E0E800D0144B /* cellBodyBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA31580E0E800D0144B /* cellBodyBG.png */; };
-		8A21DBA91580E0E800D0144B /* kmBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA41580E0E800D0144B /* kmBG.png */; };
-		8A21DBAA1580E0E800D0144B /* kmBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA51580E0E800D0144B /* kmBG@2x.png */; };
+		8A21DBA91580E0E800D0144B /* kmBG2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA41580E0E800D0144B /* kmBG2.png */; };
+		8A21DBAA1580E0E800D0144B /* kmBG2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA51580E0E800D0144B /* kmBG2@2x.png */; };
 		8A21DBAB1580E0E800D0144B /* navBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA61580E0E800D0144B /* navBar.png */; };
 		8A21DBAC1580E0E800D0144B /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A21DBA71580E0E800D0144B /* navBar@2x.png */; };
 		8A566CBD1578ACA0006CEFF6 /* radarMarkerArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A566CB71578ACA0006CEFF6 /* radarMarkerArrow.png */; };
@@ -195,6 +201,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		436C0AF115D50EA90054D9BC /* Marker2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker2.png; sourceTree = "<group>"; };
+		436C0AF215D50EA90054D9BC /* Marker2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker2@2x.png"; sourceTree = "<group>"; };
+		436C0AF615D50EB80054D9BC /* kmBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kmBG.png; sourceTree = "<group>"; };
+		436C0AF715D50EB80054D9BC /* kmBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kmBG@2x.png"; sourceTree = "<group>"; };
+		436C0AFA15D50EC80054D9BC /* bubble_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_green.png; sourceTree = "<group>"; };
+		436C0AFB15D50EC80054D9BC /* bubble_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_blue.png; sourceTree = "<group>"; };
 		6303E3431580A8DF00F6F0B0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Classes/Controllers/WebViewController.h; sourceTree = "<group>"; };
 		6303E3441580A8DF00F6F0B0 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Classes/Controllers/WebViewController.m; sourceTree = "<group>"; };
 		6303E3491580B63900F6F0B0 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -233,8 +245,8 @@
 		63F613E3155408D500D0A504 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		63F613E5155408DB00D0A504 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		8A21DBA31580E0E800D0144B /* cellBodyBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellBodyBG.png; sourceTree = "<group>"; };
-		8A21DBA41580E0E800D0144B /* kmBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kmBG.png; sourceTree = "<group>"; };
-		8A21DBA51580E0E800D0144B /* kmBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kmBG@2x.png"; sourceTree = "<group>"; };
+		8A21DBA41580E0E800D0144B /* kmBG2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kmBG2.png; sourceTree = "<group>"; };
+		8A21DBA51580E0E800D0144B /* kmBG2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kmBG2@2x.png"; sourceTree = "<group>"; };
 		8A21DBA61580E0E800D0144B /* navBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navBar.png; sourceTree = "<group>"; };
 		8A21DBA71580E0E800D0144B /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		8A566CB71578ACA0006CEFF6 /* radarMarkerArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radarMarkerArrow.png; sourceTree = "<group>"; };
@@ -660,6 +672,8 @@
 				8ADCA8D115A4767A00C015E7 /* Marker_arrow@2x.png */,
 				8ADCA8D215A4767B00C015E7 /* Marker.png */,
 				8ADCA8D315A4767B00C015E7 /* Marker@2x.png */,
+				436C0AF115D50EA90054D9BC /* Marker2.png */,
+				436C0AF215D50EA90054D9BC /* Marker2@2x.png */,
 				8A566CB71578ACA0006CEFF6 /* radarMarkerArrow.png */,
 				8A566CB81578ACA0006CEFF6 /* radarMarkerArrow@2x.png */,
 				8A566CB91578ACA0006CEFF6 /* radarMarkerName.png */,
@@ -686,8 +700,10 @@
 				8A7651E71581D64400B8C1DC /* replyCellBodyBG.png */,
 				FA82C783158F6E2E005AFE00 /* replyCellBodyBG_Pressed.png */,
 				8A21DBA31580E0E800D0144B /* cellBodyBG.png */,
-				8A21DBA41580E0E800D0144B /* kmBG.png */,
-				8A21DBA51580E0E800D0144B /* kmBG@2x.png */,
+				8A21DBA41580E0E800D0144B /* kmBG2.png */,
+				8A21DBA51580E0E800D0144B /* kmBG2@2x.png */,
+				436C0AF615D50EB80054D9BC /* kmBG.png */,
+				436C0AF715D50EB80054D9BC /* kmBG@2x.png */,
 				8A21DBA61580E0E800D0144B /* navBar.png */,
 				8A21DBA71580E0E800D0144B /* navBar@2x.png */,
 				8A7C59161580A12F004FB3CB /* loginButton@2x.png */,
@@ -716,6 +732,8 @@
 				8A7CBF14157684D5009F1A76 /* Grey_Bubble@2x.png */,
 				8A7CBF18157684D5009F1A76 /* notificationSettingsBG.png */,
 				8A7CBF19157684D5009F1A76 /* notificationSettingsBG@2x.png */,
+				436C0AFA15D50EC80054D9BC /* bubble_green.png */,
+				436C0AFB15D50EC80054D9BC /* bubble_blue.png */,
 				8A7CBF1F157684D5009F1A76 /* tabbar */,
 				8A7CBF2A157684D5009F1A76 /* textFieldBG.png */,
 				8A7CBF2B157684D5009F1A76 /* textFieldBG@2x.png */,
@@ -1169,8 +1187,8 @@
 				8A7C591A1580A12F004FB3CB /* loginButton@2x.png in Resources */,
 				6303E34A1580B63900F6F0B0 /* WebViewController.xib in Resources */,
 				8A21DBA81580E0E800D0144B /* cellBodyBG.png in Resources */,
-				8A21DBA91580E0E800D0144B /* kmBG.png in Resources */,
-				8A21DBAA1580E0E800D0144B /* kmBG@2x.png in Resources */,
+				8A21DBA91580E0E800D0144B /* kmBG2.png in Resources */,
+				8A21DBAA1580E0E800D0144B /* kmBG2@2x.png in Resources */,
 				8A21DBAB1580E0E800D0144B /* navBar.png in Resources */,
 				8A21DBAC1580E0E800D0144B /* navBar@2x.png in Resources */,
 				8A7651E81581D64400B8C1DC /* replyCellBodyBG.png in Resources */,
@@ -1212,6 +1230,12 @@
 				FA0BBEF315AD6062005F4D63 /* circle@2x.png in Resources */,
 				FA0BBEF415AD6062005F4D63 /* friendsSwitch.png in Resources */,
 				FA0BBEF515AD6062005F4D63 /* friendsSwitch@2x.png in Resources */,
+				436C0AF315D50EA90054D9BC /* Marker2.png in Resources */,
+				436C0AF415D50EA90054D9BC /* Marker2@2x.png in Resources */,
+				436C0AF815D50EB80054D9BC /* kmBG.png in Resources */,
+				436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */,
+				436C0AFC15D50EC90054D9BC /* bubble_green.png in Resources */,
+				436C0AFD15D50EC90054D9BC /* bubble_blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,8 +1392,8 @@
 		636735FB1552CF590061BF75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals\"",
@@ -1385,8 +1409,8 @@
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "66D82A49-B9E3-4537-9262-A70017B772D8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "66D82A49-B9E3-4537-9262-A70017B772D8";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1394,8 +1418,8 @@
 		636735FC1552CF590061BF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals\"",
@@ -1411,8 +1435,8 @@
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "385E8FD6-E71F-438D-A73C-C4CE183F65B3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "385E8FD6-E71F-438D-A73C-C4CE183F65B3";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

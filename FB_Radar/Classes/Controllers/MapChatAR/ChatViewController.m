@@ -35,7 +35,11 @@
     [paddingView release];
     
     // message bubble
-    messageBGImage = [[[UIImage imageNamed:@"cellBodyBG.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    messageBGImage = [[[UIImage imageNamed:@"bubble_blue.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    messageBGImage2 = [[[UIImage imageNamed:@"bubble_green.png"] stretchableImageWithLeftCapWidth:21 topCapHeight:22] retain];
+    
+    distanceImage = [[UIImage imageNamed:@"kmBG2.png"] retain];
+    distanceImage2 = [[UIImage imageNamed:@"kmBG.png"] retain];
 
     // current page of geodata
     page = 1;
@@ -61,6 +65,12 @@
 
     [messageBGImage release];
     messageBGImage = nil;
+    [messageBGImage2 release];
+    messageBGImage2 = nil;
+    [distanceImage release];
+    distanceImage = nil;
+    [distanceImage2 release];
+    distanceImage2 = nil;
     
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -311,6 +321,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
+                                  
     UserAnnotation *currentAnnotation = [[(MapChatARViewController *)delegate chatPoints] objectAtIndex:[indexPath row]];
     
     if ([currentAnnotation isKindOfClass:[UITableViewCell class]]){
@@ -393,7 +405,14 @@
         [userPhoto release];
         
         // distance BG
-        distanceView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kmBG.png"]];
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
+        {
+            distanceView = [[UIImageView alloc] initWithImage:distanceImage];
+        }
+        else
+        {
+            distanceView = [[UIImageView alloc] initWithImage:distanceImage2];
+        }
         distanceView.layer.masksToBounds = YES;
         distanceView.userInteractionEnabled = YES;
         distanceView.tag = 1106;
@@ -414,9 +433,19 @@
         // user message
         //
         // background
+        
         messageBGView = [[UIImageView alloc] init];
         messageBGView.tag = 1102;
-        [messageBGView setImage:messageBGImage];
+        
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
+        {
+             [messageBGView setImage:messageBGImage];
+        }
+        else
+        {
+            [messageBGView setImage:messageBGImage2];
+        }
+        
          messageBGView.userInteractionEnabled =YES;
         [cell.contentView addSubview:messageBGView];
         [messageBGView release];
@@ -501,6 +530,17 @@
         quotedMessageDate = (UILabel*)[cell.contentView viewWithTag:1111];
         quotedUserName = (UILabel*)[cell.contentView viewWithTag:1112];
         replyArrow = (UIImageView*)[cell.contentView viewWithTag:1113];
+        
+        if([friendsIds containsObject:[currentAnnotation.fbUser objectForKey:kId]])
+        {
+            [messageBGView setImage:messageBGImage];
+            [distanceView setImage:distanceImage];
+        }
+        else
+        {
+            [messageBGView setImage:messageBGImage2];
+            [distanceView setImage:distanceImage2];
+        }
     }
     
     int shift = 0;

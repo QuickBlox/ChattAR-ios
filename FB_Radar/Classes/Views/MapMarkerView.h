@@ -18,6 +18,7 @@
 @property (nonatomic, assign) UILabel *userName;
 @property (nonatomic, assign) UILabel *userStatus;
 @property (nonatomic, retain) UserAnnotation *annotation;
+@property (nonatomic, retain) UIImageView *userNameBG;
 
 @property (assign, nonatomic) id target;
 @property SEL action;

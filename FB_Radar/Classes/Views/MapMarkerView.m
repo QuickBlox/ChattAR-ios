@@ -12,17 +12,20 @@
 #define markerHeight 55
 
 @implementation MapMarkerView
-@synthesize userPhotoView, userName, userStatus, annotation;
+@synthesize userPhotoView, userName, userStatus, annotation, userNameBG;
 @synthesize target, action;
 
 -(id)initWithAnnotation:(id<MKAnnotation>)_annotation reuseIdentifier:(NSString *)reuseIdentifier{
+    
     if ((self = [super initWithAnnotation:_annotation reuseIdentifier:reuseIdentifier])) {
         
         self.frame = CGRectMake(0, 0, markerWidth, markerHeight*2);
         
+        //self.frame = CGRectMake(0, 0, markerWidth, markerHeight*2);
         // save annotation
         //
         annotation = (UserAnnotation *)[_annotation retain];
+
         
         // bg view for user name & status & photo
         //
@@ -36,17 +39,31 @@
         
         // add user photo 
         //
-		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 45, 45)];
-		[userPhotoView loadImageFromURL:[NSURL URLWithString:annotation.userPhotoUrl]];
-		[container addSubview: userPhotoView];
+        userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 45, 45)];
+        [userPhotoView loadImageFromURL:[NSURL URLWithString:annotation.userPhotoUrl]];
+        [container addSubview: userPhotoView];
         [userPhotoView release];
         
         
         // add userName
         //
-        UIImageView *userNameBG = [[UIImageView alloc] init];
+        
+        //============================================================================================
+        userNameBG = [[UIImageView alloc] init];
         [userNameBG setFrame:CGRectMake(45, 0, 55, 23)];
-        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"]];
+        
+        
+        NSArray *friendsIds =  [[DataManager shared].myFriendsAsDictionary allKeys];
+        
+        if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]){
+            
+            [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName@2x.png"]];
+        }
+        else
+        {
+            [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"] ];
+        }
+        
         [container addSubview: userNameBG];
         [userNameBG release];
         //
@@ -63,7 +80,7 @@
         //
         UIImageView *userStatusBG = [[UIImageView alloc] init];
         [userStatusBG setFrame:CGRectMake(45, 23, 55, 22)];
-        [userStatusBG setImage:[UIImage imageNamed:@"radarMarkerStatus@2x.png"]]; 
+        [userStatusBG setImage:[UIImage imageNamed:@"radarMarkerStatus@2x.png"]];
         [container addSubview: userStatusBG];
         [userStatusBG release];
         //
@@ -82,17 +99,33 @@
         [arrow setFrame:CGRectMake(45, 45, 10, 8)];
         [self addSubview: arrow];
         [arrow release];
+
+        
+        //[self updateContainer:_annotation];
     }
     
     return self;
 }
 
 - (void)updateAnnotation:(UserAnnotation *)_annotation{
+    
+    //[self updateContainer:_annotation];
     [annotation release];
     annotation = [_annotation retain];
     
+    NSArray *friendsIds =  [[DataManager shared].myFriendsAsDictionary allKeys];
+    
+    if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]){
+        
+        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName@2x.png"]];
+    }
+    else
+    {
+        [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"] ];
+    }
+    
     [userPhotoView loadImageFromURL:[NSURL URLWithString:_annotation.userPhotoUrl]];
-
+    
     [userName setText:_annotation.userName];
     
     [userStatus setText:[[DataManager shared] messageFromQuote:_annotation.userStatus]];
