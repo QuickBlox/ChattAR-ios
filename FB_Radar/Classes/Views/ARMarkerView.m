@@ -107,6 +107,11 @@
     userAnnotation.coordinate = newCoordinate;
 }
 
+- (void)updateStatus:(NSString *)newStatus{
+    userAnnotation.userStatus = newStatus;
+    userStatus.text = newStatus;
+}
+
 - (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation{
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:userAnnotation.coordinate.latitude longitude:userAnnotation.coordinate.longitude];
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];

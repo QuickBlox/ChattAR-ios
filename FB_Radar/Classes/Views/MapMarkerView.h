@@ -24,6 +24,7 @@
 @property SEL action;
 
 - (void)updateAnnotation:(UserAnnotation *)_annotation;
+- (void)updateStatus:(NSString *)newStatus;
 - (void)updateCoordinate:(CLLocationCoordinate2D)newCoordinate;
 
 @end

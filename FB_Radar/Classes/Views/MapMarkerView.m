@@ -107,6 +107,11 @@
     return self;
 }
 
+- (void)updateStatus:(NSString *)newStatus{
+    annotation.userStatus = newStatus;
+    userStatus.text = newStatus;
+}
+
 - (void)updateCoordinate:(CLLocationCoordinate2D)newCoordinate{
     annotation.coordinate = newCoordinate;
 }
