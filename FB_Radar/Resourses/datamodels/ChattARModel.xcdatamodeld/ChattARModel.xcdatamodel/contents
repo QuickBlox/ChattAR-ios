@@ -11,12 +11,12 @@
     </entity>
     <entity name="MapARPoint" representedClassName="MapARPoint" syncable="YES">
         <attribute name="body" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="geoDataID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="qbUserID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ChatMessage" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Checkin" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="MapARPoint" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="ChatMessage" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Checkin" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="MapARPoint" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

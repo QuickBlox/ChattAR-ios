@@ -23,5 +23,6 @@
 
 - (id)initWithGeoPoint:(UserAnnotation *)_userAnnotation;
 - (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation;
+- (void)updateCoordinate:(CLLocationCoordinate2D)newCoordinate;
 
 @end

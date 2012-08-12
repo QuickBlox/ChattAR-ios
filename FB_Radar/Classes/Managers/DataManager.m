@@ -431,22 +431,26 @@ static DataManager *instance = nil;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"MapARPoint"
 											  inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
-	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",point.geoDataID]];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"qbUserID == %i",point.qbUserID]];
 	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
+    MapARPoint *pointObject = nil;
+    
+    // Update
     if(nil != results && [results count] > 0){
-        return;
-    }
-    
-    
+        pointObject = (MapARPoint *)[results objectAtIndex:0];
+        pointObject.body = point;
+        pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
+       
     // Insert
-    
-    MapARPoint *pointObject = (MapARPoint *)[NSEntityDescription insertNewObjectForEntityForName:@"MapARPoint"
-                                                                   inManagedObjectContext:[self managedObjectContext]];
-    pointObject.body = point;
-    pointObject.geoDataID = [NSNumber numberWithInt:point.geoDataID];
-    pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
+    }else{
+        pointObject = (MapARPoint *)[NSEntityDescription insertNewObjectForEntityForName:@"MapARPoint"
+                                                                       inManagedObjectContext:[self managedObjectContext]];
+        pointObject.body = point;
+        pointObject.qbUserID = [NSNumber numberWithInt:point.qbUserID];
+        pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
+    }
     
     NSError *error = nil;
     [[self managedObjectContext] save:&error];

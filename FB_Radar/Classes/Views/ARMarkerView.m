@@ -103,6 +103,10 @@
     return self;
 }
 
+- (void)updateCoordinate:(CLLocationCoordinate2D)newCoordinate{
+    userAnnotation.coordinate = newCoordinate;
+}
+
 - (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation{
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:userAnnotation.coordinate.latitude longitude:userAnnotation.coordinate.longitude];
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];

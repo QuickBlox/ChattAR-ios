@@ -604,7 +604,8 @@
 		{
             annotation.userStatus = point.userStatus;
             MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-            marker.userStatus.text = annotation.userStatus;
+            marker.userStatus.text = annotation.userStatus; // update status
+            [marker updateCoordinate:annotation.coordinate]; // update location
             isExistPoint = YES;
             break;
         }
@@ -619,7 +620,8 @@
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
                 ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                marker.userStatus.text = point.userStatus;
+                marker.userStatus.text = point.userStatus; // update status
+                [marker updateCoordinate:point.coordinate]; // update location
                 isExistPoint = YES;
                 break;
             }

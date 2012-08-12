@@ -107,6 +107,10 @@
     return self;
 }
 
+- (void)updateCoordinate:(CLLocationCoordinate2D)newCoordinate{
+    annotation.coordinate = newCoordinate;
+}
+
 - (void)updateAnnotation:(UserAnnotation *)_annotation{
     
     //[self updateContainer:_annotation];

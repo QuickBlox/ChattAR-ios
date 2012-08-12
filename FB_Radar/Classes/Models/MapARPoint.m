@@ -12,7 +12,7 @@
 @implementation MapARPoint
 
 @dynamic body;
-@dynamic geoDataID;
+@dynamic qbUserID;
 @dynamic timestamp;
 
 @end
