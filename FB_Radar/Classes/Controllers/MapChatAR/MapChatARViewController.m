@@ -468,7 +468,6 @@
     // get chat messages from cash
     NSDate *lastMessageDate = nil;
     NSArray *cashedChatMessages = [[DataManager shared] chatMessagesFromStorage];
-    NSLog(@"cashedChatMessages =%d", [cashedChatMessages count]);
     if([cashedChatMessages count] > 0){
         for(QBChatMessageModel *chatCashedMessage in cashedChatMessages){
             if(lastMessageDate == nil){
@@ -491,6 +490,8 @@
             [mapPointsIDs addObject:[NSString stringWithFormat:@"%d", ((UserAnnotation *)mapARCashedPoint.body).geoDataID]];
         }
     }
+    
+        NSLog(@"allMapPoints =%@", allMapPoints);
     
     // If we have info from cashe - show them
     if([allMapPoints count] > 0 || [allChatPoints count] > 0){
@@ -610,10 +611,8 @@
 	[newAnnotation release];
     
     
-    
-    // Add Map/AR, Chat point to Storage
-    // ...
-    //
+    // update AR
+    [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
 }
 
 - (void)addNewPointToMapAR:(UserAnnotation *)point{
@@ -967,6 +966,11 @@
         // show Point on Map/AR
         [self addNewPointToMapAR:mapAnnotation];
     }
+    
+    // update AR
+    dispatch_async( dispatch_get_main_queue(), ^{
+        [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
+    });
 
     //
     // add to Storage
@@ -1168,6 +1172,8 @@
     // refresh chat
     dispatch_async(dispatch_get_main_queue(), ^{
         [chatViewController.messagesTableView reloadData];
+        
+        [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
     });
 }
 
@@ -1270,8 +1276,14 @@
             NSArray *points = nil;
             if([context isKindOfClass:NSArray.class]){
                 contextArray = (NSArray *)context;
-                contextType = [contextArray objectAtIndex:0];
-                points = [contextArray objectAtIndex:1];
+                
+                // basic
+                if(![[contextArray lastObject] isKindOfClass:QBLGeoData.class]){
+                    contextType = [contextArray objectAtIndex:0];
+                    points = [contextArray objectAtIndex:1];
+                }// else{
+                    // this is check new one
+                //}
             }
             
             // Map init

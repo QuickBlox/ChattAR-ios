@@ -500,6 +500,7 @@
 - (void)updateMarkersPositionsForCenterLocation:(CLLocation *)_centerLocation 
 {
     int index			= 0;
+
 	for (ARGeoCoordinate *geoLocation in self.coordinates) 
 	{
 		
@@ -552,6 +553,7 @@
     int maxShowedMarkerDistance = 0;
     int minShowedMarkerDistance = 100000000;
     int count = 0;
+
     
 	for (ARCoordinate *item in coordinates) {
 		
