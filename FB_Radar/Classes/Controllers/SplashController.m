@@ -59,7 +59,7 @@
     }
 	
 	// QuickBlox application authorization
-	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:delegate];
+	[QBAuth createSessionWithExtendedRequest:extendedAuthRequest delegate:delegate];
 	
 	[extendedAuthRequest release];  
 }
@@ -136,13 +136,13 @@
         NSString *passwordHash = [NSString stringWithFormat:@"%u", [[[DataManager shared].currentFBUser objectForKey:kId] hash]];
         
         // Authenticate user
-        [QBUsersService logInWithUserLogin:userLogin password:passwordHash delegate:self];
+        [QBUsers logInWithUserLogin:userLogin password:passwordHash delegate:self];
     }
 }
 
 
 #pragma mark -
-#pragma mark QB ActionStatusDelegate
+#pragma mark QB QBActionStatusDelegate
 
 // QuickBlox API queries delegate
 -(void)completedWithResult:(Result *)result{
@@ -194,7 +194,7 @@
             [DataManager shared].currentQBUser = res.user;
             
 			// register as subscribers for receiving push notifications
-            [QBMessagesService TRegisterSubscriptionWithDelegate:self];
+            [QBMessages TRegisterSubscriptionWithDelegate:self];
             
             // hide splash
             [activityIndicator stopAnimating];
@@ -222,7 +222,7 @@
             user.tags = [NSArray arrayWithObject:@"Chattar"];
             
             // Create user
-            [QBUsersService signUp:user delegate:self];
+            [QBUsers signUp:user delegate:self];
             [user release];
 
         // Errors
@@ -250,7 +250,7 @@
             NSString *passwordHash = [NSString stringWithFormat:@"%u", [[[DataManager shared].currentFBUser objectForKey:kId] hash]];
             
             // authenticate user
-            [QBUsersService logInWithUserLogin:userLogin password:passwordHash delegate:self];
+            [QBUsers logInWithUserLogin:userLogin password:passwordHash delegate:self];
             
         // show Errors
         }else{

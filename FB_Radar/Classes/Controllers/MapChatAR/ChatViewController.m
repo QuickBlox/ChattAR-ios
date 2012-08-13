@@ -115,7 +115,7 @@
 	}
 
     // post geodata
-	[QBLocationService createGeoData:geoData delegate:self];
+	[QBLocation createGeoData:geoData delegate:self];
 
     [sendMessageActivityIndicator startAnimating];
     
@@ -138,9 +138,9 @@
 #endif
         
         // Send push
-        [QBMessagesService TSendPush:message
-                              toUsers:[NSString stringWithFormat:@"%d",  messageField.rightView.tag] 
-               environmentDevelopment:isDevEnv 
+        [QBMessages TSendPush:message
+                      toUsers:[NSString stringWithFormat:@"%d",  messageField.rightView.tag]
+            isDevelopmentEnvironment:isDevEnv
                              delegate:self];
 	}
     
@@ -224,7 +224,7 @@
 	searchChatMessagesRequest.page = page;
 	searchChatMessagesRequest.status = YES;
 	searchChatMessagesRequest.sortBy = GeoDataSortByKindCreatedAt;
-	[QBLocationService geoDataWithRequest:searchChatMessagesRequest delegate:self context:getMoreChatMessages];
+	[QBLocation geoDataWithRequest:searchChatMessagesRequest delegate:self context:getMoreChatMessages];
 	[searchChatMessagesRequest release];
 }
 
@@ -691,7 +691,7 @@
 
 
 #pragma mark -
-#pragma mark QB ActionStatusDelegate
+#pragma mark QB QBActionStatusDelegate
 
 -(void)completedWithResult:(Result *)result context:(void *)contextInfo
 {

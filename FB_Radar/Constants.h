@@ -22,11 +22,6 @@
 #define kNewChatMessageCome @"kNewChatMessageCome"
 #define kReceivedOnlineStatus @"kReceivedOnlineStatus"
 
-// QB constants
-static NSUInteger const appID = 644;
-static NSString *const authKey = @"FgPY24nyYczhtnj";
-static NSString *const authSecret = @"Aet6zKAUhUSTnaE";
-
 // Strings
 #define quotePushMessageInChat @"Your message in Chat has been cited"
 #define appName @"ChattAR"

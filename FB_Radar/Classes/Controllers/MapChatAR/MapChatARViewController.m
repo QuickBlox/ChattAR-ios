@@ -478,6 +478,8 @@
         }
     }
     
+    NSLog(@"allChatPoints =%@", allChatPoints);
+    
     // get map/ar points from cash
     NSDate *lastPointDate = nil;
     NSArray *cashedMapARPoints = [[DataManager shared] mapARPointsFromStorage];
@@ -520,7 +522,7 @@
     if(lastPointDate){
         searchMapARPointsRequest.minCreatedAt = lastPointDate;
     }
-	[QBLocationService geoDataWithRequest:searchMapARPointsRequest delegate:self context:mapSearch];
+	[QBLocation geoDataWithRequest:searchMapARPointsRequest delegate:self context:mapSearch];
 	[searchMapARPointsRequest release];
 	
 	// get points for chat
@@ -531,7 +533,7 @@
     if(lastMessageDate){
         searchChatMessagesRequest.minCreatedAt = lastMessageDate;
     }
-	[QBLocationService geoDataWithRequest:searchChatMessagesRequest delegate:self context:chatSearch];
+	[QBLocation geoDataWithRequest:searchChatMessagesRequest delegate:self context:chatSearch];
 	[searchChatMessagesRequest release];
 }
 
@@ -564,7 +566,7 @@
     searchRequest.sortAsc = 1;
     searchRequest.perPage = 50;
     searchRequest.minCreatedAt = ((UserAnnotation *)[self lastChatMessage:YES]).createdAt;
-	[QBLocationService geoDataWithRequest:searchRequest delegate:self];
+	[QBLocation geoDataWithRequest:searchRequest delegate:self];
 	[searchRequest release];
 }
 
@@ -596,9 +598,15 @@
     newAnnotation.fbUserId = [fbUser objectForKey:kId];
     newAnnotation.fbUser = fbUser;
     newAnnotation.qbUserID = geoData.user.ID;
+    if(newAnnotation.qbUserID == 0){
+        newAnnotation.qbUserID = geoData.userID;
+    }
 	newAnnotation.createdAt = geoData.createdAt;
     
     newAnnotation.distance  = [geoData.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+    
+    
+    NSLog(@"Added message=%@", newAnnotation);
     
     
     // Add to Chat
@@ -733,7 +741,9 @@
         NSArray *newRows = [[NSArray alloc] initWithObjects:newMessagePath, nil];
 
         // on main thread
-        [chatViewController.messagesTableView performSelectorOnMainThread:@selector(insertRowsAtIndexPaths:withRowAnimation:) withObject:newRows withObject:UITableViewRowAnimationFade waitUntilDone:YES];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [chatViewController.messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationFade];
+        });
         
         [newRows release];
     }
@@ -1344,7 +1354,7 @@
             
             // convert checkins
             dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self processFBCheckins:result.body];
+                [self processFBCheckins:(NSArray *)result.body];
             });
         }
         break;
@@ -1356,7 +1366,7 @@
 
 
 #pragma mark -
-#pragma mark QB ActionStatusDelegate
+#pragma mark QB QBActionStatusDelegate
 
 - (void)completedWithResult:(Result *)result context:(void *)contextInfo{
     // get points result

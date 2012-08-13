@@ -581,7 +581,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSDictionary *toUser = [[DataManager shared].myFriendsAsDictionary objectForKey:[chatHistory.to objectForKey:kId]];
     if([[toUser objectForKey:kOnOffStatus] intValue] == 0){
         // get QB User for send push
-        [QBUsersService userWithFacebookID:[chatHistory.to objectForKey:kId] delegate:self context:rightTrimmedMessage];
+        [QBUsers userWithFacebookID:[chatHistory.to objectForKey:kId] delegate:self context:rightTrimmedMessage];
     }
 	
 	[self scrollToBottomAnimated:YES];
@@ -596,7 +596,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 
 #pragma mark -
-#pragma mark ActionStatusDelegate
+#pragma mark QBActionStatusDelegate
 
 -(void)completedWithResult:(Result *)result{
 }
@@ -624,9 +624,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 #endif
             
 			// Send push
-			[QBMessagesService TSendPush:message
+			[QBMessages TSendPush:message
 								 toUsers:[NSString stringWithFormat:@"%d", _result.user.ID]
-				  environmentDevelopment:isDevEnv
+				  isDevelopmentEnvironment:isDevEnv
 								delegate:self];
             
             [message release];

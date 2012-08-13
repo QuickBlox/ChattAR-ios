@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FBServiceResultDelegate.h"
 
-@interface SplashController : UIViewController <ActionStatusDelegate, FBServiceResultDelegate, FBSessionDelegate>{
+@interface SplashController : UIViewController <QBActionStatusDelegate, FBServiceResultDelegate, FBSessionDelegate>{
     IBOutlet UIActivityIndicatorView *activityIndicator;
     IBOutlet UIButton *loginButton;
 }

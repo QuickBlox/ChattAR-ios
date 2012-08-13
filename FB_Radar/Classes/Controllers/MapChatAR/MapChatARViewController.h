@@ -16,7 +16,7 @@
 @class ChatViewController;
 @class MapViewController;
 
-@interface MapChatARViewController : UIViewController <ActionStatusDelegate, FBServiceResultDelegate, UIActionSheetDelegate, FBRequestDelegate, CLLocationManagerDelegate>{
+@interface MapChatARViewController : UIViewController <QBActionStatusDelegate, FBServiceResultDelegate, UIActionSheetDelegate, FBRequestDelegate, CLLocationManagerDelegate>{
     
     NSTimer *updateTimre;
     

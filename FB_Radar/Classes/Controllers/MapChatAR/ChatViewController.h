@@ -16,7 +16,7 @@
 
 #define tableIsUpdating 1011
 
-@interface ChatViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, ActionStatusDelegate, UIScrollViewDelegate, FBServiceResultDelegate>{
+@interface ChatViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, QBActionStatusDelegate, UIScrollViewDelegate, FBServiceResultDelegate>{
     UIImage *messageBGImage;
     UIImage *messageBGImage2;
     UIImage *distanceImage;

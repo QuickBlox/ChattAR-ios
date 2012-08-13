@@ -91,6 +91,7 @@
                       \n\tuserStatus:%@\
                       \n\tfbUserId:%@\
                       \n\tqbUserID:%u\
+                      \n\tfbUser:%@\
                       \n\tcreatedAt:%@",
                       
                       [super description],
@@ -98,6 +99,7 @@
                       userStatus,
                       fbUserId,
                       qbUserID,
+                      fbUser,
                       createdAt];
     
     return desc;

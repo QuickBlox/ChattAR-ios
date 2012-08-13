@@ -232,7 +232,6 @@
 		6390F662157E643700004D27 /* YellowStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowStar.png; sourceTree = "<group>"; };
 		63BF3B04156E0CCD00C5F99C /* FBChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBChatViewController.h; path = Classes/Controllers/FBChatViewController.h; sourceTree = "<group>"; };
 		63BF3B05156E0CCD00C5F99C /* FBChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBChatViewController.m; path = Classes/Controllers/FBChatViewController.m; sourceTree = "<group>"; };
-		63C9F89F1554237E0000674B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		63C9F8A5155425DA0000674B /* NumberToLetterConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NumberToLetterConverter.h; path = Classes/Helpers/Converters/NumberToLetterConverter.h; sourceTree = "<group>"; };
 		63C9F8A6155425DA0000674B /* NumberToLetterConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NumberToLetterConverter.m; path = Classes/Helpers/Converters/NumberToLetterConverter.m; sourceTree = "<group>"; };
 		63F613DD155408A100D0A504 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -479,6 +478,7 @@
 		FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBChatMessageModel.m; sourceTree = "<group>"; };
 		FAC6B89015D9006D00F3B10F /* QBCheckinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckinModel.h; sourceTree = "<group>"; };
 		FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckinModel.m; sourceTree = "<group>"; };
+		FAC6B89D15D985C500F3B10F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		FAE4E23F158B29C400BBB219 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Externals/Quickblox.framework; sourceTree = "<group>"; };
 		FAEF57AF15CADF0100614DBF /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -584,7 +584,7 @@
 			children = (
 				636735E11552CF590061BF75 /* AppDelegate.h */,
 				636735E21552CF590061BF75 /* AppDelegate.m */,
-				63C9F89F1554237E0000674B /* Constants.h */,
+				FAC6B89D15D985C500F3B10F /* Constants.h */,
 				6367365E1552E52E0061BF75 /* Controllers */,
 				FA99E78B15C95C0B0031F54F /* Models */,
 				FA8E4DD21580851C00476EF7 /* Objects */,

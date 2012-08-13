@@ -12,7 +12,7 @@
 
 
 @interface FBChatViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, 
-    UITextFieldDelegate, ActionStatusDelegate>
+    UITextFieldDelegate, QBActionStatusDelegate>
 {
 	// cloud for message view
     UIImage *messageBGImageLeft;

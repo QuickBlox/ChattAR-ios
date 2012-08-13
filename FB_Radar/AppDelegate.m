@@ -57,6 +57,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
 	[UIApplication sharedApplication].statusBarHidden = YES;
     
+    // Set QuickBlox credentials
+    [QBSettings setApplicationID:644];
+    [QBSettings setAuthorizationKey:@"FgPY24nyYczhtnj"];
+    [QBSettings setAuthorizationSecret:@"Aet6zKAUhUSTnaE"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 	
@@ -156,7 +161,7 @@
     }
 	
 	// QuickBlox application authorization
-	[QBAuthService createSessionWithAppId:appID key:authKey secret:authSecret extendedRequest:extendedAuthRequest delegate:nil];
+	[QBAuth createSessionWithExtendedRequest:extendedAuthRequest delegate:nil];
 	
 	[extendedAuthRequest release];
 }
