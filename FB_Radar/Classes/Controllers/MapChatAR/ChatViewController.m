@@ -106,9 +106,6 @@
     }
 #endif
 	geoData.user = [DataManager shared].currentQBUser;
-    
-    geoData.latitude = 32.0;
-    geoData.longitude = -40.0;
 	
     // set body - with quote or without
 	if (quoteMark){

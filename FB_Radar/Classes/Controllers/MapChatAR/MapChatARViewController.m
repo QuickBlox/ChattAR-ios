@@ -42,12 +42,13 @@
 @synthesize mapViewController, chatViewController, arViewController;
 @synthesize segmentControl;
 @synthesize mapPoints, chatPoints;
-@synthesize chatMessagesIDs, mapPointsIDs;
+@synthesize chatMessagesIDs, mapPointsIDs, fbCheckinsIDs;
 @synthesize userActionSheet, allMapPoints, allCheckins, allChatPoints;
 @synthesize selectedUserAnnotation;
 @synthesize locationManager, myCurrentLocation;
 @synthesize initedFromCache;
 @synthesize allFriendsSwitch;
+@synthesize initState;
 
 
 #pragma mark -
@@ -82,6 +83,7 @@
         // IDs
         chatMessagesIDs = [[NSMutableArray alloc] init];
         mapPointsIDs = [[NSMutableArray alloc] init];
+        fbCheckinsIDs = [[NSMutableArray alloc] init];
         
         
         
@@ -119,6 +121,7 @@
     
     [chatMessagesIDs release];
     [mapPointsIDs release];
+    [fbCheckinsIDs release];
     
     [userActionSheet release];
 	
@@ -176,7 +179,7 @@
     
     if(!isInitialized){
         
-        initState = 0;
+        self.initState = 0;
         
         // show ar/map
         [segmentControl setSelectedSegmentIndex:0];
@@ -539,6 +542,7 @@
     if([cashedFBCheckins count] > 0){
         for(FBCheckinModel *checkinCashedPoint in cashedFBCheckins){
             [allCheckins addObject:checkinCashedPoint.body];
+            [fbCheckinsIDs addObject:((UserAnnotation *)checkinCashedPoint.body).fbCheckinID];
         }
     }
     
@@ -673,6 +677,10 @@
     // Save to cache
     //
     [[DataManager shared] addMapARPointToStorage:point];
+}
+
+- (void)addNewMessageToChat:(UserAnnotation *)message{
+    [self addNewMessageToChat:message addToTop:NO withReloadTable:NO];
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
@@ -942,7 +950,8 @@
             ++index;
             
             // show Point on Map/AR
-            [self addNewPointToMapAR:mapAnnotation];
+            [self performSelectorOnMainThread:@selector(addNewPointToMapAR:) withObject:mapAnnotation waitUntilDone:YES];
+            //[self addNewPointToMapAR:mapAnnotation];
         }
 
         //
@@ -951,9 +960,9 @@
         [mapPointsMutable release];
         
         // all data was retrieved
-        ++initState;
+        ++self.initState;
         NSLog(@"MAP INIT OK");
-        if(initState == 2){
+        if(self.initState == 2){
             [self performSelectorOnMainThread:@selector(endOfRetrieveInitialData) withObject:nil waitUntilDone:NO]; 
         }
     }
@@ -1015,7 +1024,8 @@
             ++index;
             
             // show Message on Chat
-            [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
+            //[self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
+            [self performSelectorOnMainThread:@selector(addNewMessageToChat:) withObject:chatAnnotation waitUntilDone:YES];
         }
         [chatViewController.messagesTableView performSelectorOnMainThread:@selector(reloadData) withObject:NO waitUntilDone:YES];
 
@@ -1023,9 +1033,9 @@
         
         
         // all data was retrieved
-        ++initState;
+        ++self.initState;
         NSLog(@"CHAT INIT OK");
-        if(initState == 2){
+        if(self.initState == 2){
             [self performSelectorOnMainThread:@selector(endOfRetrieveInitialData) withObject:nil waitUntilDone:NO]; 
         }
     }
@@ -1053,6 +1063,11 @@
                 // Collect checkins
                 NSMutableArray *proccesedCheckins = [NSMutableArray array];
                 for(NSDictionary *checkin in checkins){
+                    
+                    NSString *ID = [checkin objectForKey:kId];
+                    if([fbCheckinsIDs containsObject:ID]){
+                        continue;
+                    }
                     
                     // get checkin's owner
                     NSString *fbUserID = [[checkin objectForKey:kFrom] objectForKey:kId];
@@ -1104,7 +1119,9 @@
                     checkinAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
                     checkinAnnotation.fbUserId = [fbUser objectForKey:kId];
                     checkinAnnotation.fbUser = fbUser;
+                    checkinAnnotation.fbCheckinID = ID;
                     checkinAnnotation.createdAt = createdAt;
+                    
                     
                     CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
                     checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
@@ -1112,6 +1129,8 @@
                     
                     [proccesedCheckins addObject:checkinAnnotation];
                     [checkinAnnotation release];
+                    
+                    [fbCheckinsIDs addObject:ID];
                     
                     
                     // show Point on Map/AR
@@ -1229,6 +1248,8 @@
 #pragma mark FBServiceResultDelegate
 
 -(void)completedWithFBResult:(FBServiceResult *)result context:(id)context{
+     NSLog(@"completedWithFBResult, contextInfo=%@", context);
+    
     switch (result.queryType) {
             
         // get Users profiles
@@ -1309,7 +1330,7 @@
     // get points result
 	if([result isKindOfClass:[QBLGeoDataPagedResult class]])
 	{
-        NSLog(@"ressss");
+        NSLog(@"QB completedWithResult, contextInfo=%@, class=%@", contextInfo, [result class]);
         
         if (result.success){
             QBLGeoDataPagedResult *geoDataSearchResult = (QBLGeoDataPagedResult *)result;

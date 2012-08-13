@@ -20,7 +20,6 @@
     
     NSTimer *updateTimre;
     
-    short initState; // 2 if all data(map/chat) was retrieved
     short numberOfCheckinsRetrieved;
     
     BOOL isInitialized;
@@ -37,6 +36,7 @@
 
 @property (nonatomic, assign) NSMutableArray *chatMessagesIDs;
 @property (nonatomic, assign) NSMutableArray *mapPointsIDs;
+@property (nonatomic, assign) NSMutableArray *fbCheckinsIDs;
 
 
 
@@ -55,6 +55,8 @@
 @property (nonatomic, assign) BOOL initedFromCache;
 
 @property (nonatomic, assign) CustomSwitch *allFriendsSwitch;
+
+@property (assign) short initState; // 2 if all data(map/chat) was retrieved
 
 
 - (void)segmentValueDidChanged:(id)sender;
