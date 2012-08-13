@@ -180,6 +180,8 @@
                                                   otherButtonTitles:nil];
             [alert show];
             [alert release];
+            
+            [activityIndicator stopAnimating];
         }
 	
 	// QuickBlox User authenticate result
@@ -233,6 +235,8 @@
                                                   otherButtonTitles:nil];
             [alert show];
             [alert release];
+            
+            [activityIndicator stopAnimating];
         }
         
     // Create user result
@@ -258,6 +262,8 @@
                                                   otherButtonTitles:nil];
             [alert show];
             [alert release];
+            
+            [activityIndicator stopAnimating];
         }
         
 	}

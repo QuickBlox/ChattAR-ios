@@ -15,6 +15,6 @@
 @property (nonatomic, retain) NSString * accountFBUserID;
 @property (nonatomic, retain) id body;
 @property (nonatomic, retain) NSNumber * timestamp;
-@property (nonatomic, retain) NSNumber * fbUserID;
+@property (nonatomic, retain) NSString * fbUserID;
 
 @end

@@ -308,6 +308,24 @@ static DataManager *instance = nil;
 
 
 /**
+ Returns the thread safe managed object context for the application.
+ */
+- (NSManagedObjectContext *)threadSafeContext {
+    NSManagedObjectContext * context = nil;
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    
+    if (coordinator != nil) {
+        context = [[[NSManagedObjectContext alloc] init] autorelease];
+        [context setPersistentStoreCoordinator:coordinator];
+        [context setMergePolicy:NSOverwriteMergePolicy];
+        [context setUndoManager:nil];
+    }
+    
+    return context;
+}
+
+
+/**
  Returns the managed object model for the application.
  If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
  */
@@ -365,20 +383,25 @@ static DataManager *instance = nil;
  */
 -(void)addChatMessagesToStorage:(NSArray *)messages{
     
+    NSManagedObjectContext *ctx = [self threadSafeContext];
     for(UserAnnotation *message in messages){
-        [self addChatMessageToStorage:message];
+        [self addChatMessageToStorage:message context:ctx];
     }
 }
 //
 -(void)addChatMessageToStorage:(UserAnnotation *)message{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    [self addChatMessageToStorage:message context:ctx];
     
+}
+-(void)addChatMessageToStorage:(UserAnnotation *)message context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBChatMessageModel"
-											  inManagedObjectContext:[self managedObjectContext]];
+											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",message.geoDataID]];
-	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
     if(nil != results && [results count] > 0){
@@ -388,22 +411,24 @@ static DataManager *instance = nil;
     
     // Insert
     QBChatMessageModel *messageObject = (QBChatMessageModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBChatMessageModel"
-                                                                   inManagedObjectContext:[self managedObjectContext]];
+                                                                                            inManagedObjectContext:ctx];
     messageObject.body = message;
     messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
     messageObject.timestamp = [NSNumber numberWithInt:[message.createdAt timeIntervalSince1970]];
     
     NSError *error = nil;
-    [[self managedObjectContext] save:&error];
+    [ctx save:&error];
     if(error){
-        NSLog(@"addChatMessageToStorage error=%@", error);
+        NSLog(@"CoreData: addChatMessageToStorage error=%@", error);
     }
 }
 //
 -(NSArray *)chatMessagesFromStorage{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBChatMessageModel"
-                                                         inManagedObjectContext:[self managedObjectContext]];
+                                                         inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
     [fetchRequest setFetchLimit:fetchLimit];
@@ -411,7 +436,7 @@ static DataManager *instance = nil;
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
-    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
     return results;
 }
@@ -421,19 +446,24 @@ static DataManager *instance = nil;
  Map messages: save, get
  */
 -(void)addMapARPointsToStorage:(NSArray *)points{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
     for(UserAnnotation *point in points){
-        [self addMapARPointToStorage:point];
+        [self addMapARPointToStorage:point context:ctx];
     }
 }
 //
 -(void)addMapARPointToStorage:(UserAnnotation *)point{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    [self addMapARPointToStorage:point context:ctx];
+}
+-(void)addMapARPointToStorage:(UserAnnotation *)point context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBCheckinModel"
-											  inManagedObjectContext:[self managedObjectContext]];
+											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"qbUserID == %i",point.qbUserID]];
-	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
     QBCheckinModel *pointObject = nil;
@@ -443,27 +473,29 @@ static DataManager *instance = nil;
         pointObject = (QBCheckinModel *)[results objectAtIndex:0];
         pointObject.body = point;
         pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
-       
-    // Insert
+        
+        // Insert
     }else{
         pointObject = (QBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBCheckinModel"
-                                                                       inManagedObjectContext:[self managedObjectContext]];
+                                                                      inManagedObjectContext:ctx];
         pointObject.body = point;
         pointObject.qbUserID = [NSNumber numberWithInt:point.qbUserID];
         pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
     }
     
     NSError *error = nil;
-    [[self managedObjectContext] save:&error];
+    [ctx save:&error];
     if(error){
-        NSLog(@"addMapARPointToStorage error=%@", error);
+        NSLog(@"CoreData: addMapARPointToStorage error=%@", error);
     }
 }
 //
 -(NSArray *)mapARPointsFromStorage{
+     NSManagedObjectContext *ctx = [self threadSafeContext];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBCheckinModel"
-                                                         inManagedObjectContext:[self managedObjectContext]];
+                                                         inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
     [fetchRequest setFetchLimit:fetchLimit];
@@ -471,7 +503,7 @@ static DataManager *instance = nil;
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
-    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
     return results;
 }
@@ -480,20 +512,24 @@ static DataManager *instance = nil;
  Checkins: save, get
  */
 -(void)addCheckinsToStorage:(NSArray *)checkins{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
     for(UserAnnotation *message in checkins){
-        [self addCheckinToStorage:message];
+        [self addCheckinToStorage:message context:ctx];
     }
 }
 //
 -(void)addCheckinToStorage:(UserAnnotation *)checkin{
-    
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    [self addChatMessageToStorage:checkin context:ctx];
+}
+-(void)addCheckinToStorage:(UserAnnotation *)checkin context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBCheckinModel"
-											  inManagedObjectContext:[self managedObjectContext]];
+											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@",checkin.fbUserId]];
-	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
     FBCheckinModel *pointObject = nil;
@@ -506,32 +542,34 @@ static DataManager *instance = nil;
         pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
     }else{
         pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"FBCheckinModel"
-                                                                   inManagedObjectContext:[self managedObjectContext]];
+                                                                      inManagedObjectContext:ctx];
         
         pointObject.body = checkin;
         pointObject.accountFBUserID = currentFBUserId;
         pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
     }
     
-   
+    
     NSError *error = nil;
-    [[self managedObjectContext] save:&error];
+    [ctx save:&error];
     if(error){
-        NSLog(@"addCheckinToStorage error=%@", error);
+        NSLog(@"CoreData: addCheckinToStorage error=%@", error);
     }
 }
 //
 -(NSArray *)checkinsFromStorage{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"FBCheckinModel"
-                                                         inManagedObjectContext:[self managedObjectContext]];
+                                                         inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
-    NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
+    NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
     return results;
 }

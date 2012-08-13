@@ -9,12 +9,11 @@
 #define maxARDistance 20000000
 
 #define minARMarkerScale 0.65f
-#define countOfScaledChunks 10
+#define countOfScaledChunks 7
 #define scaleStep() (1-minARMarkerScale)/countOfScaledChunks
-#define scaledChunkWidthInKm(maxDistance) maxDistance/1000/countOfScaledChunks
 
 #define minARMarkerAlpha 0.6f
-#define alphaStep(maxDistance) (1-minARMarkerAlpha)/(maxDistance/1000)
+#define alphaStep() (1-minARMarkerAlpha)/countOfScaledChunks
 
 @protocol ARLocationDataSource
 - (NSArray *)points; 

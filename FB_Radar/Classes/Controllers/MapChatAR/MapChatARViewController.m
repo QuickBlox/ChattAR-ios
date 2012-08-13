@@ -195,9 +195,7 @@
         NSLog(@"Checkins Parts=%d", numberOfCheckinsRetrieved);
         [self getFBCheckins];
         
-        
-        
-        
+
         isInitialized = YES;
         
         
@@ -545,6 +543,7 @@
             [fbCheckinsIDs addObject:((UserAnnotation *)checkinCashedPoint.body).fbCheckinID];
         }
     }
+    NSLog(@"fbCheckinsIDs=%@", fbCheckinsIDs);
     
     if([allCheckins count] > 0){
         [self showWorld];
@@ -621,38 +620,54 @@
     
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
+    NSArray *currentMapAnnotations = [mapViewController.mapView.annotations copy];
+    
     // Check for Map
     BOOL isExistPoint = NO;
-    for (UserAnnotation *annotation in mapViewController.mapView.annotations)
+    for (UserAnnotation *annotation in currentMapAnnotations)
 	{
         // already exist, change status
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
-            MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-            [marker performSelectorOnMainThread:@selector(updateStatus:) withObject:point.userStatus waitUntilDone:YES];// update status
-            [marker updateCoordinate:point.coordinate]; 
-            
+            dispatch_async( dispatch_get_main_queue(), ^{
+                MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                [marker updateStatus:point.userStatus];// update status
+                [marker updateCoordinate:point.coordinate];
+            });
+
             isExistPoint = YES;
             
             break;
         }
     }
     
+    [currentMapAnnotations release];
+    
     
     // Check for AR
     if(isExistPoint){
-        for (ARMarkerView *marker in arViewController.coordinateViews)
+        
+        NSArray *currentARMarkers = [arViewController.coordinateViews copy];
+        
+        for (ARMarkerView *marker in currentARMarkers)
 		{
             // already exist, change status
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
-                ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                [marker performSelectorOnMainThread:@selector(updateStatus:) withObject:point.userStatus waitUntilDone:YES];// update status
-                [marker updateCoordinate:point.coordinate]; // update location
+                
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                    [marker updateStatus:point.userStatus];// update status
+                    [marker updateCoordinate:point.coordinate]; // update location  
+                });
+                               
                 isExistPoint = YES;
+                               
                 break;
             }
         }
+        
+        [currentARMarkers release];
     }
     
     
@@ -669,8 +684,10 @@
         }
         //
         if(addedToCurrentMapState){
-            [mapViewController performSelectorOnMainThread:@selector(addPoint:) withObject:point waitUntilDone:YES];
-            [arViewController performSelectorOnMainThread:@selector(addPoint:) withObject:point waitUntilDone:YES];
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [mapViewController addPoint:point];
+                [arViewController addPoint:point];
+            });
         }
     }
     
@@ -888,51 +905,49 @@
 
 // convert map array of QBLGeoData objects to UserAnnotations a
 - (void)processQBCheckins:(NSArray *)data{
-	
-    @autoreleasepool {
 
-        NSArray *fbUsers = [data objectAtIndex:0];
-        NSArray *qbPoints = [data objectAtIndex:1];
+    NSArray *fbUsers = [data objectAtIndex:0];
+    NSArray *qbPoints = [data objectAtIndex:1];
+    
+    CLLocationCoordinate2D coordinate;
+    int index = 0;
+    
+    NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
+    
+    // look through array for geodatas
+    for (QBLGeoData *geodata in qbPoints)
+    {
+        NSDictionary *fbUser = nil;
+        for(NSDictionary *user in fbUsers){
+            if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+                fbUser = user;
+                break;
+            }
+        }
         
-        CLLocationCoordinate2D coordinate;
-        int index = 0;
-        
-        NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
-        
-        // look through array for geodatas
-        for (QBLGeoData *geodata in qbPoints)
+        if ([geodata.user.facebookID isEqualToString:[DataManager shared].currentFBUserId])
         {
-            NSDictionary *fbUser = nil;
-            for(NSDictionary *user in fbUsers){
-                if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
-                    fbUser = user;
-                    break;
-                }
-            }
-            
-            if ([geodata.user.facebookID isEqualToString:[DataManager shared].currentFBUserId])
-            {
-                coordinate.latitude = self.myCurrentLocation.coordinate.latitude;
-                coordinate.longitude = self.myCurrentLocation.coordinate.longitude;
-            }
-            else
-            {
-                coordinate.latitude = geodata.latitude;
-                coordinate.longitude = geodata.longitude;
-            }
-            
-            UserAnnotation *mapAnnotation = [[UserAnnotation alloc] init];
-            mapAnnotation.geoDataID = geodata.ID;
-            mapAnnotation.coordinate = coordinate;
-            mapAnnotation.userStatus = geodata.status;
-            mapAnnotation.userName = [fbUser objectForKey:kName];
-            mapAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
-            mapAnnotation.fbUserId = [fbUser objectForKey:kId];
-            mapAnnotation.fbUser = fbUser;
-            mapAnnotation.qbUserID = geodata.user.ID;
-            mapAnnotation.createdAt = geodata.createdAt;
-            [mapPointsMutable replaceObjectAtIndex:index withObject:mapAnnotation];
-            
+            coordinate.latitude = self.myCurrentLocation.coordinate.latitude;
+            coordinate.longitude = self.myCurrentLocation.coordinate.longitude;
+        }
+        else
+        {
+            coordinate.latitude = geodata.latitude;
+            coordinate.longitude = geodata.longitude;
+        }
+        
+        UserAnnotation *mapAnnotation = [[UserAnnotation alloc] init];
+        mapAnnotation.geoDataID = geodata.ID;
+        mapAnnotation.coordinate = coordinate;
+        mapAnnotation.userStatus = geodata.status;
+        mapAnnotation.userName = [fbUser objectForKey:kName];
+        mapAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
+        mapAnnotation.fbUserId = [fbUser objectForKey:kId];
+        mapAnnotation.fbUser = fbUser;
+        mapAnnotation.qbUserID = geodata.user.ID;
+        mapAnnotation.createdAt = geodata.createdAt;
+        [mapPointsMutable replaceObjectAtIndex:index withObject:mapAnnotation];
+        
 //            // own centered
 //            if([[mapAnnotation.fbUser objectForKey:kId] isEqualToString:[[DataManager shared].currentFBUser objectForKey:kId]]){
 //                MKCoordinateRegion region;
@@ -944,219 +959,216 @@
 //                region.span = span;
 //                [mapViewController.mapView setRegion:region animated:TRUE];
 //            }
-            
-            [mapAnnotation release];
-            
-            ++index;
-            
-            // show Point on Map/AR
-            //[self performSelectorOnMainThread:@selector(addNewPointToMapAR:) withObject:mapAnnotation waitUntilDone:YES];
-            [self addNewPointToMapAR:mapAnnotation];
-        }
-
-        //
-        // add to Storage
-        [[DataManager shared] addMapARPointsToStorage:mapPointsMutable];
-        [mapPointsMutable release];
         
-        // all data was retrieved
-        ++self.initState;
-        NSLog(@"MAP INIT OK");
-        if(self.initState == 2){
-            [self performSelectorOnMainThread:@selector(endOfRetrieveInitialData) withObject:nil waitUntilDone:NO]; 
-        }
+        [mapAnnotation release];
+        
+        ++index;
+        
+        // show Point on Map/AR
+        [self addNewPointToMapAR:mapAnnotation];
+    }
+
+    //
+    // add to Storage
+    [[DataManager shared] addMapARPointsToStorage:mapPointsMutable];
+    
+    [mapPointsMutable release];
+    
+    // all data was retrieved
+    ++self.initState;
+    NSLog(@"MAP INIT OK");
+    if(self.initState == 2){
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self endOfRetrieveInitialData];
+        });
     }
 }
 
 // convert chat array of QBLGeoData objects to UserAnnotations a
 - (void)processQBChatMessages:(NSArray *)data{
-    @autoreleasepool {
-        
-        NSArray *fbUsers = [data objectAtIndex:0];
-        NSArray *qbMessages = [data objectAtIndex:1];
 
-        CLLocationCoordinate2D coordinate;
-        int index = 0;
-        
-        NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
-        
-        for (QBLGeoData *geodata in qbMessages)
-        {
-            NSDictionary *fbUser = nil;
-            for(NSDictionary *user in fbUsers){
-                if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
-                    fbUser = user;
-                    break;
-                }
+    NSArray *fbUsers = [data objectAtIndex:0];
+    NSArray *qbMessages = [data objectAtIndex:1];
+
+    CLLocationCoordinate2D coordinate;
+    int index = 0;
+    
+    NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
+    
+    for (QBLGeoData *geodata in qbMessages)
+    {
+        NSDictionary *fbUser = nil;
+        for(NSDictionary *user in fbUsers){
+            if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+                fbUser = user;
+                break;
             }
-            
-            coordinate.latitude = geodata.latitude;
-            coordinate.longitude = geodata.longitude;
-            UserAnnotation *chatAnnotation = [[UserAnnotation alloc] init];
-            chatAnnotation.geoDataID = geodata.ID;
-            chatAnnotation.coordinate = coordinate;
-            
-            if ([geodata.status length] >= 6){
-                if ([[geodata.status substringToIndex:6] isEqualToString:fbidIdentifier]){
-                    // add Quote
-                    [self addQuoteDataToAnnotation:chatAnnotation geoData:geodata];
-                    
-                }else {
-                    chatAnnotation.userStatus = geodata.status;
-                }
+        }
+        
+        coordinate.latitude = geodata.latitude;
+        coordinate.longitude = geodata.longitude;
+        UserAnnotation *chatAnnotation = [[UserAnnotation alloc] init];
+        chatAnnotation.geoDataID = geodata.ID;
+        chatAnnotation.coordinate = coordinate;
+        
+        if ([geodata.status length] >= 6){
+            if ([[geodata.status substringToIndex:6] isEqualToString:fbidIdentifier]){
+                // add Quote
+                [self addQuoteDataToAnnotation:chatAnnotation geoData:geodata];
+                
             }else {
                 chatAnnotation.userStatus = geodata.status;
             }
-            
-            chatAnnotation.userName = [NSString stringWithFormat:@"%@ %@",
-                                       [fbUser objectForKey:kFirstName], [fbUser objectForKey:kLastName]];
-            chatAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
-            chatAnnotation.fbUserId = [fbUser objectForKey:kId];
-            chatAnnotation.fbUser = fbUser;
-            chatAnnotation.qbUserID = geodata.user.ID;
-            chatAnnotation.createdAt = geodata.createdAt;
-            
-            chatAnnotation.distance  = [geodata.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
-            
-            [qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
-            [chatAnnotation release];
-            
-            ++index;
-            
-            // show Message on Chat
-            [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
-            //[self performSelectorOnMainThread:@selector(addNewMessageToChat:) withObject:chatAnnotation waitUntilDone:YES];
+        }else {
+            chatAnnotation.userStatus = geodata.status;
         }
-        [chatViewController.messagesTableView performSelectorOnMainThread:@selector(reloadData) withObject:NO waitUntilDone:YES];
+        
+        chatAnnotation.userName = [NSString stringWithFormat:@"%@ %@",
+                                   [fbUser objectForKey:kFirstName], [fbUser objectForKey:kLastName]];
+        chatAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
+        chatAnnotation.fbUserId = [fbUser objectForKey:kId];
+        chatAnnotation.fbUser = fbUser;
+        chatAnnotation.qbUserID = geodata.user.ID;
+        chatAnnotation.createdAt = geodata.createdAt;
+        
+        chatAnnotation.distance  = [geodata.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+        
+        [qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
+        [chatAnnotation release];
+        
+        ++index;
+        
+        // show Message on Chat
+        [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [chatViewController.messagesTableView reloadData];
+    });
+    
 
-        [qbMessagesMutable release];
-        
-        
-        // all data was retrieved
-        ++self.initState;
-        NSLog(@"CHAT INIT OK");
-        if(self.initState == 2){
-            [self performSelectorOnMainThread:@selector(endOfRetrieveInitialData) withObject:nil waitUntilDone:NO]; 
-        }
+    [qbMessagesMutable release];
+    
+    
+    // all data was retrieved
+    ++self.initState;
+    NSLog(@"CHAT INIT OK");
+    if(self.initState == 2){
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self endOfRetrieveInitialData];
+        });
     }
 }
 
 // convert checkins array UserAnnotations
 - (void)processFBCheckins:(NSArray *)rawCheckins{
-    
-    @autoreleasepool {
-
-        for(NSDictionary *checkinsResult in rawCheckins){
-            if([checkinsResult isKindOfClass:NSNull.class]){
-                continue;
-            }
-            SBJsonParser *parser = [[SBJsonParser alloc] init];
-            NSArray *checkins = [[parser objectWithString:(NSString *)([checkinsResult objectForKey:kBody])] objectForKey:kData];
-            [parser release];
+    for(NSDictionary *checkinsResult in rawCheckins){
+        if([checkinsResult isKindOfClass:NSNull.class]){
+            continue;
+        }
+        SBJsonParser *parser = [[SBJsonParser alloc] init];
+        NSArray *checkins = [[parser objectWithString:(NSString *)([checkinsResult objectForKey:kBody])] objectForKey:kData];
+        [parser release];
+        
+        if ([checkins count]){
             
-            if ([checkins count]){
+            //
+            
+            CLLocationCoordinate2D coordinate;
+            
+            // Collect checkins
+            NSMutableArray *proccesedCheckins = [NSMutableArray array];
+            for(NSDictionary *checkin in checkins){
                 
-                //
-                
-                CLLocationCoordinate2D coordinate;
-                
-                // Collect checkins
-                NSMutableArray *proccesedCheckins = [NSMutableArray array];
-                for(NSDictionary *checkin in checkins){
-                    
-                    NSString *ID = [checkin objectForKey:kId];
-                    if([fbCheckinsIDs containsObject:ID]){
-                        continue;
-                    }
-                    
-                    // get checkin's owner
-                    NSString *fbUserID = [[checkin objectForKey:kFrom] objectForKey:kId];
-                    
-                    NSDictionary *fbUser;
-                    if([fbUserID isEqualToString:[DataManager shared].currentFBUserId]){
-                        fbUser = [DataManager shared].currentFBUser;
-                    }else{
-                        fbUser = [[DataManager shared].myFriendsAsDictionary objectForKey:fbUserID];
-                    }
-                    
-                    // skip if not friend or own
-                    if(!fbUser){
-                        continue;
-                    }
-                    
-                    if([checkin objectForKey:kPlace] == nil){
-                        continue;
-                    }
-                    
-                    // status
-                    NSString *status = nil;
-                    NSString* country = [[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kCountry];
-                    NSString* city = [[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kCity];
-                    NSString* name = [[checkin objectForKey:kPlace] objectForKey:kName];
-                    if ([country length]){
-                        status = [NSString stringWithFormat:@"I'm at %@ in %@, %@.", name, country, city];
-                    }else {
-                        status = [NSString stringWithFormat:@"I'm at %@", name];
-                    }
-                    
-                    // datetime
-                    NSString* time = [checkin objectForKey:kCreatedTime];
-                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                    [df setLocale:[NSLocale currentLocale]];
-                    [df setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-                    NSDate *createdAt = [df dateFromString:time];
-                    [df release];
-                    
-                    // coordinate
-                    coordinate.latitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLatitude] floatValue];
-                    coordinate.longitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLongitude] floatValue];
-                    
-                    UserAnnotation *checkinAnnotation = [[UserAnnotation alloc] init];
-                    checkinAnnotation.geoDataID = -1;
-                    checkinAnnotation.coordinate = coordinate;
-                    checkinAnnotation.userStatus = status;
-                    checkinAnnotation.userName = [[checkin objectForKey:kFrom] objectForKey:kName];
-                    checkinAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
-                    checkinAnnotation.fbUserId = [fbUser objectForKey:kId];
-                    checkinAnnotation.fbUser = fbUser;
-                    checkinAnnotation.fbCheckinID = ID;
-                    checkinAnnotation.createdAt = createdAt;
-                    
-                    
-                    CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
-                    checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
-                    [checkinLocation release];
-                    
-                    [proccesedCheckins addObject:checkinAnnotation];
-                    [checkinAnnotation release];
-                    
-                    [fbCheckinsIDs addObject:ID];
-                    
-                    
-                    // show Point on Map/AR
-                    [self addNewPointToMapAR:checkinAnnotation];
-                    
-                    // show Message on Chat
-                    [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO];
+                NSString *ID = [checkin objectForKey:kId];
+                if([fbCheckinsIDs containsObject:ID]){
+                    continue;
                 }
                 
-                // refresh chat
-                [chatViewController refresh];
+                // get checkin's owner
+                NSString *fbUserID = [[checkin objectForKey:kFrom] objectForKey:kId];
+                
+                NSDictionary *fbUser;
+                if([fbUserID isEqualToString:[DataManager shared].currentFBUserId]){
+                    fbUser = [DataManager shared].currentFBUser;
+                }else{
+                    fbUser = [[DataManager shared].myFriendsAsDictionary objectForKey:fbUserID];
+                }
+                
+                // skip if not friend or own
+                if(!fbUser){
+                    continue;
+                }
+                
+                if([checkin objectForKey:kPlace] == nil){
+                    continue;
+                }
+                
+                // status
+                NSString *status = nil;
+                NSString* country = [[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kCountry];
+                NSString* city = [[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kCity];
+                NSString* name = [[checkin objectForKey:kPlace] objectForKey:kName];
+                if ([country length]){
+                    status = [NSString stringWithFormat:@"I'm at %@ in %@, %@.", name, country, city];
+                }else {
+                    status = [NSString stringWithFormat:@"I'm at %@", name];
+                }
+                
+                // datetime
+                NSString* time = [checkin objectForKey:kCreatedTime];
+                NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                [df setLocale:[NSLocale currentLocale]];
+                [df setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+                NSDate *createdAt = [df dateFromString:time];
+                [df release];
+                
+                // coordinate
+                coordinate.latitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLatitude] floatValue];
+                coordinate.longitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLongitude] floatValue];
+                
+                UserAnnotation *checkinAnnotation = [[UserAnnotation alloc] init];
+                checkinAnnotation.geoDataID = -1;
+                checkinAnnotation.coordinate = coordinate;
+                checkinAnnotation.userStatus = status;
+                checkinAnnotation.userName = [[checkin objectForKey:kFrom] objectForKey:kName];
+                checkinAnnotation.userPhotoUrl = [fbUser objectForKey:kPicture];
+                checkinAnnotation.fbUserId = [fbUser objectForKey:kId];
+                checkinAnnotation.fbUser = fbUser;
+                checkinAnnotation.fbCheckinID = ID;
+                checkinAnnotation.createdAt = createdAt;
                 
                 
-                // save Checkins
-                [allCheckins addObjectsFromArray:proccesedCheckins];
-                //
-                // add to Storage
-                [[DataManager shared] addCheckinsToStorage:proccesedCheckins];
+                CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
+                checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+                [checkinLocation release];
                 
-                //
-            
+                [proccesedCheckins addObject:checkinAnnotation];
+                [checkinAnnotation release];
+                
+                [fbCheckinsIDs addObject:ID];
+                
+                
+                // show Point on Map/AR
+                [self addNewPointToMapAR:checkinAnnotation];
+                
+                // show Message on Chat
+                [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO];
             }
+            
+            // save Checkins
+            [allCheckins addObjectsFromArray:proccesedCheckins];
+            //
+            // add to Storage
+            [[DataManager shared] addCheckinsToStorage:proccesedCheckins];
+            
         }
-        
-        [chatViewController.messagesTableView performSelectorOnMainThread:@selector(reloadData) withObject:NO waitUntilDone:YES];
     }
+    
+    // refresh chat
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [chatViewController.messagesTableView reloadData];
+    });
 }
 
 // Add Quote data to annotation
@@ -1248,7 +1260,6 @@
 #pragma mark FBServiceResultDelegate
 
 -(void)completedWithFBResult:(FBServiceResult *)result context:(id)context{
-     NSLog(@"completedWithFBResult, contextInfo=%@", context);
     
     switch (result.queryType) {
             
@@ -1268,16 +1279,18 @@
                 
                 // conversation
                 NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-                //[self performSelectorInBackground:@selector(processQBCheckins:) withObject:data];
-                [self processQBCheckins:data];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [self processQBCheckins:data];
+                });
                 
             // Chat init
             }else if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:chatFBUsers]){
                 
                 // conversation
                 NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-               // [self performSelectorInBackground:@selector(processQBChatMessages:) withObject:data];
-                [self processQBChatMessages:data];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [self processQBChatMessages:data];
+                });
                 
             // check new one
             }else{
@@ -1313,9 +1326,11 @@
             --numberOfCheckinsRetrieved;
             
             NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
-
+            
             // convert checkins
-            [self performSelectorInBackground:@selector(processFBCheckins:) withObject:result.body];  
+            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self processFBCheckins:result.body];
+            });
         }
         break;
             
@@ -1415,6 +1430,15 @@
         }else{
             [activityIndicator removeFromSuperview];
             activityIndicator = nil;
+            
+            NSString *message = [result.errors stringValue];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
         }
     }
 }
