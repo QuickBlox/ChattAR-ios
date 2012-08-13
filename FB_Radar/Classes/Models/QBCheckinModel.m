@@ -1,15 +1,15 @@
 //
-//  MapARPoint.m
+//  QBCheckinModel.m
 //  Chattar
 //
 //  Created by IgorKh on 8/10/12.
 //
 //
 
-#import "MapARPoint.h"
+#import "QBCheckinModel.h"
 
 
-@implementation MapARPoint
+@implementation QBCheckinModel
 
 @dynamic body;
 @dynamic qbUserID;

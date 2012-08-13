@@ -34,5 +34,6 @@
     #import "NSArray+convert.h"
     #import "NSString+Additions.h"
     #import "UIColor+hex.h"
+    #import "NSObject+performer.h"
 
 #endif

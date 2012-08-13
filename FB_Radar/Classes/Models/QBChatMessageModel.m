@@ -1,15 +1,15 @@
 //
-//  ChatMessage.m
+//  QBChatMessageModel.m
 //  Chattar
 //
 //  Created by IgorKh on 8/10/12.
 //
 //
 
-#import "ChatMessage.h"
+#import "QBChatMessageModel.h"
 
 
-@implementation ChatMessage
+@implementation QBChatMessageModel
 
 @dynamic body;
 @dynamic geoDataID;

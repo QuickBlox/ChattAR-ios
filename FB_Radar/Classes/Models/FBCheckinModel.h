@@ -1,5 +1,5 @@
 //
-//  Checkin.h
+//  FBCheckinModel.h
 //  Chattar
 //
 //  Created by IgorKh on 8/2/12.
@@ -10,9 +10,11 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Checkin : NSManagedObject
+@interface FBCheckinModel : NSManagedObject
 
 @property (nonatomic, retain) NSString * accountFBUserID;
 @property (nonatomic, retain) id body;
+@property (nonatomic, retain) NSNumber * timestamp;
+@property (nonatomic, retain) NSNumber * fbUserID;
 
 @end

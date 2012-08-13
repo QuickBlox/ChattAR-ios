@@ -9,8 +9,9 @@
 #import "DataManager.h"
 #import "UserAnnotation.h"
 
-#import "MapARPoint.h"
-#import "ChatMessage.h"
+#import "QBCheckinModel.h"
+#import "QBChatMessageModel.h"
+#import "FBCheckinModel.h"
 
 #define kFavoritiesFriends [NSString stringWithFormat:@"kFavoritiesFriends_%@", [DataManager shared].currentFBUserId]
 #define kFavoritiesFriendsIds [NSString stringWithFormat:@"kFavoritiesFriendsIds_%@", [DataManager shared].currentFBUserId]
@@ -373,7 +374,7 @@ static DataManager *instance = nil;
     
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatMessage"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBChatMessageModel"
 											  inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",message.geoDataID]];
@@ -386,7 +387,7 @@ static DataManager *instance = nil;
     
     
     // Insert
-    ChatMessage *messageObject = (ChatMessage *)[NSEntityDescription insertNewObjectForEntityForName:@"ChatMessage"
+    QBChatMessageModel *messageObject = (QBChatMessageModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBChatMessageModel"
                                                                    inManagedObjectContext:[self managedObjectContext]];
     messageObject.body = message;
     messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
@@ -401,7 +402,7 @@ static DataManager *instance = nil;
 //
 -(NSArray *)chatMessagesFromStorage{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"ChatMessage"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBChatMessageModel"
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
@@ -428,24 +429,24 @@ static DataManager *instance = nil;
 -(void)addMapARPointToStorage:(UserAnnotation *)point{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MapARPoint"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBCheckinModel"
 											  inManagedObjectContext:[self managedObjectContext]];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"qbUserID == %i",point.qbUserID]];
 	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
-    MapARPoint *pointObject = nil;
+    QBCheckinModel *pointObject = nil;
     
     // Update
     if(nil != results && [results count] > 0){
-        pointObject = (MapARPoint *)[results objectAtIndex:0];
+        pointObject = (QBCheckinModel *)[results objectAtIndex:0];
         pointObject.body = point;
         pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
        
     // Insert
     }else{
-        pointObject = (MapARPoint *)[NSEntityDescription insertNewObjectForEntityForName:@"MapARPoint"
+        pointObject = (QBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBCheckinModel"
                                                                        inManagedObjectContext:[self managedObjectContext]];
         pointObject.body = point;
         pointObject.qbUserID = [NSNumber numberWithInt:point.qbUserID];
@@ -461,7 +462,7 @@ static DataManager *instance = nil;
 //
 -(NSArray *)mapARPointsFromStorage{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"MapARPoint"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBCheckinModel"
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
@@ -484,27 +485,50 @@ static DataManager *instance = nil;
     }
 }
 //
--(void)addCheckinToStorage:(id)checkin{
-    NSManagedObject *messageObject = [NSEntityDescription insertNewObjectForEntityForName:@"Checkin"
-                                                                   inManagedObjectContext:[self managedObjectContext]];
-    [messageObject setValue:checkin forKey:@"body"];
-    [messageObject setValue:currentFBUserId forKey:@"accountFBUserID"];
+-(void)addCheckinToStorage:(UserAnnotation *)checkin{
     
+    // Check if exist
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBCheckinModel"
+											  inManagedObjectContext:[self managedObjectContext]];
+    [fetchRequest setEntity:entity];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@",checkin.fbUserId]];
+	NSArray *results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:nil];
+    [fetchRequest release];
+    
+    FBCheckinModel *pointObject = nil;
+    
+    
+    // Update
+    if(nil != results && [results count] > 0){
+        pointObject = (FBCheckinModel *)[results objectAtIndex:0];
+        pointObject.body = checkin;
+        pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
+    }else{
+        pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"FBCheckinModel"
+                                                                   inManagedObjectContext:[self managedObjectContext]];
+        
+        pointObject.body = checkin;
+        pointObject.accountFBUserID = currentFBUserId;
+        pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
+    }
+    
+   
     NSError *error = nil;
     [[self managedObjectContext] save:&error];
     if(error){
         NSLog(@"addCheckinToStorage error=%@", error);
     }
-
 }
 //
 -(NSArray *)checkinsFromStorage{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"Checkin"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"FBCheckinModel"
                                                          inManagedObjectContext:[self managedObjectContext]];
     
     [fetchRequest setEntity:entityDescription];
-    //    [fetchRequest setSortDescriptors:<#(NSArray *)#>:predicate];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     NSError *error;
     NSArray* results = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];

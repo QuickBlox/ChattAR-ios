@@ -191,11 +191,11 @@
 		FAC31286158B5CE800A1ABE4 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC31284158B5CE800A1ABE4 /* camera.png */; };
 		FAC31287158B5CE800A1ABE4 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC31285158B5CE800A1ABE4 /* camera@2x.png */; };
 		FAC3128B158B8C0000A1ABE4 /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC3128A158B8C0000A1ABE4 /* Conversation.m */; };
-		FAC6B84B15D5382900F3B10F /* MapARPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B84A15D5382900F3B10F /* MapARPoint.m */; };
-		FAC6B84E15D5382900F3B10F /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B84D15D5382900F3B10F /* ChatMessage.m */; };
-		FAC6B85C15D552EE00F3B10F /* cellBodyBG2.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC6B85B15D552EE00F3B10F /* cellBodyBG2.png */; };
+		FAC6B88215D8F07B00F3B10F /* bubble_green-1.png in Resources */ = {isa = PBXBuildFile; fileRef = FAC6B88115D8F07B00F3B10F /* bubble_green-1.png */; };
+		FAC6B89215D9006D00F3B10F /* FBCheckinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B88D15D9006D00F3B10F /* FBCheckinModel.m */; };
+		FAC6B89315D9006D00F3B10F /* QBChatMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */; };
+		FAC6B89415D9006D00F3B10F /* QBCheckinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */; };
 		FAE4E240158B29C400BBB219 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4E23F158B29C400BBB219 /* Quickblox.framework */; };
-		FAEA2B1115CAC385004E2B56 /* Checkin.m in Sources */ = {isa = PBXBuildFile; fileRef = FAEA2B1015CAC385004E2B56 /* Checkin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -472,14 +472,14 @@
 		FAC31285158B5CE800A1ABE4 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
 		FAC31289158B8C0000A1ABE4 /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		FAC3128A158B8C0000A1ABE4 /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
-		FAC6B84915D5382900F3B10F /* MapARPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapARPoint.h; sourceTree = "<group>"; };
-		FAC6B84A15D5382900F3B10F /* MapARPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapARPoint.m; sourceTree = "<group>"; };
-		FAC6B84C15D5382900F3B10F /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
-		FAC6B84D15D5382900F3B10F /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
-		FAC6B85B15D552EE00F3B10F /* cellBodyBG2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellBodyBG2.png; sourceTree = "<group>"; };
+		FAC6B88115D8F07B00F3B10F /* bubble_green-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_green-1.png"; sourceTree = "<group>"; };
+		FAC6B88C15D9006D00F3B10F /* FBCheckinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckinModel.h; sourceTree = "<group>"; };
+		FAC6B88D15D9006D00F3B10F /* FBCheckinModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckinModel.m; sourceTree = "<group>"; };
+		FAC6B88E15D9006D00F3B10F /* QBChatMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBChatMessageModel.h; sourceTree = "<group>"; };
+		FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBChatMessageModel.m; sourceTree = "<group>"; };
+		FAC6B89015D9006D00F3B10F /* QBCheckinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckinModel.h; sourceTree = "<group>"; };
+		FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckinModel.m; sourceTree = "<group>"; };
 		FAE4E23F158B29C400BBB219 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Externals/Quickblox.framework; sourceTree = "<group>"; };
-		FAEA2B0F15CAC385004E2B56 /* Checkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Checkin.h; sourceTree = "<group>"; };
-		FAEA2B1015CAC385004E2B56 /* Checkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Checkin.m; sourceTree = "<group>"; };
 		FAEF57AF15CADF0100614DBF /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -686,6 +686,7 @@
 			children = (
 				FA0BBEE915AD6062005F4D63 /* FriendsAllSwitch */,
 				8A566CB61578ACA0006CEFF6 /* RadarMarker */,
+				FAC6B88115D8F07B00F3B10F /* bubble_green-1.png */,
 				8A79B8FB15862B4D0015B3A7 /* sendButton.png */,
 				8A79B8FC15862B4D0015B3A7 /* sendButton@2x.png */,
 				FAAD8AA0158DFC5700176682 /* 3item.png */,
@@ -695,7 +696,6 @@
 				8A7651E71581D64400B8C1DC /* replyCellBodyBG.png */,
 				FA82C783158F6E2E005AFE00 /* replyCellBodyBG_Pressed.png */,
 				8A21DBA31580E0E800D0144B /* cellBodyBG.png */,
-				FAC6B85B15D552EE00F3B10F /* cellBodyBG2.png */,
 				8A21DBA41580E0E800D0144B /* kmBG2.png */,
 				8A21DBA51580E0E800D0144B /* kmBG2@2x.png */,
 				436C0AF615D50EB80054D9BC /* kmBG.png */,
@@ -1074,12 +1074,12 @@
 		FA99E78B15C95C0B0031F54F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FAEA2B0F15CAC385004E2B56 /* Checkin.h */,
-				FAEA2B1015CAC385004E2B56 /* Checkin.m */,
-				FAC6B84C15D5382900F3B10F /* ChatMessage.h */,
-				FAC6B84D15D5382900F3B10F /* ChatMessage.m */,
-				FAC6B84915D5382900F3B10F /* MapARPoint.h */,
-				FAC6B84A15D5382900F3B10F /* MapARPoint.m */,
+				FAC6B88C15D9006D00F3B10F /* FBCheckinModel.h */,
+				FAC6B88D15D9006D00F3B10F /* FBCheckinModel.m */,
+				FAC6B88E15D9006D00F3B10F /* QBChatMessageModel.h */,
+				FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */,
+				FAC6B89015D9006D00F3B10F /* QBCheckinModel.h */,
+				FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */,
 			);
 			name = Models;
 			path = Classes/Models;
@@ -1226,7 +1226,7 @@
 				436C0AF415D50EA90054D9BC /* Marker2@2x.png in Resources */,
 				436C0AF815D50EB80054D9BC /* kmBG.png in Resources */,
 				436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */,
-				FAC6B85C15D552EE00F3B10F /* cellBodyBG2.png in Resources */,
+				FAC6B88215D8F07B00F3B10F /* bubble_green-1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1311,9 +1311,9 @@
 				FA0BBF1115AD6114005F4D63 /* ViewTouch.m in Sources */,
 				FA99E78715C956BB0031F54F /* ChattARModel.xcdatamodeld in Sources */,
 				FA99E78A15C95BFB0031F54F /* CustomButtonWithQuote.m in Sources */,
-				FAEA2B1115CAC385004E2B56 /* Checkin.m in Sources */,
-				FAC6B84B15D5382900F3B10F /* MapARPoint.m in Sources */,
-				FAC6B84E15D5382900F3B10F /* ChatMessage.m in Sources */,
+				FAC6B89215D9006D00F3B10F /* FBCheckinModel.m in Sources */,
+				FAC6B89315D9006D00F3B10F /* QBChatMessageModel.m in Sources */,
+				FAC6B89415D9006D00F3B10F /* QBCheckinModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
