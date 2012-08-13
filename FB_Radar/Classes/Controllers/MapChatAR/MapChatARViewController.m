@@ -950,8 +950,8 @@
             ++index;
             
             // show Point on Map/AR
-            [self performSelectorOnMainThread:@selector(addNewPointToMapAR:) withObject:mapAnnotation waitUntilDone:YES];
-            //[self addNewPointToMapAR:mapAnnotation];
+            //[self performSelectorOnMainThread:@selector(addNewPointToMapAR:) withObject:mapAnnotation waitUntilDone:YES];
+            [self addNewPointToMapAR:mapAnnotation];
         }
 
         //
@@ -1024,8 +1024,8 @@
             ++index;
             
             // show Message on Chat
-            //[self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
-            [self performSelectorOnMainThread:@selector(addNewMessageToChat:) withObject:chatAnnotation waitUntilDone:YES];
+            [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
+            //[self performSelectorOnMainThread:@selector(addNewMessageToChat:) withObject:chatAnnotation waitUntilDone:YES];
         }
         [chatViewController.messagesTableView performSelectorOnMainThread:@selector(reloadData) withObject:NO waitUntilDone:YES];
 
@@ -1268,14 +1268,16 @@
                 
                 // conversation
                 NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-                [self performSelectorInBackground:@selector(processQBCheckins:) withObject:data];
+                //[self performSelectorInBackground:@selector(processQBCheckins:) withObject:data];
+                [self processQBCheckins:data];
                 
             // Chat init
             }else if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:chatFBUsers]){
                 
                 // conversation
                 NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-                [self performSelectorInBackground:@selector(processQBChatMessages:) withObject:data];
+               // [self performSelectorInBackground:@selector(processQBChatMessages:) withObject:data];
+                [self processQBChatMessages:data];
                 
             // check new one
             }else{

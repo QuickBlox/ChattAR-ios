@@ -623,10 +623,15 @@
     
     // Set Alpha & Size based on distance
     if([self scaleViewsBasedOnDistance] || [self transparenViewsBasedOnDistance]){
+        
+        CGFloat scaledChunkWidth = scaledChunkWidthInKm(maxShowedMarkerDistance-minShowedMarkerDistance);
+        
         for (ARMarkerView *viewToDraw in self.displayView.subviews) {
             if(![viewToDraw isKindOfClass:ARMarkerView.class]){
                 continue;
             }
+            
+                   
             
             CATransform3D transform = CATransform3DIdentity;
             
@@ -638,12 +643,16 @@
                 // max scale: 1   -> 1 km
                 //
                 
-                scaleFactor = 1.0 - (viewToDraw.distance-minShowedMarkerDistance)/1000 * scaleStep((maxShowedMarkerDistance-minShowedMarkerDistance));
+                int numberOfChunk = ceil(((viewToDraw.distance-minShowedMarkerDistance)/1000)/scaledChunkWidth);
+                
+                scaleFactor = minimumScaleFactor + numberOfChunk*scaleStep();
+                
                 if(scaleFactor > 1){
                     scaleFactor = 1.0;
                 }else if (scaleFactor < minARMarkerScale){
                     scaleFactor = minARMarkerScale;
                 }
+                
 
                 transform = CATransform3DScale(transform, scaleFactor, scaleFactor, scaleFactor);
                 viewToDraw.layer.transform = transform;
