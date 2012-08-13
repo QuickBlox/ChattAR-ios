@@ -14,6 +14,7 @@
 #import "MessagesViewController.h"
 #import "CustomSwitch.h"
 
+#define tableIsUpdating 1011
 
 @interface ChatViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, ActionStatusDelegate, UIScrollViewDelegate, FBServiceResultDelegate>{
     UIImage *messageBGImage;

@@ -38,8 +38,6 @@
 @property (nonatomic, assign) NSMutableArray *mapPointsIDs;
 @property (nonatomic, assign) NSMutableArray *fbCheckinsIDs;
 
-
-
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
 @property (nonatomic, retain) UIActionSheet *userActionSheet;

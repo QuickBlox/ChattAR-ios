@@ -55,7 +55,8 @@
         
         NSArray *friendsIds =  [[DataManager shared].myFriendsAsDictionary allKeys];
         
-        if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]){
+        if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]
+           || [[DataManager shared].currentFBUserId isEqualToString:[annotation.fbUser objectForKey:kId]]){
             
             [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName@2x.png"]];
         }
@@ -124,7 +125,8 @@
     
     NSArray *friendsIds =  [[DataManager shared].myFriendsAsDictionary allKeys];
     
-    if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]){
+    if([friendsIds containsObject:[annotation.fbUser objectForKey:kId]]
+       || [[DataManager shared].currentFBUserId isEqualToString:[annotation.fbUser objectForKey:kId]]){
         
         [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName@2x.png"]];
     }

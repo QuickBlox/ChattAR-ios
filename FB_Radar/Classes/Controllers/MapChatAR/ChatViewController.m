@@ -588,6 +588,11 @@
         
         if (currentAnnotation.distance > 1000)
         {
+            if(currentAnnotation.distance/1000 > 10000){
+                [distanceLabel setFont:[UIFont boldSystemFontOfSize:10]];
+            }else{
+               [distanceLabel setFont:[UIFont boldSystemFontOfSize:12]]; 
+            }
             distanceLabel.text = [NSString stringWithFormat:@"%i km", currentAnnotation.distance/1000];
         }
         else 
@@ -808,6 +813,9 @@
 
 // Get More messages feature
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if(messagesTableView.tag == tableIsUpdating){
+        return;
+    }
     CGFloat thresholdToAction = [messagesTableView contentSize].height-300;
 		
     if (([scrollView contentOffset].y >= thresholdToAction) && !isLoadingMoreMessages) {

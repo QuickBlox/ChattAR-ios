@@ -529,6 +529,7 @@ static DataManager *instance = nil;
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@",checkin.fbUserId]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
 	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
@@ -540,6 +541,8 @@ static DataManager *instance = nil;
         pointObject = (FBCheckinModel *)[results objectAtIndex:0];
         pointObject.body = checkin;
         pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
+        
+    // Create new
     }else{
         pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"FBCheckinModel"
                                                                       inManagedObjectContext:ctx];
@@ -567,6 +570,7 @@ static DataManager *instance = nil;
     [fetchRequest setEntity:entityDescription];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
     
     NSError *error;
     NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];

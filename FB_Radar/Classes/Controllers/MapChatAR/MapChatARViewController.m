@@ -700,6 +700,7 @@
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
+    chatViewController.messagesTableView.tag = tableIsUpdating;
     
     [chatMessagesIDs addObject:[NSString stringWithFormat:@"%d", message.geoDataID]];
     
@@ -741,6 +742,8 @@
     // Save to cache
     //
     [[DataManager shared] addChatMessageToStorage:message];
+    
+    chatViewController.messagesTableView.tag = 0;
 }
 
 - (void)endOfRetrieveInitialData{
