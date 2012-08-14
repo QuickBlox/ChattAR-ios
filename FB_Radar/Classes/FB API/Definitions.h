@@ -39,6 +39,7 @@
 #define kLongitude          @"longitude"
 #define kDate               @"date"
 #define kFbID               @"fbid"
+#define kQbID               @"qbid"
 #define	kCreatedTime		@"created_time"
 #define	kUpdatedTime		@"updated_time"
 #define kFavorites			@"favorites"
@@ -53,6 +54,7 @@
 #define photoIdentifier @"@photo="
 #define messageIdentifier @"@msg="
 #define fbidIdentifier @"@fbid="
+#define qbidIdentifier @"@qbid="
 #define quoteDelimiter @"|"
 
 

@@ -160,7 +160,7 @@
 - (void)addQuote
 {
     // pattern
-    // @fbid=<FB_id>@name=<user_name>@date=<created_at>@photo=<url>@msg=<text>|<message_text>
+    // @fbid=<FB_id>@name=<user_name>@date=<created_at>@photo=<url>@qbid=<QB_id>@msg=<text>|<message_text>
     //
     
     NSString *userStatus = [(MapChatARViewController *)delegate selectedUserAnnotation].userStatus;
@@ -171,9 +171,10 @@
     NSString* authorName = [(MapChatARViewController *)delegate selectedUserAnnotation].userName;
     NSString* photoLink = [[(MapChatARViewController *)delegate selectedUserAnnotation].fbUser objectForKey:kPicture];
     NSString* fbid = [(MapChatARViewController *)delegate selectedUserAnnotation].fbUserId;
+    NSUInteger qbid = [(MapChatARViewController *)delegate selectedUserAnnotation].qbUserID;
 	
-    
-    self.quoteMark = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@", fbidIdentifier, fbid,nameIdentifier, authorName, dateIdentifier, date, photoIdentifier, photoLink, messageIdentifier, text, @"|"];
+
+    self.quoteMark = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%u%@%@%@", fbidIdentifier, fbid,nameIdentifier, authorName, dateIdentifier, date, photoIdentifier, photoLink, qbidIdentifier, qbid, messageIdentifier, text, quoteDelimiter];
     
     
     
@@ -232,13 +233,13 @@
 - (void)didSelectedQuote:(CustomButtonWithQuote *)sender
 {
     UserAnnotation *annotation = [[UserAnnotation alloc] init];
-    
+
     annotation.fbUserId = [sender.quote objectForKey:kFbID];
+    annotation.qbUserID = [[sender.quote objectForKey:kQbID] integerValue];
     annotation.fbUser = [NSDictionary dictionaryWithObjectsAndKeys:[sender.quote objectForKey:kName], kName, [sender.quote objectForKey:kFbID], kId, [sender.quote objectForKey:kPhoto], kPicture, nil];
     annotation.userStatus = [sender.quote objectForKey:kMessage];
     annotation.userName = [sender.quote objectForKey:kName];
     annotation.createdAt = [sender.quote objectForKey:kDate];
-   // annotation.qbUserID = [DataManager
 
     ((MapChatARViewController *)delegate).selectedUserAnnotation = annotation;
     [annotation release];
@@ -632,6 +633,9 @@
     //
     if (currentAnnotation.quotedUserFBId){
         [quoteBG.quote setObject:currentAnnotation.quotedUserFBId forKey:kFbID];
+    }
+    if (currentAnnotation.quotedUserQBId){
+        [quoteBG.quote setObject:currentAnnotation.quotedUserQBId forKey:kQbID];
     }
     if (currentAnnotation.quotedUserName){
         [quoteBG.quote setObject:currentAnnotation.quotedUserName forKey:kName];

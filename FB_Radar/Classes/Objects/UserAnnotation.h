@@ -48,6 +48,7 @@
 
 // quote
 @property (nonatomic, retain) NSString* quotedUserFBId;
+@property (nonatomic, retain) NSString* quotedUserQBId;
 @property (nonatomic, retain) NSString* quotedUserPhotoURL;
 @property (nonatomic, retain) NSString* quotedUserName;
 @property (nonatomic, retain) NSDate* quotedMessageDate;
