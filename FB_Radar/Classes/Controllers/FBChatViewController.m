@@ -437,7 +437,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	
 	
 	float messageTextWidth;
-    float messageTextHeight;
 
 	if (isLeftCell){
 		// set message label
@@ -458,22 +457,15 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	}
 	
 	messageTextWidth = userMessage.frame.size.width;
-    messageTextHeight = userMessage.frame.size.height;
+
 	
 	// left/right messages
     if(isLeftCell){
-		if(messageTextHeight == 0){
-            messageTextHeight = 5;
-        }
         
         // set cloud view (left)
         [messageBGView setImage:messageBGImageLeft];
         [messageBGView setFrame:CGRectMake(5, 6, messageTextWidth + 25, cellHeight + 15)];
 	}else{
-		if(messageTextHeight == 0)
-		{
-            messageTextHeight = 5;
-        }
         
         // set cloud view (right)
         [messageBGView setImage:messageBGImageRight];
@@ -557,6 +549,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	[formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
 	[formatter setLocale:[NSLocale currentLocale]];
 	NSString *timeStamp = [formatter stringFromDate:now];
+    [formatter release];
 	
 	//add date of message
 	[newMessage setObject:timeStamp forKey:kCreatedTime];

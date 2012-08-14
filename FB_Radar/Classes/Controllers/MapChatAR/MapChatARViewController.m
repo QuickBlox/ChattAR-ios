@@ -442,6 +442,7 @@
             [chatPoints addObject:mapAnnotation];
         }
     }
+    [friendsIds release];
     //
     // add all checkins
     [chatPoints addObjectsFromArray:allCheckins];
@@ -1191,7 +1192,7 @@
     
     // refresh chat
     dispatch_async(dispatch_get_main_queue(), ^{
-        [chatViewController.messagesTableView reloadData];
+        [chatViewController refresh];
         
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
     });
@@ -1217,6 +1218,7 @@
 	[formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"yyyy'-'MM'-'dd HH':'mm':'ss Z"];
     annotation.quotedMessageDate = [formatter dateFromString:date];
+    [formatter release];
     
     // authore photo
     NSString* photoLink = [[geoData.status substringFromIndex:[geoData.status rangeOfString:photoIdentifier].location+7] substringToIndex:[[geoData.status substringFromIndex:[geoData.status rangeOfString:photoIdentifier].location+7] rangeOfString:qbidIdentifier].location];
@@ -1408,6 +1410,8 @@
                     [fbMapUsersIds addObject:geodata.user.facebookID];
                 }
                 if([fbMapUsersIds count] == 0){
+                    [newQBMapARPoints release];
+                    [fbMapUsersIds release];
                     return;
                 }
                 
@@ -1420,6 +1424,7 @@
 				
                 
                 NSArray *context = [NSArray arrayWithObjects:mapFBUsers, newQBMapARPoints, nil];
+                [newQBMapARPoints release];
                 
                 
 				// get FB info for obtained QB locations
@@ -1445,6 +1450,7 @@
                     [fbChatUsersIds addObject:geodata.user.facebookID];
                 }
                 if([fbChatUsersIds count] == 0){
+                    [fbChatUsersIds release];
                     return;
                 }
                 

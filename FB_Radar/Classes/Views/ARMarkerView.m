@@ -115,6 +115,7 @@
 - (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation{
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:userAnnotation.coordinate.latitude longitude:userAnnotation.coordinate.longitude];
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];
+    [pointLocation release];
     
     if(_distance < 0){
         [distanceLabel setHidden:YES];

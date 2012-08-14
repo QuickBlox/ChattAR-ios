@@ -368,7 +368,7 @@ static FBService *instance = nil;
     NSLog(@"XMPP disconnected");
     
     // reconnect if disconnected
-    if([DataManager shared].currentFBUser){
+    if([DataManager shared].currentFBUser && [Reachability internetConnected]){
         [self logInChat];
     }
 }

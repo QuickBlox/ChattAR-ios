@@ -20,6 +20,11 @@
 
 #define fetchLimit 50
 
+#define FBCheckinModelEntity @"FBCheckinModel"
+#define QBCheckinModelEntity @"QBCheckinModel"
+#define QBChatMessageModelEntity @"QBChatMessageModel"
+
+
 @implementation DataManager
 
 static DataManager *instance = nil;
@@ -42,11 +47,6 @@ static DataManager *instance = nil;
 	}
 	
 	return instance;
-}
-
-- (void)clearCache{
-    NSLog(@"==================================================================");
-    NSLog(@"Clear cache!");
 }
 
 - (void)sortMessagesArray
@@ -402,7 +402,7 @@ static DataManager *instance = nil;
 -(void)addChatMessageToStorage:(UserAnnotation *)message context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBChatMessageModel"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:QBChatMessageModelEntity
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"geoDataID == %i",message.geoDataID]];
@@ -415,7 +415,7 @@ static DataManager *instance = nil;
     
     
     // Insert
-    QBChatMessageModel *messageObject = (QBChatMessageModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBChatMessageModel"
+    QBChatMessageModel *messageObject = (QBChatMessageModel *)[NSEntityDescription insertNewObjectForEntityForName:QBChatMessageModelEntity
                                                                                             inManagedObjectContext:ctx];
     messageObject.body = message;
     messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
@@ -432,7 +432,7 @@ static DataManager *instance = nil;
     NSManagedObjectContext *ctx = [self threadSafeContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBChatMessageModel"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:QBChatMessageModelEntity
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
@@ -464,7 +464,7 @@ static DataManager *instance = nil;
 -(void)addMapARPointToStorage:(UserAnnotation *)point context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"QBCheckinModel"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:QBCheckinModelEntity
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"qbUserID == %i",point.qbUserID]];
@@ -482,7 +482,7 @@ static DataManager *instance = nil;
         
         // Insert
     }else{
-        pointObject = (QBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"QBCheckinModel"
+        pointObject = (QBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:QBCheckinModelEntity
                                                                       inManagedObjectContext:ctx];
         pointObject.body = point;
         pointObject.qbUserID = [NSNumber numberWithInt:point.qbUserID];
@@ -503,7 +503,7 @@ static DataManager *instance = nil;
      NSManagedObjectContext *ctx = [self threadSafeContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"QBCheckinModel"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:QBCheckinModelEntity
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
@@ -534,7 +534,7 @@ static DataManager *instance = nil;
 -(void)addCheckinToStorage:(UserAnnotation *)checkin context:(NSManagedObjectContext *)ctx{
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBCheckinModel"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:FBCheckinModelEntity
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@",checkin.fbUserId]];
@@ -553,7 +553,7 @@ static DataManager *instance = nil;
         
     // Create new
     }else{
-        pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:@"FBCheckinModel"
+        pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:FBCheckinModelEntity
                                                                       inManagedObjectContext:ctx];
         
         pointObject.body = checkin;
@@ -573,7 +573,7 @@ static DataManager *instance = nil;
     NSManagedObjectContext *ctx = [self threadSafeContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"FBCheckinModel"
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:FBCheckinModelEntity
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
@@ -585,6 +585,36 @@ static DataManager *instance = nil;
     NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
     return results;
+}
+
+- (void) deleteAllObjects: (NSString *) entityDescription  context:(NSManagedObjectContext *)ctx {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:ctx];
+    [fetchRequest setEntity:entity];
+    
+    if([entityDescription isEqualToString:FBCheckinModelEntity]){
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
+    }
+    
+    NSError *error;
+    NSArray *items = [ctx executeFetchRequest:fetchRequest error:&error];
+    [fetchRequest release];
+    
+
+    for (NSManagedObject *managedObject in items) {
+        [ctx deleteObject:managedObject];
+    }
+    if (![ctx save:&error]) {
+        NSLog(@"CoreData: deleting %@ - error:%@",entityDescription,error);
+    }
+}
+
+- (void)clearCache{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    
+    [self deleteAllObjects:FBCheckinModelEntity context:ctx];
+    [self deleteAllObjects:QBCheckinModelEntity context:ctx];
+    [self deleteAllObjects:QBChatMessageModelEntity context:ctx];
 }
 
 

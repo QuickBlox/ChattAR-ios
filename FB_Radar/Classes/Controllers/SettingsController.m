@@ -129,16 +129,13 @@
 
 - (IBAction)clearCache:(id)sender {
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Do you really want to clear the cache?" delegate:self cancelButtonTitle:@"Cansel" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Do you really want to clear the cache?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     [alert show];
     [alert release];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
-    
-    if([title isEqualToString:@"Yes"])
-    {
+    if(buttonIndex == 1){
         [[DataManager shared] clearCache];
     }
 }

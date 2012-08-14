@@ -147,6 +147,8 @@
                       toUsers:[NSString stringWithFormat:@"%d",  messageField.rightView.tag]
             isDevelopmentEnvironment:isDevEnv
                              delegate:self];
+        
+        [message release];
 	}
     
     if(quotePhotoTop){
@@ -211,6 +213,8 @@
 
 	[[(MapChatARViewController *)delegate chatPoints] removeAllObjects];
 	[[(MapChatARViewController *)delegate chatPoints] addObjectsFromArray:sortedArray];
+    
+    NSLog(@"sortedArray=%@", sortedArray);
 	
 	messagesTableView.delegate = self;
     messagesTableView.dataSource = self;
@@ -626,6 +630,7 @@
     [formatter setDateFormat:@"d MMMM HH:mm"];
     datetime.text = [formatter stringFromDate:currentAnnotation.createdAt];
     [datetime setFrame:CGRectMake(messageWidth-41, 11+shift, 101, 12)];
+    [formatter release];
     
     // set user name
     [userName setFrame:CGRectMake(83, 10+shift, 125, 12)];
@@ -669,6 +674,7 @@
     qformatter.timeZone = [NSTimeZone systemTimeZone];
     quotedMessageDate.text = [qformatter stringFromDate:currentAnnotation.quotedMessageDate];
     [cell.contentView bringSubviewToFront:quotedMessageDate];
+    [qformatter release];
     
     // set quoted user name
     [quotedUserName setFrame:CGRectMake(quotedUserPhoto.frame.origin.x+26, quotedUserPhoto.frame.origin.y+5, 95, 12)];
@@ -714,6 +720,7 @@
                 NSArray *loadingCell = [[NSArray alloc] initWithObjects:newMessagePath, nil];
                 //
                 [messagesTableView deleteRowsAtIndexPaths:loadingCell withRowAnimation:UITableViewRowAnimationNone];
+                [loadingCell release];
                 
                 isLoadingMoreMessages = NO;
                 
@@ -743,14 +750,25 @@
 			//
 			[fbChatUsersIds release];
         }
-	}
+	}else{
+        NSString *message = [result.errors stringValue];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+
+    }
 }
 
 -(void)completedWithResult:(Result *)result{
     
     // Post new message result
-    if(result.success){
-        if([result isKindOfClass:QBLGeoDataResult.class]){
+    if([result isKindOfClass:QBLGeoDataResult.class]){
+        if(result.success){
+            
             QBLGeoDataResult *geoDataRes = (QBLGeoDataResult*)result; 
             
             // clear text
@@ -767,12 +785,21 @@
             
             // scroll to top
             [messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-            
-        // Send push result
-        }else if([result isKindOfClass:QBMSendPushTaskResult.class]){
-            NSLog(@"Send Push success");
+        
+        }else{
+            NSString *message = [result.errors stringValue];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release]; 
         }
-
+        
+    // Send push result
+    }else if([result isKindOfClass:QBMSendPushTaskResult.class]){
+        NSLog(@"Send Push success");
     }
 }
 
@@ -833,12 +860,10 @@
 		[loading startAnimating];
 		[cell.contentView addSubview:loading];
 		[[(MapChatARViewController *)delegate chatPoints] addObject:cell];
+        [cell release];
 		[loading release];
 		//
-		NSIndexPath *newMessagePath = [NSIndexPath indexPathForRow:[[(MapChatARViewController *)delegate chatPoints] indexOfObject:[[(MapChatARViewController *)delegate chatPoints] lastObject]] inSection:0];
-		NSArray *newRows = [[NSArray alloc] initWithObjects:newMessagePath, nil];
-		[messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationNone];
-		[newRows release];
+		[messagesTableView reloadData];
 		
         
         // get more messages
