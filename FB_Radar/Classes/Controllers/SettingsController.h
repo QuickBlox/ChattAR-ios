@@ -19,10 +19,12 @@
 
 @property (nonatomic, assign) IBOutlet UISwitch* vibrateSwitch;
 @property (nonatomic, assign) IBOutlet UISwitch* soundSwitch;
-@property (nonatomic, assign) IBOutlet UISwitch* popUpSwitch;
+@property (retain, nonatomic) IBOutlet UIButton *clearcacheButton;
+
 
 -(IBAction)switchValueDidChange:(UISwitch *)switchView;
 -(IBAction)linksAction:(id)sender;
 -(void)logoutButtonDidPress;
+- (IBAction)clearCache:(id)sender;
 
 @end

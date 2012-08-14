@@ -41,6 +41,8 @@
 
 - (void)sortMessagesArray;
 
+- (void)clearCache;
+
 #pragma mark -
 #pragma mark Friends
 

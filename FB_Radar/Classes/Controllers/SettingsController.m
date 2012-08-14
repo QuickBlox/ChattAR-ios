@@ -22,8 +22,8 @@
 @synthesize userName = _userName;
 @synthesize vibrateSwitch = _vibrateSwitch;
 @synthesize soundSwitch = _soundSwitch;
+@synthesize clearcacheButton = _clearcacheButton;
 @synthesize userStatus = _userStatus;
-@synthesize popUpSwitch = _popUpSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,6 +37,7 @@
 }
 
 - (void)dealloc{
+    [_clearcacheButton release];
 	[super dealloc];
 }
 
@@ -55,7 +56,7 @@
     // set switches state
     _soundSwitch.on = [NotificationManager isSoundEnabled];
     _vibrateSwitch.on = [NotificationManager isVibrationEnabled];
-    _popUpSwitch.on = [NotificationManager isPopUpEnabled];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated{
@@ -83,8 +84,8 @@
     [self setVibrateSwitch:nil];
     [self setSoundSwitch:nil];
     [self setUserStatus:nil];
-    [self setPopUpSwitch:nil];
 
+    [self setClearcacheButton:nil];
     [super viewDidUnload];
 }
 
@@ -124,6 +125,22 @@
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];
     
     NSLog(@"LogOut");
+}
+
+- (IBAction)clearCache:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Do you really want to clear the cache?" delegate:self cancelButtonTitle:@"Cansel" otherButtonTitles:@"Yes", nil];
+    [alert show];
+    [alert release];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if([title isEqualToString:@"Yes"])
+    {
+        [[DataManager shared] clearCache];
+    }
 }
 
 // Sound/Vibro

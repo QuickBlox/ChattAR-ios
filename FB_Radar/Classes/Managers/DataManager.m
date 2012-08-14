@@ -44,6 +44,11 @@ static DataManager *instance = nil;
 	return instance;
 }
 
+- (void)clearCache{
+    NSLog(@"==================================================================");
+    NSLog(@"Clear cache!");
+}
+
 - (void)sortMessagesArray
 {
 	Conversation* temp;
