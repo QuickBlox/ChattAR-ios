@@ -737,15 +737,10 @@
 	}
     //
     if(addedToCurrentChatState && reloadTable){
-        NSIndexPath *newMessagePath = [NSIndexPath indexPathForRow:0 inSection:0];
-        NSArray *newRows = [[NSArray alloc] initWithObjects:newMessagePath, nil];
-
         // on main thread
         dispatch_async( dispatch_get_main_queue(), ^{
-            [chatViewController.messagesTableView insertRowsAtIndexPaths:newRows withRowAnimation:UITableViewRowAnimationFade];
+            [chatViewController.messagesTableView reloadData];
         });
-        
-        [newRows release];
     }
     
     
@@ -926,9 +921,13 @@
     
     NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
     
+    NSLog(@"processQBCheckins, count=%d", [qbPoints count]);
+    
     // look through array for geodatas
     for (QBLGeoData *geodata in qbPoints)
     {
+        NSLog(@"processQBCheckins, i=%d", [qbPoints indexOfObject:qbPoints]);
+        
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
             if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
@@ -1010,10 +1009,14 @@
     CLLocationCoordinate2D coordinate;
     int index = 0;
     
+    NSLog(@"processQBChatMessages, count=%d", [qbMessages count]);
+    
     NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
     
     for (QBLGeoData *geodata in qbMessages)
     {
+         NSLog(@"processQBChatMessages, i=%d", [qbMessages indexOfObject:geodata]);
+        
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
             if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
@@ -1079,6 +1082,10 @@
 
 // convert checkins array UserAnnotations
 - (void)processFBCheckins:(NSArray *)rawCheckins{
+    if([rawCheckins isKindOfClass:NSString.class]){
+        NSLog(@"rawCheckins=%@", rawCheckins);
+        // return;
+    }
     for(NSDictionary *checkinsResult in rawCheckins){
         if([checkinsResult isKindOfClass:NSNull.class]){
             continue;
