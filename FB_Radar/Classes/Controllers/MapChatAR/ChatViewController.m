@@ -576,29 +576,32 @@
     
     // distance label
     [distanceLabel setFrame:CGRectMake(5, distanceView.frame.origin.y+5, 50, 15)];
-    if ([[DataManager shared].currentFBUserId isEqualToString:[currentAnnotation.fbUser objectForKey:kId]])
-    {
+    if ([[DataManager shared].currentFBUserId isEqualToString:[currentAnnotation.fbUser objectForKey:kId]]){
+        
         distanceLabel.hidden = YES;
         distanceView.hidden = YES;
         
         [messageBGView setImage:messageBGImage];
 
     }else{
-        distanceLabel.hidden = NO;
-        distanceView.hidden = NO;
-        
-        if (currentAnnotation.distance > 1000)
-        {
-            if(currentAnnotation.distance/1000 > 10000){
-                [distanceLabel setFont:[UIFont boldSystemFontOfSize:10]];
+        if(currentAnnotation.distance < 0){
+            distanceLabel.hidden = YES;
+            distanceView.hidden = YES;
+            
+        }else{
+            distanceLabel.hidden = NO;
+            distanceView.hidden = NO;
+            
+            if (currentAnnotation.distance > 1000){
+                if(currentAnnotation.distance/1000 > 10000){
+                    [distanceLabel setFont:[UIFont boldSystemFontOfSize:10]];
+                }else{
+                    [distanceLabel setFont:[UIFont boldSystemFontOfSize:12]];
+                }
+                distanceLabel.text = [NSString stringWithFormat:@"%i km", currentAnnotation.distance/1000];
             }else{
-               [distanceLabel setFont:[UIFont boldSystemFontOfSize:12]]; 
+                distanceLabel.text = [NSString stringWithFormat:@"%i m", currentAnnotation.distance];
             }
-            distanceLabel.text = [NSString stringWithFormat:@"%i km", currentAnnotation.distance/1000];
-        }
-        else 
-        {
-            distanceLabel.text = [NSString stringWithFormat:@"%i m", currentAnnotation.distance];
         }
     }
 
@@ -610,17 +613,13 @@
     userMessage.text = currentAnnotation.userStatus; 
     [userMessage sizeToFit];
     
-    // datetime
-    NSTimeZone *tz = [NSTimeZone defaultTimeZone];
-    NSInteger seconds = [tz secondsFromGMTForDate: currentAnnotation.createdAt];
-    NSDate* firstDate = [NSDate dateWithTimeInterval: seconds sinceDate: currentAnnotation.createdAt];
-    
+    // sate date
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 	[formatter setLocale:[NSLocale currentLocale]];
+    formatter.timeZone = [NSTimeZone systemTimeZone];
     [formatter setDateFormat:@"d MMMM HH:mm"];
-    datetime.text = [formatter stringFromDate:firstDate];
-    
+    datetime.text = [formatter stringFromDate:currentAnnotation.createdAt];
     [datetime setFrame:CGRectMake(messageWidth-41, 11+shift, 101, 12)];
     
     // set user name
@@ -659,16 +658,11 @@
     
     // set date of quoted message
     [quotedMessageDate setFrame:CGRectMake(messageWidth-30, quoteBG.frame.origin.y+12, 90, 12)];
-    
-    NSTimeZone *qtz = [NSTimeZone defaultTimeZone];
-    NSInteger qseconds = [qtz secondsFromGMTForDate: currentAnnotation.quotedMessageDate];
-    NSDate* qfirstDate = [NSDate dateWithTimeInterval: qseconds sinceDate: currentAnnotation.quotedMessageDate];
-    
     NSDateFormatter* qformatter = [[NSDateFormatter alloc] init];
 	[qformatter setLocale:[NSLocale currentLocale]];
     [qformatter setDateFormat:@"d MMMM HH:mm"];
-    
-    quotedMessageDate.text = [qformatter stringFromDate:qfirstDate];
+    qformatter.timeZone = [NSTimeZone systemTimeZone];
+    quotedMessageDate.text = [qformatter stringFromDate:currentAnnotation.quotedMessageDate];
     [cell.contentView bringSubviewToFront:quotedMessageDate];
     
     // set quoted user name
