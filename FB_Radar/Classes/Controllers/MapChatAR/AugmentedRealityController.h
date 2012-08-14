@@ -49,7 +49,6 @@
 
 @property (nonatomic, assign) UISlider* distanceSlider;
 @property (nonatomic, assign) UILabel* distanceLabel;
-@property (nonatomic, assign) UIView* distanceView;
 
 /*!
  @brief	The capture session takes the input from the camera and capture it

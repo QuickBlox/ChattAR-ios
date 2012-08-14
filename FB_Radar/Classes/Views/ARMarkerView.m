@@ -115,13 +115,18 @@
 - (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation{
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:userAnnotation.coordinate.latitude longitude:userAnnotation.coordinate.longitude];
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];
-
-    if (_distance > 1000){
-        distanceLabel.text = [NSString stringWithFormat:@"%.000f km", _distance/1000];
-    }else {
-        distanceLabel.text = [NSString stringWithFormat:@"%.000f m", _distance];
+    
+    if(_distance < 0){
+        [distanceLabel setHidden:YES];
+    }else{
+        if (_distance > 1000){
+            distanceLabel.text = [NSString stringWithFormat:@"%.000f km", _distance/1000];
+        }else {
+            distanceLabel.text = [NSString stringWithFormat:@"%.000f m", _distance];
+        }
+        
+        [distanceLabel setHidden:NO];
     }
-
     
     distance = _distance;
     

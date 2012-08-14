@@ -34,7 +34,7 @@
 @synthesize locationManager, accelerometerManager, displayView, centerCoordinate, scaleViewsBasedOnDistance, transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
 @synthesize latestHeading, viewAngle, coordinateViews;
 @synthesize captureSession;
-@synthesize delegate, distanceSlider, distanceLabel, distanceView;
+@synthesize delegate, distanceSlider, distanceLabel;
 
 
 #pragma mark - 
@@ -98,33 +98,16 @@
 	
     self.view = displayView;
     [displayView release];
-	
-    
-    // Distance views
-    distanceView = [[UIView alloc] init];
-    [distanceView setFrame:CGRectMake(13, 10, 30, 330)];
-    
-    CALayer *layer = distanceView.layer;
-    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-    rotationAndPerspectiveTransform.m34 = 1.0 / 500;
-    
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 1.0f, -(45.0f * M_PI / 180.0f), 0.0f, 0.0f);
-    layer.transform = rotationAndPerspectiveTransform;
     
 	distanceSlider = [[UISlider alloc] init];
-	[distanceSlider setFrame:CGRectMake(-132, 160, 300, 30)];
+	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
 	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
 	distanceSlider.minimumValue =  0;
 	distanceSlider.maximumValue = [sliderNumbers count]-1;
     distanceSlider.continuous = YES;
-    
-    
-    [distanceView addSubview:distanceSlider];
-    [self.view addSubview:distanceView];
-	
+    [self.view addSubview:distanceSlider];
 	[distanceSlider setValue:2 animated:NO];
 	[distanceSlider release];
-    [distanceView release];
     
     distanceLabel = [[UILabel alloc] init];
     [distanceLabel setFrame:CGRectMake(19, 335, 100, 20)];
@@ -160,8 +143,15 @@
 - (void) viewDidLoad{
     [super viewDidLoad];
 	
-	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 1.5);
+	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
+    
+//    CALayer *layer = distanceSlider.layer;
+//    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+//    rotationAndPerspectiveTransform.m34 = 1.0 / 500;
+//    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 1.0f, -(45.0f * M_PI / 180.0f), 0.0f, 0.0f);
+//    layer.transform = rotationAndPerspectiveTransform;
+    
     
 	[self.view bringSubviewToFront:distanceSlider];
     [self.view bringSubviewToFront:distanceLabel];
@@ -222,7 +212,7 @@
     [displayView setImage:nil];
     
     for(UIView *view in self.view.subviews){
-        if([view isKindOfClass:[CustomSwitch class]] || view == distanceView || view == distanceLabel){
+        if([view isKindOfClass:[CustomSwitch class]] || view == distanceSlider || view == distanceLabel){
 			continue;
         }
         
@@ -257,7 +247,7 @@
 - (void)refreshWithNewPoints:(NSArray *)mapPoints{
 	// remove old
 	for (UIView* view in displayView.subviews){
-		if ([view isKindOfClass:[CustomSwitch class]] || view == distanceLabel || view == distanceView){
+		if ([view isKindOfClass:[CustomSwitch class]] || view == distanceLabel || view == distanceSlider){
 			continue;
 		}
         

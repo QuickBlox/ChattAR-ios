@@ -92,10 +92,17 @@
     // check for empty
     if ([[messageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
         return;
-    }    
+    }
+    if([sendMessageActivityIndicator isAnimating]){
+        return;
+    }
     
-    // remove | symbol
+    [sendMessageActivityIndicator startAnimating];
+    
+    // remove | and @ symbols
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"|" withString:@""];
+    messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    
 
 	QBLGeoData *geoData = [QBLGeoData currentGeoData];
 #ifdef DEBUG
@@ -116,8 +123,6 @@
 
     // post geodata
 	[QBLocation createGeoData:geoData delegate:self];
-
-    [sendMessageActivityIndicator startAnimating];
     
 
 	// send push notification if this is quote
@@ -742,6 +747,7 @@
 }
 
 -(void)completedWithResult:(Result *)result{
+    
     // Post new message result
     if(result.success){
         if([result isKindOfClass:QBLGeoDataResult.class]){
