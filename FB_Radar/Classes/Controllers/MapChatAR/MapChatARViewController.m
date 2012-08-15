@@ -1185,7 +1185,7 @@
                 
                 // show Point on Map/AR
                 [self addNewPointToMapAR:checkinAnnotation];
-                
+
                 // show Message on Chat
                 [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO];
             }
