@@ -420,6 +420,20 @@
     // get inbox messages
     if (result.queryType == FBQueriesTypesGetInboxMessages){
         
+        if(![result.body isKindOfClass:NSDictionary.class]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook"
+                                                            message:@"Something went wrong, please restart application"
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            
+            [HUD hide:YES];
+            
+            return;
+        }
+        
         NSArray *resultData = [result.body objectForKey:kData];
         NSDictionary *resultError = [result.body objectForKey:kError];
         if(resultError && !resultData){
@@ -486,6 +500,22 @@
         
     // get friends
     }else if (result.queryType ==FBQueriesTypesFriendsGet){
+        
+        if(![result.body isKindOfClass:NSDictionary.class]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook"
+                                                            message:@"Something went wrong, please restart application"
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            
+            [HUD hide:YES];
+            
+            return;
+        }
+        
+        
 		// save friends
 		[DataManager shared].myFriends = [result.body objectForKey:kData];
 		

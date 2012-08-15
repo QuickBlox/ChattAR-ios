@@ -58,9 +58,9 @@
 	[UIApplication sharedApplication].statusBarHidden = YES;
     
     // Set QuickBlox credentials
-    [QBSettings setApplicationID:644];
-    [QBSettings setAuthorizationKey:@"FgPY24nyYczhtnj"];
-    [QBSettings setAuthorizationSecret:@"Aet6zKAUhUSTnaE"];
+    [QBSettings setApplicationID:771];
+    [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
+    [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];

@@ -205,6 +205,7 @@ static FBService *instance = nil;
 }
 
 - (void)requestCheckins:(NSArray *)params{
+    
     [facebook requestWithGraphPath:@"" andParams:[params objectAtIndex:0] andHttpMethod:@"POST" andDelegate:self andFBServiceDelegate:[params objectAtIndex:1] type:FBQueriesTypesFriendsGetCheckins];
     
     NSLog(@"requestCheckins");

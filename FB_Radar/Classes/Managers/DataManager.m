@@ -499,7 +499,7 @@ static DataManager *instance = nil;
     // Update
     if(nil != results && [results count] > 0){
         pointObject = (QBCheckinModel *)[results objectAtIndex:0];
-        NSLog(@"old MAP=%@", pointObject.body);
+        //NSLog(@"old MAP=%@", pointObject.body);
         pointObject.body = point;
         pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
         
@@ -519,7 +519,7 @@ static DataManager *instance = nil;
     }
     
     
-    NSLog(@"updated MAP=%@", pointObject.body);
+    //NSLog(@"updated MAP=%@", pointObject.body);
 }
 //
 -(NSArray *)mapARPointsFromStorage{

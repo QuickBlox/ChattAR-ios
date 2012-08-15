@@ -479,7 +479,7 @@
         }
     }
     
-    NSLog(@"allChatPoints =%@", allChatPoints);
+    //NSLog(@"allChatPoints =%@", allChatPoints);
     
     // get map/ar points from cash
     NSDate *lastPointDate = nil;
@@ -1313,6 +1313,7 @@
             
         // get Users profiles
         case FBQueriesTypesUsersProfiles:{
+            
             NSArray *contextArray = nil;
             NSString *contextType = nil;
             NSArray *points = nil;
@@ -1330,37 +1331,93 @@
             
             // Map init
             if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:mapFBUsers]){
-                // conversation
-                NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [self processQBCheckins:data];
-                });
+                
+                if([result.body isKindOfClass:NSDictionary.class]){
+                    NSDictionary *resultError = [result.body objectForKey:kError];
+                    if(resultError != nil){
+                        // all data was retrieved
+                        ++self.initState;
+                        NSLog(@"MAP INIT FB ERROR");
+                        if(self.initState == 2){
+                            [self endOfRetrieveInitialData];
+                        }
+                        return;
+                    }
+                
+                    // conversation
+                    NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [self processQBCheckins:data];
+                    });
+                
+                // Undefined format
+                }else{
+                    ++self.initState;
+                    NSLog(@"MAP INIT FB Undefined format");
+                    if(self.initState == 2){
+                        [self endOfRetrieveInitialData];
+                    }
+                }
                 
             // Chat init
             }else if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:chatFBUsers]){
+                
+                if([result.body isKindOfClass:NSDictionary.class]){
+                    NSDictionary *resultError = [result.body objectForKey:kError];
+                    if(resultError != nil){
+                        // all data was retrieved
+                        ++self.initState;
+                        NSLog(@"CHAT INIT FB ERROR");
+                        if(self.initState == 2){
+                            [self endOfRetrieveInitialData];
+                        }
+                        return;
+                    }
 
-                // conversation
-                NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil]; 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [self processQBChatMessages:data];
-                });
+                    // conversation
+                    NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil]; 
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [self processQBChatMessages:data];
+                    });
+                
+                // Undefined format
+                }else{
+                    ++self.initState;
+                    NSLog(@"CHAT INIT FB Undefined format");
+                    if(self.initState == 2){
+                        [self endOfRetrieveInitialData];
+                    }
+                }
                 
             // check new one
             }else{
-                for (QBLGeoData *geoData in context) {	
-                    
-                    // get vk user
-                    NSDictionary *fbUser = nil;
-                    for(NSDictionary *user in [result.body allValues]){
-                        if([geoData.user.facebookID isEqualToString:[[user objectForKey:kId] description]]){
-                            fbUser = user;
-                            break;
-                        }
+                
+                if([result.body isKindOfClass:NSDictionary.class]){
+                    NSDictionary *resultError = [result.body objectForKey:kError];
+                    if(resultError != nil){
+                        NSLog(@"check new one FB ERROR");
+                        return;
                     }
-                    
-                    // add new Annotation to map/chat/ar
-                    [self createAndAddNewAnnotationToMapChatARForFBUser:fbUser withGeoData:geoData addToTop:YES withReloadTable:YES];
-                }        
+
+                    for (QBLGeoData *geoData in context) {	
+                        
+                        // get vk user
+                        NSDictionary *fbUser = nil;
+                        for(NSDictionary *user in [result.body allValues]){
+                            if([geoData.user.facebookID isEqualToString:[[user objectForKey:kId] description]]){
+                                fbUser = user;
+                                break;
+                            }
+                        }
+                        
+                        // add new Annotation to map/chat/ar
+                        [self createAndAddNewAnnotationToMapChatARForFBUser:fbUser withGeoData:geoData addToTop:YES withReloadTable:YES];
+                    }
+                
+                // Undefined format
+                }else{
+                   // ... 
+                }
             }
                 
             break;
@@ -1376,14 +1433,32 @@
     {
         // Get Friends checkins
         case FBQueriesTypesFriendsGetCheckins:{
+
             --numberOfCheckinsRetrieved;
             
             NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
             
-            // convert checkins
-            dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [self processFBCheckins:(NSArray *)result.body];
-            });
+            // if error, return.
+            // for example:
+            // {
+            // "error": {
+            //    "message": "Invalid OAuth access token.",
+            //    "type": "OAuthException",
+            //    "code": 190
+            // }
+            if([result.body isKindOfClass:NSDictionary.class]){
+                NSDictionary *resultError = [result.body objectForKey:kError];
+                if(resultError != nil){
+                    return;
+                }
+            }
+            
+            if([result.body isKindOfClass:NSArray.class]){
+                // convert checkins
+                dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [self processFBCheckins:(NSArray *)result.body];
+                });
+            }
         }
         break;
             

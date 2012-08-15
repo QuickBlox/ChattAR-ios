@@ -715,13 +715,7 @@
             if([geoDataSearchResult.geodata count] == 0){
                 // remove loading cell
                 [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-                //
-                NSIndexPath *newMessagePath = [NSIndexPath indexPathForRow:[((MapChatARViewController *)delegate).chatPoints count] inSection:0];
-                NSArray *loadingCell = [[NSArray alloc] initWithObjects:newMessagePath, nil];
-                //
-                [messagesTableView deleteRowsAtIndexPaths:loadingCell withRowAnimation:UITableViewRowAnimationNone];
-                [loadingCell release];
-                
+                [messagesTableView reloadData];
                 isLoadingMoreMessages = NO;
                 
                 return;
@@ -751,6 +745,10 @@
 			[fbChatUsersIds release];
         }
 	}else{
+//        
+//        // remove loading cell
+//        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
+        
         NSString *message = [result.errors stringValue];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
                                                         message:message
@@ -787,6 +785,7 @@
             [messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         
         }else{
+            
             NSString *message = [result.errors stringValue];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
                                                             message:message
@@ -816,25 +815,37 @@
         // remove loading cell
         [((MapChatARViewController *)delegate).chatPoints removeLastObject];
 
-
-        // nem messages
-        for (QBLGeoData *geodata in context) {
-            
-            NSDictionary *fbUser = nil;
-            for(NSDictionary *user in [result.body allValues]){
-                if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
-                    fbUser = user;
-                    break;
-                }
+        if([result.body isKindOfClass:NSDictionary.class]){
+            NSDictionary *resultError = [result.body objectForKey:kError];
+            if(resultError != nil){
+                [messagesTableView reloadData];
+                return;
             }
             
-            // add point
-            [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
-                                                                            withGeoData:geodata addToTop:NO withReloadTable:NO];
-        }
+
+            // nem messages
+            for (QBLGeoData *geodata in context) {
+                
+                NSDictionary *fbUser = nil;
+                for(NSDictionary *user in [result.body allValues]){
+                    if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+                        fbUser = user;
+                        break;
+                    }
+                }
+                
+                // add point
+                [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
+                                                                                withGeoData:geodata addToTop:NO withReloadTable:NO];
+            }
+            
+            // refresh table
+            [self refresh];
         
-        // refresh table
-        [self refresh];
+        // Undefined format
+        }else{
+            // ...
+        }
     }
 }
 
