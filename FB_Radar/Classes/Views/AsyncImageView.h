@@ -24,6 +24,8 @@ typedef enum {
 -(void)loadImageFromURL:(NSURL*)url;
 -(void)remakeImage:(UIImage *)img;
 
++ (void)clearCache;
+
 @property AsyncImageCrop typeCrop;
 
 @end

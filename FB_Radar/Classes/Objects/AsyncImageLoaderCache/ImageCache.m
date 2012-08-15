@@ -22,6 +22,10 @@
     return self;
 }
 
+- (void) clearCache{
+    [myDictionary removeAllObjects];
+}
+
 -(void)dealloc {
     [myDictionary release];
     [super dealloc];

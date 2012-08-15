@@ -70,6 +70,8 @@
 - (void)addPoints:(NSArray *)mapPoints;
 - (void)addPoint:(UserAnnotation *)point;
 
+- (void)clear;
+
 
 - (UIView *)viewForAnnotation:(UserAnnotation *)annotation;
 - (UIView *)viewForExistAnnotation:(UserAnnotation *)userAnnotation;

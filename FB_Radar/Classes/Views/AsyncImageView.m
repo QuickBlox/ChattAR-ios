@@ -17,6 +17,10 @@ static ImageCache *imageCache = nil;
 @synthesize typeCrop, useMask;
 @synthesize linkedUrl;
 
++ (void)clearCache{
+    [imageCache clearCache];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.userInteractionEnabled = YES;

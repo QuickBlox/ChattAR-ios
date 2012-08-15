@@ -195,18 +195,6 @@
             
 			// register as subscribers for receiving push notifications
             [QBMessages TRegisterSubscriptionWithDelegate:self];
-            
-            // hide splash
-            [activityIndicator stopAnimating];
-            
-            // show messages
-            ((AppDelegate *)[[UIApplication sharedApplication] delegate]).tabBarController.selectedIndex = 0;
-            
-            [self dismissModalViewControllerAnimated:YES];
-            
-            
-            // start track own loaction
-            [[[QBLLocationDataSource instance] locationManager] startUpdatingLocation];
 
         // Errors
 		}else if(401 == result.status){
@@ -266,7 +254,23 @@
             [activityIndicator stopAnimating];
         }
         
-	}
+        
+    // Register for Push Notifications result
+	}else if([result isKindOfClass:[QBMRegisterSubscriptionTaskResult class]]){
+        
+        // hide splash
+        [activityIndicator stopAnimating];
+        
+        // show messages
+        ((AppDelegate *)[[UIApplication sharedApplication] delegate]).tabBarController.selectedIndex = 0;
+        
+        [self dismissModalViewControllerAnimated:YES];
+        [[FBService shared].facebook setSessionDelegate:nil];
+        
+        
+        // start track own loaction
+        [[[QBLLocationDataSource instance] locationManager] startUpdatingLocation];
+    }
 }
 
 @end

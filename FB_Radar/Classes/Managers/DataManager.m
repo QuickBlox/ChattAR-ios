@@ -400,6 +400,16 @@ static DataManager *instance = nil;
     
 }
 -(void)addChatMessageToStorage:(UserAnnotation *)message context:(NSManagedObjectContext *)ctx{
+    if(message.fbUser == nil){
+#ifdef DEBUG
+        id exc = [NSException exceptionWithName:NSInvalidArchiveOperationException
+                                         reason:@"addChatMessageToStorage, fbUser=nil"
+                                       userInfo:nil];
+        @throw exc;
+#endif
+        return;
+    }
+    
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:QBChatMessageModelEntity
@@ -462,6 +472,19 @@ static DataManager *instance = nil;
     [self addMapARPointToStorage:point context:ctx];
 }
 -(void)addMapARPointToStorage:(UserAnnotation *)point context:(NSManagedObjectContext *)ctx{
+
+    if(point.fbUser == nil){
+#ifdef DEBUG
+        id exc = [NSException exceptionWithName:NSInvalidArchiveOperationException
+                                     reason:@"addMapARPointToStorage, fbUser=nil"
+                                   userInfo:nil];
+        @throw exc;
+#endif
+        return;
+    }
+
+    
+    
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:QBCheckinModelEntity

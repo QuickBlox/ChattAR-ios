@@ -922,6 +922,7 @@
     
     NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
     
+    NSLog(@"processQBCheckins fbUsers=%@", fbUsers);
     NSLog(@"processQBCheckins, count=%d", [qbPoints count]);
     
     // look through array for geodatas
@@ -1010,6 +1011,8 @@
     CLLocationCoordinate2D coordinate;
     int index = 0;
     
+    NSLog(@"processQBChatMessages fbUsers=%@", fbUsers);
+    
     NSLog(@"processQBChatMessages, count=%d", [qbMessages count]);
     
     NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
@@ -1085,7 +1088,13 @@
 - (void)processFBCheckins:(NSArray *)rawCheckins{
     if([rawCheckins isKindOfClass:NSString.class]){
         NSLog(@"rawCheckins=%@", rawCheckins);
-        // return;
+#ifdef DEBUG
+        id exc = [NSException exceptionWithName:NSInvalidArchiveOperationException
+                                         reason:@"rawCheckins = NSString"
+                                       userInfo:nil];
+        @throw exc;
+#endif
+        return;
     }
     for(NSDictionary *checkinsResult in rawCheckins){
         if([checkinsResult isKindOfClass:NSNull.class]){
@@ -1264,6 +1273,7 @@
     
     [chatMessagesIDs removeAllObjects];
     [mapPointsIDs removeAllObjects];
+    [fbCheckinsIDs removeAllObjects];
     
     [updateTimre invalidate];
     [updateTimre release];
@@ -1272,7 +1282,8 @@
     
     // clean controllers
     [arViewController dissmisAR];
-    [mapViewController.mapView removeAnnotations:mapViewController.mapView.annotations];
+    [arViewController clear];
+    [mapViewController clear];
     [chatViewController.messagesTableView reloadData];
 }
 
@@ -1319,7 +1330,6 @@
             
             // Map init
             if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:mapFBUsers]){
-                
                 // conversation
                 NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1328,9 +1338,9 @@
                 
             // Chat init
             }else if([contextType isKindOfClass:NSString.class] && [contextType isEqualToString:chatFBUsers]){
-                
+
                 // conversation
-                NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
+                NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil]; 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     [self processQBChatMessages:data];
                 });

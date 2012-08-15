@@ -124,6 +124,11 @@
     splashViewController.openedAtStartApp = !animated;
     [self.tabBarController presentModalViewController:splashViewController animated:animated];
     [splashViewController release];
+    
+    // logout
+    if(animated){
+        [[FBService shared].facebook setSessionDelegate:splashViewController];
+    }
 }
 
 // For iOS 4.2+ support
@@ -181,6 +186,9 @@
 }
 
 - (void) checkMemory {
+    // clear image cache
+    [AsyncImageView clearCache];
+    
 #ifdef DEBUG
 	if (printMemoryInfo() < 3) {
 

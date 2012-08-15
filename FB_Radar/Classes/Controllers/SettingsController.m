@@ -111,6 +111,12 @@
 
 // logout
 -(void)logoutButtonDidPress{
+     NSLog(@"LogOut1");
+    
+    // show splash
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];
+    
+    NSLog(@"LogOut2");
     
     isInitialized = NO;
     
@@ -119,12 +125,10 @@
     
     // logout
     [[FBService shared].facebook logout];
+     NSLog(@"LogOut4");
     [[FBService shared] logOutChat];
     
-    
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];
-    
-    NSLog(@"LogOut");
+    NSLog(@"LogOut5");
 }
 
 - (IBAction)clearCache:(id)sender {

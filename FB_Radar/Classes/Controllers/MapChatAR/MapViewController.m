@@ -70,6 +70,12 @@
     [mapView addAnnotation:mapPoint];
 }
 
+- (void)clear{
+    [mapView setUserInteractionEnabled:NO];
+    [mapView removeAnnotations:mapView.annotations];
+	mapView.userInteractionEnabled = YES;
+}
+
 
 #pragma mark -
 #pragma mark MKMapViewDelegate

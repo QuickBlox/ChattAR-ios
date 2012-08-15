@@ -20,4 +20,6 @@
 - (void)addPoints:(NSArray *)mapPoints;
 - (void)addPoint:(UserAnnotation *)mapPoint;
 
+- (void)clear;
+
 @end

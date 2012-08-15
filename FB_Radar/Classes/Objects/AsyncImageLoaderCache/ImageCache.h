@@ -22,4 +22,6 @@
 -(void)insertImage:(UIImage*)image withSize:(NSUInteger)sz forKey:(NSString*)key;
 -(UIImage*)imageForKey:(NSString*)key;
 
+- (void) clearCache;
+
 @end

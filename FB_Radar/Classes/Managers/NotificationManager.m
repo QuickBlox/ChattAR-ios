@@ -60,20 +60,8 @@ static AVAudioPlayer* audioPlayer;
 #pragma mark -
 #pragma mark PopUp
 
-+ (void)popUpEnable: (BOOL)popUpEnable {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSNumber numberWithBool:popUpEnable] forKey:kPopUpOn];
-    [defaults synchronize];
-}
-
 + (BOOL)isPopUpEnabled {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *enabled = [defaults objectForKey:kPopUpOn];
-    if(enabled == nil) {
-        return YES;
-    }
-    
-    return  [enabled boolValue];
+    return YES;
 }
 
 

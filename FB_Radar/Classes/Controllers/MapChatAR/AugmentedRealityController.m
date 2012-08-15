@@ -261,6 +261,11 @@
     [self addPoints:mapPoints];
 }
 
+- (void)clear{
+    [coordinates removeAllObjects];
+	[coordinateViews removeAllObjects];
+}
+
 /*
  Add users' annotations to AR environment
  */
