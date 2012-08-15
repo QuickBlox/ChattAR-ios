@@ -932,7 +932,13 @@
         
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
-            if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+            
+            NSString *ID = [user objectForKey:kId];
+            NSLog(@"ID=%@", ID);
+            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
+            
+            if([geodata.user.facebookID isEqualToString:ID]){
+                NSLog(@"COnnect");
                 fbUser = user;
                 break;
             }
@@ -1023,8 +1029,13 @@
         
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
-            if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+            NSString *ID = [user objectForKey:kId];
+            NSLog(@"ID=%@", ID);
+            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
+                                                   
+            if([geodata.user.facebookID isEqualToString:ID]){
                 fbUser = user;
+                 NSLog(@"COnnect2");
                 break;
             }
         }

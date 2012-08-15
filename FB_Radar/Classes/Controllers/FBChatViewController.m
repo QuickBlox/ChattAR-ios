@@ -532,6 +532,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         return;
     }
 	
+    NSLog(@"chatHistory=%@", chatHistory);
+    
 	// send to Facebook
 	[[FBService shared] sendMessageToFacebook:rightTrimmedMessage 
                          withFriendFacebookID:[chatHistory.to objectForKey:kId]]; 
@@ -574,7 +576,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSDictionary *toUser = [[DataManager shared].myFriendsAsDictionary objectForKey:[chatHistory.to objectForKey:kId]];
     if([[toUser objectForKey:kOnOffStatus] intValue] == 0){
         // get QB User for send push
-        [QBUsers userWithFacebookID:[chatHistory.to objectForKey:kId] delegate:self context:rightTrimmedMessage];
+        NSString *userFBID = [NSString stringWithString:[chatHistory.to objectForKey:kId]];
+        [QBUsers userWithFacebookID:userFBID delegate:self context:rightTrimmedMessage];
     }
 	
 	[self scrollToBottomAnimated:YES];

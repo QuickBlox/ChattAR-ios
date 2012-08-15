@@ -233,7 +233,6 @@ static FBService *instance = nil;
 }
 
 - (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
-	
     if([textMessage length] > 0) {
         NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
         [body setStringValue:textMessage];

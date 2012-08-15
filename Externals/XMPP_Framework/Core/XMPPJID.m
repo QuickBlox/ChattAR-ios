@@ -342,11 +342,13 @@
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_4
 - (unsigned)hash
 {
+    NSLog(@"hash1");
 	return [[self full] hash];
 }
 #else
 - (NSUInteger)hash
 {
+    NSLog(@"hash2");
 	return [[self full] hash];
 }
 #endif

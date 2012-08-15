@@ -126,7 +126,10 @@
     // logout
     [[FBService shared].facebook logout];
      NSLog(@"LogOut4");
-    [[FBService shared] logOutChat];
+    dispatch_async( dispatch_get_main_queue(), ^{
+        [[FBService shared] logOutChat];
+    });
+   
     
     NSLog(@"LogOut5");
 }
