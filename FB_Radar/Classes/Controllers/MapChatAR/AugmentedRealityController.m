@@ -253,7 +253,7 @@
         
 		[view removeFromSuperview];
 	}
-	[coordinates removeAllObjects];
+	[self.coordinates removeAllObjects];
 	[coordinateViews removeAllObjects];
 	
     
@@ -262,7 +262,7 @@
 }
 
 - (void)clear{
-    [coordinates removeAllObjects];
+    [self.coordinates removeAllObjects];
 	[coordinateViews removeAllObjects];
 }
 
@@ -338,7 +338,7 @@
  Add AR coordinate 
  */
 - (void)addCoordinate:(ARCoordinate *)coordinate augmentedView:(UIView *)agView animated:(BOOL)animated {
-	[coordinates addObject:coordinate];
+	[self.coordinates addObject:coordinate];
 	
 	if (coordinate.radialDistance > self.maximumScaleDistance) {
 		self.maximumScaleDistance = coordinate.radialDistance;
@@ -356,7 +356,7 @@
 
 - (void)removeCoordinate:(ARCoordinate *)coordinate animated:(BOOL)animated {
 	NSUInteger indexToRemove = [coordinates indexOfObject:coordinate];
-    [coordinates	 removeObjectAtIndex:indexToRemove];
+    [self.coordinates	 removeObjectAtIndex:indexToRemove];
     [coordinateViews removeObjectAtIndex:indexToRemove];
 }
 
@@ -565,7 +565,7 @@
     int count = 0;
 
     
-	for (ARCoordinate *item in coordinates) {
+	for (ARCoordinate *item in self.coordinates) {
 		
 		ARMarkerView *viewToDraw = [coordinateViews objectAtIndex:index];
 

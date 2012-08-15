@@ -35,8 +35,8 @@
 @property (nonatomic, assign) double latestHeading;
 @property (nonatomic, assign) float  viewAngle;
 
-@property (readonly)          NSArray        *coordinates;
-@property (nonatomic, retain) NSMutableArray *coordinateViews;
+@property (assign)          NSMutableArray        *coordinates;
+@property (retain) NSMutableArray *coordinateViews;
 
 @property (nonatomic, retain) UIAccelerometer         *accelerometerManager;
 @property (nonatomic, retain) CLLocationManager       *locationManager;

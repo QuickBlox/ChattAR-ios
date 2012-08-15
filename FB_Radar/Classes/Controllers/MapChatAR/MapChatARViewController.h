@@ -25,30 +25,32 @@
     BOOL isInitialized;
     
     UIActivityIndicatorView *activityIndicator;
+    
+    dispatch_queue_t processCheckinsQueue;
 }
 
-@property (nonatomic, assign) NSMutableArray* allMapPoints;
-@property (nonatomic, assign) NSMutableArray* allChatPoints;
-@property (nonatomic, assign) NSMutableArray* allCheckins;
+@property (assign) NSMutableArray* allMapPoints;
+@property (assign) NSMutableArray* allChatPoints;
+@property (assign) NSMutableArray* allCheckins;
 
-@property (nonatomic, assign) NSMutableArray *mapPoints;
-@property (nonatomic, assign) NSMutableArray *chatPoints;
+@property (assign) NSMutableArray *mapPoints;
+@property (assign) NSMutableArray *chatPoints;
 
-@property (nonatomic, assign) NSMutableArray *chatMessagesIDs;
-@property (nonatomic, assign) NSMutableArray *mapPointsIDs;
-@property (nonatomic, assign) NSMutableArray *fbCheckinsIDs;
+@property (assign) NSMutableArray *chatMessagesIDs;
+@property (assign) NSMutableArray *mapPointsIDs;
+@property (assign) NSMutableArray *fbCheckinsIDs;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
 @property (nonatomic, retain) UIActionSheet *userActionSheet;
 
-@property (nonatomic, retain) IBOutlet MapViewController *mapViewController;
-@property (nonatomic, retain) IBOutlet ChatViewController *chatViewController;
-@property (nonatomic, retain) AugmentedRealityController *arViewController;
+@property (retain) IBOutlet MapViewController *mapViewController;
+@property (retain) IBOutlet ChatViewController *chatViewController;
+@property (retain) AugmentedRealityController *arViewController;
 
 @property (nonatomic, assign) UISegmentedControl *segmentControl;
 
-@property (nonatomic, retain) UserAnnotation *selectedUserAnnotation;
+@property (retain) UserAnnotation *selectedUserAnnotation;
 
 @property (nonatomic, assign) BOOL initedFromCache;
 

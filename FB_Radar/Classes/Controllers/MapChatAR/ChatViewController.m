@@ -213,8 +213,6 @@
 
 	[[(MapChatARViewController *)delegate chatPoints] removeAllObjects];
 	[[(MapChatARViewController *)delegate chatPoints] addObjectsFromArray:sortedArray];
-    
-    NSLog(@"sortedArray=%@", sortedArray);
 	
 	messagesTableView.delegate = self;
     messagesTableView.dataSource = self;
