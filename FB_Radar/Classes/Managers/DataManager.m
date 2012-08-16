@@ -18,7 +18,9 @@
 
 #define kFirstSwitchAllFriends [NSString stringWithFormat:@"kFirstSwitchAllFriends_%@", [DataManager shared].currentFBUserId]
 
-#define fetchLimit 50
+#define qbCheckinsFetchLimit 40
+#define fbCheckinsFetchLimit 40
+#define qbChatMessagesFetchLimit 40
 
 #define FBCheckinModelEntity @"FBCheckinModel"
 #define QBCheckinModelEntity @"QBCheckinModel"
@@ -35,7 +37,7 @@ static DataManager *instance = nil;
 @synthesize currentFBUser;
 @synthesize currentFBUserId;
 
-@synthesize myFriends, myFriendsAsDictionary;
+@synthesize myFriends, myFriendsAsDictionary, myPopularFriends;
 
 @synthesize historyConversation, historyConversationAsArray;
 
@@ -47,27 +49,6 @@ static DataManager *instance = nil;
 	}
 	
 	return instance;
-}
-
-- (void)sortMessagesArray
-{    
-    self.historyConversationAsArray =(NSMutableArray *)[[[historyConversationAsArray sortedArrayUsingComparator: ^(id conversation1, id conversation2) {
-        NSString* date1 = [(NSMutableDictionary*)[((Conversation*)conversation1).messages lastObject] objectForKey:@"created_time"];
-        NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
-        [formatter1 setLocale:[NSLocale currentLocale]];
-        [formatter1 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-        NSDate *timeStamp1 = [formatter1 dateFromString:date1];
-        [formatter1 release];
-        
-        NSString* date2 = [(NSMutableDictionary*)[((Conversation*)conversation2).messages lastObject] objectForKey:@"created_time"];
-        NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
-        [formatter2 setLocale:[NSLocale currentLocale]];
-        [formatter2 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-        NSDate *timeStamp2 = [formatter2 dateFromString:date2];
-        [formatter2 release];
-        
-        return [timeStamp2 compare:timeStamp1];
-    }] mutableCopy] autorelease];
 }
 
 - (id)init
@@ -93,6 +74,7 @@ static DataManager *instance = nil;
     
 	[myFriends release];
 	[myFriendsAsDictionary release];
+    [myPopularFriends release];
     
 	[historyConversation release];
     [historyConversationAsArray release];
@@ -120,6 +102,7 @@ static DataManager *instance = nil;
     // reset Friends
     self.myFriends = nil;
     self.myFriendsAsDictionary = nil;
+    self.myPopularFriends = nil;
     
     // reset Dialogs
     [historyConversation removeAllObjects];
@@ -165,6 +148,31 @@ static DataManager *instance = nil;
 
 
 #pragma mark -
+#pragma mark Messages
+
+- (void)sortMessagesArray
+{
+    self.historyConversationAsArray =(NSMutableArray *)[[[historyConversationAsArray sortedArrayUsingComparator: ^(id conversation1, id conversation2) {
+        NSString* date1 = [(NSMutableDictionary*)[((Conversation*)conversation1).messages lastObject] objectForKey:@"created_time"];
+        NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+        [formatter1 setLocale:[NSLocale currentLocale]];
+        [formatter1 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSDate *timeStamp1 = [formatter1 dateFromString:date1];
+        [formatter1 release];
+        
+        NSString* date2 = [(NSMutableDictionary*)[((Conversation*)conversation2).messages lastObject] objectForKey:@"created_time"];
+        NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
+        [formatter2 setLocale:[NSLocale currentLocale]];
+        [formatter2 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSDate *timeStamp2 = [formatter2 dateFromString:date2];
+        [formatter2 release];
+        
+        return [timeStamp2 compare:timeStamp1];
+    }] mutableCopy] autorelease];
+}
+
+
+#pragma mark -
 #pragma mark Friends
 
 - (void)makeFriendsDictionary{
@@ -174,6 +182,14 @@ static DataManager *instance = nil;
     for (NSDictionary* user in [DataManager shared].myFriends){
         [myFriendsAsDictionary setObject:user forKey:[user objectForKey:kId]];
     }
+}
+
+- (void)addPopularFriendID:(NSString *)friendID{
+    if(myPopularFriends == nil){
+        myPopularFriends =  [[NSMutableSet alloc] init];
+    }
+    
+    [myPopularFriends addObject:friendID];
 }
 
 
@@ -434,7 +450,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
-    [fetchRequest setFetchLimit:fetchLimit];
+    [fetchRequest setFetchLimit:qbChatMessagesFetchLimit];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
@@ -514,7 +530,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
-    [fetchRequest setFetchLimit:fetchLimit];
+    [fetchRequest setFetchLimit:qbCheckinsFetchLimit];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
@@ -584,6 +600,7 @@ static DataManager *instance = nil;
                                                          inManagedObjectContext:ctx];
     
     [fetchRequest setEntity:entityDescription];
+    [fetchRequest setFetchLimit:fbCheckinsFetchLimit];
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];

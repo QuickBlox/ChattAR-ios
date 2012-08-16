@@ -34,6 +34,12 @@
 
 
 #pragma mark -
+#pragma mark Home
+
+- (void) userHomeWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate;
+
+
+#pragma mark -
 #pragma mark Users
 
 - (void) usersProfilesWithIds:(NSString*)ids delegate:(NSObject <FBServiceResultDelegate>*)delegate context:(id)context;

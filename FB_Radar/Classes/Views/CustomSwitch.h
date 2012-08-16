@@ -16,6 +16,8 @@
 
     // private member
     BOOL m_touchedSelf;
+    
+    BOOL valueChangedSelf;
 }
 @property(nonatomic,getter=isOn) BOOL on;
 

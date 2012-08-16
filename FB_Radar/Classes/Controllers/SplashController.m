@@ -84,7 +84,7 @@
 - (IBAction)login:(id)sender{
     // Auth in FB
     NSArray *params = [[NSArray alloc] initWithObjects:@"user_checkins", @"user_location", @"friends_checkins",
-                       @"friends_location", @"friends_status", @"read_mailbox",@"photo_upload",
+                       @"friends_location", @"friends_status", @"read_mailbox",@"photo_upload",@"read_stream",
                        @"publish_stream", @"user_photos", @"xmpp_login", @"user_about_me", nil];
     [[FBService shared].facebook setSessionDelegate:self];
     [[FBService shared].facebook authorize:params];

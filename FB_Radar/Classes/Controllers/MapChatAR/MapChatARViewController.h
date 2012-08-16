@@ -11,7 +11,7 @@
 #import "AugmentedRealityController.h"
 #import "FBServiceResultDelegate.h"
 
-#define kGetGeoDataCount 20
+#define kGetGeoDataCount 100
 
 @class ChatViewController;
 @class MapViewController;

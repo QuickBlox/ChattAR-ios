@@ -27,6 +27,7 @@
 // friends
 @property (nonatomic, retain) NSMutableArray		*myFriends;
 @property (nonatomic, retain) NSMutableDictionary	*myFriendsAsDictionary;
+@property (nonatomic, retain) NSMutableSet		*myPopularFriends;
 
 // messages
 @property (nonatomic, retain) NSMutableDictionary	*historyConversation;
@@ -47,6 +48,7 @@
 #pragma mark Friends
 
 - (void)makeFriendsDictionary;
+- (void)addPopularFriendID:(NSString *)friendID;
 
 
 #pragma mark -

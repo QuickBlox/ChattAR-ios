@@ -191,7 +191,7 @@
         
         
         // get checkins for all friends
-        numberOfCheckinsRetrieved = ceil([[DataManager shared].myFriends count]/fmaxRequestsInBatch);
+        numberOfCheckinsRetrieved = ceil([[[DataManager shared].myPopularFriends allObjects] count]/fmaxRequestsInBatch);
         NSLog(@"Checkins Parts=%d", numberOfCheckinsRetrieved);
         [self getFBCheckins];
         
@@ -332,19 +332,20 @@
     switch (stateValue) {
         // show Friends
         case 0:{
-            [self showFriends]; 
+            [self showFriends];
         }
         break;
             
         // show World
         case 1:{
-			[self showWorld];
+            [self showWorld];
         }
         break;
     }
 }
 
 - (void) showWorld{
+    
     // Map/AR points
     //
     [self.mapPoints removeAllObjects];
@@ -357,7 +358,8 @@
     }
     //
     // add checkin
-    for (UserAnnotation* checkin in self.allCheckins){
+    NSArray *allCheckinsCopy = [self.allCheckins copy];
+    for (UserAnnotation* checkin in allCheckinsCopy){
         if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
             [self.mapPoints addObject:checkin];
             [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
@@ -374,6 +376,7 @@
             }
         }
     }
+    [allCheckinsCopy release];
     
     
     // Chat points
@@ -413,7 +416,8 @@
     }
     //
     // add checkin
-    for (UserAnnotation* checkin in self.allCheckins){
+    NSArray *allCheckinsCopy = [self.allCheckins copy];
+    for (UserAnnotation* checkin in allCheckinsCopy){
         if (![friendsIdsWhoAlreadyAdded containsObject:checkin.fbUserId]){
             [self.mapPoints addObject:checkin];
             [friendsIdsWhoAlreadyAdded addObject:checkin.fbUserId];
@@ -430,6 +434,7 @@
             }
         }
     }
+    [allCheckinsCopy release];
     
     
     // Chat points
@@ -607,9 +612,6 @@
     newAnnotation.distance  = [geoData.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
     
     
-    NSLog(@"Added message=%@", newAnnotation);
-    
-    
     // Add to Chat
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable];
     
@@ -629,6 +631,7 @@
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
     NSArray *currentMapAnnotations = [mapViewController.mapView.annotations copy];
+    NSLog(@"currentMapAnnotations count=%d", [currentMapAnnotations count]);
     
     // Check for Map
     BOOL isExistPoint = NO;
@@ -681,22 +684,26 @@
     
     // new -> add to Map, AR
     if(!isExistPoint){
-        BOOL addedToCurrentMapState = NO;
+        __block BOOL addedToCurrentMapState = NO;
         
-        [self.allMapPoints addObject:point];
-        [self.mapPointsIDs addObject:[NSString stringWithFormat:@"%d", point.geoDataID]];
+        dispatch_async( dispatch_get_main_queue(), ^{
         
-        if([self isAllShowed] || [friendsIds containsObject:point.fbUserId]){
-            [self.mapPoints addObject:point];
-            addedToCurrentMapState = YES;
-        }
-        //
-        if(addedToCurrentMapState){
-            dispatch_async( dispatch_get_main_queue(), ^{
-                [mapViewController addPoint:point];
-                [arViewController addPoint:point];
-            });
-        }
+            [self.allMapPoints addObject:point];
+            [self.mapPointsIDs addObject:[NSString stringWithFormat:@"%d", point.geoDataID]];
+            
+            if([self isAllShowed] || [friendsIds containsObject:point.fbUserId]){
+                [self.mapPoints addObject:point];
+                addedToCurrentMapState = YES;
+            }
+            //
+            if(addedToCurrentMapState){
+                
+                    [mapViewController addPoint:point];
+                    [arViewController addPoint:point];
+      
+            }
+            
+        });
     }
     
     // Save to cache
@@ -716,33 +723,39 @@
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
     // Add to Chat
-    BOOL addedToCurrentChatState = NO;
+    __block BOOL addedToCurrentChatState = NO;
     
-    // New messages
-	if (toTop){
-		[self.allChatPoints insertObject:message atIndex:0];
-        if([self isAllShowed] || [friendsIds containsObject:message.fbUserId] ||
-           [message.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
-            [self.chatPoints insertObject:message atIndex:0];
-            addedToCurrentChatState = YES;
+    
+    dispatch_async( dispatch_get_main_queue(), ^{
+    
+        // New messages
+        if (toTop){
+            [self.allChatPoints insertObject:message atIndex:0];
+            if([self isAllShowed] || [friendsIds containsObject:message.fbUserId] ||
+               [message.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
+                [self.chatPoints insertObject:message atIndex:0];
+                addedToCurrentChatState = YES;
+            }
+            
+        // old messages
+        }else {
+            [self.allChatPoints insertObject:message atIndex:[self.allChatPoints count] > 0 ? ([self.allChatPoints count]-1) : 0];
+            if([self isAllShowed] || [friendsIds containsObject:message.fbUserId] ||
+               [message.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
+                [self.chatPoints insertObject:message atIndex:[self.chatPoints count] > 0 ? ([self.chatPoints count]-1) : 0];
+                addedToCurrentChatState = YES;
+            }
+        }
+        //
+        if(addedToCurrentChatState && reloadTable){
+            // on main thread
+            
+                [chatViewController.messagesTableView reloadData];
+         
         }
         
-        // old messages
-	}else {
-		[self.allChatPoints insertObject:message atIndex:[self.allChatPoints count] > 0 ? ([self.allChatPoints count]-1) : 0];
-        if([self isAllShowed] || [friendsIds containsObject:message.fbUserId] ||
-           [message.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
-            [self.chatPoints insertObject:message atIndex:[self.chatPoints count] > 0 ? ([self.chatPoints count]-1) : 0];
-            addedToCurrentChatState = YES;
-        }
-	}
-    //
-    if(addedToCurrentChatState && reloadTable){
-        // on main thread
-        dispatch_async( dispatch_get_main_queue(), ^{
-            [chatViewController.messagesTableView reloadData];
-        });
-    }
+    });
+    
     
     
     // Save to cache
@@ -922,23 +935,13 @@
     
     NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
     
-    NSLog(@"processQBCheckins fbUsers=%@", fbUsers);
-    NSLog(@"processQBCheckins, count=%d", [qbPoints count]);
-    
     // look through array for geodatas
     for (QBLGeoData *geodata in qbPoints)
     {
-        NSLog(@"processQBCheckins, i=%d", [qbPoints indexOfObject:qbPoints]);
-        
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
-            
             NSString *ID = [user objectForKey:kId];
-            NSLog(@"ID=%@", ID);
-            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
-            
             if([geodata.user.facebookID isEqualToString:ID]){
-                NSLog(@"COnnect");
                 fbUser = user;
                 break;
             }
@@ -966,19 +969,6 @@
         mapAnnotation.qbUserID = geodata.user.ID;
         mapAnnotation.createdAt = geodata.createdAt;
         [mapPointsMutable replaceObjectAtIndex:index withObject:mapAnnotation];
-        
-//            // own centered
-//            if([[mapAnnotation.fbUser objectForKey:kId] isEqualToString:[[DataManager shared].currentFBUser objectForKey:kId]]){
-//                MKCoordinateRegion region;
-//                //Set Zoom level using Span
-//                MKCoordinateSpan span;
-//                region.center = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
-//                span.latitudeDelta = 100;
-//                span.longitudeDelta = 100;
-//                region.span = span;
-//                [mapViewController.mapView setRegion:region animated:TRUE];
-//            }
-        
         [mapAnnotation release];
         
         ++index;
@@ -1017,25 +1007,14 @@
     CLLocationCoordinate2D coordinate;
     int index = 0;
     
-    NSLog(@"processQBChatMessages fbUsers=%@", fbUsers);
-    
-    NSLog(@"processQBChatMessages, count=%d", [qbMessages count]);
-    
     NSMutableArray *qbMessagesMutable = [qbMessages mutableCopy];
     
-    for (QBLGeoData *geodata in qbMessages)
-    {
-        NSLog(@"processQBChatMessages, i=%d", [qbMessages indexOfObject:geodata]);
-        
+    for (QBLGeoData *geodata in qbMessages){
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
-            NSString *ID = [user objectForKey:kId];
-            NSLog(@"ID=%@", ID);
-            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
-                                                   
+            NSString *ID = [user objectForKey:kId];                                  
             if([geodata.user.facebookID isEqualToString:ID]){
                 fbUser = user;
-                NSLog(@"COnnect2");
                 break;
             }
         }
@@ -1077,6 +1056,7 @@
         [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
     }
     
+    NSLog(@"CHAT INIT reloadData");
     dispatch_async(dispatch_get_main_queue(), ^{
         [chatViewController.messagesTableView reloadData];
     });
@@ -1453,6 +1433,10 @@
     {
         // Get Friends checkins
         case FBQueriesTypesFriendsGetCheckins:{
+
+            --numberOfCheckinsRetrieved;
+            
+            NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
             
             // if error, return.
             // for example:
@@ -1465,6 +1449,7 @@
             if([result.body isKindOfClass:NSDictionary.class]){
                 NSDictionary *resultError = [result.body objectForKey:kError];
                 if(resultError != nil){
+                    NSLog(@"resultError=%@", resultError);
                     return;
                 }
             }
@@ -1479,11 +1464,7 @@
                     [self processFBCheckins:(NSArray *)result.body];
                 });
             }
-            
-            
-            --numberOfCheckinsRetrieved;
-            
-            NSLog(@"numberOfCheckinsRetrieved=%d", numberOfCheckinsRetrieved);
+
             
             if(numberOfCheckinsRetrieved == 0){
                 dispatch_release(processCheckinsQueue);

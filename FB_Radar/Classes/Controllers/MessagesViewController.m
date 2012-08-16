@@ -528,9 +528,42 @@
         // make friends as dictionary
         [[DataManager shared] makeFriendsDictionary];
         
+        
+        // get home feeds
+        [[FBService shared] userHomeWithDelegate:self];
+        
+    // Home
+	}else if(result.queryType ==FBQueriesTypesHome){
+        if(![result.body isKindOfClass:NSDictionary.class]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook"
+                                                            message:@"Something went wrong, please restart application"
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+            
+            [HUD hide:YES];
+            
+            return;
+        }
+        
+        NSArray *feeds = [result.body objectForKey:kData];
+        for(NSDictionary *homeMessage in feeds){
+            NSDictionary *from = [homeMessage objectForKey:kFrom];
+            NSString *ID = [from objectForKey:kId];
+            if(ID == nil){
+                NSLog(@"homeMessage=%@", homeMessage);
+            }
+            
+            // add popular friend's ID
+            [[DataManager shared] addPopularFriendID:ID];
+
+        }
+
         // show messages
         [self showInboxMessages];
-	}
+    }
 }
 
 

@@ -76,7 +76,15 @@
 }
 
 - (void)valueDidChange{
+    valueChangedSelf = YES;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+- (void)sendActionsForControlEvents:(UIControlEvents)controlEvents{
+    if(valueChangedSelf){
+        [super sendActionsForControlEvents:controlEvents];
+        valueChangedSelf = NO;
+    }
 }
 
 - (void) endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {

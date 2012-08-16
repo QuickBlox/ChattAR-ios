@@ -73,6 +73,10 @@
     [QBSettings setApplicationID:771];
     [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
     [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
+    [QBSettings setRestAPIVersion:@"0.1.1"];
+#ifndef DEBUG
+    [QBSettings setLogLevel:QBLogLevelNothing];
+#endif
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];

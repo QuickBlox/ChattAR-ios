@@ -56,7 +56,6 @@
     // set switches state
     _soundSwitch.on = [NotificationManager isSoundEnabled];
     _vibrateSwitch.on = [NotificationManager isVibrationEnabled];
-
 }
 
 - (void) viewWillAppear:(BOOL)animated{
@@ -87,6 +86,8 @@
 
     [self setClearcacheButton:nil];
     [super viewDidUnload];
+    
+    isInitialized = NO;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
@@ -111,12 +112,9 @@
 
 // logout
 -(void)logoutButtonDidPress{
-     NSLog(@"LogOut1");
-    
+
     // show splash
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];
-    
-    NSLog(@"LogOut2");
     
     isInitialized = NO;
     
@@ -125,13 +123,9 @@
     
     // logout
     [[FBService shared].facebook logout];
-     NSLog(@"LogOut4");
     dispatch_async( dispatch_get_main_queue(), ^{
         [[FBService shared] logOutChat];
     });
-   
-    
-    NSLog(@"LogOut5");
 }
 
 - (IBAction)clearCache:(id)sender {

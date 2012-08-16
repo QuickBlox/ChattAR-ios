@@ -45,6 +45,8 @@
 #define kFavorites			@"favorites"
 #define kComments           @"comments"
 #define kError              @"error"
+#define kPaging             @"paging"
+#define kNext               @"next"
 
 #define kGET                @"GET"
 
@@ -81,6 +83,7 @@ typedef enum {
 	FBQueriesTypesFriendsGetCheckins,
 	FBQueriesTypesUsersProfiles,
     //
+    FBQueriesTypesHome,
     FBQueriesTypesGetInboxMessages,	
     
 } FBQueriesTypes;
