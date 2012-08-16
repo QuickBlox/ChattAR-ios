@@ -50,36 +50,24 @@ static DataManager *instance = nil;
 }
 
 - (void)sortMessagesArray
-{
-	Conversation* temp;
-	int n = [historyConversationAsArray count];
-	for (int i = 0; i < n-1; i++)
-	{
-		for (int j = 0; j < n-1-i; j++)
-		{
-			NSString* date1 = [(NSMutableDictionary*)[((Conversation*)[historyConversationAsArray objectAtIndex:j]).messages lastObject] objectForKey:@"created_time"];
-			NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
-			[formatter1 setLocale:[NSLocale currentLocale]];
-			[formatter1 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-			NSDate *timeStamp1 = [formatter1 dateFromString:date1];
-			[formatter1 release];
-			
-			NSString* date2 = [(NSMutableDictionary*)[((Conversation*)[historyConversationAsArray objectAtIndex:j+1]).messages lastObject] objectForKey:@"created_time"];
-			NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
-			[formatter2 setLocale:[NSLocale currentLocale]];
-			[formatter2 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-			NSDate *timeStamp2 = [formatter2 dateFromString:date2];
-			[formatter2 release];
-
-			if ([timeStamp1 compare:timeStamp2] == -1)
-			{
-				temp = [((Conversation*)[historyConversationAsArray objectAtIndex:j]) retain];
-				[historyConversationAsArray replaceObjectAtIndex:j withObject:[historyConversationAsArray objectAtIndex:j+1]];
-				[historyConversationAsArray replaceObjectAtIndex:j+1 withObject:temp];
-				[temp release];
-			}
-		}
-	}
+{    
+    self.historyConversationAsArray =(NSMutableArray *)[[[historyConversationAsArray sortedArrayUsingComparator: ^(id conversation1, id conversation2) {
+        NSString* date1 = [(NSMutableDictionary*)[((Conversation*)conversation1).messages lastObject] objectForKey:@"created_time"];
+        NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+        [formatter1 setLocale:[NSLocale currentLocale]];
+        [formatter1 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSDate *timeStamp1 = [formatter1 dateFromString:date1];
+        [formatter1 release];
+        
+        NSString* date2 = [(NSMutableDictionary*)[((Conversation*)conversation2).messages lastObject] objectForKey:@"created_time"];
+        NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
+        [formatter2 setLocale:[NSLocale currentLocale]];
+        [formatter2 setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSDate *timeStamp2 = [formatter2 dateFromString:date2];
+        [formatter2 release];
+        
+        return [timeStamp2 compare:timeStamp1];
+    }] mutableCopy] autorelease];
 }
 
 - (id)init
