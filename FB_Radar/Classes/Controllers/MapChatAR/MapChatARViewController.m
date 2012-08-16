@@ -637,7 +637,7 @@
         // already exist, change status
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
-            dispatch_sync( dispatch_get_main_queue(), ^{
+            dispatch_async( dispatch_get_main_queue(), ^{
                 MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
                 [marker updateStatus:point.userStatus];// update status
                 [marker updateCoordinate:point.coordinate];
@@ -663,7 +663,7 @@
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
                 
-                dispatch_sync( dispatch_get_main_queue(), ^{
+                dispatch_async( dispatch_get_main_queue(), ^{
                     ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
                     [marker updateStatus:point.userStatus];// update status
                     [marker updateCoordinate:point.coordinate]; // update location  
@@ -692,7 +692,7 @@
         }
         //
         if(addedToCurrentMapState){
-            dispatch_sync( dispatch_get_main_queue(), ^{
+            dispatch_async( dispatch_get_main_queue(), ^{
                 [mapViewController addPoint:point];
                 [arViewController addPoint:point];
             });
@@ -739,7 +739,7 @@
     //
     if(addedToCurrentChatState && reloadTable){
         // on main thread
-        dispatch_sync( dispatch_get_main_queue(), ^{
+        dispatch_async( dispatch_get_main_queue(), ^{
             [chatViewController.messagesTableView reloadData];
         });
     }
@@ -988,7 +988,7 @@
     }
     
     // update AR
-    dispatch_sync( dispatch_get_main_queue(), ^{
+    dispatch_async( dispatch_get_main_queue(), ^{
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
     });
 
@@ -1002,7 +1002,7 @@
     ++self.initState;
     NSLog(@"MAP INIT OK");
     if(self.initState == 2){
-        dispatch_sync( dispatch_get_main_queue(), ^{
+        dispatch_async( dispatch_get_main_queue(), ^{
             [self endOfRetrieveInitialData];
         });
     }
@@ -1077,7 +1077,7 @@
         [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
     }
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [chatViewController.messagesTableView reloadData];
     });
     
@@ -1089,7 +1089,7 @@
     ++self.initState;
     NSLog(@"CHAT INIT OK");
     if(self.initState == 2){
-        dispatch_sync( dispatch_get_main_queue(), ^{
+        dispatch_async( dispatch_get_main_queue(), ^{
             [self endOfRetrieveInitialData];
         });
     }
@@ -1220,7 +1220,7 @@
     }
     
     // refresh chat
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [chatViewController refresh];
         
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
