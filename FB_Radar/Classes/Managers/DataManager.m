@@ -18,8 +18,8 @@
 
 #define kFirstSwitchAllFriends [NSString stringWithFormat:@"kFirstSwitchAllFriends_%@", [DataManager shared].currentFBUserId]
 
-#define qbCheckinsFetchLimit 40
-#define fbCheckinsFetchLimit 40
+#define qbCheckinsFetchLimit 50
+#define fbCheckinsFetchLimit 50
 #define qbChatMessagesFetchLimit 40
 
 #define FBCheckinModelEntity @"FBCheckinModel"
@@ -555,13 +555,13 @@ static DataManager *instance = nil;
     [self addChatMessageToStorage:checkin context:ctx];
 }
 -(void)addCheckinToStorage:(UserAnnotation *)checkin context:(NSManagedObjectContext *)ctx{
+
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:FBCheckinModelEntity
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
-	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@",checkin.fbUserId]];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@ AND accountFBUserID == %@", checkin.fbUserId, currentFBUserId]];
 	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
@@ -579,6 +579,7 @@ static DataManager *instance = nil;
         pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:FBCheckinModelEntity
                                                                       inManagedObjectContext:ctx];
         
+        pointObject.fbUserID = checkin.fbUserId;
         pointObject.body = checkin;
         pointObject.accountFBUserID = currentFBUserId;
         pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
