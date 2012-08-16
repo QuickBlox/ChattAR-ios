@@ -36,4 +36,7 @@
     #import "UIColor+hex.h"
     #import "NSObject+performer.h"
 
+    // libs
+    #import "FlurryAnalytics.h"
+
 #endif

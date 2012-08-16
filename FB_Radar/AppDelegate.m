@@ -69,6 +69,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
 	[UIApplication sharedApplication].statusBarHidden = YES;
     
+    // Flurry
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [FlurryAnalytics startSession:FLURRY_API_KEY];
+    
+    
     // Set QuickBlox credentials
     [QBSettings setApplicationID:771];
     [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
@@ -205,7 +210,6 @@
     // clear image cache
     [AsyncImageView clearCache];
     
-#ifdef DEBUG
 	if (printMemoryInfo() < 3) {
 
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Attention","Title of alert")
@@ -216,7 +220,15 @@
         [alert show];
         [alert release];
 	} 
-#endif
+}
+
+
+#pragma mark -
+#pragma mark Flurry uncaught Exception Handler
+
+
+void uncaughtExceptionHandler(NSException *exception) {
+    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
 }
 
 @end

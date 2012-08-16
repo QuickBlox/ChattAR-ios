@@ -196,6 +196,7 @@
 		FAC6B89315D9006D00F3B10F /* QBChatMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */; };
 		FAC6B89415D9006D00F3B10F /* QBCheckinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */; };
 		FAE4E240158B29C400BBB219 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE4E23F158B29C400BBB219 /* Quickblox.framework */; };
+		FAE96D7B15DD42FB00544783 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -480,6 +481,8 @@
 		FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckinModel.m; sourceTree = "<group>"; };
 		FAC6B89D15D985C500F3B10F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		FAE4E23F158B29C400BBB219 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Externals/Quickblox.framework; sourceTree = "<group>"; };
+		FAE96D7915DD42FB00544783 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		FAEF57AF15CADF0100614DBF /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -509,6 +512,7 @@
 				636735D51552CF590061BF75 /* Foundation.framework in Frameworks */,
 				FA8E4F0C1580887B00476EF7 /* libidn.a in Frameworks */,
 				FAE4E240158B29C400BBB219 /* Quickblox.framework in Frameworks */,
+				FAE96D7B15DD42FB00544783 /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,6 +902,7 @@
 		FA8E4E961580887B00476EF7 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
+				FAE96D7815DD42FB00544783 /* FlurryAnalytics */,
 				FA8E4E971580887B00476EF7 /* FB SDK */,
 				FA8E4EA41580887B00476EF7 /* XMPP_Framework */,
 			);
@@ -1083,6 +1088,15 @@
 			);
 			name = Models;
 			path = Classes/Models;
+			sourceTree = "<group>";
+		};
+		FAE96D7815DD42FB00544783 /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				FAE96D7915DD42FB00544783 /* FlurryAnalytics.h */,
+				FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1396,6 +1410,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals/XMPP_Framework\"",
+					"\"$(SRCROOT)/Externals/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
@@ -1422,6 +1437,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals/XMPP_Framework\"",
+					"\"$(SRCROOT)/Externals/FlurryAnalytics\"",
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;

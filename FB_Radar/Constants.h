@@ -26,4 +26,8 @@
 #define quotePushMessageInChat @"Your message in Chat has been cited"
 #define appName @"ChattAR"
 
+// Flurry
+#define FLURRY_API_KEY @"KMD7NSM4DF344W9JVCGN"
+#define FLURRY_EVENT_USER_DID_LOGIN @"User did login"
+
 #endif

@@ -631,8 +631,7 @@
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
     NSArray *currentMapAnnotations = [mapViewController.mapView.annotations copy];
-    NSLog(@"currentMapAnnotations count=%d", [currentMapAnnotations count]);
-    
+   
     // Check for Map
     BOOL isExistPoint = NO;
     for (UserAnnotation *annotation in currentMapAnnotations)
@@ -709,10 +708,6 @@
     // Save to cache
     //
     [[DataManager shared] addMapARPointToStorage:point];
-}
-
-- (void)addNewMessageToChat:(UserAnnotation *)message{
-    [self addNewMessageToChat:message addToTop:NO withReloadTable:NO];
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
