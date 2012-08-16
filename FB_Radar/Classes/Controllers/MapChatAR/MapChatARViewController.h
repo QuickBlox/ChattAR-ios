@@ -38,7 +38,6 @@
 
 @property (assign) NSMutableArray *chatMessagesIDs;
 @property (assign) NSMutableArray *mapPointsIDs;
-@property (assign) NSMutableArray *fbCheckinsIDs;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 

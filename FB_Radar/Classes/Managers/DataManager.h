@@ -95,7 +95,7 @@
 
 -(NSArray *)checkinsFromStorage;
 -(void)addCheckinsToStorage:(NSArray *)checkins;
--(void)addCheckinToStorage:(id)checkins;
+-(BOOL)addCheckinToStorage:(id)checkins;
 
 -(void) deleteAllObjects: (NSString *) entityDescription  context:(NSManagedObjectContext *)ctx;
 

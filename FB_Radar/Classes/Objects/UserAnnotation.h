@@ -20,6 +20,7 @@
     NSString *fbUserId;
     NSUInteger geoDataID;
     NSString *fbCheckinID;
+    NSString *fbPlaceID;
     NSUInteger qbUserID;
     
     NSInteger distance;
@@ -42,6 +43,7 @@
 @property (nonatomic, retain) NSString *fbUserId;
 @property (nonatomic, assign) NSUInteger geoDataID;
 @property (nonatomic, retain) NSString *fbCheckinID;
+@property (nonatomic, retain) NSString *fbPlaceID;
 @property (nonatomic, assign) NSUInteger qbUserID;
 
 @property (nonatomic, assign) NSInteger distance;

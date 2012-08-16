@@ -32,8 +32,8 @@
 - (void)processQBChatMessages:(NSArray *)data;
 - (void)processFBCheckins:(NSArray *)data;
 
-- (void)addNewPointToMapAR:(UserAnnotation *)point;
-- (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable;
+- (void)addNewPointToMapAR:(UserAnnotation *)point isFBCheckin:(BOOL)isFBCheckin;
+- (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable isFBCheckin:(BOOL)isFBCheckin;
 
 @end
 
@@ -42,7 +42,7 @@
 @synthesize mapViewController, chatViewController, arViewController;
 @synthesize segmentControl;
 @synthesize mapPoints, chatPoints;
-@synthesize chatMessagesIDs, mapPointsIDs, fbCheckinsIDs;
+@synthesize chatMessagesIDs, mapPointsIDs;
 @synthesize userActionSheet, allMapPoints, allCheckins, allChatPoints;
 @synthesize selectedUserAnnotation;
 @synthesize locationManager, myCurrentLocation;
@@ -83,9 +83,8 @@
         // IDs
         chatMessagesIDs = [[NSMutableArray alloc] init];
         mapPointsIDs = [[NSMutableArray alloc] init];
-        fbCheckinsIDs = [[NSMutableArray alloc] init];
         
-        
+
         
         // Current location
         myCurrentLocation = [[CLLocation alloc] init];
@@ -121,7 +120,6 @@
     
     [chatMessagesIDs release];
     [mapPointsIDs release];
-    [fbCheckinsIDs release];
     
     [userActionSheet release];
 	
@@ -203,16 +201,22 @@
         if([[DataManager shared] isFirstStartApp]){
             [[DataManager shared] setFirstStartApp:NO];
             
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil) 
-                                                            message:NSLocalizedString(@"You can see and chat with all\nusers within 10km. Increase\nsearch radius using slider (left). \nSwitch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil)    
-                                                           delegate:nil 
-                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil) 
+            NSString *alertBody = nil;
+            if([ARManager deviceSupportsAR]){
+                alertBody = NSLocalizedString(@"You can see and chat with all\nusers within 10km. Increase\nsearch radius using slider (left). \nSwitch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil);
+                
+            }else{
+                alertBody = NSLocalizedString(@"Switch to 'Facebook only' mode (bottom right) to see your friends and their check-ins only.", nil);
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"'World' mode", nil)
+                                                            message:alertBody
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
                                                   otherButtonTitles:nil];
             [alert show];
             [alert release];
         }
-    }    
+    }
 }
 
 - (void)viewDidUnload
@@ -328,6 +332,11 @@
     }else if(origValue <= friendsValue){
         stateValue = 0;
     }
+//    
+//    
+//    for(UserAnnotation *a in chatPoints){
+//        NSLog(@"coordinate lat=%f, lon=%f", a.coordinate.latitude, a.coordinate.longitude);
+//    }
     
     switch (stateValue) {
         // show Friends
@@ -545,7 +554,6 @@
     if([cashedFBCheckins count] > 0){
         for(FBCheckinModel *checkinCashedPoint in cashedFBCheckins){
             [self.allCheckins addObject:checkinCashedPoint.body];
-            [self.fbCheckinsIDs addObject:((UserAnnotation *)checkinCashedPoint.body).fbCheckinID];
         }
     }
     
@@ -608,11 +616,11 @@
     
     
     // Add to Chat
-    [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable];
+    [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable isFBCheckin:NO];
     
     
     // Add to Map
-    [self addNewPointToMapAR:newAnnotation];
+    [self addNewPointToMapAR:newAnnotation isFBCheckin:NO];
 	
 	[newAnnotation release];
     
@@ -621,7 +629,7 @@
     [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
 }
 
-- (void)addNewPointToMapAR:(UserAnnotation *)point{
+- (void)addNewPointToMapAR:(UserAnnotation *)point isFBCheckin:(BOOL)isFBCheckin{
     
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
@@ -705,10 +713,12 @@
     
     // Save to cache
     //
-    [[DataManager shared] addMapARPointToStorage:point];
+    if(!isFBCheckin){
+        [[DataManager shared] addMapARPointToStorage:point];
+    }
 }
 
-- (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
+- (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable isFBCheckin:(BOOL)isFBCheckin{
     chatViewController.messagesTableView.tag = tableIsUpdating;
     
     if(message.geoDataID != -1){
@@ -755,7 +765,9 @@
     
     // Save to cache
     //
-    [[DataManager shared] addChatMessageToStorage:message];
+    if(!isFBCheckin){
+        [[DataManager shared] addChatMessageToStorage:message];
+    }
     
     chatViewController.messagesTableView.tag = 0;
 }
@@ -969,7 +981,7 @@
         ++index;
         
         // show Point on Map/AR
-        [self addNewPointToMapAR:mapAnnotation];
+        [self addNewPointToMapAR:mapAnnotation isFBCheckin:NO];
     }
     
     // update AR
@@ -1048,7 +1060,7 @@
         ++index;
         
         // show Message on Chat
-        [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO];
+        [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO isFBCheckin:NO];
     }
     
     NSLog(@"CHAT INIT reloadData");
@@ -1095,18 +1107,21 @@
             //
             
             CLLocationCoordinate2D coordinate;
+            //
+            NSString *previousPlaceID = nil;
+            NSString *previousFBUserID = nil;
             
             // Collect checkins
-            NSMutableArray *proccesedCheckins = [NSMutableArray array];
             for(NSDictionary *checkin in checkins){
                 
                 NSString *ID = [checkin objectForKey:kId];
-                if([self.fbCheckinsIDs containsObject:ID]){
+                
+                NSDictionary *place = [checkin objectForKey:kPlace];
+                if(place == nil){
                     continue;
                 }
                 
-                
-                id location = [[checkin objectForKey:kPlace] objectForKey:kLocation];
+                id location = [place objectForKey:kLocation];
                 if(![location isKindOfClass:NSDictionary.class]){
                     continue;
                 }
@@ -1127,9 +1142,16 @@
                     continue;
                 }
                 
-                if([checkin objectForKey:kPlace] == nil){
+                // coordinate
+                coordinate.latitude = [[[place objectForKey:kLocation] objectForKey:kLatitude] floatValue];
+                coordinate.longitude = [[[place objectForKey:kLocation] objectForKey:kLongitude] floatValue];
+                
+                
+                // if this is checkin on the same location 
+                if([previousPlaceID isEqualToString:[place objectForKey:kId]] && [previousFBUserID isEqualToString:fbUserID]){
                     continue;
                 }
+                
                 
                 // status
                 NSString *status = nil;
@@ -1153,10 +1175,6 @@
                 NSDate *createdAt = [df dateFromString:time];
                 [df release];
                 
-                // coordinate
-                coordinate.latitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLatitude] floatValue];
-                coordinate.longitude = [[[[checkin objectForKey:kPlace] objectForKey:kLocation] objectForKey:kLongitude] floatValue];
-                
                 UserAnnotation *checkinAnnotation = [[UserAnnotation alloc] init];
                 checkinAnnotation.geoDataID = -1;
                 checkinAnnotation.coordinate = coordinate;
@@ -1166,6 +1184,7 @@
                 checkinAnnotation.fbUserId = [fbUser objectForKey:kId];
                 checkinAnnotation.fbUser = fbUser;
                 checkinAnnotation.fbCheckinID = ID;
+                checkinAnnotation.fbPlaceID = [place objectForKey:kId];
                 checkinAnnotation.createdAt = createdAt;
                 
                 
@@ -1173,24 +1192,26 @@
                 checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
                 [checkinLocation release];
                 
-                [proccesedCheckins addObject:checkinAnnotation];
-                [checkinAnnotation release];
-                
-                [self.fbCheckinsIDs addObject:ID];
+                // add to Storage
+                BOOL isAdded = [[DataManager shared] addCheckinToStorage:checkinAnnotation];
+                if(!isAdded){
+                    [checkinAnnotation release];
+                    continue;
+                }
 
                 // show Point on Map/AR
-                [self addNewPointToMapAR:checkinAnnotation];
+                [self addNewPointToMapAR:checkinAnnotation isFBCheckin:YES];
 
                 // show Message on Chat
-                [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO];
+                [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO isFBCheckin:YES];
+                
+                
+                previousPlaceID = [place objectForKey:kId];
+                previousFBUserID = fbUserID;
+                
+                [self.allCheckins addObject:checkinAnnotation];
+                [checkinAnnotation release];
             }
-            
-            // save Checkins
-            [self.allCheckins addObjectsFromArray:proccesedCheckins];
-            //
-            // add to Storage
-            [[DataManager shared] addCheckinsToStorage:proccesedCheckins];
-            
         }
     }
     
@@ -1268,7 +1289,6 @@
     
     [self.chatMessagesIDs removeAllObjects];
     [self.mapPointsIDs removeAllObjects];
-    [self.fbCheckinsIDs removeAllObjects];
     
     [updateTimre invalidate];
     [updateTimre release];

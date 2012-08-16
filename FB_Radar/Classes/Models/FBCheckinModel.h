@@ -15,6 +15,8 @@
 @property (nonatomic, retain) NSString * accountFBUserID;
 @property (nonatomic, retain) id body;
 @property (nonatomic, retain) NSNumber * timestamp;
+@property (nonatomic, retain) NSString * checkinID;
+@property (nonatomic, retain) NSString * placeID;
 @property (nonatomic, retain) NSString * fbUserID;
 
 @end

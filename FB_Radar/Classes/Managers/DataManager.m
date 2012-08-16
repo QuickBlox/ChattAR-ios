@@ -550,47 +550,48 @@ static DataManager *instance = nil;
     }
 }
 //
--(void)addCheckinToStorage:(UserAnnotation *)checkin{
+-(BOOL)addCheckinToStorage:(UserAnnotation *)checkin{
     NSManagedObjectContext *ctx = [self threadSafeContext];
-    [self addChatMessageToStorage:checkin context:ctx];
+    return [self addCheckinToStorage:checkin context:ctx];
 }
--(void)addCheckinToStorage:(UserAnnotation *)checkin context:(NSManagedObjectContext *)ctx{
+-(BOOL)addCheckinToStorage:(UserAnnotation *)checkin context:(NSManagedObjectContext *)ctx{
 
     // Check if exist
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:FBCheckinModelEntity
 											  inManagedObjectContext:ctx];
     [fetchRequest setEntity:entity];
-	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"fbUserID == %@ AND accountFBUserID == %@", checkin.fbUserId, currentFBUserId]];
+	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID like %@ AND (checkinID like %@ OR (fbUserID like %@ AND placeID like %@))", currentFBUserId, checkin.fbCheckinID, checkin.fbUserId, checkin.fbPlaceID]];
+    
 	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
     FBCheckinModel *pointObject = nil;
     
     
-    // Update
-    if(nil != results && [results count] > 0){
-        pointObject = (FBCheckinModel *)[results objectAtIndex:0];
-        pointObject.body = checkin;
-        pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
-        
-    // Create new
-    }else{
+    // Add new
+    if(nil == results || [results count] == 0){
         pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:FBCheckinModelEntity
                                                                       inManagedObjectContext:ctx];
         
+        pointObject.checkinID = checkin.fbCheckinID;
+        pointObject.placeID = checkin.fbPlaceID;
         pointObject.fbUserID = checkin.fbUserId;
         pointObject.body = checkin;
         pointObject.accountFBUserID = currentFBUserId;
         pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
+
+        NSError *error = nil;
+        [ctx save:&error];
+        if(error){
+            NSLog(@"CoreData: addCheckinToStorage error=%@", error);
+            return NO;
+        }else{
+            return YES;
+        }
     }
     
-    
-    NSError *error = nil;
-    [ctx save:&error];
-    if(error){
-        NSLog(@"CoreData: addCheckinToStorage error=%@", error);
-    }
+    return NO;
 }
 //
 -(NSArray *)checkinsFromStorage{

@@ -3,7 +3,9 @@
     <entity name="FBCheckinModel" representedClassName="Checkin" syncable="YES">
         <attribute name="accountFBUserID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="body" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="checkinID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fbUserID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="QBChatMessageModel" representedClassName="ChatMessage" syncable="YES">
@@ -17,8 +19,8 @@
         <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
+        <element name="FBCheckinModel" positionX="0" positionY="0" width="128" height="135"/>
         <element name="QBChatMessageModel" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="FBCheckinModel" positionX="0" positionY="0" width="128" height="105"/>
         <element name="QBCheckinModel" positionX="0" positionY="0" width="128" height="90"/>
     </elements>
 </model>

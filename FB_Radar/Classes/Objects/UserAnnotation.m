@@ -10,7 +10,7 @@
 #import "Macro.h"
 
 @implementation UserAnnotation
-@synthesize userPhotoUrl, userName, userStatus, coordinate, fbUserId, geoDataID, createdAt, fbUser, quotedUserName, quotedMessageDate, quotedMessageText, quotedUserPhotoURL, distance, quotedUserFBId, quotedUserQBId, qbUserID, fbCheckinID;
+@synthesize userPhotoUrl, userName, userStatus, coordinate, fbUserId, geoDataID, createdAt, fbUser, quotedUserName, quotedMessageDate, quotedMessageText, quotedUserPhotoURL, distance, quotedUserFBId, quotedUserQBId, qbUserID, fbCheckinID, fbPlaceID;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -27,6 +27,7 @@
         DESERIALIZE_OBJECT(fbUserId, aDecoder);
         DESERIALIZE_INT(geoDataID, aDecoder);
         DESERIALIZE_OBJECT(fbCheckinID, aDecoder);
+        DESERIALIZE_OBJECT(fbPlaceID, aDecoder);
         DESERIALIZE_INT(qbUserID, aDecoder);
         
         DESERIALIZE_INT(distance, aDecoder);
@@ -54,6 +55,7 @@
     SERIALIZE_OBJECT(fbUserId, aCoder);
     SERIALIZE_INT(geoDataID, aCoder);
     SERIALIZE_OBJECT(fbCheckinID, aCoder);
+    SERIALIZE_OBJECT(fbPlaceID, aCoder);
     SERIALIZE_INT(qbUserID, aCoder);
     
     SERIALIZE_INT(distance, aCoder);
@@ -82,6 +84,7 @@
     [fbUserId release];
     [fbUser release];
     [fbCheckinID release];
+    [fbPlaceID release];
     
     [super dealloc];
 }
@@ -95,6 +98,8 @@
                       \n\tqbUserID:%u\
                       \n\tfbUser:%@\
                       \n\tgeoDataID:%d\
+                      \n\tfbCheckinID:%@\
+                      \n\tfbPlaceID:%@\
                       \n\tcreatedAt:%@",
                       
                       [super description],
@@ -103,6 +108,8 @@
                       qbUserID,
                       fbUser,
                       geoDataID,
+                      fbCheckinID,
+                      fbPlaceID,
                       createdAt];
     
     return desc;

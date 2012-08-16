@@ -13,6 +13,8 @@
 @dynamic accountFBUserID;
 @dynamic body;
 @dynamic timestamp;
+@dynamic checkinID;
+@dynamic placeID;
 @dynamic fbUserID;
 
 @end
