@@ -922,23 +922,23 @@
     
     NSMutableArray *mapPointsMutable = [qbPoints mutableCopy];
     
-    //NSLog(@"processQBCheckins fbUsers=%@", fbUsers);
+    NSLog(@"processQBCheckins fbUsers=%@", fbUsers);
     NSLog(@"processQBCheckins, count=%d", [qbPoints count]);
     
     // look through array for geodatas
     for (QBLGeoData *geodata in qbPoints)
     {
-        //NSLog(@"processQBCheckins, i=%d", [qbPoints indexOfObject:qbPoints]);
+        NSLog(@"processQBCheckins, i=%d", [qbPoints indexOfObject:qbPoints]);
         
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
             
             NSString *ID = [user objectForKey:kId];
-           // NSLog(@"ID=%@", ID);
-           // NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
+            NSLog(@"ID=%@", ID);
+            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
             
             if([geodata.user.facebookID isEqualToString:ID]){
-                //NSLog(@"COnnect");
+                NSLog(@"COnnect");
                 fbUser = user;
                 break;
             }
@@ -1017,7 +1017,7 @@
     CLLocationCoordinate2D coordinate;
     int index = 0;
     
-    //NSLog(@"processQBChatMessages fbUsers=%@", fbUsers);
+    NSLog(@"processQBChatMessages fbUsers=%@", fbUsers);
     
     NSLog(@"processQBChatMessages, count=%d", [qbMessages count]);
     
@@ -1025,17 +1025,17 @@
     
     for (QBLGeoData *geodata in qbMessages)
     {
-        // NSLog(@"processQBChatMessages, i=%d", [qbMessages indexOfObject:geodata]);
+        NSLog(@"processQBChatMessages, i=%d", [qbMessages indexOfObject:geodata]);
         
         NSDictionary *fbUser = nil;
         for(NSDictionary *user in fbUsers){
             NSString *ID = [user objectForKey:kId];
-            //NSLog(@"ID=%@", ID);
-            //NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
+            NSLog(@"ID=%@", ID);
+            NSLog(@"[geodata.user.facebookID=%@", geodata.user.facebookID);
                                                    
             if([geodata.user.facebookID isEqualToString:ID]){
                 fbUser = user;
-                 //NSLog(@"COnnect2");
+                NSLog(@"COnnect2");
                 break;
             }
         }
@@ -1511,20 +1511,21 @@
             
             // update map
             if([((NSString *)contextInfo) isEqualToString:mapSearch]){
-				
-                NSArray *newQBMapARPoints = [geoDataSearchResult.geodata mutableCopy];
-                
+
                 // get string of fb users ids
                 NSMutableArray *fbMapUsersIds = [[NSMutableArray alloc] init];
-                for (QBLGeoData *geodata in newQBMapARPoints){
+                NSMutableArray *geodataProcessed = [NSMutableArray array];
+                
+                for (QBLGeoData *geodata in geoDataSearchResult.geodata){
                     // skip if already exist
                     if([self.mapPointsIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
                         continue;
                     }
                     [fbMapUsersIds addObject:geodata.user.facebookID];
+                    
+                    [geodataProcessed addObject:geodata];
                 }
                 if([fbMapUsersIds count] == 0){
-                    [newQBMapARPoints release];
                     [fbMapUsersIds release];
                     return;
                 }
@@ -1536,9 +1537,9 @@
 					[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
 				}
 				
+                NSLog(@"ids=%@", ids);
                 
-                NSArray *context = [NSArray arrayWithObjects:mapFBUsers, newQBMapARPoints, nil];
-                [newQBMapARPoints release];
+                NSArray *context = [NSArray arrayWithObjects:mapFBUsers, geodataProcessed, nil];
                 
                 
 				// get FB info for obtained QB locations
@@ -1552,21 +1553,26 @@
             // update chat
             }else if([((NSString *)contextInfo) isEqualToString:chatSearch]){
                 
-                NSArray *newQBChatMesages = geoDataSearchResult.geodata;
-                
                 // get fb users info
                 NSMutableSet *fbChatUsersIds = [[NSMutableSet alloc] init];
-                for (QBLGeoData *geodata in newQBChatMesages){
+                
+                NSMutableArray *geodataProcessed = [NSMutableArray array];
+                
+                for (QBLGeoData *geodata in geoDataSearchResult.geodata){
                     // skip if already exist
                     if([self.chatMessagesIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
                         continue;
                     }
                     [fbChatUsersIds addObject:geodata.user.facebookID];
+                    
+                    [geodataProcessed addObject:geodata];
                 }
                 if([fbChatUsersIds count] == 0){
                     [fbChatUsersIds release];
                     return;
                 }
+                
+                NSLog(@"fbChatUsersIds=%@", fbChatUsersIds);
                 
                 //
                 NSMutableString* ids = [[NSMutableString alloc] init];
@@ -1575,8 +1581,10 @@
 					[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
 				}
                 
+                NSLog(@"ids2=%@", ids);
                 
-                NSArray *context = [NSArray arrayWithObjects:chatFBUsers, newQBChatMesages, nil];
+                
+                NSArray *context = [NSArray arrayWithObjects:chatFBUsers, geodataProcessed, nil];
                 
 
                 // get FB info for obtained QB chat messages
@@ -1605,6 +1613,8 @@
 }
 
 - (void)completedWithResult:(Result *)result {
+    NSLog(@"completedWithResult");
+    
     // get points result - check for new one
 	if([result isKindOfClass:[QBLGeoDataPagedResult class]])
 	{
@@ -1619,6 +1629,7 @@
             // get fb users info
             NSMutableArray *fbChatUsersIds = nil;
             NSMutableArray *geodataProcessed = [NSMutableArray array];
+            
             for (QBLGeoData *geodata in geoDataSearchResult.geodata){
                 // skip if already exist
                 if([self.chatMessagesIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
