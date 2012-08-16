@@ -96,6 +96,8 @@
 #pragma mark FBSessionDelegate
 
 - (void)fbDidLogin {
+    NSLog(@"fbDidLogin");
+    
     // save FB token and expiration date
     [[DataManager shared] saveFBToken:[FBService shared].facebook.accessToken 
                               andDate:[FBService shared].facebook.expirationDate];

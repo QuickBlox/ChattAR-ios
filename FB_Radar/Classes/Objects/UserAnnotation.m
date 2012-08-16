@@ -92,17 +92,17 @@
                       @"%@\
                       \n\tuserName:%@\
                       \n\tuserStatus:%@\
-                      \n\tfbUserId:%@\
                       \n\tqbUserID:%u\
                       \n\tfbUser:%@\
+                      \n\tgeoDataID:%d\
                       \n\tcreatedAt:%@",
                       
                       [super description],
                       userName,
                       userStatus,
-                      fbUserId,
                       qbUserID,
                       fbUser,
+                      geoDataID,
                       createdAt];
     
     return desc;

@@ -780,7 +780,9 @@
             quotePhotoTop = nil;
             
             // scroll to top
-            [messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            if([[(MapChatARViewController *)delegate chatPoints] count] > 0){
+                [messagesTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            }
         
         }else{
             

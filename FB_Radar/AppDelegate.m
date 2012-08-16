@@ -226,9 +226,10 @@
 #pragma mark -
 #pragma mark Flurry uncaught Exception Handler
 
-
 void uncaughtExceptionHandler(NSException *exception) {
+#ifndef DEBUG
     [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+#endif
 }
 
 @end

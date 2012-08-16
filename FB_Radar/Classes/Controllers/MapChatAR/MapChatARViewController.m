@@ -484,8 +484,6 @@
         }
     }
     
-    //NSLog(@"allChatPoints =%@", allChatPoints);
-    
     // get map/ar points from cash
     NSDate *lastPointDate = nil;
     NSArray *cashedMapARPoints = [[DataManager shared] mapARPointsFromStorage];
@@ -498,8 +496,6 @@
             [self.mapPointsIDs addObject:[NSString stringWithFormat:@"%d", ((UserAnnotation *)mapARCashedPoint.body).geoDataID]];
         }
     }
-    
-        NSLog(@"allMapPoints =%@", allMapPoints);
     
     // If we have info from cashe - show them
     if([self.allMapPoints count] > 0 || [self.allChatPoints count] > 0){
@@ -552,7 +548,6 @@
             [self.fbCheckinsIDs addObject:((UserAnnotation *)checkinCashedPoint.body).fbCheckinID];
         }
     }
-    NSLog(@"fbCheckinsIDs=%@", fbCheckinsIDs);
     
     if([self.allCheckins count] > 0){
         [self showWorld];
@@ -688,7 +683,10 @@
         dispatch_async( dispatch_get_main_queue(), ^{
         
             [self.allMapPoints addObject:point];
-            [self.mapPointsIDs addObject:[NSString stringWithFormat:@"%d", point.geoDataID]];
+            
+            if(point.geoDataID != -1){
+                [self.mapPointsIDs addObject:[NSString stringWithFormat:@"%d", point.geoDataID]];
+            }
             
             if([self isAllShowed] || [friendsIds containsObject:point.fbUserId]){
                 [self.mapPoints addObject:point];
@@ -713,7 +711,9 @@
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable{
     chatViewController.messagesTableView.tag = tableIsUpdating;
     
-    [self.chatMessagesIDs addObject:[NSString stringWithFormat:@"%d", message.geoDataID]];
+    if(message.geoDataID != -1){
+        [self.chatMessagesIDs addObject:[NSString stringWithFormat:@"%d", message.geoDataID]];
+    }
     
     NSArray *friendsIds = [[DataManager shared].myFriendsAsDictionary allKeys];
     
@@ -1656,6 +1656,14 @@
                 }
                 
                 [self showChat];
+                
+                // move wheel to front
+                if(activityIndicator){
+                    [self.view bringSubviewToFront:activityIndicator];
+                }
+                //
+                // move all/friends switch to front
+                [self.view bringSubviewToFront:allFriendsSwitch];
             }
                 
             // quote action
