@@ -469,9 +469,14 @@ static FBService *instance = nil;
     [fromID replaceOccurrencesOfString:@"@chat.facebook.com" withString:@"" 
                                options:0 range:NSMakeRange(0, [fromID length])]; // remove @chat.facebook.com
 
-    NSLog(@"fromID=%@", fromID);
     
-
+    NSDictionary *friend = [[DataManager shared].myFriendsAsDictionary objectForKey:fromID];
+    if(friend == nil){
+        [fromID release];
+        return;
+    }
+    
+    
     // construct new message
     NSMutableDictionary *recievedMessage  = [[NSMutableDictionary alloc] init];
     
@@ -480,10 +485,7 @@ static FBService *instance = nil;
     
     // set opponent's info
     NSMutableDictionary *opponent = [[NSMutableDictionary alloc] init];
-    NSDictionary *friend = [[DataManager shared].myFriendsAsDictionary objectForKey:fromID];
-    NSLog(@"setid3=%@, body=%@", friend, body);
     [opponent setObject:[friend objectForKey:kId] forKey:kId];
-    NSLog(@"setid33");
     [opponent setObject:[friend objectForKey:kName] forKey:kName];
     [recievedMessage setObject:opponent forKey:kFrom];
     [opponent release];
