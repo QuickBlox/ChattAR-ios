@@ -105,6 +105,8 @@
 
 - (void)dealloc
 {
+    dispatch_release(processCheckinsQueue);
+    
     self.mapViewController = nil;
     self.chatViewController = nil;
     self.arViewController = nil;
@@ -1477,11 +1479,6 @@
                 dispatch_async(processCheckinsQueue, ^{
                     [self processFBCheckins:(NSArray *)result.body];
                 });
-            }
-
-            
-            if(numberOfCheckinsRetrieved == 0){
-                dispatch_release(processCheckinsQueue);
             }
         }
         break;

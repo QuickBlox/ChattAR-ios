@@ -478,6 +478,11 @@
             // create and add conversation
             Conversation *conersation = [[Conversation alloc] init];
             conersation.to = [to objectAtIndex:0];
+
+            
+            // add to popular
+            [[DataManager shared] addPopularFriendID:[conersation.to objectForKey:kId]];
+            
             
             // add comments
             if([inboxConversation objectForKey:kComments]){
@@ -554,6 +559,7 @@
             NSString *ID = [from objectForKey:kId];
             if(ID == nil){
                 NSLog(@"homeMessage=%@", homeMessage);
+                continue;
             }
             
             // add popular friend's ID

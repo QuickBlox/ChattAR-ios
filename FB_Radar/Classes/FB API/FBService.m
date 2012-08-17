@@ -86,9 +86,16 @@ static FBService *instance = nil;
 #pragma mark Home
 
 - (void) userHomeWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate{
-    NSString *urlString = [NSString stringWithFormat:@"%@/me/home?access_token=%@&limit=100",
+    int popularFriendsCount = [[[DataManager shared].myPopularFriends allObjects] count];
+    int homeFeedsCountToRetrieve = 100-popularFriendsCount;
+    if(homeFeedsCountToRetrieve <= 0){
+        homeFeedsCountToRetrieve = 5;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/me/home?access_token=%@&limit=%d",
                            FB,
-                           [FBService shared].facebook.accessToken];
+                           [FBService shared].facebook.accessToken,
+                            homeFeedsCountToRetrieve];
     
     [self performRequestAsyncWithUrl:urlString request:nil type:FBQueriesTypesHome delegate:delegate];
 }

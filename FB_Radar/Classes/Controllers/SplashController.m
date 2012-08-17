@@ -131,8 +131,6 @@
         [DataManager shared].currentFBUser = [[result.body mutableCopy] autorelease];
         [DataManager shared].currentFBUserId = [[DataManager shared].currentFBUser objectForKey:kId];
         
-        NSLog(@" [DataManager shared].currentFBUserId =%@", [DataManager shared].currentFBUserId );
-        
         // try to auth
         NSString *userLogin = [[NumberToLetterConverter instance] convertNumbersToLetters:[[DataManager shared].currentFBUser objectForKey:kId]];
         NSString *passwordHash = [NSString stringWithFormat:@"%u", [[[DataManager shared].currentFBUser objectForKey:kId] hash]];
@@ -170,6 +168,16 @@
                 
                 // auth in Chat
                 [[FBService shared] logInChat];
+                
+                
+                // restore FB cookies
+                NSHTTPCookieStorage *cookiesStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+                NSArray *cookies = [[NSUserDefaults standardUserDefaults] objectForKey:FB_COOKIES];
+                for(NSHTTPCookie *cook in cookies){
+                    if([cook.domain rangeOfString:@"facebook.com"].location != NSNotFound){
+                        [cookiesStorage setCookie:cook];
+                    }
+                }
             }
             
         // Errors
@@ -275,6 +283,12 @@
         
         // start track own loaction
         [[[QBLLocationDataSource instance] locationManager] startUpdatingLocation];
+        
+        
+        // save FB cookies
+        NSHTTPCookieStorage *cookiesStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSObject *cookies = [cookiesStorage cookies];
+        [[NSUserDefaults standardUserDefaults] setObject:cookies forKey:FB_COOKIES];
     }
 }
 
