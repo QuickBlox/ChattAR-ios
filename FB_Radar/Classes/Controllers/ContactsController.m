@@ -391,9 +391,7 @@
         
         // add to
         NSMutableDictionary *to = [NSMutableDictionary dictionary];
-        NSLog(@"setid1");
         [to setObject:selectedFriendId forKey:kId];
-        NSLog(@"setid11");
         [to setObject:[selectedFriend objectForKey:kName] forKey:kName];
         newConversation.to = to;
         
