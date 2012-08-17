@@ -34,9 +34,9 @@
 
 
 #pragma mark -
-#pragma mark Home
+#pragma mark Wall
 
-- (void) userHomeWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate;
+- (void) userWallWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate;
 
 
 #pragma mark -

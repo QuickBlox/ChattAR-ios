@@ -172,7 +172,8 @@
                 
                 // restore FB cookies
                 NSHTTPCookieStorage *cookiesStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-                NSArray *cookies = [[NSUserDefaults standardUserDefaults] objectForKey:FB_COOKIES];
+                NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:FB_COOKIES];
+                NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:data];
                 for(NSHTTPCookie *cook in cookies){
                     if([cook.domain rangeOfString:@"facebook.com"].location != NSNotFound){
                         [cookiesStorage setCookie:cook];
@@ -287,8 +288,9 @@
         
         // save FB cookies
         NSHTTPCookieStorage *cookiesStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-        NSObject *cookies = [cookiesStorage cookies];
-        [[NSUserDefaults standardUserDefaults] setObject:cookies forKey:FB_COOKIES];
+        NSArray *cookies = [cookiesStorage cookies];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:FB_COOKIES];
     }
 }
 

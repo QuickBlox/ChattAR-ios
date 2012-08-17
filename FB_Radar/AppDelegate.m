@@ -68,6 +68,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
 	[UIApplication sharedApplication].statusBarHidden = YES;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     
     // Flurry
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);

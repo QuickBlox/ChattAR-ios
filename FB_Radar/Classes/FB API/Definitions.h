@@ -26,6 +26,7 @@
 #define kLastName			@"last_name"
 #define kInbox				@"inbox"
 #define kComments			@"comments"
+#define kLikes              @"likes"
 #define kFrom				@"from"
 #define kTo					@"to"
 #define kBody				@"body"
@@ -83,7 +84,7 @@ typedef enum {
 	FBQueriesTypesFriendsGetCheckins,
 	FBQueriesTypesUsersProfiles,
     //
-    FBQueriesTypesHome,
+    FBQueriesTypesWall,
     FBQueriesTypesGetInboxMessages,	
     
 } FBQueriesTypes;

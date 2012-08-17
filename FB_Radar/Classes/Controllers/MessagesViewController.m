@@ -535,10 +535,10 @@
         
         
         // get home feeds
-        [[FBService shared] userHomeWithDelegate:self];
+        [[FBService shared] userWallWithDelegate:self];
         
-    // Home
-	}else if(result.queryType ==FBQueriesTypesHome){
+    // Wall
+	}else if(result.queryType ==FBQueriesTypesWall){
         if(![result.body isKindOfClass:NSDictionary.class]){
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook"
                                                             message:@"Something went wrong, please restart application"
@@ -554,18 +554,46 @@
         }
         
         NSArray *feeds = [result.body objectForKey:kData];
-        for(NSDictionary *homeMessage in feeds){
-            NSDictionary *from = [homeMessage objectForKey:kFrom];
-            NSString *ID = [from objectForKey:kId];
-            if(ID == nil){
-                NSLog(@"homeMessage=%@", homeMessage);
+        
+        
+        NSArray *friendsIds = [[[DataManager shared].myFriendsAsDictionary allKeys] copy];
+        
+        for(NSDictionary *feed in feeds){
+            NSArray *likes = [[feed objectForKey:kLikes] objectForKey:kData];
+            NSDictionary *comments = [[feed objectForKey:kComments] objectForKey:kData];
+            
+            if(likes == nil && comments == nil){
                 continue;
             }
             
-            // add popular friend's ID
-            [[DataManager shared] addPopularFriendID:ID];
-
+            if([[[DataManager shared].myPopularFriends allObjects] count] > maxPopularFriends){
+                break;
+            }
+            
+            // add likes
+            if(likes != nil){
+                for(NSDictionary *like in likes){
+                    NSString *userID = [like objectForKey:kId];
+                    if([friendsIds containsObject:userID]){
+                        // add popular friend's ID
+                        [[DataManager shared] addPopularFriendID:userID];
+                    }
+                }
+            }
+            
+            // add comments
+            if(comments != nil){
+                for(NSDictionary *comment in comments){
+                    NSString *userID = [[comment objectForKey:kFrom] objectForKey:kId];
+                    if([friendsIds containsObject:userID]){
+                        // add popular friend's ID
+                        [[DataManager shared] addPopularFriendID:userID];
+                    }
+                }
+            }
         }
+        
+        [friendsIds release];
 
         // show messages
         [self showInboxMessages];

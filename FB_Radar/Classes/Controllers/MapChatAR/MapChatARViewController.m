@@ -1564,16 +1564,12 @@
                     return;
                 }
                 
-                NSLog(@"fbChatUsersIds=%@", fbChatUsersIds);
-                
                 //
                 NSMutableString* ids = [[NSMutableString alloc] init];
 				for (NSString* userID in fbChatUsersIds)
 				{
 					[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
 				}
-                
-                NSLog(@"ids2=%@", ids);
                 
                 
                 NSArray *context = [NSArray arrayWithObjects:chatFBUsers, geodataProcessed, nil];

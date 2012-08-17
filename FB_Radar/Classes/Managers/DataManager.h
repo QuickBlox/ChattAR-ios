@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define maxPopularFriends 40
+
 @interface DataManager : NSObject{
     // Core Data
     NSManagedObjectModel *managedObjectModel;
