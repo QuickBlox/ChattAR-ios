@@ -120,7 +120,9 @@
     }
     
 	//refresh friends
-    [searchArray removeAllObjects];
+    if([_searchField.text length] == 0){
+        [searchArray removeAllObjects];
+    }
     
 	[offlineFriends removeAllObjects];
 	[onlineFriends removeAllObjects];
@@ -485,8 +487,7 @@
 
 - (void) statusMessageReceived:(NSNotification *)textMessage			
 {
-	// reload last message in table 
-	 [self showFriends];
+    [self showFriends];
 }
 
 
