@@ -479,7 +479,7 @@ static FBService *instance = nil;
     // set opponent's info
     NSMutableDictionary *opponent = [[NSMutableDictionary alloc] init];
     NSDictionary *friend = [[DataManager shared].myFriendsAsDictionary objectForKey:fromID];
-    NSLog(@"setid3");
+    NSLog(@"setid3=%@, body=%@", friend, body);
     [opponent setObject:[friend objectForKey:kId] forKey:kId];
     NSLog(@"setid33");
     [opponent setObject:[friend objectForKey:kName] forKey:kName];
