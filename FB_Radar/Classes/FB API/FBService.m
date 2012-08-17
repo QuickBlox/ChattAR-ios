@@ -465,6 +465,20 @@ static FBService *instance = nil;
     
     // from
     NSMutableString *fromID = [[textMessage attributeStringValueForName:@"from"] mutableCopy]; // like -1621286874@chat.facebook.com
+    
+    if([fromID isEqualToString:@"chat.facebook.com"]){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook", nil)
+                                                        message:body
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+        [fromID release];
+        return;
+    }
+    
     [fromID replaceCharactersInRange:NSMakeRange(0, 1) withString:@""]; // remove -
     [fromID replaceOccurrencesOfString:@"@chat.facebook.com" withString:@"" 
                                options:0 range:NSMakeRange(0, [fromID length])]; // remove @chat.facebook.com
