@@ -469,6 +469,8 @@ static FBService *instance = nil;
     [fromID replaceOccurrencesOfString:@"@chat.facebook.com" withString:@"" 
                                options:0 range:NSMakeRange(0, [fromID length])]; // remove @chat.facebook.com
 
+    NSLog(@"fromID=%@", fromID);
+    
 
     // construct new message
     NSMutableDictionary *recievedMessage  = [[NSMutableDictionary alloc] init];
