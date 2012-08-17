@@ -1742,9 +1742,7 @@
         
         // add to
         NSMutableDictionary *to = [NSMutableDictionary dictionary];
-        NSLog(@"setid5");
         [to setObject:selectedFriendId forKey:kId];
-        NSLog(@"setid55");
         [to setObject:[selectedUserAnnotation.fbUser objectForKey:kName] forKey:kName];
         newConversation.to = to;
         

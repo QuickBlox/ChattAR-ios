@@ -14,5 +14,6 @@
 @dynamic body;
 @dynamic qbUserID;
 @dynamic timestamp;
+@dynamic fbUserID;
 
 @end

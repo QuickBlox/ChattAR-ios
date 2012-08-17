@@ -127,28 +127,10 @@
 
 	// send push notification if this is quote
 	if (quoteMark){
-		// Create message
-        //
-        NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-        NSMutableDictionary *aps = [NSMutableDictionary dictionary];
-        [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
-        [aps setObject:quotePushMessageInChat forKey:QBMPushMessageAlertKey];
-        [payload setObject:aps forKey:QBMPushMessageApsKey];
-        //
-        QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
-		
-        BOOL isDevEnv = NO;
-#ifdef DEBUG
-        isDevEnv = YES;
-#endif
         
-        // Send push
-        [QBMessages TSendPush:message
-                      toUsers:[NSString stringWithFormat:@"%d",  messageField.rightView.tag]
-            isDevelopmentEnvironment:isDevEnv
-                             delegate:self];
-        
-        [message release];
+        // search QB User by fb ID
+        NSString *fbUserID = [[geoData.status substringFromIndex:6] substringToIndex:[self.quoteMark rangeOfString:nameIdentifier].location-6];
+        [QBUsers userWithFacebookID:fbUserID delegate:self];
 	}
     
     if(quotePhotoTop){
@@ -184,7 +166,6 @@
     self.quoteMark = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%u%@%@%@", fbidIdentifier, fbid,nameIdentifier, authorName, dateIdentifier, date, photoIdentifier, photoLink, qbidIdentifier, qbid, messageIdentifier, text, quoteDelimiter];
     
     
-    
     // add Quote user photo
 	quotePhotoTop = [[AsyncImageView alloc] initWithFrame:CGRectMake(-2, 0, 18, 18)];
 	UITapGestureRecognizer* recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeQuote)];
@@ -198,10 +179,7 @@
 	messageField.rightViewMode = UITextFieldViewModeAlways;
 	messageField.rightView = view;
 	[view release];
-    
 	[quotePhotoTop loadImageFromURL:[NSURL URLWithString:photoLink]];
-    // set id for push
-    messageField.rightView.tag = [(MapChatARViewController *)delegate selectedUserAnnotation].qbUserID; 
 }
 
 - (void)refresh{
@@ -789,6 +767,35 @@
                                                   otherButtonTitles:nil];
             [alert show];
             [alert release]; 
+        }
+       
+    // search QB user by FB ID result
+    }else if([result isKindOfClass:QBUUserResult.class]){
+        if(result.success){
+        
+            QBUUser *qbUser = ((QBUUserResult *)result).user;
+            
+            // Create push message
+            //
+            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+            NSMutableDictionary *aps = [NSMutableDictionary dictionary];
+            [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
+            [aps setObject:quotePushMessageInChat forKey:QBMPushMessageAlertKey];
+            [payload setObject:aps forKey:QBMPushMessageApsKey];
+            //
+            QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
+
+            BOOL isDevEnv = NO;
+    #ifdef DEBUG
+            isDevEnv = YES;
+    #endif
+            // Send push
+            [QBMessages TSendPush:message
+                          toUsers:[NSString stringWithFormat:@"%d",  qbUser.ID]
+                isDevelopmentEnvironment:isDevEnv
+                                 delegate:self];
+            
+            [message release];
         }
         
     // Send push result

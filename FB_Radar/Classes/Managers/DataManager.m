@@ -385,7 +385,42 @@ static DataManager *instance = nil;
 
 
 #pragma mark -
-#pragma mark Core Data api
+#pragma mark Core Data: general
+
+- (void) deleteAllObjects: (NSString *) entityDescription  context:(NSManagedObjectContext *)ctx {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:ctx];
+    [fetchRequest setEntity:entity];
+    
+    if([entityDescription isEqualToString:FBCheckinModelEntity]){
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
+    }
+    
+    NSError *error;
+    NSArray *items = [ctx executeFetchRequest:fetchRequest error:&error];
+    [fetchRequest release];
+    
+    
+    for (NSManagedObject *managedObject in items) {
+        [ctx deleteObject:managedObject];
+    }
+    if (![ctx save:&error]) {
+        NSLog(@"CoreData: deleting %@ - error:%@",entityDescription,error);
+    }
+}
+
+- (void)clearCache{
+    NSManagedObjectContext *ctx = [self threadSafeContext];
+    
+    [self deleteAllObjects:FBCheckinModelEntity context:ctx];
+    [self deleteAllObjects:QBCheckinModelEntity context:ctx];
+    [self deleteAllObjects:QBChatMessageModelEntity context:ctx];
+}
+
+
+#pragma mark -
+#pragma mark Core Data: QB Messages
+
 
 /**
  Chat messages: save, get
@@ -434,6 +469,7 @@ static DataManager *instance = nil;
     messageObject.body = message;
     messageObject.geoDataID = [NSNumber numberWithInt:message.geoDataID];
     messageObject.timestamp = [NSNumber numberWithInt:[message.createdAt timeIntervalSince1970]];
+    messageObject.fbUserID = message.fbUserId;
     
     NSError *error = nil;
     [ctx save:&error];
@@ -461,9 +497,10 @@ static DataManager *instance = nil;
 }
 
 
-/**
- Map messages: save, get
- */
+
+#pragma mark -
+#pragma mark Core Data: QB Checkins
+
 -(void)addMapARPointsToStorage:(NSArray *)points{
     NSManagedObjectContext *ctx = [self threadSafeContext];
     for(UserAnnotation *point in points){
@@ -513,6 +550,7 @@ static DataManager *instance = nil;
         pointObject.body = point;
         pointObject.qbUserID = [NSNumber numberWithInt:point.qbUserID];
         pointObject.timestamp = [NSNumber numberWithInt:[point.createdAt timeIntervalSince1970]];
+        pointObject.fbUserID = point.fbUserId;
     }
     
     NSError *error = nil;
@@ -540,9 +578,10 @@ static DataManager *instance = nil;
     return results;
 }
 
-/**
- Checkins: save, get
- */
+
+#pragma mark -
+#pragma mark Core Data: FB Checkins
+
 -(void)addCheckinsToStorage:(NSArray *)checkins{
     NSManagedObjectContext *ctx = [self threadSafeContext];
     for(UserAnnotation *message in checkins){
@@ -628,36 +667,6 @@ static DataManager *instance = nil;
     NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
     return results;
-}
-
-- (void) deleteAllObjects: (NSString *) entityDescription  context:(NSManagedObjectContext *)ctx {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:ctx];
-    [fetchRequest setEntity:entity];
-    
-    if([entityDescription isEqualToString:FBCheckinModelEntity]){
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"accountFBUserID == %@", currentFBUserId]];
-    }
-    
-    NSError *error;
-    NSArray *items = [ctx executeFetchRequest:fetchRequest error:&error];
-    [fetchRequest release];
-    
-
-    for (NSManagedObject *managedObject in items) {
-        [ctx deleteObject:managedObject];
-    }
-    if (![ctx save:&error]) {
-        NSLog(@"CoreData: deleting %@ - error:%@",entityDescription,error);
-    }
-}
-
-- (void)clearCache{
-    NSManagedObjectContext *ctx = [self threadSafeContext];
-    
-    [self deleteAllObjects:FBCheckinModelEntity context:ctx];
-    [self deleteAllObjects:QBCheckinModelEntity context:ctx];
-    [self deleteAllObjects:QBChatMessageModelEntity context:ctx];
 }
 
 

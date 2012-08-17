@@ -14,5 +14,6 @@
 @dynamic body;
 @dynamic geoDataID;
 @dynamic timestamp;
+@dynamic fbUserID;
 
 @end
