@@ -531,14 +531,12 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         [self clearChatInput];
         return;
     }
-	
-    NSLog(@"chatHistory=%@", chatHistory);
     
 	// send to Facebook
 	[[FBService shared] sendMessageToFacebook:rightTrimmedMessage 
                          withFriendFacebookID:[chatHistory.to objectForKey:kId]]; 
 
-	
+    
 	[self clearChatInput];
 	
 	// add message to cache
@@ -558,7 +556,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	
 	//add own id 
 	NSMutableDictionary *tempID = [[NSMutableDictionary alloc] init];
+    NSLog(@"setid2");
 	[tempID setObject:[[DataManager shared] currentFBUserId] forKey:kId];
+    NSLog(@"setid22");
 	[tempID setObject:@"me" forKey:kName];
 	[newMessage setObject:tempID forKey:kFrom];
 	[tempID release];
