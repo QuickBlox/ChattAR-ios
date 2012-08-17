@@ -96,7 +96,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     AsyncImageView *userPic = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     userPic.useMask = YES;
     [userPic setUserInteractionEnabled:YES];
-    NSString *userID = [chatHistory.to objectForKey:kId]; 
+    NSString *userID = [chatHistory.to objectForKey:kId];
     [userPic loadImageFromURL:[NSURL URLWithString: [[[DataManager shared].myFriendsAsDictionary objectForKey:userID] objectForKey:kPicture]]];
     //
     UIButton *rb = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -556,9 +556,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	
 	//add own id 
 	NSMutableDictionary *tempID = [[NSMutableDictionary alloc] init];
-    NSLog(@"setid2");
 	[tempID setObject:[[DataManager shared] currentFBUserId] forKey:kId];
-    NSLog(@"setid22");
 	[tempID setObject:@"me" forKey:kName];
 	[newMessage setObject:tempID forKey:kFrom];
 	[tempID release];
@@ -587,7 +585,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)messageReceived:(NSNotification*)textMessage 
 {
-	[self scrollToBottomAnimated:YES];
+    NSString *from = [textMessage.userInfo objectForKey:kFrom];
+    if([from isEqualToString:[chatHistory.to objectForKey:kId]]){
+        [self scrollToBottomAnimated:YES];
+    }
 }
 
 

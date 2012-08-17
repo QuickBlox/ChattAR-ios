@@ -450,7 +450,7 @@ static FBService *instance = nil;
 
 - (void) backgroundMessageReceived:(XMPPMessage *)textMessage
 {
-	NSString *body = [[textMessage elementForName:@"body"] stringValue];
+	NSString *body = [[textMessage elementForName:kBody] stringValue];
     if(body == nil){
         return;
     }
@@ -464,7 +464,7 @@ static FBService *instance = nil;
     [formatter release];
     
     // from
-    NSMutableString *fromID = [[textMessage attributeStringValueForName:@"from"] mutableCopy]; // like -1621286874@chat.facebook.com
+    NSMutableString *fromID = [[textMessage attributeStringValueForName:kFrom] mutableCopy]; // like -1621286874@chat.facebook.com
     
     if([fromID isEqualToString:@"chat.facebook.com"]){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook", nil)
@@ -514,9 +514,7 @@ static FBService *instance = nil;
         
         // add to
         NSMutableDictionary *to = [NSMutableDictionary dictionary];
-        NSLog(@"setid4");
         [to setObject:[friend objectForKey:kId] forKey:kId];
-        NSLog(@"setid44");
         [to setObject:[friend objectForKey:kName] forKey:kName];
         newConversation.to = to;
         
@@ -533,8 +531,6 @@ static FBService *instance = nil;
     
     [conversation.messages addObject:recievedMessage];
 
-    
-    [fromID release];
     [recievedMessage release];
     
     
@@ -543,7 +539,9 @@ static FBService *instance = nil;
     [[DataManager shared].historyConversationAsArray insertObject:conversation atIndex:0];
 
     // notify application
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNewChatMessageCome object:nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:fromID, kFrom, nil];
+    [fromID release];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNewChatMessageCome object:nil userInfo:userInfo];
     //
     // play notify
     [NotificationManager playNotificationSoundAndVibrate];
