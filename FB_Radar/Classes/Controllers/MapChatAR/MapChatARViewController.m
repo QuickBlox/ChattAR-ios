@@ -332,11 +332,6 @@
     }else if(origValue <= friendsValue){
         stateValue = 0;
     }
-//    
-//    
-//    for(UserAnnotation *a in chatPoints){
-//        NSLog(@"coordinate lat=%f, lon=%f", a.coordinate.latitude, a.coordinate.longitude);
-//    }
     
     switch (stateValue) {
         // show Friends

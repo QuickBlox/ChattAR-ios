@@ -255,11 +255,6 @@
     [((MapChatARViewController *)delegate) showActionSheetWithTitle:annotation.userName andSubtitle:annotation.userStatus];
 }
 
-// switch All/Friends
-- (void)allFriendsSwitchValueDidChanged:(id)sender{
-    [((MapChatARViewController *)delegate) allFriendsSwitchValueDidChanged:sender];
-}
-
 
 #pragma mark -
 #pragma mark UITextFieldDelegate

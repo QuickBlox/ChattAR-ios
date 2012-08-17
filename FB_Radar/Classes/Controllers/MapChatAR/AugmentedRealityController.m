@@ -135,11 +135,6 @@
     distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
 }
 
-// switch All/Friends
-- (void)allFriendsSwitchValueDidChanged:(id)sender{
-    [((MapChatARViewController *)delegate) allFriendsSwitchValueDidChanged:sender];
-}
-
 - (void) viewDidLoad{
     [super viewDidLoad];
 	
