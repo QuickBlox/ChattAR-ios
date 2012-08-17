@@ -566,11 +566,28 @@ static DataManager *instance = nil;
 	NSArray *results = [ctx executeFetchRequest:fetchRequest error:nil];
     [fetchRequest release];
     
+    
     FBCheckinModel *pointObject = nil;
+    if([results count] > 0){
+        pointObject = [results objectAtIndex:0];
+    }
     
-    
+    // Update
+    if(pointObject && [checkin.createdAt compare:((UserAnnotation *) pointObject.body).createdAt] == NSOrderedDescending){
+        pointObject.body = checkin;
+        pointObject.timestamp = [NSNumber numberWithInt:[checkin.createdAt timeIntervalSince1970]];
+        
+        NSError *error = nil;
+        [ctx save:&error];
+        if(error){
+            NSLog(@"CoreData: addCheckinToStorage error=%@", error);
+            return NO;
+        }else{
+            return YES;
+        }
+
     // Add new
-    if(nil == results || [results count] == 0){
+    }else if(nil == results || [results count] == 0){
         pointObject = (FBCheckinModel *)[NSEntityDescription insertNewObjectForEntityForName:FBCheckinModelEntity
                                                                       inManagedObjectContext:ctx];
         
