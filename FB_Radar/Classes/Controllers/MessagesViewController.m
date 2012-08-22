@@ -245,7 +245,19 @@
     // set name & last message & photo
     currentMessage.text = [[conversation.messages lastObject] objectForKey:kMessage];
     name.text = [conversation.to objectForKey:kName];
-    [photo loadImageFromURL:[NSURL URLWithString:[[[DataManager shared].myFriendsAsDictionary objectForKey:[conversation.to objectForKey:kId]] objectForKey:kPicture]]];
+	
+	id picture = [[[DataManager shared].myFriendsAsDictionary objectForKey:[conversation.to objectForKey:kId]] objectForKey:kPicture];
+	if ([picture isKindOfClass:[NSString class]])
+	{
+		[photo loadImageFromURL:[NSURL URLWithString:[[[DataManager shared].myFriendsAsDictionary objectForKey:[conversation.to objectForKey:kId]] objectForKey:kPicture]]];
+	}
+	else
+	{
+		NSDictionary* pic = (NSDictionary*)picture;
+		NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+		[photo loadImageFromURL:[NSURL URLWithString:url]];
+		[[[DataManager shared].myFriendsAsDictionary objectForKey:[conversation.to objectForKey:kId]] setObject:url forKey:kPicture];
+	}
 	
 	if ([[[[conversation.messages lastObject] objectForKey:kFrom] objectForKey:kId] isEqualToString:[DataManager shared].currentFBUserId]) // last message is mine
 	{

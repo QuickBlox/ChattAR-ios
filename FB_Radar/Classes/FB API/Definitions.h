@@ -14,6 +14,7 @@
 #define kMe					@"me"
 #define kResponse			@"response"
 #define kData				@"data" 
+#define kUrl				@"url"
 #define kName				@"name"
 #define kPicture			@"picture"
 #define kLocation			@"location"

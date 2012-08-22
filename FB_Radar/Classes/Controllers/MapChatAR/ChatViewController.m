@@ -159,6 +159,10 @@
     NSDate* date = [(MapChatARViewController *)delegate selectedUserAnnotation].createdAt;
     NSString* authorName = [(MapChatARViewController *)delegate selectedUserAnnotation].userName;
     NSString* photoLink = [[(MapChatARViewController *)delegate selectedUserAnnotation].fbUser objectForKey:kPicture];
+	if ([photoLink isKindOfClass:[NSDictionary class]])
+	{
+		photoLink = [[[[(MapChatARViewController *)delegate selectedUserAnnotation].fbUser objectForKey:kPicture] objectForKey:kData] objectForKey:kUrl];
+	}
     NSString* fbid = [(MapChatARViewController *)delegate selectedUserAnnotation].fbUserId;
     NSUInteger qbid = [(MapChatARViewController *)delegate selectedUserAnnotation].qbUserID;
 	
@@ -549,7 +553,19 @@
     
     // set user photo
     [userPhoto setFrame:CGRectMake(5, 5+shift, 50, 50)];
-    [userPhoto loadImageFromURL:[NSURL URLWithString:currentAnnotation.userPhotoUrl]];
+	
+	id picture = currentAnnotation.userPhotoUrl;
+	if ([picture isKindOfClass:[NSString class]])
+	{
+		[userPhoto loadImageFromURL:[NSURL URLWithString:currentAnnotation.userPhotoUrl]];
+	}
+	else
+	{
+		NSDictionary* pic = (NSDictionary*)picture;
+		NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+		[userPhoto loadImageFromURL:[NSURL URLWithString:url]];
+		currentAnnotation.userPhotoUrl = url;
+	}
     
     // set distance bg
     [distanceView setFrame:CGRectMake(5, userPhoto.frame.origin.y+userPhoto.frame.size.height, 50, 25)];

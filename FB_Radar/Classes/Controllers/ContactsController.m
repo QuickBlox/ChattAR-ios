@@ -330,7 +330,19 @@
 	cell.contentView.tag = indexPath.row; // store row
 	cell.tag = indexPath.section; // store section
 	
-	[photo loadImageFromURL:[NSURL URLWithString:[[tableData objectAtIndex:indexPath.row] objectForKey:kPicture]]];
+	id picture = [[tableData objectAtIndex:indexPath.row] objectForKey:kPicture];
+	if ([picture isKindOfClass:[NSString class]])
+	{
+		[photo loadImageFromURL:[NSURL URLWithString:[[tableData objectAtIndex:indexPath.row] objectForKey:kPicture]]];
+	}
+	else
+	{
+		NSDictionary* pic = (NSDictionary*)picture;
+		NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+		[photo loadImageFromURL:[NSURL URLWithString:url]];
+		[[tableData objectAtIndex:indexPath.row] setObject:url forKey:kPicture];
+	}
+	
 	name.text = [[tableData objectAtIndex:indexPath.row] objectForKey:kName];
 	currentStatus.text = [[[[[tableData objectAtIndex:indexPath.row] objectForKey:kStatuses] objectForKey:kData] objectAtIndex:0] objectForKey:kMessage];
     

@@ -65,7 +65,20 @@
         isInitialized = YES;
         
         // show photo & user name
-        [_userProfilePicture loadImageFromURL:[NSURL URLWithString:[[DataManager shared].currentFBUser objectForKey:kPicture]]];
+		
+		id picture = [[DataManager shared].currentFBUser objectForKey:kPicture];
+		if ([picture isKindOfClass:[NSString class]])
+		{
+			[_userProfilePicture loadImageFromURL:[NSURL URLWithString:[[DataManager shared].currentFBUser objectForKey:kPicture]]];
+		}
+		else
+		{
+			NSDictionary* pic = (NSDictionary*)picture;
+			NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+			[_userProfilePicture loadImageFromURL:[NSURL URLWithString:url]];
+			[[DataManager shared].currentFBUser setObject:url forKey:kPicture];
+		}
+		
         [_userName setText:[[DataManager shared].currentFBUser objectForKey:kName]];
         
         NSDictionary *location = [[DataManager shared].currentFBUser objectForKey:kLocation];
