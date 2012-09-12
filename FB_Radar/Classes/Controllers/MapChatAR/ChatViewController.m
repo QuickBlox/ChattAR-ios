@@ -102,8 +102,7 @@
     // remove | and @ symbols
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"|" withString:@""];
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"@" withString:@""];
-    
-
+                         
 	QBLGeoData *geoData = [QBLGeoData currentGeoData];
 #ifdef DEBUG
     NSArray *coord = [[TestManager shared].testLocations objectForKey:[DataManager shared].currentFBUserId];
@@ -130,7 +129,7 @@
         
         // search QB User by fb ID
         NSString *fbUserID = [[geoData.status substringFromIndex:6] substringToIndex:[self.quoteMark rangeOfString:nameIdentifier].location-6];
-        [QBUsers userWithFacebookID:fbUserID delegate:self];
+        [QBUsers userWithFacebookID:fbUserID delegate:self context:messageField.text];
 	}
     
     if(quotePhotoTop){
@@ -222,7 +221,6 @@
 - (void)didSelectedQuote:(CustomButtonWithQuote *)sender
 {
     UserAnnotation *annotation = [[UserAnnotation alloc] init];
-
     annotation.fbUserId = [sender.quote objectForKey:kFbID];
     annotation.qbUserID = [[sender.quote objectForKey:kQbID] integerValue];
     annotation.fbUser = [NSDictionary dictionaryWithObjectsAndKeys:[sender.quote objectForKey:kName], kName, [sender.quote objectForKey:kFbID], kId, [sender.quote objectForKey:kPhoto], kPicture, nil];
@@ -691,8 +689,39 @@
 
 -(void)completedWithResult:(Result *)result context:(void *)contextInfo
 {
-	if (result.success)
-	{		
+    // search QB user by FB ID result
+    if([result isKindOfClass:QBUUserResult.class]){
+        if(result.success){
+        
+            QBUUser *qbUser = ((QBUUserResult *)result).user;
+            
+            // Create push message
+            //
+            
+            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+            NSMutableDictionary *aps = [NSMutableDictionary dictionary];
+            [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
+            [aps setObject:[NSString stringWithFormat:@"%@: %@", [[DataManager shared].currentFBUser objectForKey:kName], (NSString *)contextInfo] forKey:QBMPushMessageAlertKey];
+            [payload setObject:aps forKey:QBMPushMessageApsKey];
+            //
+            QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
+            
+            BOOL isDevEnv = NO;
+    #ifdef DEBUG
+            isDevEnv = YES;
+    #endif
+            // Send push
+            [QBMessages TSendPush:message
+                          toUsers:[NSString stringWithFormat:@"%d",  qbUser.ID]
+         isDevelopmentEnvironment:isDevEnv
+                         delegate:self];
+            
+            [message release];
+        }
+    
+    //
+    }else if (result.success){
+        
         // get more messages result
 		if([((NSString *)contextInfo) isEqualToString:getMoreChatMessages])
 		{
@@ -785,35 +814,6 @@
             [alert release]; 
         }
        
-    // search QB user by FB ID result
-    }else if([result isKindOfClass:QBUUserResult.class]){
-        if(result.success){
-        
-            QBUUser *qbUser = ((QBUUserResult *)result).user;
-            
-            // Create push message
-            //
-            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-            NSMutableDictionary *aps = [NSMutableDictionary dictionary];
-            [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
-            [aps setObject:quotePushMessageInChat forKey:QBMPushMessageAlertKey];
-            [payload setObject:aps forKey:QBMPushMessageApsKey];
-            //
-            QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
-
-            BOOL isDevEnv = NO;
-    #ifdef DEBUG
-            isDevEnv = YES;
-    #endif
-            // Send push
-            [QBMessages TSendPush:message
-                          toUsers:[NSString stringWithFormat:@"%d",  qbUser.ID]
-                isDevelopmentEnvironment:isDevEnv
-                                 delegate:self];
-            
-            [message release];
-        }
-        
     // Send push result
     }else if([result isKindOfClass:QBMSendPushTaskResult.class]){
         NSLog(@"Send Push success");

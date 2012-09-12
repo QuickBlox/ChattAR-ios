@@ -17,6 +17,7 @@
 #import "FBChatViewController.h"
 #import "NumberToLetterConverter.h"
 #import "Extender.h"
+#import "UserAnnotation.h"
 
 @implementation AppDelegate
 
@@ -41,29 +42,15 @@
     // Receive push notifications
     NSString *message = [[userInfo objectForKey:QBMPushMessageApsKey] objectForKey:QBMPushMessageAlertKey];
 
-    if([message isEqualToString:quotePushMessageInChat]){
-        
-        if(self.tabBarController.selectedIndex != 1){
-            [NotificationManager playNotificationSoundAndVibrate];
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "") 
-                                                            message:quotePushMessageInChat
-                                                           delegate:self 
-                                                  cancelButtonTitle:NSLocalizedString(@"Ok", "OK") 
-                                                  otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-        }
-        
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "")
-                                                        message:message
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Ok", "OK")
-                                              otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-    }
+    [NotificationManager playNotificationSoundAndVibrate];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "")
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"Ok", "OK")
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
