@@ -22,4 +22,10 @@
 /** Unique auto generated sequence of numbers which identify API User as the legitimate user of our system. It is used in relatively short periods of time and can be easily changed. We grant API Users some rights after authentication and check them based on this token. */
 @property (nonatomic, readonly) NSString *token;
 
+/** Social provider access token .*/
+@property (nonatomic, readonly) NSString *socialProviderToken;
+
+/** Social provider access token expiration date .*/
+@property (nonatomic, readonly) NSDate *socialProviderTokenExpiresAt;
+
 @end

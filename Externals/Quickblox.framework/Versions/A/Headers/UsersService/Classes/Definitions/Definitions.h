@@ -9,3 +9,5 @@
 
 #import "Consts.h"
 #import "Enums.h"
+
+#define userElement @"user"

@@ -10,5 +10,7 @@
 @interface BinaryAnswer : RestAnswer {
 	NSData* loadedData;
 }
+
 @property (nonatomic,readonly) NSData* loadedData;
+
 @end

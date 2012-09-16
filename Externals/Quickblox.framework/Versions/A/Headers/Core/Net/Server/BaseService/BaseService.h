@@ -8,8 +8,6 @@
 
  
 @interface BaseService : NSObject{
-@protected
-	NSString *token;
 }
 
 @property (nonatomic, retain) NSString *token;

@@ -12,7 +12,7 @@
 /** Overview:*/
 /** This class represents place information. You can store places on server, and then retrieve them using search. See QBLocationService  */
 
-@interface QBLPlace : Entity {
+@interface QBLPlace : Entity <NSCoding, NSCopying> {
 @private
 	CLLocationDegrees latitude;
 	CLLocationDegrees longitude;

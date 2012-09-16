@@ -6,9 +6,6 @@
 //  Copyright 2011 QuickBlox. All rights reserved.
 //
 
-#import "RatingsService/QBRatingsServiceAnswer.h"
-#import "RatingsService/QBRatingsServicePagedAnswer.h"
-
 #import "GameModeParameterValue/GameModeParameterValue.h"
 #import "GameMode/GameMode.h"
 #import "Scores/Scores.h"

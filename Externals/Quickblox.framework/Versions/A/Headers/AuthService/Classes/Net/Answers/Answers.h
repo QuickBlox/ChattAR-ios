@@ -7,5 +7,4 @@
  *
  */
 
-#import "AuthService/QBAuthServiceAnswer.h"
 #import "Auth/Auth.h"

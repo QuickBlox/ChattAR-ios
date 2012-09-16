@@ -2,11 +2,11 @@
 //  ASINetworkQueue.h
 //  Part of ASIHTTPRequest -> http://allseeing-i.com/ASIHTTPRequest
 //
+//  Created by Ben Copsey on 07/11/2008.
+//  Copyright 2008-2009 All-Seeing Interactive. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequestDelegate.h"
-#import "ASIProgressDelegate.h"
 
 @interface ASINetworkQueue : NSOperationQueue <ASIProgressDelegate, ASIHTTPRequestDelegate, NSCopying> {
 	
@@ -16,9 +16,14 @@
 	// Will be called when a request starts with the request as the argument
 	SEL requestDidStartSelector;
 	
-	// Will be called when a request receives response headers with the request as the argument
+	// Will be called when a request receives response headers
+	// Should take the form request:didRecieveResponseHeaders:, where the first argument is the request, and the second the headers dictionary
 	SEL requestDidReceiveResponseHeadersSelector;
 	
+	// Will be called when a request is about to redirect
+	// Should take the form request:willRedirectToURL:, where the first argument is the request, and the second the new url
+	SEL requestWillRedirectSelector;
+
 	// Will be called when a request completes with the request as the argument
 	SEL requestDidFinishSelector;
 	
@@ -78,19 +83,12 @@
 // This method will start the queue
 - (void)go;
 
-// Used on iPhone platform to show / hide the network activity indicator (in the status bar)
-// On mac, you could subclass to do something else
-- (void)updateNetworkActivityIndicator;
-
-// Returns YES if the queue is in progress
-- (BOOL)isNetworkActive;
-
-
-@property (assign, nonatomic,setter=setUploadProgressDelegate:) id uploadProgressDelegate;
-@property (assign, nonatomic,setter=setDownloadProgressDelegate:) id downloadProgressDelegate;
+@property (assign, nonatomic, setter=setUploadProgressDelegate:) id uploadProgressDelegate;
+@property (assign, nonatomic, setter=setDownloadProgressDelegate:) id downloadProgressDelegate;
 
 @property (assign) SEL requestDidStartSelector;
 @property (assign) SEL requestDidReceiveResponseHeadersSelector;
+@property (assign) SEL requestWillRedirectSelector;
 @property (assign) SEL requestDidFinishSelector;
 @property (assign) SEL requestDidFailSelector;
 @property (assign) SEL queueDidFinishSelector;

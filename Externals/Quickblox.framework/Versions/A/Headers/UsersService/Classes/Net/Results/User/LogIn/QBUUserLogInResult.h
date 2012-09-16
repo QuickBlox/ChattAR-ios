@@ -15,4 +15,10 @@
 
 }
 
+/** Social provider access token .*/
+@property (nonatomic, readonly) NSString *socialProviderToken;
+
+/** Social provider access token expiration date .*/
+@property (nonatomic, readonly) NSDate *socialProviderTokenExpiresAt;
+
 @end

@@ -9,7 +9,7 @@
 /** Overview */
 /** Class represents user subscription to push chanell */
 
-@interface QBMSubscription : Entity {
+@interface QBMSubscription : Entity <NSCoding, NSCopying>{
 	QBMNotificatioChannel notificationChannel;
 	NSString *deviceUDID;
     NSString *devicePlatform;

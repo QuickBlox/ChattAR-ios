@@ -11,7 +11,7 @@
 /** Overview */
 /** Event representation. If you want to send Apple push - use concrete subsclasses QBMPushEvent. */
 
-@interface QBMEvent : Entity {
+@interface QBMEvent : Entity <NSCoding, NSCopying>{
     BOOL active;
     enum QBMNotificationType notificationType;
     
@@ -25,7 +25,7 @@
     NSString *name;
     
     BOOL isEnvironmentDevelopment;
-    NSMutableDictionary *message;
+    id message;
     enum QBMEventType type;
     
     NSDate *date;
@@ -63,7 +63,7 @@
 @property (nonatomic) BOOL isDevelopmentEnvironment;
 
 /** Event message */
-@property (nonatomic,retain) NSMutableDictionary *message;
+@property (nonatomic,retain) id message;
 
 /** Event type */
 @property (nonatomic) QBMEventType type;

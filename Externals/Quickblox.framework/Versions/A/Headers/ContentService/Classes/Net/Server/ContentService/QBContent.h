@@ -50,7 +50,7 @@
 
 
 #pragma mark -
-#pragma mark Get list of blob for the current user
+#pragma mark Get list of blobs for the current user
 
 /**
  Get list of blob for the current User (last 10 files, for more - use equivalent method with 'pagedRequest' argument)
@@ -74,6 +74,33 @@
  */
 + (NSObject<Cancelable>*)blobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate;
 + (NSObject<Cancelable>*)blobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
+
+
+#pragma mark -
+#pragma mark Get list of tagged blobs for the current user
+
+/**
+ Get list of tagged blobs for the current User (last 10 files, for more - use equivalent method with 'pagedRequest' argument)
+ 
+ Type of Result - QBCBlobPagedResult
+ 
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCBlobPagedResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable>*)taggedBlobsWithDelegate:(NSObject<QBActionStatusDelegate>*)delegate;
++ (NSObject<Cancelable>*)taggedBlobsWithDelegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
+
+/**
+ Get list of tagged blobs for the current User (with extended set of pagination parameters)
+ 
+ Type of Result - QBCBlobPagedResult
+ 
+ @param pagedRequest paged request
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable>*)taggedBlobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate;
++ (NSObject<Cancelable>*)taggedBlobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
 
 
 #pragma mark -
@@ -236,5 +263,10 @@
  */
 + (NSObject<Cancelable>*)TDownloadFileWithBlobID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
 + (NSObject<Cancelable>*)TDownloadFileWithBlobID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
+
+
+
+#pragma mark Deprecated
++ (QBCFileResult *)downloadFileSyncWithUID:(NSString*)blobUID;
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface QBUUserAnswer : QBUsersServiceAnswer {
+@interface QBUUserAnswer : EntityAnswer {
 
 }
 @property (nonatomic,readonly) QBUUser *user;

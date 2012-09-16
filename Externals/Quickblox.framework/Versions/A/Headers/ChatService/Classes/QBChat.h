@@ -90,7 +90,12 @@ typedef enum QBChatServiceError {
 /**
  Send presence message to Chat server. Session will be closed in 90 seconds since last activity.
  */
-- (void)sendPresence;
+- (BOOL)sendPresence;
+
+/**
+ Send direct presence message to particular user in Chat.
+ */
+- (BOOL)sendDirectPresenceToUser:(NSUInteger)userID type:(NSString *)type;
 
 /**
  Send request for getting list of public groups
@@ -118,9 +123,15 @@ typedef enum QBChatServiceError {
 - (void)requestUserForPresence:(NSString*)jid;
 
 /**
- Retrieve JID from QBUUser
+ Retrieve JID from QBUUser's identifier
  */
-- (NSString *)jidFromUser:(QBUUser *)user;
+- (NSString *)jidFromUserID:(NSUInteger)userID;
+
+/**
+ Retrieve QBUUser's ID from jid
+ */
+- (NSUInteger)userIDfromJid:(NSString *)jid;
+
 
 /**
  Get current chat user

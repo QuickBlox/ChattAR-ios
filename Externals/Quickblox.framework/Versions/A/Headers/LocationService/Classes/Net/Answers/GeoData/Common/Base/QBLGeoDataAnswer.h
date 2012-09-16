@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBLGeoDataAnswer : QBLocationServiceAnswer{
+@interface QBLGeoDataAnswer : EntityAnswer{
 @protected
 	QBLGeoData *geoData;
 	QBUUserAnswer *userAnswer;

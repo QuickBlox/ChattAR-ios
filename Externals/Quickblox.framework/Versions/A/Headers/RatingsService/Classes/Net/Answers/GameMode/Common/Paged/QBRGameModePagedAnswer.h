@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBRGameModePagedAnswer : QBRatingsServicePagedAnswer{
+@interface QBRGameModePagedAnswer : PagedAnswer{
     QBRGameModeAnswer *gameModeAnswer;
 
     NSMutableArray *gameModes;

@@ -14,6 +14,7 @@
 #import "MapChatARViewController.h"
 #import "ARMarkerView.h"
 #import "TestManager.h"
+#import "WebViewController.h"
 
 @interface ChatViewController ()
 
@@ -102,7 +103,7 @@
     // remove | and @ symbols
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"|" withString:@""];
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"@" withString:@""];
-                         
+    
 	QBLGeoData *geoData = [QBLGeoData currentGeoData];
 #ifdef DEBUG
     NSArray *coord = [[TestManager shared].testLocations objectForKey:[DataManager shared].currentFBUserId];
@@ -235,7 +236,6 @@
     [((MapChatARViewController *)delegate) showActionSheetWithTitle:annotation.userName andSubtitle:annotation.userStatus];
 }
 
-
 #pragma mark -
 #pragma mark UITextFieldDelegate
 
@@ -273,7 +273,7 @@
 	if ([currentAnnotation isKindOfClass:[UserAnnotation class]]){
 		CGSize boundingSize = CGSizeMake(messageWidth-25, 10000000);
 		
-		CGSize itemFrameSize = [currentAnnotation.userStatus sizeWithFont:[UIFont systemFontOfSize:14]
+		CGSize itemFrameSize = [currentAnnotation.userStatus sizeWithFont:[UIFont systemFontOfSize:15]
 								constrainedToSize:boundingSize
 									lineBreakMode:UILineBreakModeWordWrap];
 		
@@ -315,7 +315,7 @@
     // get height
     CGSize boundingSize = CGSizeMake(messageWidth-25, 10000000);
     
-    CGSize itemFrameSize = [currentAnnotation.userStatus sizeWithFont:[UIFont systemFontOfSize:14]
+    CGSize itemFrameSize = [currentAnnotation.userStatus sizeWithFont:[UIFont systemFontOfSize:15]
                                              constrainedToSize:boundingSize
                                                  lineBreakMode:UILineBreakModeWordWrap];
     float textHeight = itemFrameSize.height + 7;
@@ -329,7 +329,7 @@
     UIImageView *messageBGView;
     UIImageView *distanceView;
     UILabel *distanceLabel;
-    UILabel *userMessage;
+    UITextView *userMessage;
     UILabel *userName;
     UILabel *datetime;
     CustomButtonWithQuote* quoteBG;
@@ -434,12 +434,15 @@
         [messageBGView release];
         //
         // label
-        userMessage = [[UILabel alloc] init];
+        userMessage = [[UITextView alloc] init];
         userMessage.tag = 1103;
         [userMessage setFont:[UIFont systemFontOfSize:14]];
-        userMessage.numberOfLines = 0;
+        userMessage.editable = NO;
+        userMessage.scrollEnabled = NO;
+        userMessage.dataDetectorTypes = UIDataDetectorTypeLink;
         [userMessage setBackgroundColor:[UIColor clearColor]];
         [messageBGView addSubview:userMessage];
+        userMessage.contentInset = UIEdgeInsetsMake(-11,-8,0,-8);
         [userMessage release];
 //        userMessage.layer.borderWidth = 1;
 //        userMessage.layer.borderColor = [[UIColor redColor] CGColor];
@@ -502,7 +505,7 @@
     }else{
         userPhoto = (AsyncImageView *)[cell.contentView viewWithTag:1101];
         messageBGView = (UIImageView *)[cell.contentView viewWithTag:1102];
-        userMessage = (UILabel *)[messageBGView viewWithTag:1103];
+        userMessage = (UITextView *)[messageBGView viewWithTag:1103];
         datetime = (UILabel *)[cell.contentView viewWithTag:1104];
         userName = (UILabel *)[cell.contentView viewWithTag:1105];
         distanceView = (UIImageView*)[cell.contentView viewWithTag:1106];
@@ -600,12 +603,12 @@
     }
 
     // set bg
-    [messageBGView setFrame:CGRectMake(62, 5+shift, messageWidth, textHeight+19)];
+    [messageBGView setFrame:CGRectMake(62, 5+shift, messageWidth, textHeight+15)];
     
     // set message
-    [userMessage setFrame:CGRectMake(21, 22, messageBGView.frame.size.width-25, messageBGView.frame.size.height-10)];
-    userMessage.text = currentAnnotation.userStatus; 
-    [userMessage sizeToFit];
+    [userMessage setFrame:CGRectMake(21, 22, messageBGView.frame.size.width-24, messageBGView.frame.size.height-26)];
+    userMessage.text = currentAnnotation.userStatus;
+//    [userMessage sizeToFit];
     
     // sate date
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
@@ -696,7 +699,6 @@
             QBUUser *qbUser = ((QBUUserResult *)result).user;
             
             // Create push message
-            //
             
             NSMutableDictionary *payload = [NSMutableDictionary dictionary];
             NSMutableDictionary *aps = [NSMutableDictionary dictionary];
@@ -894,7 +896,6 @@
 		//
 		[messagesTableView reloadData];
 		
-        
         // get more messages
 		[self getMoreMessages];
     }

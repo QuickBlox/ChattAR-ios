@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBAAuthAnswer : QBAuthServiceAnswer{
+@interface QBAAuthAnswer : EntityAnswer{
     
 }
 

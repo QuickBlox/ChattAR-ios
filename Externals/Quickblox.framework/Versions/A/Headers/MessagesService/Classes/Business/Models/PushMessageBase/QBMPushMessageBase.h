@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface QBMPushMessageBase : NSObject {
+@interface QBMPushMessageBase : NSObject <NSCoding, NSCopying>{
 	NSMutableDictionary *payloadDict;
 }
 @property (nonatomic,retain) NSMutableDictionary *payloadDict;

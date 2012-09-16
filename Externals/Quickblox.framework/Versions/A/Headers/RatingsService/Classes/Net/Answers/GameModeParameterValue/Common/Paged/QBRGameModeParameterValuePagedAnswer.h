@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QBRGameModeParameterValuePagedAnswer : QBRatingsServicePagedAnswer{
+@interface QBRGameModeParameterValuePagedAnswer : PagedAnswer{
     QBRGameModeParameterValueAnswer *gameModeParemeterValueAnswer;
     
     NSMutableArray *gameModeParemeterValues;

@@ -16,7 +16,7 @@
 /** Push message representation.
  @see http://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/ApplePushService/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1 */
 
-@interface QBMPushMessage : QBMPushMessageBase {
+@interface QBMPushMessage : QBMPushMessageBase <NSCoding, NSCopying>{
 	NSString *alertBody;
 	NSNumber *badge;
 	NSString *soundFile;
@@ -50,5 +50,4 @@
  @return New instance of QBMPushMessage
  */
 + (QBMPushMessage *)pushMessage;
-
 @end

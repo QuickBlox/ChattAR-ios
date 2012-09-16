@@ -16,6 +16,7 @@
 
 @synthesize webView, loadUrlProgress;
 @synthesize urlAdress;
+@synthesize request;
 
 - (void)viewDidLoad
 {	
@@ -23,9 +24,13 @@
     
     self.title = NSLocalizedString(@"Web", @"Web");
     
-    NSURL *url = [NSURL URLWithString:urlAdress];
-	NSURLRequest *request = [NSURLRequest requestWithURL:url];
-	[webView loadRequest:request];
+    if(urlAdress != nil){
+        NSURL *url = [NSURL URLWithString:urlAdress];
+        NSURLRequest *_request = [NSURLRequest requestWithURL:url];
+        [webView loadRequest:_request];
+    }else if(request != nil){
+        [webView loadRequest:request];
+    }
 }
 
 - (void)viewDidUnload

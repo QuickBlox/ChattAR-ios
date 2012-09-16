@@ -12,6 +12,5 @@
 @property (nonatomic, assign) Query* query;
 
 -(Result*)allocResult;
--(void)addTextError:(NSString*)text;
 
 @end

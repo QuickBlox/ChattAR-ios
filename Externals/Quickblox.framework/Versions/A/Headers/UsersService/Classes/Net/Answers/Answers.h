@@ -7,7 +7,4 @@
  *
  */
 
-#import "UsersService/QBUsersServiceAnswer.h"
-#import "UsersService/QBUsersServicePagedAnswer.h"
-
 #import "User/UserAnswers.h"

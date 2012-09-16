@@ -7,3 +7,5 @@
 //
 
 #import "Enums.h"
+
+#define sessionElement @"session"

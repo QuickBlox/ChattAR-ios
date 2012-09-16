@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBUUserPagedAnswer : QBUsersServicePagedAnswer{
+@interface QBUUserPagedAnswer : PagedAnswer{
     QBUUserAnswer *userAnswer;
 	NSMutableArray *users;
 }

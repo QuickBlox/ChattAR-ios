@@ -125,6 +125,9 @@
 
 // logout
 -(void)logoutButtonDidPress{
+    
+    // remove push subscription to this device
+    [QBMessages TUnregisterSubscriptionWithDelegate:nil];
 
     // show splash
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];

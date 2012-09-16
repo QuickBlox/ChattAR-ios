@@ -32,4 +32,9 @@
 - (void)setMethod:(RestRequest*)request;
 - (void)setFiles:(RestRequest*)request;
 - (void)setShouldRedirect:(RestRequest*)request;
+
+#pragma mark Deprecated
+-(Result *)perform;
+- (RestRequest*)request;
+
 @end

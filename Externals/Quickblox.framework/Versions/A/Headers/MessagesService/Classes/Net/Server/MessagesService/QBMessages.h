@@ -203,7 +203,7 @@
 #pragma mark -
 #pragma mark Register Subscription Task
 
-/** Create subscription for current user. 
+/** Create subscription for current device. 
  
  This method registers push token on the server if they are not registered yet, then creates a Subscription and associates it with curent User. 
  
@@ -217,9 +217,25 @@
 
 
 #pragma mark -
+#pragma mark Unregister Subscription Task
+
+/** Remove subscription for current device.
+ 
+ This method remove subscription for current device from server.
+ 
+ Type of Result - QBMUnregisterSubscriptionTaskResult
+ 
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMUnregisterSubscriptionTaskResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable> *)TUnregisterSubscriptionWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
++ (NSObject<Cancelable> *)TUnregisterSubscriptionWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
+
+
+#pragma mark -
 #pragma mark Send Push Task
 
-/** Send push message to user
+/** Send push message to users
  
  Type of Result - QBMSendPushTaskResult
  
@@ -230,11 +246,30 @@
  */
 + (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 
                             toUsers:(NSString *)usersIDs 
-             isDevelopmentEnvironment:(BOOL)isDevelopmentEnvironment
+           isDevelopmentEnvironment:(BOOL)isDevelopmentEnvironment
 						   delegate:(NSObject<QBActionStatusDelegate> *)delegate;
 + (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 
                             toUsers:(NSString *)usersIDs 
              isDevelopmentEnvironment:(BOOL)isDevelopmentEnvironment
+						   delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
+
+/** Send push message to users with tags
+ 
+ Type of Result - QBMSendPushTaskResult
+ 
+ @param pushMessage composed push message to send
+ @param usersTags users tags who will get the message. Contain a string of users tags divided by comas.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSendPushTaskResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 
+          toUsersWithAnyOfTheseTags:(NSString *)usersTags 
+           isDevelopmentEnvironment:(BOOL)isDevelopmentEnvironment
+						   delegate:(NSObject<QBActionStatusDelegate> *)delegate;
+
++ (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 
+          toUsersWithAnyOfTheseTags:(NSString *)usersTags 
+           isDevelopmentEnvironment:(BOOL)isDevelopmentEnvironment
 						   delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
 
 @end

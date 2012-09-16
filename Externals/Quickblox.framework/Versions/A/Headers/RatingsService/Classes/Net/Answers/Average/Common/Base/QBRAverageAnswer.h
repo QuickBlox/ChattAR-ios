@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBRAverageAnswer : QBRatingsServiceAnswer {
+@interface QBRAverageAnswer : EntityAnswer {
 @protected
 	QBRAverage *average;
 }

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBCBlobPagedAnswer : QBContentServicePagedAnswer{
+@interface QBCBlobPagedAnswer : PagedAnswer{
     QBCBlobAnswer *blobAnswer;
     NSMutableArray *blobs;
 }

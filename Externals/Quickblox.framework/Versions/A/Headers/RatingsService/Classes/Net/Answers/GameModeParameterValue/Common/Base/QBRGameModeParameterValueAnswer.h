@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QBRGameModeParameterValueAnswer : QBRatingsServiceAnswer{
+@interface QBRGameModeParameterValueAnswer : EntityAnswer{
     
 }
 @property (nonatomic,readonly) QBRGameModeParameterValue *gameModeParameterValue;

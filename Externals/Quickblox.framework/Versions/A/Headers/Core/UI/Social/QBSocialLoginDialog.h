@@ -16,7 +16,8 @@
     // Ensures that UI elements behind the dialog are disabled.
     UIView* _modalBackgroundView;
 }
-@property (retain) RestAnswer *answer;
+@property (retain) SocialLoginAnswer *answer;
+@property (retain) ASIWebPageRequest *request;
 
 - (void) showWithHTML:(NSString *)html;
 - (void) hide;

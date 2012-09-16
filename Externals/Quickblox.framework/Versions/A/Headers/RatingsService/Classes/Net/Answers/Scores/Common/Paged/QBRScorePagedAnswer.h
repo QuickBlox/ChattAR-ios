@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBRScorePagedAnswer : QBRatingsServicePagedAnswer{
+@interface QBRScorePagedAnswer : PagedAnswer{
 	QBRScoreAnswer *scoreAnswer;
     
 	NSMutableArray *scores;

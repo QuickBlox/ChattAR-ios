@@ -92,6 +92,7 @@
 		8ADCA8D515A4767B00C015E7 /* Marker_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADCA8D115A4767A00C015E7 /* Marker_arrow@2x.png */; };
 		8ADCA8D615A4767B00C015E7 /* Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADCA8D215A4767B00C015E7 /* Marker.png */; };
 		8ADCA8D715A4767B00C015E7 /* Marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADCA8D315A4767B00C015E7 /* Marker@2x.png */; };
+		BB6616171605DF5800DBADD4 /* ChattARApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6616161605DF5800DBADD4 /* ChattARApplication.m */; };
 		FA0BBEF015AD6062005F4D63 /* allSwitch.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0BBEEA15AD6062005F4D63 /* allSwitch.png */; };
 		FA0BBEF115AD6062005F4D63 /* allSwitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0BBEEB15AD6062005F4D63 /* allSwitch@2x.png */; };
 		FA0BBEF215AD6062005F4D63 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = FA0BBEEC15AD6062005F4D63 /* circle.png */; };
@@ -298,6 +299,8 @@
 		8ADCA8D115A4767A00C015E7 /* Marker_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker_arrow@2x.png"; sourceTree = "<group>"; };
 		8ADCA8D215A4767B00C015E7 /* Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker.png; sourceTree = "<group>"; };
 		8ADCA8D315A4767B00C015E7 /* Marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker@2x.png"; sourceTree = "<group>"; };
+		BB6616151605DF5700DBADD4 /* ChattARApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChattARApplication.h; sourceTree = "<group>"; };
+		BB6616161605DF5800DBADD4 /* ChattARApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChattARApplication.m; sourceTree = "<group>"; };
 		FA0BBEEA15AD6062005F4D63 /* allSwitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allSwitch.png; sourceTree = "<group>"; };
 		FA0BBEEB15AD6062005F4D63 /* allSwitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allSwitch@2x.png"; sourceTree = "<group>"; };
 		FA0BBEEC15AD6062005F4D63 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
@@ -588,6 +591,8 @@
 			children = (
 				636735E11552CF590061BF75 /* AppDelegate.h */,
 				636735E21552CF590061BF75 /* AppDelegate.m */,
+				BB6616151605DF5700DBADD4 /* ChattARApplication.h */,
+				BB6616161605DF5800DBADD4 /* ChattARApplication.m */,
 				FAC6B89D15D985C500F3B10F /* Constants.h */,
 				6367365E1552E52E0061BF75 /* Controllers */,
 				FA99E78B15C95C0B0031F54F /* Models */,
@@ -1328,6 +1333,7 @@
 				FAC6B89215D9006D00F3B10F /* FBCheckinModel.m in Sources */,
 				FAC6B89315D9006D00F3B10F /* QBChatMessageModel.m in Sources */,
 				FAC6B89415D9006D00F3B10F /* QBCheckinModel.m in Sources */,
+				BB6616171605DF5800DBADD4 /* ChattARApplication.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

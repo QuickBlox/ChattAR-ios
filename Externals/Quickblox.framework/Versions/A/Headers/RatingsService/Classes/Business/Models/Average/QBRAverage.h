@@ -10,7 +10,7 @@
 /** Overview:*/
 /** This class represents avarage information. */
 
-@interface QBRAverage : Entity {
+@interface QBRAverage : Entity <NSCoding, NSCopying>{
 	NSUInteger gameModeID;
 	CGFloat value;
 }

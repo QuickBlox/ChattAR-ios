@@ -12,7 +12,7 @@
 /** Overview:*/
 /** This class represents GameMode information. */
 
-@interface QBRGameMode : Entity{
+@interface QBRGameMode : Entity <NSCoding, NSCopying>{
     NSString *title;
     NSUInteger applicationID;
     NSUInteger userID;

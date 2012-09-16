@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-@interface QBMEventPagedAnswer : QBMessagesServicePagedAnswer{
+@interface QBMEventPagedAnswer : PagedAnswer{
     QBMEventAnswer *eventAnswer;
     NSMutableArray *events;
 }

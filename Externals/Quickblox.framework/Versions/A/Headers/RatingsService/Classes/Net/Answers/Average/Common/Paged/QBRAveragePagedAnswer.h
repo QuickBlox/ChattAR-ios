@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBRAveragePagedAnswer : QBRatingsServicePagedAnswer{
+@interface QBRAveragePagedAnswer : PagedAnswer{
 	QBRAverageAnswer *averageAnswer;
 	NSMutableArray *averages;
 }

@@ -10,3 +10,4 @@
 #import "GetTokenPerformer/QBMGetTokenPerformer.h"
 #import "Subscription/QBMRegisterSubscriptionTask.h"
 #import "SendPush/QBMSendPushTask.h"
+#import "Subscription/QBMUnregisterSubscriptionTask.h"

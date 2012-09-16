@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface QBAAuthSessionCreationAnswer : QBAAuthAnswer{
-    
 }
-@property (nonatomic,readonly) QBASession *session;
+@property (nonatomic, readonly) QBASession *session;
 
 @end

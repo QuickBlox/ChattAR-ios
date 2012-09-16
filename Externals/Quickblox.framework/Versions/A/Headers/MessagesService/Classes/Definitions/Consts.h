@@ -30,6 +30,7 @@ extern NSString* const QBMPushMessageAlertLocArgsKey;
 extern NSString* const QBMPushMessageAlertLaunchImageKey;
 extern NSString* const QBMPushMessageBadgeKey;
 extern NSString* const QBMPushMessageSoundKey;
+extern NSString* const QBMPushMessageRichContentKey;
 
 // Event types
 extern NSString *const kQBMEventTypeOneShot;
@@ -40,7 +41,7 @@ extern NSString *const kQBMEventTypeMultiShot;
 // Notification channels
 extern NSString *const kQBMNotificationChannelsEmail;
 extern NSString *const kQBMNotificationChannelsAPNS;
-extern NSString *const kQBMNotificationChannelsC2DM;
+extern NSString *const kQBMNotificationChannelsGCM;
 extern NSString *const kQBMNotificationChannelsMPNS;
 extern NSString *const kQBMNotificationChannelsBBPS;
 extern NSString *const kQBMNotificationChannelsPull;
@@ -54,7 +55,7 @@ extern NSString *const kQBMNotificationTypePull;
 
 // Push type
 extern NSString *const kQBMPushTypeAPNS;
-extern NSString *const kQBMPushTypeC2DM;
+extern NSString *const kQBMPushTypeGCM;
 extern NSString *const kQBMPushTypeMPNS;
 extern NSString *const kQBMPushTypeBBPS;
 

@@ -13,7 +13,13 @@
  Please set only text and recipient_id values since ID and sender_id
  are setted automatically by QBChatService
  */
-@interface QBChatMessage : NSObject {
+@interface QBChatMessage : NSObject <NSCoding, NSCopying>{
+@private
+    NSUInteger ID;
+    NSString *text;
+    NSString *recipientJID;
+    NSString *senderJID;
+    NSDate *datetime;
 }
 
 /**
@@ -40,10 +46,5 @@
  Message datetime
  */
 @property (nonatomic, retain) NSDate *datetime;
-
-/**
- Sended file
- */
-@property (nonatomic, retain) NSData *file;
 
 @end

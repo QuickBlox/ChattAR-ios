@@ -6,7 +6,7 @@
 //  Copyright 2011 QuickBlox team. All rights reserved.
 //
 
-@interface QBMEventAnswer : QBMessagesServiceAnswer {
+@interface QBMEventAnswer : EntityAnswer {
 @protected
     QBMEvent *event;
 }

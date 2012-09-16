@@ -12,7 +12,7 @@
 /** Overview */
 /** Push event representation */
 
-@interface QBMPushEvent : QBMEvent {
+@interface QBMPushEvent : QBMEvent <NSCoding, NSCopying>{
 	QBMPushMessage *pushMessage;
 }
 

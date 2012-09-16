@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBCBlobObjectAccessAnswer : QBContentServiceAnswer {
+@interface QBCBlobObjectAccessAnswer : EntityAnswer {
 @protected
     QBCBlobObjectAccess* blobObjectAccess;
 	NSMutableString* paramsBuffer;

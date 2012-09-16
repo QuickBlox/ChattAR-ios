@@ -12,7 +12,7 @@
 /** Overview:*/
 /** This class represents value of game mode parameter. */
 
-@interface QBRGameModeParameterValue : Entity{
+@interface QBRGameModeParameterValue : Entity <NSCoding, NSCopying>{
     NSUInteger gameModeParameterID; 
     NSUInteger scoreID;
     NSString *value;

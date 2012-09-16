@@ -3,7 +3,7 @@
  File: Reachability.h
  Abstract: Basic demonstration of how to use the SystemConfiguration Reachablity APIs.
  
- Version: 2.0
+ Version: 2.2
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
  ("Apple") in consideration of your agreement to the following terms, and your
@@ -13,6 +13,7 @@
  
  In consideration of your agreement to abide by the following terms, and subject
  to these terms, Apple grants you a personal, non-exclusive license, under
+ Apple's copyrights in this original Apple software (the "Apple Software"), to
  use, reproduce, modify and redistribute the Apple Software, with or without
  modifications, in source and/or binary forms; provided that if you redistribute
  the Apple Software in its entirety and without modifications, you must retain
@@ -40,36 +41,34 @@
  CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF
  APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
+ Copyright (C) 2010 Apple Inc. All Rights Reserved.
  
-*/
-//#if REACHABILITY_20_API
-//#else
-//#define REACHABILITY_20_API 1
-//#endif
+ */
+
 
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
 typedef enum {
-	NotReachable = 0,
-	ReachableViaWiFi,
-	ReachableViaWWAN
+    NotReachable = 0,
+    ReachableViaWiFi,
+    ReachableViaWWAN
 } NetworkStatus;
 #define kReachabilityChangedNotification @"kNetworkReachabilityChangedNotification"
 
 @interface Reachability: NSObject
 {
-	BOOL localWiFiRef;
-	SCNetworkReachabilityRef reachabilityRef;
+    BOOL localWiFiRef;
+    SCNetworkReachabilityRef reachabilityRef;
 }
 
-//reachabilityWithHostName- Use to check the reachability of a particular host name. 
+//reachabilityWithHostName- Use to check the reachability of a particular host name.
 + (Reachability*) reachabilityWithHostName: (NSString*) hostName;
 
-//reachabilityWithAddress- Use to check the reachability of a particular IP address. 
-//+ (Reachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
+//reachabilityWithAddress- Use to check the reachability of a particular IP address.
++ (Reachability*) reachabilityWithAddress: (const struct sockaddr_in*) hostAddress;
 
-//reachabilityForInternetConnection- checks whether the default route is available.  
+//reachabilityForInternetConnection- checks whether the default route is available.
 //  Should be used by applications that do not connect to a particular host
 + (Reachability*) reachabilityForInternetConnection;
 
@@ -77,8 +76,8 @@ typedef enum {
 + (Reachability*) reachabilityForLocalWiFi;
 
 //Start listening for reachability notifications on the current run loop
-- (BOOL) startNotifer;
-- (void) stopNotifer;
+- (BOOL) startNotifier;
+- (void) stopNotifier;
 
 - (NetworkStatus) currentReachabilityStatus;
 //WWAN may be available, but not active until a connection has been established.

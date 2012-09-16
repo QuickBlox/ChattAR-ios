@@ -1,3 +1,4 @@
+
 //
 //  main.m
 //  FB_Radar
@@ -9,9 +10,10 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
+#import "ChattARApplication.h"
 
 int main(int argc, char *argv[]){
 	@autoreleasepool {
-	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+	    return UIApplicationMain(argc, argv, NSStringFromClass([ChattARApplication class]), NSStringFromClass([AppDelegate class]));
 	}
 }

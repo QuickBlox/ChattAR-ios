@@ -18,6 +18,7 @@
 
 @interface QBApplicationRedelegate : NSObject<UIApplicationDelegate> {
 	NSObject<UIApplicationDelegate42> *delegate;
+    
 }
 @property (nonatomic, retain) NSObject<UIApplicationDelegate42> *delegate; // We mustn't release it
 

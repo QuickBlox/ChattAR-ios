@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBLPlaceAnswer : QBLocationServiceAnswer{
+@interface QBLPlaceAnswer : EntityAnswer{
 @protected
 	QBLPlace *place;
 }

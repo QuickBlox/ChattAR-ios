@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBLPlacePagedAnswer : QBLocationServicePagedAnswer{
+@interface QBLPlacePagedAnswer : PagedAnswer{
 	QBLPlaceAnswer *placeAnswer;
 	NSMutableArray *places;
 }

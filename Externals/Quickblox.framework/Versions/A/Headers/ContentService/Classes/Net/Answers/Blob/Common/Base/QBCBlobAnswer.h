@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface QBCBlobAnswer : QBContentServiceAnswer {
+@interface QBCBlobAnswer : EntityAnswer {
 @protected
 	QBCBlob* blob;
     QBCBlobObjectAccessAnswer* blobObjectAccessAnswer;

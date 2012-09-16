@@ -13,7 +13,6 @@
 /** Class for setup framework */
 
 @interface QBSettings : NSObject {
-    NSString *restAPIVersion;
 }
 
 #pragma mark -

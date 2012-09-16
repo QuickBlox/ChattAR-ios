@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBRScoreAnswer : QBRatingsServiceAnswer {
+@interface QBRScoreAnswer : EntityAnswer {
     QBRGameModeParameterValuePagedAnswer *gameModeParemeterValuePagedAnswer;
 }
 

@@ -11,7 +11,7 @@
 /** Overview */
 /** This class represents File in Content module. Limitations: max size of file is 5368709120 bytes (5 GB). */
 
-@interface QBCBlob : Entity 
+@interface QBCBlob : Entity <NSCoding, NSCopying>
 {
 	NSString *contentType;          
 	NSString *name;                 

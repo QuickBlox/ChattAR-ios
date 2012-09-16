@@ -1,14 +1,13 @@
-/*
- *  Quickblox.h
- *  BaseServiceStaticLibrary
- *
+//
+// Quickblox.h
+// Quickblox
+//
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
+//
 
- *  Copyright 2010 QuickBlox team. All rights reserved.
- *
- */
+#define frameworkVersion @"1.2.0"
 
 #import "Core/BaseServiceFramework.h"
-
 #import "AuthService/AuthServiceFramework.h"
 #import "UsersService/UsersServiceFramework.h"
 #import "LocationService/LocationServiceFramework.h"
@@ -16,3 +15,4 @@
 #import "ContentService/Classes/ContentServiceFramework.h"
 #import "RatingsService/RatingsServiceFramework.h"
 #import "ChatService/ChatServiceFramework.h"
+#import "CustomObjects/CustomObjectsFramework.h"

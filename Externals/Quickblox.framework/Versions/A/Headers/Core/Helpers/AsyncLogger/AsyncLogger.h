@@ -8,7 +8,6 @@
 
 
 @interface AsyncLogger : NSObject {
-
 }
 
 +(void)LogF:(NSString *)string;

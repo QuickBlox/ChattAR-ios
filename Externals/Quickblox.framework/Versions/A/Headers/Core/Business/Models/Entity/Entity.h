@@ -10,7 +10,8 @@
 /** Overview */
 /** Base class for the most business objects */
 
-@interface Entity : NSObject {
+@interface Entity : NSObject <NSCoding, NSCopying> {
+@private
 	NSDate *createdAt;
 	NSDate *updatedAt;
 	NSUInteger ID;
@@ -21,6 +22,7 @@
 
 /** Created date */
 @property (nonatomic,retain) NSDate* createdAt;
+//@property (nonatomic,assign) NSDate* createdAt;
 
 /** Updated date */
 @property (nonatomic,retain) NSDate* updatedAt;

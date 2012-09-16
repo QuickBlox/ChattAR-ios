@@ -7,8 +7,5 @@
  *
  */
 
-#import "LocationService/QBLocationServiceAnswer.h"
-#import "LocationService/QBLocationServicePagedAnswer.h"
-
 #import "GeoData/QBGeoDataAnswers.h"
 #import "Place/QBPlaceAnswers.h"

@@ -13,7 +13,7 @@
 /** Overview:*/
 /** This class represents geo data - location point. You can store user locations on server, and then retrieve them using filters and search. See QBLocationService  */
 
-@interface QBLGeoData : Entity {
+@interface QBLGeoData : Entity <NSCoding, NSCopying> {
 @private
 	CLLocationDegrees latitude;
 	CLLocationDegrees longitude;
@@ -51,7 +51,7 @@
  */
 + (QBLGeoData *)geoData;
 
-/** Obtain current geo data 
+/** Obtain current geo data
  @return QBLGeoData initialized with current location
  */
 + (QBLGeoData *)currentGeoData;

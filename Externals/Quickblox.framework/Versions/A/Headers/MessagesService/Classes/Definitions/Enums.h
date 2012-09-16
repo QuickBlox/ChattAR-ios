@@ -25,17 +25,17 @@ typedef enum QBMNotificationType{
 
 // Event push types
 typedef enum QBMPushType{
-    QBMPushTypeAPNS,
-    QBMPushTypeC2DM,
-    QBMPushTypeMPNS,
-    QBMPushTypeBBPS
+    QBMPushTypeAPNS = 1,
+    QBMPushTypeGCM = 2,
+    QBMPushTypeMPNS = 3,
+    QBMPushTypeBBPS = 4
 } QBMPushType;
 
 // Notification channels
 typedef enum QBMNotificatioChannel{
     QBMNotificatioChannelEmail,
     QBMNotificatioChannelAPNS,
-    QBMNotificatioChannelC2DM,
+    QBMNotificatioChannelGCM,
     QBMNotificatioChannelMPNS,
     QBMNotificatioChannelBBPS,
     QBMNotificatioChannelPull,

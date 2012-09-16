@@ -14,5 +14,6 @@
 @property (nonatomic, assign) IBOutlet UIWebView *webView;
 @property (nonatomic, assign) IBOutlet UIActivityIndicatorView *loadUrlProgress;
 @property (nonatomic, retain) NSString *urlAdress;
+@property (nonatomic, retain) NSURLRequest *request;
 
 @end

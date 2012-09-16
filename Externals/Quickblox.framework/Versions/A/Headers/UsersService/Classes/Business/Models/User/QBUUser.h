@@ -13,7 +13,7 @@
 /** Overview */
 /** This class represents QuickBlox User. */
 
-@interface QBUUser : Entity {
+@interface QBUUser : Entity <NSCoding, NSCopying> {
 @private
     NSUInteger externalUserID;
     NSUInteger blobID;
@@ -73,5 +73,4 @@
  @return New instance of QBUUser
  */
 + (QBUUser *)user;
-
 @end

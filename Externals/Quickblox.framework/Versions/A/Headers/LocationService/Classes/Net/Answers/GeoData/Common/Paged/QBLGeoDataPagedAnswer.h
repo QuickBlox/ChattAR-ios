@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBLGeoDataPagedAnswer : QBLocationServicePagedAnswer{
+@interface QBLGeoDataPagedAnswer : PagedAnswer{
 	QBLGeoDataAnswer *geodataAnswer;
     
 	NSMutableArray *geodata;

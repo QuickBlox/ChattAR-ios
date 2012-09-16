@@ -52,7 +52,7 @@ extern NSString* const QuickbloxSocialAuthFailure;
 #define kBaseServicePerPageNotSet 0
 
 // log
-#define QBDL(...) if([QBSettings logLevel]>=QBLogLevelDebug) [AsyncLogger LogF:[NSString stringWithFormat:__VA_ARGS__]] 
+#define QBDLog(...) if([QBSettings logLevel] == QBLogLevelDebug) [AsyncLogger LogF:[NSString stringWithFormat:__VA_ARGS__]] 
 
 #define E(A,B,C) @throw [NSException exceptionWithName:A reason:B userInfo:C];
 #define E2(A,B) @throw [NSException exceptionWithName:A reason:B userInfo:nil];

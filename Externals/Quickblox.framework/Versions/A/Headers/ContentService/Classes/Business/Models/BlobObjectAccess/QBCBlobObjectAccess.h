@@ -11,7 +11,7 @@
 /** Overview */
 /** This class represents entity that uses for upload file to server. */
 
-@interface QBCBlobObjectAccess : Entity {
+@interface QBCBlobObjectAccess : Entity <NSCoding, NSCopying> {
 	NSUInteger blobID;
 	enum QBCBlobObjectAccessType type;
 	NSDate *expires;

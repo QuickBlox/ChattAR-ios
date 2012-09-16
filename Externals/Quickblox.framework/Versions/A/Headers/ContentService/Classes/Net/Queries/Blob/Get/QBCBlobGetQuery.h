@@ -13,11 +13,12 @@
     PagedRequest *pagedRequest;
     
     BOOL isMultipleGet;
+    BOOL isTaggedGet;
 }
 @property (nonatomic,readonly) NSUInteger blobId;
 @property (nonatomic, readonly) PagedRequest *pagedRequest;
 
 - (id)initWithBlobId:(NSUInteger)blobid;
-- (id)initWithPagedRequest:(PagedRequest *)pagedRequest;
+- (id)initWithPagedRequest:(PagedRequest *)pagedRequest isTaggedGet:(BOOL)isTaggedGet;
 
 @end

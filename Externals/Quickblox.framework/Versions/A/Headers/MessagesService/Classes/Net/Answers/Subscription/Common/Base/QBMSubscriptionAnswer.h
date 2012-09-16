@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-@interface QBMSubscriptionAnswer : QBMessagesServiceAnswer{
+@interface QBMSubscriptionAnswer : EntityAnswer{
 @protected 
     NSMutableArray *subscriptions;
 }

@@ -10,7 +10,7 @@
 /** Overview:*/
 /** This class represents Score information. */
 
-@interface QBRScore : Entity {
+@interface QBRScore : Entity <NSCoding, NSCopying>{
 	NSUInteger gameModeID;
 	NSUInteger userID;
 	NSUInteger value;

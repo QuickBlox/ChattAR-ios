@@ -6,7 +6,7 @@
 //  Copyright 2011 QuickBlox. All rights reserved.
 //
 
-@interface QBRGameModeAnswer : QBRatingsServiceAnswer {
+@interface QBRGameModeAnswer : EntityAnswer {
 }
 
 @property (nonatomic,readonly) QBRGameMode *gamemode;

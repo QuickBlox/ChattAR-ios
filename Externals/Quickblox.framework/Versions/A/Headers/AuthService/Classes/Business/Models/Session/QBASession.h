@@ -1,5 +1,5 @@
 //
-//  QBASession.h
+//  QBASession.h/Users/bogdan/Documents/git/SDK-ios/Framework/Quickblox.xcodeproj
 //  AuthService
 //
 
@@ -12,7 +12,7 @@
 /** Overview:*/
 /** This class represents session information. */
 
-@interface QBASession : Entity {
+@interface QBASession : Entity <NSCoding, NSCopying>{
 @private
     NSString *token;
     NSUInteger applicationID;

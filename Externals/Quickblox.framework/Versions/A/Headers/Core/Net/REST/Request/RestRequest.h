@@ -49,8 +49,11 @@
 
 - (void)asyncRequestWithdelegate:(NSObject<RestRequestDelegate>*)delegate;
 
-- (void)ldAsync:(NSArray*)args;
-- (void)ld:(NSArray*)args;
 + (NSString *)httpMethod:(enum RestMethodKind)method;
 - (void)setMultipartParts:(ASIFormDataRequest*)asireq;
+
+#pragma mark Deprecated
+- (RestResponse *)syncRequest;
+@property(readonly) ASIHTTPRequest* asirequest;
+
 @end

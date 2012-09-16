@@ -79,6 +79,6 @@
 /**
  Called in case receiving presence
  */
-- (void)chatDidReceivePresenceOfUser:(NSString *)jid;
+- (void)chatDidReceivePresenceOfUser:(NSUInteger)userID type:(NSString *)type;
 
 @end
