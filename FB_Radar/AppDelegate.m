@@ -40,7 +40,7 @@
     [NotificationManager playNotificationSoundAndVibrate];
     
     // if not in chat
-    MapChatARViewController *mapChatArViewController = [self.tabBarController.viewControllers objectAtIndex:1];
+    MapChatARViewController *mapChatArViewController = [[((UINavigationController *)[self.tabBarController.viewControllers objectAtIndex:1]) viewControllers] objectAtIndex:0];
     int mapChatArSelectedSegmentIndex = mapChatArViewController.segmentControl.selectedSegmentIndex;
     //
     if(self.tabBarController.selectedIndex != 1 || mapChatArSelectedSegmentIndex != (mapChatArViewController.segmentControl.numberOfSegments-1)){

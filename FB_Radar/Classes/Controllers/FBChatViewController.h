@@ -27,6 +27,9 @@
     UIButton *sendButton;
     
     BOOL isWriteAtLeastOneMessage;
+    
+    // quickblox quieries cancelables
+    id<Cancelable> getFBUserQuery;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView	*chatTableView;

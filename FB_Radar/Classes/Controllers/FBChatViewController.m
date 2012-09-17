@@ -223,6 +223,11 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [chatHistory release];
 	
 	[emptyChat release];
+    
+    if(getFBUserQuery != nil){
+        [getFBUserQuery cancel];
+        getFBUserQuery = nil;
+    }
 	
 	[super dealloc];
 }
@@ -575,7 +580,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     if([[toUser objectForKey:kOnOffStatus] intValue] == 0){
         // get QB User for send push
         NSString *userFBID = [NSString stringWithString:[chatHistory.to objectForKey:kId]];
-        [QBUsers userWithFacebookID:userFBID delegate:self context:rightTrimmedMessage];
+        
+        getFBUserQuery = [QBUsers userWithFacebookID:userFBID delegate:self context:rightTrimmedMessage];
     }
 	
 	[self scrollToBottomAnimated:YES];
@@ -602,6 +608,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	if (result.success){
         // User info result
 		if ([result isKindOfClass:QBUUserResult.class]){
+            
+            getFBUserQuery = nil;
+            
 			QBUUserResult* _result = (QBUUserResult*)result;
 			
 			// Create message
@@ -624,7 +633,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 			[QBMessages TSendPush:message
 								 toUsers:[NSString stringWithFormat:@"%d", _result.user.ID]
 				  isDevelopmentEnvironment:isDevEnv
-								delegate:self];
+								delegate:nil];
             
             [message release];
 		}
