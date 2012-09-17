@@ -27,14 +27,14 @@
     UIButton *sendButton;
     
     BOOL isWriteAtLeastOneMessage;
-    
-    // quickblox quieries cancelables
-    id<Cancelable> getFBUserQuery;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView	*chatTableView;
 @property (retain, nonatomic) Conversation *chatHistory;
 @property (nonatomic, retain) UILabel* emptyChat;
+
+// quickblox quieries cancelables
+@property (nonatomic, retain) id<Cancelable> getFBUserQuery;
 
 - (void)markConversationAsRead;
 

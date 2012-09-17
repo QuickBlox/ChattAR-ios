@@ -24,8 +24,6 @@
 
 @interface MapChatARViewController ()
 
-@property (nonatomic, retain) CLLocation* myCurrentLocation;
-
 - (UserAnnotation *)lastChatMessage:(BOOL)ignoreOwn;
 
 - (void)processQBCheckins:(NSArray *)data;
@@ -45,7 +43,7 @@
 @synthesize chatMessagesIDs, mapPointsIDs;
 @synthesize userActionSheet, allMapPoints, allCheckins, allChatPoints;
 @synthesize selectedUserAnnotation;
-@synthesize locationManager, myCurrentLocation;
+@synthesize locationManager;
 @synthesize initedFromCache;
 @synthesize allFriendsSwitch;
 @synthesize initState;
@@ -85,12 +83,9 @@
         mapPointsIDs = [[NSMutableArray alloc] init];
         
 
-        
-        // Current location
-        myCurrentLocation = [[CLLocation alloc] init];
-        //
+        // Loc manager
 		locationManager = [[CLLocationManager alloc] init];
-        locationManager.delegate = self; // send loc updates to myself
+        [locationManager startUpdatingLocation];
 		
         
         isInitialized = NO;
@@ -126,7 +121,6 @@
     [userActionSheet release];
 	
 	[locationManager release];
-	[myCurrentLocation release];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNotificationLogout object:nil];
     
@@ -609,7 +603,7 @@
     }
 	newAnnotation.createdAt = geoData.createdAt;
     
-    newAnnotation.distance  = [geoData.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+    newAnnotation.distance  = [geoData.location distanceFromLocation:self.locationManager.location];
     
     
     // Add to Chat
@@ -951,8 +945,8 @@
         
         if ([geodata.user.facebookID isEqualToString:[DataManager shared].currentFBUserId])
         {
-            coordinate.latitude = self.myCurrentLocation.coordinate.latitude;
-            coordinate.longitude = self.myCurrentLocation.coordinate.longitude;
+            coordinate.latitude = self.locationManager.location.coordinate.latitude;
+            coordinate.longitude = self.locationManager.location.coordinate.longitude;
         }
         else
         {
@@ -1047,7 +1041,7 @@
         chatAnnotation.qbUserID = geodata.user.ID;
         chatAnnotation.createdAt = geodata.createdAt;
         
-        chatAnnotation.distance  = [geodata.location distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+        chatAnnotation.distance  = [geodata.location distanceFromLocation:self.locationManager.location];
         
         [qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
         [chatAnnotation release];
@@ -1184,7 +1178,7 @@
                 
                 
                 CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
-                checkinAnnotation.distance = [checkinLocation distanceFromLocation:[[QBLLocationDataSource instance] currentLocation]];
+                checkinAnnotation.distance = [checkinLocation distanceFromLocation:self.locationManager.location];
                 [checkinLocation release];
                 
                 // add to Storage
@@ -1299,22 +1293,6 @@
     [arViewController clear];
     [mapViewController clear];
     [chatViewController.messagesTableView reloadData];
-}
-
-
-#pragma mark -
-#pragma mark CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    myCurrentLocation = [newLocation retain];
-    
-    // update my location on server
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-	NSLog(@"Error: %@", [error description]);
 }
 
 

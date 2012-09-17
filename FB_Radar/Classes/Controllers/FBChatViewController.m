@@ -50,6 +50,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 @synthesize chatTableView = _chatTableView;
 @synthesize chatHistory, emptyChat;
+@synthesize getFBUserQuery;
 
 #pragma mark Init
 
@@ -226,7 +227,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     
     if(getFBUserQuery != nil){
         [getFBUserQuery cancel];
-        getFBUserQuery = nil;
+        self.getFBUserQuery = nil;
     }
 	
 	[super dealloc];
@@ -581,7 +582,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         // get QB User for send push
         NSString *userFBID = [NSString stringWithString:[chatHistory.to objectForKey:kId]];
         
-        getFBUserQuery = [QBUsers userWithFacebookID:userFBID delegate:self context:rightTrimmedMessage];
+        self.getFBUserQuery = [QBUsers userWithFacebookID:userFBID delegate:self context:rightTrimmedMessage];
     }
 	
 	[self scrollToBottomAnimated:YES];
@@ -609,7 +610,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         // User info result
 		if ([result isKindOfClass:QBUUserResult.class]){
             
-            getFBUserQuery = nil;
+            self.getFBUserQuery = nil;
             
 			QBUUserResult* _result = (QBUUserResult*)result;
 			

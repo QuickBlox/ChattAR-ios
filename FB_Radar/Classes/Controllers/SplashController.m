@@ -282,10 +282,6 @@
         [[FBService shared].facebook setSessionDelegate:nil];
         
         
-        // start track own loaction
-        [[[QBLLocationDataSource instance] locationManager] startUpdatingLocation];
-        
-        
         // save FB cookies
         NSHTTPCookieStorage *cookiesStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         NSArray *cookies = [cookiesStorage cookies];
