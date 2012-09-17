@@ -615,7 +615,7 @@
     [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 	[formatter setLocale:[NSLocale currentLocale]];
     formatter.timeZone = [NSTimeZone systemTimeZone];
-    [formatter setDateFormat:@"d MM yy HH:mm"];
+    [formatter setDateFormat:@"d MMMM HH:mm"];
     datetime.text = [formatter stringFromDate:currentAnnotation.createdAt];
     [datetime setFrame:CGRectMake(messageWidth-41, 11+shift, 101, 12)];
     [formatter release];

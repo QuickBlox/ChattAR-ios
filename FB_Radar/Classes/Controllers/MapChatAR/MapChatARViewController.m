@@ -716,7 +716,6 @@
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable isFBCheckin:(BOOL)isFBCheckin{
-    
     chatViewController.messagesTableView.tag = tableIsUpdating;
     
     if(message.geoDataID != -1){
@@ -727,7 +726,6 @@
     
     // Add to Chat
     __block BOOL addedToCurrentChatState = NO;
-    
     
     dispatch_async( dispatch_get_main_queue(), ^{
     
@@ -756,7 +754,6 @@
                 [chatViewController.messagesTableView reloadData];
          
         }
-        
     });
     
     

@@ -147,7 +147,13 @@
         [userNameBG setImage:[UIImage imageNamed:@"radarMarkerName2@2x.png"] ];
     }
     
-    [userPhotoView loadImageFromURL:[NSURL URLWithString:_annotation.userPhotoUrl]];
+    if ([_annotation.userPhotoUrl isKindOfClass:[NSString class]]){
+        [userPhotoView loadImageFromURL:[NSURL URLWithString:_annotation.userPhotoUrl]];
+    }else{
+        NSDictionary* pic = (NSDictionary*)_annotation.userPhotoUrl;
+        NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+        [userPhotoView loadImageFromURL:[NSURL URLWithString:url]];
+    }
     
     [userName setText:_annotation.userName];
     
