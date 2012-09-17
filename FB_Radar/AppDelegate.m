@@ -31,11 +31,6 @@
     [super dealloc];
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
-{
-	NSLog(@"Failed to get token, error: %@", error);
-}
-
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     NSLog(@"didReceiveRemoteNotification userInfo=%@", userInfo);
 
@@ -43,14 +38,20 @@
     NSString *message = [[userInfo objectForKey:QBMPushMessageApsKey] objectForKey:QBMPushMessageAlertKey];
 
     [NotificationManager playNotificationSoundAndVibrate];
-
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "")
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"Ok", "OK")
-                                          otherButtonTitles:nil];
-    [alert show];
-    [alert release];
+    
+    // if not in chat
+    MapChatARViewController *mapChatArViewController = [self.tabBarController.viewControllers objectAtIndex:1];
+    int mapChatArSelectedSegmentIndex = mapChatArViewController.segmentControl.selectedSegmentIndex;
+    //
+    if(self.tabBarController.selectedIndex != 1 || mapChatArSelectedSegmentIndex != (mapChatArViewController.segmentControl.numberOfSegments-1)){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(appName, "")
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Ok", "OK")
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
@@ -68,17 +69,12 @@
     [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
     [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
     [QBSettings setRestAPIVersion:@"0.1.1"];
-#ifndef DEBUG
+//#ifndef DEBUG
     [QBSettings setLogLevel:QBLogLevelNothing];
-#endif
+//#endif
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
-	
-	// Register for Push Notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | 
-                                                                           UIRemoteNotificationTypeBadge | 
-                                                                           UIRemoteNotificationTypeSound)];
 	
 	_window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	

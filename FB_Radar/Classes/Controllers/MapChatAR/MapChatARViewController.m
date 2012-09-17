@@ -716,6 +716,7 @@
 }
 
 - (void)addNewMessageToChat:(UserAnnotation *)message addToTop:(BOOL)toTop withReloadTable:(BOOL)reloadTable isFBCheckin:(BOOL)isFBCheckin{
+    
     chatViewController.messagesTableView.tag = tableIsUpdating;
     
     if(message.geoDataID != -1){
@@ -1062,7 +1063,7 @@
     
     NSLog(@"CHAT INIT reloadData");
     dispatch_async(dispatch_get_main_queue(), ^{
-        [chatViewController.messagesTableView reloadData];
+         [chatViewController refresh];
     });
     
 
@@ -1262,13 +1263,13 @@
 // Return last chat message
 - (UserAnnotation *)lastChatMessage:(BOOL)ignoreOwn{
     if(ignoreOwn){
-        for(UserAnnotation *chatAnnotation in self.allChatPoints){
+        for(UserAnnotation *chatAnnotation in self.chatPoints){
             if(![chatAnnotation.fbUserId isEqualToString:[DataManager shared].currentFBUserId]){
                 return chatAnnotation;
             }
         }
     }else{
-        return ((UserAnnotation *)[self.allChatPoints objectAtIndex:0]);
+        return ((UserAnnotation *)[self.chatPoints objectAtIndex:0]);
     }
     
     return nil;
