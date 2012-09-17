@@ -54,7 +54,14 @@
         // add user photo 
         //
 		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 40, 40)];
-		[userPhotoView loadImageFromURL:[NSURL URLWithString:_userAnnotation.userPhotoUrl]];
+        id picture = _userAnnotation.userPhotoUrl;
+		if ([picture isKindOfClass:[NSString class]]){
+			[userPhotoView loadImageFromURL:[NSURL URLWithString:picture]];
+		}else{
+			NSDictionary* pic = (NSDictionary*)picture;
+			NSString* url = [[pic objectForKey:kData] objectForKey:kUrl];
+			[userPhotoView loadImageFromURL:[NSURL URLWithString:url]];
+		}
 		[container addSubview: userPhotoView];
         [userPhotoView release];
         
