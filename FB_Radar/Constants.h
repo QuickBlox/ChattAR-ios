@@ -14,10 +14,8 @@
 #define FBExpirationDateKey @"FBExpirationDateKey"
 //
 // FB Chattar
-//#define APP_ID @"464189473609303"
-//#define APP_SECRET @"bee15c5e5d9db2d63c4499f5186f70aa"
-#define APP_ID @"278381872271598"
-#define APP_SECRET @"60514269c6f5838dc5f2314019eb4904"
+#define APP_ID @"464189473609303"
+#define APP_SECRET @"bee15c5e5d9db2d63c4499f5186f70aa"
 #define FB_COOKIES @"FB_COOKIES"
 
 // notifications
