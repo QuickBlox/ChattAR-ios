@@ -91,6 +91,10 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived:)
 													 name:kNewChatMessageCome object:nil];
     }
+    
+    // Application did enter backgrount notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification object:nil];
 
     
 	// set right button with user photo
@@ -196,6 +200,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 	[[NSNotificationCenter defaultCenter] removeObserver:self
 													name:kNewChatMessageCome
 												  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+													name:UIApplicationDidEnterBackgroundNotification
+												  object:nil];
     
     [super viewDidUnload];
 }
@@ -238,6 +245,9 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)applicationDidEnterBackground{
+    [chatInput resignFirstResponder];
+}
 
 - (void)rightButtonDidPress:(id)sender
 {
