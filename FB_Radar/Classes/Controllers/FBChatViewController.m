@@ -9,6 +9,7 @@
 #import "FBChatViewController.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"
+#import "DatetimeConverter.h"
 
 
 #define VIEW_WIDTH    self.view.frame.size.width
@@ -423,10 +424,16 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     NSString *dateInterval = [[chatHistory.messages objectAtIndex:indexPath.row] objectForKey:kCreatedTime];
 	if(![dateInterval isEqualToString:@"N.A."])
 	{
-		// determine date of message
-		dateInterval = [dateInterval substringFromIndex:11];
-		dateInterval = [dateInterval substringToIndex:[dateInterval length] - 8];
-		datetime.text = dateInterval;
+        NSDate *date = [DatetimeConverter dateFromString:dateInterval];
+        
+        // sate date
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+        [formatter setLocale:[NSLocale currentLocale]];
+        formatter.timeZone = [NSTimeZone systemTimeZone];
+        [formatter setDateFormat:@"HH:mm"];
+        datetime.text = [formatter stringFromDate:date];
+        [formatter release];
 	}
 	else 
 	{

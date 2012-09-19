@@ -461,6 +461,7 @@ static FBService *instance = nil;
     if(body == nil){
         return;
     }
+    
 
     // message datetime
     NSDate *now = [NSDate date];
@@ -469,6 +470,7 @@ static FBService *instance = nil;
     [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
     NSString *timeStamp = [formatter stringFromDate:now];
     [formatter release];
+	
     
     // from
     NSMutableString *fromID = [[textMessage attributeStringValueForName:kFrom] mutableCopy]; // like -1621286874@chat.facebook.com
