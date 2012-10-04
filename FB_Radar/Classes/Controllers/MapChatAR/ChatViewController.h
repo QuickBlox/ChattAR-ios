@@ -28,6 +28,7 @@
 	BOOL isLoadingMoreMessages;
 }
 
+@property (retain, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, retain) IBOutlet UITextField *messageField;
 @property (nonatomic, retain) IBOutlet UITableView *messagesTableView;

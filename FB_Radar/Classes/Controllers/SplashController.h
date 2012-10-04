@@ -14,6 +14,7 @@
     IBOutlet UIButton *loginButton;
 }
 
+@property (retain, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (nonatomic) BOOL openedAtStartApp;
 
 - (IBAction)login:(id)sender;

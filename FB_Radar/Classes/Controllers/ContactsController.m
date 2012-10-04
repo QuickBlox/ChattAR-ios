@@ -69,7 +69,7 @@
 												 name:kReceivedOnlineStatus object:nil];
 	
 	[_searchField setFrame:CGRectMake(0, 0, 320, 44)];
-	[_friendListTableView setFrame:CGRectMake(0, 44, 320, 420)];   
+	[_friendListTableView setFrame:CGRectMake(0, 44, 320, 420)];
 }
 
 

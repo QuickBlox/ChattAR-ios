@@ -14,6 +14,8 @@
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 
+#import "JSON.h"
+#import "Reachability.h"
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
@@ -405,6 +407,7 @@ static FBService *instance = nil;
     
     // reconnect if disconnected
     if([DataManager shared].currentFBUser && [Reachability internetConnected]){
+    //if([DataManager shared].currentFBUser){
         [self logInChat];
     }
 }

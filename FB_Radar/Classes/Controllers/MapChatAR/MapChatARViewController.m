@@ -21,6 +21,7 @@
 #import "QBChatMessageModel.h"
 #import "FBCheckinModel.h"
 
+#import "JSON.h"
 
 @interface MapChatARViewController ()
 
@@ -155,7 +156,15 @@
     // add All/Friends switch
 	allFriendsSwitch = [CustomSwitch customSwitch];
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
-    [allFriendsSwitch setCenter:CGPointMake(280, 360)];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if(screenBounds.size.height == 568){
+    //if(!isiPhone5){
+        [allFriendsSwitch setCenter:CGPointMake(280, 360)];
+    }else{
+        [allFriendsSwitch setCenter:CGPointMake(280, 448)];
+    }
+    
     [allFriendsSwitch setValue:worldValue];
     [allFriendsSwitch scaleSwitch:0.9];
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];

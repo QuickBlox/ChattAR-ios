@@ -38,6 +38,11 @@
 
 - (void)dealloc{
     [_clearcacheButton release];
+    [_developedLabel release];
+    [_arChatLabel release];
+    [_linkButton release];
+    [_linkButtonQB release];
+    [_shadowImageView release];
 	[super dealloc];
 }
 
@@ -56,6 +61,30 @@
     // set switches state
     _soundSwitch.on = [NotificationManager isSoundEnabled];
     _vibrateSwitch.on = [NotificationManager isVibrationEnabled];
+    
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    if(screenBounds.size.height == 568){
+        
+        CGRect frame = self.developedLabel.frame;
+        frame.origin.y += 88;
+        [self.developedLabel setFrame:frame];
+        
+        frame = self.arChatLabel.frame;
+        frame.origin.y += 88;
+        [self.arChatLabel setFrame:frame];
+        
+        frame = self.linkButton.frame;
+        frame.origin.y += 88;
+        [self.linkButton setFrame:frame];
+        
+        frame = self.linkButtonQB.frame;
+        frame.origin.y += 88;
+        [self.linkButtonQB setFrame:frame];
+        
+        frame = self.shadowImageView.frame;
+        frame.origin.y += 88;
+        [self.shadowImageView setFrame:frame];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated{
@@ -98,6 +127,11 @@
     [self setUserStatus:nil];
 
     [self setClearcacheButton:nil];
+    [self setDevelopedLabel:nil];
+    [self setArChatLabel:nil];
+    [self setLinkButton:nil];
+    [self setLinkButtonQB:nil];
+    [self setShadowImageView:nil];
     [super viewDidUnload];
     
     isInitialized = NO;

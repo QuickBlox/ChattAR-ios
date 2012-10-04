@@ -29,6 +29,7 @@
     BOOL isWriteAtLeastOneMessage;
 }
 
+@property (retain, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (retain, nonatomic) IBOutlet UITableView	*chatTableView;
 @property (retain, nonatomic) Conversation *chatHistory;
 @property (nonatomic, retain) UILabel* emptyChat;

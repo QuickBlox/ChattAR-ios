@@ -23,4 +23,6 @@
 #define DESERIALIZE_DOUBLE(var_name, decoder)	var_name = [decoder decodeDoubleForKey:@#var_name]
 #define DESERIALIZE_BOOL(var_name, decoder)		var_name = [decoder decodeBoolForKey:@#var_name]
 
+#define isiPhone5                               [[[UIDevice currentDevice] model] isEqualToString:@"iPhone5"]
+
 #endif
