@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		435F356816257519009D15F0 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 435F356716257519009D15F0 /* Quickblox.framework */; };
 		436C0AF315D50EA90054D9BC /* Marker2.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF115D50EA90054D9BC /* Marker2.png */; };
 		436C0AF415D50EA90054D9BC /* Marker2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF215D50EA90054D9BC /* Marker2@2x.png */; };
 		436C0AF815D50EB80054D9BC /* kmBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF615D50EB80054D9BC /* kmBG.png */; };
@@ -127,7 +128,6 @@
 		FA52C8CC158DF43E00620918 /* onLine.png in Resources */ = {isa = PBXBuildFile; fileRef = FA52C8C8158DF43E00620918 /* onLine.png */; };
 		FA52C8CD158DF43E00620918 /* onLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA52C8C9158DF43E00620918 /* onLine@2x.png */; };
 		FA82C784158F6E2E005AFE00 /* replyCellBodyBG_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = FA82C783158F6E2E005AFE00 /* replyCellBodyBG_Pressed.png */; };
-		FA8764B6160777BE00EB1B58 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8764B5160777BE00EB1B58 /* Quickblox.framework */; };
 		FA8E4D8F157F549B00476EF7 /* AugmentedRealityController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4D88157F549B00476EF7 /* AugmentedRealityController.m */; };
 		FA8E4D90157F549B00476EF7 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4D8A157F549B00476EF7 /* ChatViewController.m */; };
 		FA8E4D91157F549B00476EF7 /* MapChatARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4D8C157F549B00476EF7 /* MapChatARViewController.m */; };
@@ -209,6 +209,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		435F356716257519009D15F0 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Quickblox.framework; sourceTree = "<group>"; };
 		436C0AF115D50EA90054D9BC /* Marker2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker2.png; sourceTree = "<group>"; };
 		436C0AF215D50EA90054D9BC /* Marker2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker2@2x.png"; sourceTree = "<group>"; };
 		436C0AF615D50EB80054D9BC /* kmBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kmBG.png; sourceTree = "<group>"; };
@@ -362,7 +363,6 @@
 		FA52C8C9158DF43E00620918 /* onLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "onLine@2x.png"; sourceTree = "<group>"; };
 		FA58AFBD15AB2515002B7434 /* Extender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Extender.h; sourceTree = "<group>"; };
 		FA82C783158F6E2E005AFE00 /* replyCellBodyBG_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replyCellBodyBG_Pressed.png; sourceTree = "<group>"; };
-		FA8764B5160777BE00EB1B58 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = "../ios-qb-samples/SDK-ios/Framework/build/Framework/Quickblox.framework"; sourceTree = "<group>"; };
 		FA8E4D87157F549B00476EF7 /* AugmentedRealityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentedRealityController.h; sourceTree = "<group>"; };
 		FA8E4D88157F549B00476EF7 /* AugmentedRealityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AugmentedRealityController.m; sourceTree = "<group>"; };
 		FA8E4D89157F549B00476EF7 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 				636735D51552CF590061BF75 /* Foundation.framework in Frameworks */,
 				FA8E4F0C1580887B00476EF7 /* libidn.a in Frameworks */,
 				FAE96D7B15DD42FB00544783 /* libFlurryAnalytics.a in Frameworks */,
-				FA8764B6160777BE00EB1B58 /* Quickblox.framework in Frameworks */,
+				435F356816257519009D15F0 /* Quickblox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,7 +620,7 @@
 		636735D11552CF590061BF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FA8764B5160777BE00EB1B58 /* Quickblox.framework */,
+				435F356716257519009D15F0 /* Quickblox.framework */,
 				63891AF71573505300035EC2 /* libresolv.dylib */,
 				8A983A7F156A5D61003C303D /* AddressBookUI.framework */,
 				8A983A7D156A5D5C003C303D /* AddressBook.framework */,

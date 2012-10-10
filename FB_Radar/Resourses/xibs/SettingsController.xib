@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11G56</string>
+		<string key="IBDocument.SystemVersion">11G63</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
 		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
@@ -211,7 +211,7 @@
 					</object>
 					<object class="IBUIImageView" id="523234406">
 						<reference key="NSNextResponder" ref="905866194"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{0, 339}, {320, 10}}</string>
 						<reference key="NSSuperview" ref="905866194"/>
 						<reference key="NSNextKeyView" ref="676613207"/>
@@ -225,7 +225,7 @@
 					</object>
 					<object class="IBUILabel" id="299872445">
 						<reference key="NSNextResponder" ref="905866194"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{90, 346}, {121, 21}}</string>
 						<reference key="NSSuperview" ref="905866194"/>
 						<reference key="NSNextKeyView" ref="696928215"/>
@@ -253,7 +253,7 @@
 					</object>
 					<object class="IBUIButton" id="696928215">
 						<reference key="NSNextResponder" ref="905866194"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{181, 339}, {27, 35}}</string>
 						<reference key="NSSuperview" ref="905866194"/>
 						<reference key="NSNextKeyView" ref="724687769"/>
@@ -285,7 +285,7 @@
 					</object>
 					<object class="IBUILabel" id="676613207">
 						<reference key="NSNextResponder" ref="905866194"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{26, 363}, {223, 21}}</string>
 						<reference key="NSSuperview" ref="905866194"/>
 						<reference key="NSNextKeyView" ref="299872445"/>
@@ -306,7 +306,7 @@
 					</object>
 					<object class="IBUIButton" id="724687769">
 						<reference key="NSNextResponder" ref="905866194"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{217, 357}, {51, 35}}</string>
 						<reference key="NSSuperview" ref="905866194"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>

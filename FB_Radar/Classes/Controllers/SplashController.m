@@ -47,19 +47,6 @@
         loginButton.hidden = NO;
     }
 
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if(screenBounds.size.height == 568){
-    //if(isiPhone5){
-        
-        CGRect frame = self.backgroundImage.frame;
-        frame.size.height += 88;
-        [self.backgroundImage setFrame:frame];
-        
-        frame = self->activityIndicator.frame;
-        frame.origin.y += 88;
-        [self->activityIndicator setFrame:frame];
-        
-    }
 }
 
 - (void)createSessionWithDelegate:(id)delegate{
@@ -87,7 +74,6 @@
     activityIndicator = nil;
     loginButton = nil;
     
-    [self setBackgroundImage:nil];
     [super viewDidUnload];
 }
 
@@ -106,6 +92,9 @@
     [params release];
 }
 
+- (void)dealloc {
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark FBSessionDelegate
@@ -305,8 +294,4 @@
     }
 }
 
-- (void)dealloc {
-    [_backgroundImage release];
-    [super dealloc];
-}
 @end

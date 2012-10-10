@@ -157,12 +157,10 @@
 	allFriendsSwitch = [CustomSwitch customSwitch];
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if(screenBounds.size.height == 568){
-    //if(!isiPhone5){
-        [allFriendsSwitch setCenter:CGPointMake(280, 360)];
-    }else{
+    if(IS_HEIGHT_GTE_568){
         [allFriendsSwitch setCenter:CGPointMake(280, 448)];
+    }else{
+        [allFriendsSwitch setCenter:CGPointMake(280, 360)];
     }
     
     [allFriendsSwitch setValue:worldValue];
@@ -289,7 +287,7 @@
     if([arViewController.view superview] == nil)
 	{
         [self.view addSubview:arViewController.view];
-        [arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+//        [arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
     }
     [mapViewController.view removeFromSuperview];
     [chatViewController.view removeFromSuperview];
@@ -302,7 +300,7 @@
 	
     if([chatViewController.view superview] == nil){
         [self.view addSubview:chatViewController.view];
-        [chatViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
+//        [chatViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
     }
     [mapViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];
@@ -315,7 +313,7 @@
 	
     if([mapViewController.view superview] == nil){
         [self.view addSubview:mapViewController.view];
-        [mapViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+//        [mapViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
     }
     [chatViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];

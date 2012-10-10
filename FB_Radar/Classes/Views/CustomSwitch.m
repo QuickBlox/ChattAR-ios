@@ -38,7 +38,7 @@
     
 	[self setThumbImage:[UIImage imageNamed:@"circle.png"] forState:UIControlStateNormal];
 
-    if([[[UIDevice currentDevice] systemVersion] isEqualToString:@"6.0"]){
+    if(IS_IOS_6){
         [self setMinimumTrackImage:[[UIImage imageNamed:@"allSwitch.png"] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"0")] forState:UIControlStateNormal];
         [self setMaximumTrackImage:[[UIImage imageNamed:@"friendsSwitch.png"] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"0")] forState:UIControlStateNormal];
     }else {

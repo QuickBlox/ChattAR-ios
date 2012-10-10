@@ -33,16 +33,6 @@
 	span.longitudeDelta=150;
 	region.span=span;
 	[mapView setRegion:region animated:YES];
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if(screenBounds.size.height == 568){
-    //if(isiPhone5){
-        
-        CGRect frame = self.mapView.frame;
-        frame.size.height += 44;
-        [self.mapView setFrame:frame];
-
-    }
 }
 
 - (void)viewDidUnload

@@ -47,19 +47,6 @@
 	
     // YES when is getting new messages
 	isLoadingMoreMessages = NO;
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if(screenBounds.size.height == 568){
-    //if(isiPhone5){
-        
-        CGRect frame = self.messagesTableView.frame;
-        frame.size.height += 88;
-        [self.messagesTableView setFrame:frame];
-        
-        frame = self.backgroundImage.frame;
-        frame.size.height += 88;
-        [self.backgroundImage setFrame:frame];
-    }
 }
 
 - (void)removeQuote
@@ -86,7 +73,6 @@
     [distanceImage2 release];
     distanceImage2 = nil;
     
-    [self setBackgroundImage:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -101,6 +87,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)dealloc {
+    [super dealloc];
 }
 
 - (IBAction)sendMessageDidPress:(id)sender{
@@ -915,8 +905,4 @@
     }
 }
 
-- (void)dealloc {
-    [_backgroundImage release];
-    [super dealloc];
-}
 @end

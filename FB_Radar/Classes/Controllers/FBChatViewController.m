@@ -185,14 +185,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 		[self.view bringSubviewToFront:emptyChat];
 	}
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    if(screenBounds.size.height == 568){
-    //if(isiPhone5){
-        
-        CGRect frame = self.backgroundImage.frame;
-        frame.size.height += 88;
-        [self.backgroundImage setFrame:frame];
-    }
 }
 
 - (void)viewDidUnload
@@ -214,7 +206,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 													name:UIApplicationDidEnterBackgroundNotification
 												  object:nil];
     
-    [self setBackgroundImage:nil];
     [super viewDidUnload];
 }
 
@@ -248,7 +239,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
         self.getFBUserQuery = nil;
     }
 	
-    [_backgroundImage release];
 	[super dealloc];
 }
 
