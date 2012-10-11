@@ -184,6 +184,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 		[self.view addSubview:emptyChat];
 		[self.view bringSubviewToFront:emptyChat];
 	}
+    
 }
 
 - (void)viewDidUnload

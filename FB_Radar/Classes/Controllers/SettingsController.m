@@ -38,6 +38,11 @@
 
 - (void)dealloc{
     [_clearcacheButton release];
+    [_developedLabel release];
+    [_arChatLabel release];
+    [_linkButton release];
+    [_linkButtonQB release];
+    [_shadowImageView release];
 	[super dealloc];
 }
 
@@ -56,6 +61,7 @@
     // set switches state
     _soundSwitch.on = [NotificationManager isSoundEnabled];
     _vibrateSwitch.on = [NotificationManager isVibrationEnabled];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated{
@@ -98,6 +104,11 @@
     [self setUserStatus:nil];
 
     [self setClearcacheButton:nil];
+    [self setDevelopedLabel:nil];
+    [self setArChatLabel:nil];
+    [self setLinkButton:nil];
+    [self setLinkButtonQB:nil];
+    [self setShadowImageView:nil];
     [super viewDidUnload];
     
     isInitialized = NO;

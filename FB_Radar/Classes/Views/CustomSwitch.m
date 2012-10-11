@@ -37,14 +37,20 @@
 	self.backgroundColor = [UIColor clearColor];
     
 	[self setThumbImage:[UIImage imageNamed:@"circle.png"] forState:UIControlStateNormal];
-	[self setMinimumTrackImage:[UIImage imageNamed:@"allSwitch.png"] forState:UIControlStateNormal];
-	[self setMaximumTrackImage:[UIImage imageNamed:@"friendsSwitch.png"] forState:UIControlStateNormal];
+
+    if(IS_IOS_6){
+        [self setMinimumTrackImage:[[UIImage imageNamed:@"allSwitch.png"] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"0")] forState:UIControlStateNormal];
+        [self setMaximumTrackImage:[[UIImage imageNamed:@"friendsSwitch.png"] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"0")] forState:UIControlStateNormal];
+    }else {
+        [self setMinimumTrackImage:[UIImage imageNamed:@"allSwitch.png"] forState:UIControlStateNormal];
+        [self setMaximumTrackImage:[UIImage imageNamed:@"friendsSwitch.png"] forState:UIControlStateNormal];        
+    }
 	
 	self.minimumValue = 0;
 	self.maximumValue = 1;
 	self.continuous = NO;
 }
-
+ 
 - (void)scaleSwitch:(float)newSize {
 	self.transform = CGAffineTransformMakeScale(newSize,newSize);
 }

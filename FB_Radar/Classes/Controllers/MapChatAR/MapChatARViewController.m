@@ -21,6 +21,7 @@
 #import "QBChatMessageModel.h"
 #import "FBCheckinModel.h"
 
+#import "JSON.h"
 
 @interface MapChatARViewController ()
 
@@ -155,7 +156,13 @@
     // add All/Friends switch
 	allFriendsSwitch = [CustomSwitch customSwitch];
     [allFriendsSwitch setAutoresizingMask:(UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
-    [allFriendsSwitch setCenter:CGPointMake(280, 360)];
+    
+    if(IS_HEIGHT_GTE_568){
+        [allFriendsSwitch setCenter:CGPointMake(280, 448)];
+    }else{
+        [allFriendsSwitch setCenter:CGPointMake(280, 360)];
+    }
+    
     [allFriendsSwitch setValue:worldValue];
     [allFriendsSwitch scaleSwitch:0.9];
     [allFriendsSwitch addTarget:self action:@selector(allFriendsSwitchValueDidChanged:) forControlEvents:UIControlEventValueChanged];
@@ -280,7 +287,7 @@
     if([arViewController.view superview] == nil)
 	{
         [self.view addSubview:arViewController.view];
-        [arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+//        [arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
     }
     [mapViewController.view removeFromSuperview];
     [chatViewController.view removeFromSuperview];
@@ -293,7 +300,7 @@
 	
     if([chatViewController.view superview] == nil){
         [self.view addSubview:chatViewController.view];
-        [chatViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
+//        [chatViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
     }
     [mapViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];
@@ -306,7 +313,7 @@
 	
     if([mapViewController.view superview] == nil){
         [self.view addSubview:mapViewController.view];
-        [mapViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+//        [mapViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
     }
     [chatViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];
@@ -1564,14 +1571,14 @@
             [activityIndicator removeFromSuperview];
             activityIndicator = nil;
             
-            NSString *message = [result.errors stringValue];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
-                                                  otherButtonTitles:nil];
-            [alert show];
-            [alert release];
+//            NSString *message = [result.errors stringValue];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
+//                                                            message:message
+//                                                           delegate:self
+//                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+//                                                  otherButtonTitles:nil];
+//            [alert show];
+//            [alert release];
         }
     }
 }

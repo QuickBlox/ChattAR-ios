@@ -32,8 +32,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"didReceiveRemoteNotification userInfo=%@", userInfo);
-
+    NSLog(@"didReceiveRemoteNotification userInfo=%@", userInfo);    
+    
     // Receive push notifications
     NSString *message = [[userInfo objectForKey:QBMPushMessageApsKey] objectForKey:QBMPushMessageAlertKey];
 
@@ -58,6 +58,15 @@
 	[UIApplication sharedApplication].statusBarHidden = YES;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
+//    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+//    NSLog(@"======================================================================================================================");
+//    NSLog(@"%f x %f", screenBounds.size.width, screenBounds.size.height);
+//    
+//    CGFloat screenScale = [[UIScreen mainScreen] scale];
+//    NSLog(@"%f", screenScale);
+//    
+//    CGSize screenSize = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale);
+//    NSLog(@"%f x %f", screenSize.width, screenSize.height);
     
     // Flurry
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);

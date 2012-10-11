@@ -21,6 +21,11 @@
 @property (nonatomic, assign) IBOutlet UISwitch* soundSwitch;
 @property (retain, nonatomic) IBOutlet UIButton *clearcacheButton;
 
+@property (retain, nonatomic) IBOutlet UILabel *developedLabel;
+@property (retain, nonatomic) IBOutlet UILabel *arChatLabel;
+@property (retain, nonatomic) IBOutlet UIButton *linkButton;
+@property (retain, nonatomic) IBOutlet UIButton *linkButtonQB;
+@property (retain, nonatomic) IBOutlet UIImageView *shadowImageView;
 
 -(IBAction)switchValueDidChange:(UISwitch *)switchView;
 -(IBAction)linksAction:(id)sender;

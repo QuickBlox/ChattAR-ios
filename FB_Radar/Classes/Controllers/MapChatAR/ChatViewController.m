@@ -89,6 +89,10 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [super dealloc];
+}
+
 - (IBAction)sendMessageDidPress:(id)sender{
     // check for empty
     if ([[messageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {

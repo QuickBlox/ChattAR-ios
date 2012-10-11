@@ -45,7 +45,8 @@
         [activityIndicator stopAnimating];
         
         loginButton.hidden = NO;
-    }     
+    }
+
 }
 
 - (void)createSessionWithDelegate:(id)delegate{
@@ -91,6 +92,9 @@
     [params release];
 }
 
+- (void)dealloc {
+    [super dealloc];
+}
 
 #pragma mark -
 #pragma mark FBSessionDelegate

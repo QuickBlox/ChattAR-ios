@@ -23,4 +23,7 @@
 #define DESERIALIZE_DOUBLE(var_name, decoder)	var_name = [decoder decodeDoubleForKey:@#var_name]
 #define DESERIALIZE_BOOL(var_name, decoder)		var_name = [decoder decodeBoolForKey:@#var_name]
 
+#define IS_HEIGHT_GTE_568 [[UIScreen mainScreen ] bounds].size.height >= 568.0f
+
+#define IS_IOS_6 [[[UIDevice currentDevice] systemVersion] isEqualToString:@"6.0"]
 #endif
