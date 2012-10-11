@@ -739,7 +739,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer); 
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer); 
     size_t width = CVPixelBufferGetWidth(imageBuffer); 
-    size_t height = CVPixelBufferGetHeight(imageBuffer);  
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
     
     /*Create a CGImageRef from the CVImageBufferRef*/
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB(); 
