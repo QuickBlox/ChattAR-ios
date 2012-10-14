@@ -22,7 +22,7 @@ This blox allows to connect local users in a group chat room
 <h3>Important - how to build your own Augmented Reality Chat app</h3>
 
 If you want to build your own iOS app using ChattAR as a basis, please do the following:<br />
-Note: you can also watch our [video turotial](http://youtu.be/AgJZYBoxKz0) on Youtube.
+Note: you can also watch our [video turotial](http://youtu.be/AgJZYBoxKz0) on Youtube.<br />
 1) download the project from here (GIT)<br />
 2) register a QuickBlox account (if you don't have one yet): http://admin.quickblox.com/register<br />
 3) log in to QuickBlox admin panel [http://admin.quickblox.com/signin]http://admin.quickblox.com/signin<br />
