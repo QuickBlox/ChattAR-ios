@@ -103,7 +103,13 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     userPic.useMask = YES;
     [userPic setUserInteractionEnabled:YES];
     NSString *userID = [chatHistory.to objectForKey:kId];
-    [userPic loadImageFromURL:[NSURL URLWithString: [[[DataManager shared].myFriendsAsDictionary objectForKey:userID] objectForKey:kPicture]]];
+    
+    id url = [[[DataManager shared].myFriendsAsDictionary objectForKey:userID] objectForKey:kPicture];
+    if([url isKindOfClass:NSDictionary.class]){
+        url = [[url objectForKey:@"data"] objectForKey:@"url"];
+    }
+    [userPic loadImageFromURL:[NSURL URLWithString: url]];
+    
     //
     UIButton *rb = [UIButton buttonWithType:UIButtonTypeCustom];
     [rb setBackgroundColor:[UIColor clearColor]];
