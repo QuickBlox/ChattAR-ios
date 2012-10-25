@@ -291,7 +291,7 @@
     // Register for Push Notifications result
 	}else if([result isKindOfClass:[QBMRegisterSubscriptionTaskResult class]]){
         
-        [FlurryAnalytics logEvent:FLURRY_EVENT_USER_DID_LOGIN];
+        [Flurry logEvent:FLURRY_EVENT_USER_DID_LOGIN];
         
         
         // hide splash

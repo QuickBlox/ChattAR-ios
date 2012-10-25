@@ -180,7 +180,8 @@
         ARMarkerView *marker = [self.view.subviews objectAtIndex:i];
         if(![marker isKindOfClass:ARMarkerView.class])
 		{
-            continue;
+            //continue;
+            break;
         }
         
 		CGPoint point = [lastTouch locationInView:marker];

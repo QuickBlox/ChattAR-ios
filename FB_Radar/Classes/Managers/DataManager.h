@@ -29,11 +29,11 @@
 // friends
 @property (nonatomic, retain) NSMutableArray		*myFriends;
 @property (nonatomic, retain) NSMutableDictionary	*myFriendsAsDictionary;
-@property (nonatomic, retain) NSMutableSet		*myPopularFriends;
+@property (nonatomic, retain) NSMutableSet		    *myPopularFriends;
 
 // messages
 @property (nonatomic, retain) NSMutableDictionary	*historyConversation;
-@property (nonatomic, retain) NSMutableArray	*historyConversationAsArray;
+@property (nonatomic, retain) NSMutableArray	    *historyConversationAsArray;
 
 // Core Data
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

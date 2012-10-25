@@ -287,7 +287,13 @@
     if([arViewController.view superview] == nil)
 	{
         [self.view addSubview:arViewController.view];
-//        [arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+        if(IS_HEIGHT_GTE_568){
+            [arViewController.view setFrame:CGRectMake(0, 0, 320, 475)];
+        }else{
+            //[arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
+            [arViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
+        }
+    
     }
     [mapViewController.view removeFromSuperview];
     [chatViewController.view removeFromSuperview];

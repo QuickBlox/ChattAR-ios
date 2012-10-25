@@ -70,7 +70,7 @@
     
     // Flurry
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    [FlurryAnalytics startSession:FLURRY_API_KEY];
+    [Flurry startSession:FLURRY_API_KEY];
     
     
     // Set QuickBlox credentials

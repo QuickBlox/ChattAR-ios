@@ -12,6 +12,8 @@
 		436C0AF415D50EA90054D9BC /* Marker2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF215D50EA90054D9BC /* Marker2@2x.png */; };
 		436C0AF815D50EB80054D9BC /* kmBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF615D50EB80054D9BC /* kmBG.png */; };
 		436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF715D50EB80054D9BC /* kmBG@2x.png */; };
+		438B8EBC16392CC2003692E1 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBB16392CC2003692E1 /* libFlurry.a */; };
+		438B8EBE16392D54003692E1 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBD16392D54003692E1 /* libidn.a */; };
 		43A44027161C27A4007D2C21 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A44026161C279E007D2C21 /* Default-568h@2x.png */; };
 		43A4403F161C3494007D2C21 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A44034161C3494007D2C21 /* NSObject+SBJSON.m */; };
 		43A44040161C3494007D2C21 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A44036161C3494007D2C21 /* NSString+SBJSON.m */; };
@@ -173,7 +175,6 @@
 		FA8E4F091580887B00476EF7 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4ED61580887B00476EF7 /* DDXMLDocument.m */; };
 		FA8E4F0A1580887B00476EF7 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4ED81580887B00476EF7 /* DDXMLElement.m */; };
 		FA8E4F0B1580887B00476EF7 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4EDA1580887B00476EF7 /* DDXMLNode.m */; };
-		FA8E4F0C1580887B00476EF7 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA8E4EDD1580887B00476EF7 /* libidn.a */; };
 		FA8E4F0D1580887B00476EF7 /* DDList.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4EE11580887B00476EF7 /* DDList.m */; };
 		FA8E4F0E1580887B00476EF7 /* GCDMulticastDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4EE31580887B00476EF7 /* GCDMulticastDelegate.m */; };
 		FA8E4F0F1580887B00476EF7 /* LibIDN.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8E4EE51580887B00476EF7 /* LibIDN.m */; };
@@ -205,7 +206,6 @@
 		FAC6B89215D9006D00F3B10F /* FBCheckinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B88D15D9006D00F3B10F /* FBCheckinModel.m */; };
 		FAC6B89315D9006D00F3B10F /* QBChatMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B88F15D9006D00F3B10F /* QBChatMessageModel.m */; };
 		FAC6B89415D9006D00F3B10F /* QBCheckinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */; };
-		FAE96D7B15DD42FB00544783 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +214,9 @@
 		436C0AF215D50EA90054D9BC /* Marker2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker2@2x.png"; sourceTree = "<group>"; };
 		436C0AF615D50EB80054D9BC /* kmBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kmBG.png; sourceTree = "<group>"; };
 		436C0AF715D50EB80054D9BC /* kmBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kmBG@2x.png"; sourceTree = "<group>"; };
+		438B8EBA16392CC2003692E1 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		438B8EBB16392CC2003692E1 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		438B8EBD16392D54003692E1 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		43A44026161C279E007D2C21 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		43A44032161C3494007D2C21 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		43A44033161C3494007D2C21 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
@@ -455,7 +458,6 @@
 		FA8E4ED91580887B00476EF7 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		FA8E4EDA1580887B00476EF7 /* DDXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLNode.m; sourceTree = "<group>"; };
 		FA8E4EDC1580887B00476EF7 /* DDXMLPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLPrivate.h; sourceTree = "<group>"; };
-		FA8E4EDD1580887B00476EF7 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		FA8E4EDE1580887B00476EF7 /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		FA8E4EE01580887B00476EF7 /* DDList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDList.h; sourceTree = "<group>"; };
 		FA8E4EE11580887B00476EF7 /* DDList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDList.m; sourceTree = "<group>"; };
@@ -510,8 +512,6 @@
 		FAC6B89015D9006D00F3B10F /* QBCheckinModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckinModel.h; sourceTree = "<group>"; };
 		FAC6B89115D9006D00F3B10F /* QBCheckinModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckinModel.m; sourceTree = "<group>"; };
 		FAC6B89D15D985C500F3B10F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		FAE96D7915DD42FB00544783 /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
-		FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		FAEF57AF15CADF0100614DBF /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -539,9 +539,9 @@
 				63F613E0155408BD00D0A504 /* SystemConfiguration.framework in Frameworks */,
 				6386D4401553C7BC00096516 /* QuartzCore.framework in Frameworks */,
 				636735D51552CF590061BF75 /* Foundation.framework in Frameworks */,
-				FA8E4F0C1580887B00476EF7 /* libidn.a in Frameworks */,
-				FAE96D7B15DD42FB00544783 /* libFlurryAnalytics.a in Frameworks */,
 				435F356816257519009D15F0 /* Quickblox.framework in Frameworks */,
+				438B8EBC16392CC2003692E1 /* libFlurry.a in Frameworks */,
+				438B8EBE16392D54003692E1 /* libidn.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -967,7 +967,7 @@
 		FA8E4E961580887B00476EF7 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
-				FAE96D7815DD42FB00544783 /* FlurryAnalytics */,
+				FAE96D7815DD42FB00544783 /* Flurry */,
 				FA8E4E971580887B00476EF7 /* FB SDK */,
 				FA8E4EA41580887B00476EF7 /* XMPP_Framework */,
 			);
@@ -1002,8 +1002,8 @@
 				FA8E4EBA1580887B00476EF7 /* Core */,
 				FA8E4ECF1580887B00476EF7 /* idn-int.h */,
 				FA8E4ED01580887B00476EF7 /* KissXML */,
-				FA8E4EDD1580887B00476EF7 /* libidn.a */,
 				FA8E4EDE1580887B00476EF7 /* stringprep.h */,
+				438B8EBD16392D54003692E1 /* libidn.a */,
 				FA8E4EDF1580887B00476EF7 /* Utilities */,
 			);
 			path = XMPP_Framework;
@@ -1155,13 +1155,13 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		FAE96D7815DD42FB00544783 /* FlurryAnalytics */ = {
+		FAE96D7815DD42FB00544783 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
-				FAE96D7915DD42FB00544783 /* FlurryAnalytics.h */,
-				FAE96D7A15DD42FB00544783 /* libFlurryAnalytics.a */,
+				438B8EBA16392CC2003692E1 /* Flurry.h */,
+				438B8EBB16392CC2003692E1 /* libFlurry.a */,
 			);
-			path = FlurryAnalytics;
+			path = Flurry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1424,8 +1424,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1440,7 +1440,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "DAE2D3F8-2688-4CB9-9C29-64A223CB206C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DAE2D3F8-2688-4CB9-9C29-64A223CB206C";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1470,8 +1471,8 @@
 		636735FB1552CF590061BF75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals\"",
@@ -1485,12 +1486,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals/XMPP_Framework\"",
-					"\"$(SRCROOT)/Externals/FlurryAnalytics\"",
+					"\"$(SRCROOT)/Externals/Flurry\"",
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "61070765-F7A1-4048-BB1E-5CD876A4090E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "61070765-F7A1-4048-BB1E-5CD876A4090E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1513,7 +1514,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals/XMPP_Framework\"",
-					"\"$(SRCROOT)/Externals/FlurryAnalytics\"",
+					"\"$(SRCROOT)/Externals/Flurry\"",
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;

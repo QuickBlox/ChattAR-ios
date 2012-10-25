@@ -150,7 +150,7 @@
         
     UILabel			*name;					// name of friend
     UILabel			*currentMessage;		// last message
-    AsyncImageView			*photo;			// photo of opponent
+    AsyncImageView  *photo;                 // photo of opponent
 	UILabel			*lastMessageDate;		// last message's date
     UIImageView		*replyArrow;			// reply arrow
 	UIImageView		*onlineDot;				// online status

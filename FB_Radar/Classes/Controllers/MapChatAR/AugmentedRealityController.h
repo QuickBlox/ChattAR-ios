@@ -42,7 +42,7 @@
 @property (nonatomic, retain) CLLocationManager       *locationManager;
 @property (nonatomic, retain) ARCoordinate            *centerCoordinate;
 @property (nonatomic, retain) CLLocation              *centerLocation;
-@property (nonatomic, retain) UIImageView                  *displayView;
+@property (nonatomic, retain) UIImageView             *displayView;
 @property (nonatomic, assign) UIDeviceOrientation	  currentOrientation;
 
 @property (nonatomic, assign) id delegate;
