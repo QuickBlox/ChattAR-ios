@@ -85,21 +85,18 @@
 // Login action
 - (IBAction)login:(id)sender{
 
-    NetworkStatus networkStatus = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
-    if (!(networkStatus == ReachableViaWWAN)) {
-        networkStatus = [[Reachability reachabilityForLocalWiFi] currentReachabilityStatus];
-        if (!(networkStatus == ReachableViaWiFi)) {
+    if (![Reachability internetConnected]) {
 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"No internet connection."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-            return;
-        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"No internet connection."
+                                                        delegate:nil
+                                                cancelButtonTitle:@"Ok"
+                                                otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
     }
+
     
     // Auth in FB
     NSArray *params = [[NSArray alloc] initWithObjects:@"user_checkins", @"user_location", @"friends_checkins",
