@@ -11,10 +11,18 @@
 #import "CustomSwitch.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate>{
+    CGFloat count;
+    CGFloat lastCount;
+    
+    CGRect mapFrameZoomOut;
+    CGRect mapFrameZoomIn;
+    
+    BOOL canRotate;
 }
 
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) UIImageView *compass;
 
 - (void)refreshWithNewPoints:(NSArray *)mapPoints;
 - (void)addPoints:(NSArray *)mapPoints;
