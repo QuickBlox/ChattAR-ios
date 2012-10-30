@@ -54,8 +54,18 @@
     mapFrameZoomIn.size.width  = 503.0f;
     mapFrameZoomIn.size.height = 503.0f;
     
-    mapFrameZoomIn.origin.x -= 91.5f;
-    mapFrameZoomIn.origin.y -= 58.0f;
+    mapFrameZoomIn.origin.x = -91.5f;
+    mapFrameZoomIn.origin.y = -58.0f;
+    
+    if(IS_HEIGHT_GTE_568){
+        mapFrameZoomOut.size.height = 475.0f;
+        
+        mapFrameZoomIn.size.height  = 573.0f;
+        mapFrameZoomIn.size.width   = 573.0f;
+        
+        mapFrameZoomIn.origin.x = -126.5f;
+        mapFrameZoomIn.origin.y = -49.0f;
+    }
     
     compass = [[UIImageView alloc] init];
     
@@ -170,9 +180,21 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
+    NSLog(@"%f", self.mapView.region.span.longitudeDelta / 255.0f);
     NSLog(@"regionDidChangeAnimated");
     
-    if( ((self.mapView.region.span.longitudeDelta / 255.0f) < 0.38f) && !canRotate ){
+    float longitudeDeltaZoomOut = 255.0f;
+    float longitudeDeltaZoomIn  = 353.671875f;
+    
+    float zoomOun = 0.38f;
+    float zoomIn  = 0.43f;
+    
+    if(IS_HEIGHT_GTE_568){
+        longitudeDeltaZoomOut = 112.5;
+        longitudeDeltaZoomIn  = 180.0f;
+    }
+    
+    if( ((self.mapView.region.span.longitudeDelta / longitudeDeltaZoomOut) < zoomOun) && !canRotate ){
         
         [self.mapView setFrame:mapFrameZoomIn];
         
@@ -181,7 +203,7 @@
         [self.compass setAlpha:1.0f];
         
     }
-    if(((self.mapView.region.span.longitudeDelta / 353.671875f) > 0.43f) && canRotate){
+    if(((self.mapView.region.span.longitudeDelta / longitudeDeltaZoomIn) > zoomIn) && canRotate){
         
         canRotate = NO;
         [self.compass setAlpha:0.0f];
