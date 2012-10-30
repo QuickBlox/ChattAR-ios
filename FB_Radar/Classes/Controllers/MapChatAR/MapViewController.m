@@ -45,15 +45,17 @@
     count     = 0;
     lastCount = 0;
     
-    mapFrameZoomOut = self.mapView.frame;
-    NSLog(@"%f", self.mapView.frame.size.height);
-    NSLog(@"%f", mapFrameZoomOut.size.height);
+    mapFrameZoomOut.size.width  = 320.0f;
+    mapFrameZoomOut.size.height = 387.0f;
     
-    mapFrameZoomIn.size.width  = 577.0f;
-    mapFrameZoomIn.size.height = 577.0f;
+    mapFrameZoomOut.origin.y = 0;
+    mapFrameZoomOut.origin.x = 0;
     
-    mapFrameZoomIn.origin.y -= 49.0f;
-    mapFrameZoomIn.origin.x -= 128.5f;
+    mapFrameZoomIn.size.width  = 503.0f;
+    mapFrameZoomIn.size.height = 503.0f;
+    
+    mapFrameZoomIn.origin.x -= 91.5f;
+    mapFrameZoomIn.origin.y -= 58.0f;
     
     compass = [[UIImageView alloc] init];
     
@@ -65,13 +67,13 @@
     compassFrame.origin.y = 15;
     
     [self.compass setImage:[UIImage imageNamed:@"compass.png" ]];
+    [self.compass setAlpha:0.0f];
     [self.compass setFrame:compassFrame];
     [self.view addSubview:compass];
     [compass release];
 }
 
 - (void)spin:(UIRotationGestureRecognizer *)gestureRecognizer {
-    
     if(canRotate){
         if(gestureRecognizer.state == UIGestureRecognizerStateBegan){
             lastCount = 0;
@@ -81,14 +83,17 @@
         lastCount = gestureRecognizer.rotation;
         [self.mapView setTransform:CGAffineTransformMakeRotation(count)];
         [self.compass setTransform:CGAffineTransformMakeRotation(count)];
-    
-        [[mapView annotations] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            MKAnnotationView * view = [mapView viewForAnnotation:obj];
+        [self rotateAnnotations:(-count)];
+    }
+}
+
+- (void)rotateAnnotations:(CGFloat) angle{
+    [[self.mapView annotations] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            MKAnnotationView * view = [self.mapView viewForAnnotation:obj];
         
-            [view setTransform:CGAffineTransformMakeRotation(-count)];
+            [view setTransform:CGAffineTransformMakeRotation(angle)];
         
         }];
-    }
 }
 
 - (void)viewDidUnload
@@ -132,7 +137,6 @@
 	mapView.userInteractionEnabled = YES;
 }
 
-
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
@@ -143,6 +147,7 @@
     if(marker == nil){
         marker = [[[MapMarkerView alloc] initWithAnnotation:annotation 
                                     reuseIdentifier:reuseidentifier] autorelease];
+        
     }else{
         [marker updateAnnotation:(UserAnnotation *)annotation];
     }
@@ -150,44 +155,53 @@
     // set touch action
     marker.target = delegate;
     marker.action = @selector(touchOnMarker:);
+
+    
+    if (IS_IOS_6) {
+        [marker setTransform:CGAffineTransformMakeRotation(.001)];
+        if(count != 0){
+            //[self performSelector:@selector(rotate) withObject:nil afterDelay:0.01];
+            [self rotateAnnotations:-count];
+        }
+    }
     
 	return marker;
 }
 
--(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
-    NSLog(@"zoom = %f", (self.mapView.region.span.longitudeDelta / 255.0f));
+    NSLog(@"regionDidChangeAnimated");
     
-    NSLog(@"%f", self.mapView.frame.size.width);
-    NSLog(@"%f", mapFrameZoomOut.size.width);
-    
-    if( ((self.mapView.region.span.longitudeDelta / 255.0f) <= 0.5f) && !canRotate ){
-        NSLog(@"Zoom in!");
+    if( ((self.mapView.region.span.longitudeDelta / 255.0f) < 0.38f) && !canRotate ){
+        
         [self.mapView setFrame:mapFrameZoomIn];
+        
         canRotate = YES;
-    }else if(((self.mapView.region.span.longitudeDelta / 255.0f) > 0.5f) && canRotate){
+        
+        [self.compass setAlpha:1.0f];
+        
+    }
+    if(((self.mapView.region.span.longitudeDelta / 353.671875f) > 0.43f) && canRotate){
+        
+        canRotate = NO;
+        [self.compass setAlpha:0.0f];
+        
         count = 0;
+        
+        [self performSelector:@selector(setZoomOut) withObject:nil afterDelay:1];
         
         [UIView animateWithDuration:0.3f
                          animations:^{
                              [self.mapView setTransform:CGAffineTransformMakeRotation(count)];
                              [self.compass setTransform:CGAffineTransformMakeRotation(count)];
-                             [[self.mapView annotations] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                                 MKAnnotationView * view = [self.mapView viewForAnnotation:obj];
-            
-                                 [view setTransform:CGAffineTransformMakeRotation(-count)];
-            
-                             }];
+                             [self rotateAnnotations:(count)];
                          }
          ];
-        
-        [self performSelector:@selector(setZoomOut) withObject:nil afterDelay:3];
     }
 }
 
 - (void)setZoomOut{
     [self.mapView setFrame:mapFrameZoomOut];
-    canRotate = NO;
 }
 
 @end
