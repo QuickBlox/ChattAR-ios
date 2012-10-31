@@ -18,6 +18,7 @@
     CGRect mapFrameZoomIn;
     
     BOOL canRotate;
+    int annotationsViewCount;
 }
 
 @property (nonatomic, assign) id delegate;

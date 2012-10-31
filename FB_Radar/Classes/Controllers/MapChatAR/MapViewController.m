@@ -42,8 +42,11 @@
     [self.view addGestureRecognizer:rotationGestureRecognizer];
     [rotationGestureRecognizer release];
     
+    
     count     = 0;
     lastCount = 0;
+    
+    annotationsViewCount = 0;
     
     mapFrameZoomOut.size.width  = 320.0f;
     mapFrameZoomOut.size.height = 387.0f;
@@ -157,7 +160,6 @@
     if(marker == nil){
         marker = [[[MapMarkerView alloc] initWithAnnotation:annotation 
                                     reuseIdentifier:reuseidentifier] autorelease];
-        
     }else{
         [marker updateAnnotation:(UserAnnotation *)annotation];
     }
@@ -166,14 +168,24 @@
     marker.target = delegate;
     marker.action = @selector(touchOnMarker:);
 
-    
     if (IS_IOS_6) {
-        [marker setTransform:CGAffineTransformMakeRotation(.001)];
-        if(count != 0){
-            //[self performSelector:@selector(rotate) withObject:nil afterDelay:0.01];
-            [self rotateAnnotations:-count];
+        [marker setTransform:CGAffineTransformMakeRotation(0.001)];
+        if(count){
+            [marker setTransform:CGAffineTransformMakeRotation(-count)];
+        }
+    } else{
+        annotationsViewCount++;
+        if(annotationsViewCount == [self.mapView.annotations count]){
+            annotationsViewCount = 0;
+            [self rotateAnnotations:(-count)];
+            double delayInSeconds = 0.00001;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^{
+                [marker setTransform:CGAffineTransformMakeRotation(-count)];
+            });
         }
     }
+    
     
 	return marker;
 }
