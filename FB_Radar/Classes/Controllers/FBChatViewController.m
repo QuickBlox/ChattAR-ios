@@ -52,6 +52,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 @synthesize chatTableView = _chatTableView;
 @synthesize chatHistory, emptyChat;
 @synthesize getFBUserQuery;
+@synthesize rightButton;
 
 #pragma mark Init
 
@@ -98,31 +99,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
                                                  name:UIApplicationDidEnterBackgroundNotification object:nil];
 
     
-	// set right button with user photo
-    AsyncImageView *userPic = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    userPic.useMask = YES;
-    [userPic setUserInteractionEnabled:YES];
-    NSString *userID = [chatHistory.to objectForKey:kId];
-    
-    id url = [[[DataManager shared].myFriendsAsDictionary objectForKey:userID] objectForKey:kPicture];
-    if([url isKindOfClass:NSDictionary.class]){
-        url = [[url objectForKey:@"data"] objectForKey:@"url"];
-    }
-    [userPic loadImageFromURL:[NSURL URLWithString: url]];
-    
-    //
-    UIButton *rb = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rb setBackgroundColor:[UIColor clearColor]];
-    [rb setFrame:CGRectMake(0,0,30,30)];
-    [rb addSubview:userPic];
-    [userPic release];
-    [rb addTarget:self action:@selector(rightButtonDidPress:) forControlEvents:UIControlEventTouchUpInside];
-    //
-    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithCustomView:rb];
-    self.navigationItem.rightBarButtonItem = anotherButton;
-    [anotherButton release];
-    
-    
     // Create chatBar
     chatBar = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height-kChatBarHeight1,
                                                             self.view.frame.size.width, kChatBarHeight1)];
@@ -133,7 +109,7 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     chatBar.userInteractionEnabled = YES;
     
     // Create chatInput.
-    chatInput = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 234.0f, 22.0f)];
+    chatInput = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 230.0f, 22.0f)];
     chatInput.delegate = self;
     chatInput.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     chatInput.clearsContextBeforeDrawing = NO;
@@ -215,8 +191,34 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     [super viewDidUnload];
 }
 
+- (void) viewDidAppear:(BOOL)animated{
+    // set right button with user photo
+    AsyncImageView *userPic = [[[AsyncImageView alloc] init] autorelease];
+    NSString *userID = [chatHistory.to objectForKey:kId];
+    
+    id url = [[[DataManager shared].myFriendsAsDictionary objectForKey:userID] objectForKey:kPicture];
+    if([url isKindOfClass:NSDictionary.class]){
+        url = [[url objectForKey:@"data"] objectForKey:@"url"];
+    }
+    
+    rightButton = [[UIButton alloc] initWithFrame:CGRectMake(286, 7, 30, 30)];
+    
+    if(url){
+        [userPic loadImageFromURL:[NSURL URLWithString: url]];
+        [rightButton setBackgroundImage:userPic.cachedImage forState:UIControlStateNormal];
+    }else{
+        [rightButton setBackgroundImage:[UIImage imageNamed:@"camera.png"] forState:UIControlStateNormal];
+    }
+    
+    [rightButton addTarget:self action:@selector(rightButtonDidPress:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view addSubview:rightButton];
+    [rightButton release];
+}
+
 - (void) viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+
+    [self.rightButton removeFromSuperview];
     
     // mark Conversation as read
     [self markConversationAsRead];
@@ -664,6 +666,5 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 		}
 	}
 }
-
 
 @end

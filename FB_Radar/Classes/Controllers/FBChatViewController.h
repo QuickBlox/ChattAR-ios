@@ -18,7 +18,7 @@
     UIImage *messageBGImageLeft;
     UIImage *messageBGImageRight;
 	
-	// back view fro hide keyboard
+	// back view for hide keyboard
     ViewTouch *backView;
     
     // chat bar
@@ -32,6 +32,7 @@
 @property (retain, nonatomic) IBOutlet UITableView	*chatTableView;
 @property (retain, nonatomic) Conversation *chatHistory;
 @property (nonatomic, retain) UILabel* emptyChat;
+@property (nonatomic, retain) UIButton *rightButton;
 
 // quickblox quieries cancelables
 @property (nonatomic, retain) id<Cancelable> getFBUserQuery;

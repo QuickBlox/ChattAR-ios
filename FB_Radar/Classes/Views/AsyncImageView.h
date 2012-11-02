@@ -17,9 +17,12 @@ typedef enum {
     NSURLConnection *connection;
     NSMutableData *data;
     NSString *urlString; // key for image cache dictionary
+    
+    UIImage *cachedImage;
 }
 @property (assign) BOOL useMask;
 @property (retain) NSURL *linkedUrl;
+@property (nonatomic, retain) UIImage *cachedImage;
 
 -(void)loadImageFromURL:(NSURL*)url;
 -(void)remakeImage:(UIImage *)img;

@@ -16,6 +16,7 @@ static ImageCache *imageCache = nil;
 
 @synthesize typeCrop, useMask;
 @synthesize linkedUrl;
+@synthesize cachedImage;
 
 + (void)clearCache{
     [imageCache clearCache];
@@ -45,7 +46,7 @@ static ImageCache *imageCache = nil;
     [connection release];
     [data release];
     [linkedUrl release];
-	
+	[cachedImage release];
     [super dealloc];
 }
 
@@ -70,7 +71,7 @@ static ImageCache *imageCache = nil;
     
     
     // check cashed
-    UIImage *cachedImage = [imageCache imageForKey:urlString];
+    self.cachedImage = [imageCache imageForKey:urlString];
     if (cachedImage != nil) {
         [self remakeImage:cachedImage];
         return;

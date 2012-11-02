@@ -39,6 +39,7 @@
     
     UIGestureRecognizer *rotationGestureRecognizer;
     rotationGestureRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(spin:)];
+    [rotationGestureRecognizer setDelegate:self];
     [self.view addGestureRecognizer:rotationGestureRecognizer];
     [rotationGestureRecognizer release];
     
@@ -236,6 +237,14 @@
 
 - (void)setZoomOut{
     [self.mapView setFrame:mapFrameZoomOut];
+}
+
+#pragma mark -
+#pragma mark UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    
+    return YES;
 }
 
 @end

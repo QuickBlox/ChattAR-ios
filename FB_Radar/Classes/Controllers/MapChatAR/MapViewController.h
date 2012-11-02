@@ -10,7 +10,7 @@
 #import "MapMarkerView.h"
 #import "CustomSwitch.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>{
+@interface MapViewController : UIViewController <MKMapViewDelegate, UIGestureRecognizerDelegate>{
     CGFloat count;
     CGFloat lastCount;
     
