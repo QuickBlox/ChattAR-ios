@@ -25,6 +25,15 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    //[self startApplication];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(startApplication)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)startApplication{
+    
     [QBSettings setLogLevel:QBLogLevelDebug];
 
     // QuickBlox application autorization
@@ -293,6 +302,8 @@
         
         // hide splash
         [activityIndicator stopAnimating];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         
         // show messages
         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).tabBarController.selectedIndex = 0;

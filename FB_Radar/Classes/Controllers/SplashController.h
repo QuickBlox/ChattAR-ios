@@ -17,5 +17,6 @@
 @property (nonatomic) BOOL openedAtStartApp;
 
 - (IBAction)login:(id)sender;
+- (void)startApplication;
 
 @end
