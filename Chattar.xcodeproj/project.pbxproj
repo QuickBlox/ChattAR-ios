@@ -14,13 +14,14 @@
 		436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF715D50EB80054D9BC /* kmBG@2x.png */; };
 		438B8EBC16392CC2003692E1 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBB16392CC2003692E1 /* libFlurry.a */; };
 		438B8EBE16392D54003692E1 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBD16392D54003692E1 /* libidn.a */; };
-		43A44027161C27A4007D2C21 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A44026161C279E007D2C21 /* Default-568h@2x.png */; };
 		43A4403F161C3494007D2C21 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A44034161C3494007D2C21 /* NSObject+SBJSON.m */; };
 		43A44040161C3494007D2C21 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A44036161C3494007D2C21 /* NSString+SBJSON.m */; };
 		43A44041161C3494007D2C21 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A44038161C3494007D2C21 /* SBJSON.m */; };
 		43A44042161C3494007D2C21 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A4403A161C3494007D2C21 /* SBJsonBase.m */; };
 		43A44043161C3494007D2C21 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A4403C161C3494007D2C21 /* SBJsonParser.m */; };
 		43A44044161C3494007D2C21 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A4403E161C3494007D2C21 /* SBJsonWriter.m */; };
+		43DD4EC716440077001202BE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD4EC616440077001202BE /* Default-568h@2x.png */; };
+		43DD4ECA16440175001202BE /* Default-568h@2x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD4EC916440173001202BE /* Default-568h@2x-1.png */; };
 		43EEE6D9163E999600B4FE89 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 43EEE6D8163E999600B4FE89 /* compass.png */; };
 		43FAAFBC163AEE4E0035424C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FAAFBB163AEE4E0035424C /* Reachability.m */; };
 		6303E3461580A8DF00F6F0B0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6303E3441580A8DF00F6F0B0 /* WebViewController.m */; };
@@ -219,7 +220,6 @@
 		438B8EBA16392CC2003692E1 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		438B8EBB16392CC2003692E1 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		438B8EBD16392D54003692E1 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
-		43A44026161C279E007D2C21 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		43A44032161C3494007D2C21 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		43A44033161C3494007D2C21 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		43A44034161C3494007D2C21 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -233,6 +233,8 @@
 		43A4403C161C3494007D2C21 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		43A4403D161C3494007D2C21 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		43A4403E161C3494007D2C21 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		43DD4EC616440077001202BE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "FB_Radar/Resourses/images/RadarMarker/Default-568h@2x.png"; sourceTree = "<group>"; };
+		43DD4EC916440173001202BE /* Default-568h@2x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x-1.png"; sourceTree = "<group>"; };
 		43EEE6D8163E999600B4FE89 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		43FAAFB8163AEDBA0035424C /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		43FAAFBB163AEE4E0035424C /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -596,13 +598,14 @@
 		636735C31552CF590061BF75 = {
 			isa = PBXGroup;
 			children = (
-				43A44026161C279E007D2C21 /* Default-568h@2x.png */,
 				FA0EE225158B3B9F0078E45A /* Default.png */,
 				FA0EE226158B3B9F0078E45A /* Default@2x.png */,
 				FA0EE227158B3B9F0078E45A /* Icon.png */,
 				FA0EE228158B3B9F0078E45A /* Icon@2x.png */,
 				FA0EE229158B3B9F0078E45A /* Icon~ipad.png */,
 				43EEE6D8163E999600B4FE89 /* compass.png */,
+				43DD4EC616440077001202BE /* Default-568h@2x.png */,
+				43DD4EC916440173001202BE /* Default-568h@2x-1.png */,
 				43A44051161C3935007D2C21 /* Reachability */,
 				43A44031161C3490007D2C21 /* JSON */,
 				636735D81552CF590061BF75 /* FB_Radar */,
@@ -1310,8 +1313,9 @@
 				436C0AF815D50EB80054D9BC /* kmBG.png in Resources */,
 				436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */,
 				FAC6B88215D8F07B00F3B10F /* bubble_green-1.png in Resources */,
-				43A44027161C27A4007D2C21 /* Default-568h@2x.png in Resources */,
 				43EEE6D9163E999600B4FE89 /* compass.png in Resources */,
+				43DD4EC716440077001202BE /* Default-568h@2x.png in Resources */,
+				43DD4ECA16440175001202BE /* Default-568h@2x-1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
