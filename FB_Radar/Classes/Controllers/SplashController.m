@@ -149,7 +149,21 @@
 - (void)fbDidNotLogin:(BOOL)cancelled{}
 - (void)fbDidExtendToken:(NSString*)accessToken
                expiresAt:(NSDate*)expiresAt{}
-- (void)fbDidLogout{}
+
+- (void)fbDidLogout{
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies])
+        {
+            NSString* domainName = [cookie domain];
+            NSRange domainRange = [domainName rangeOfString:@"facebook"];
+            if(domainRange.length > 0)
+                {
+                    [storage deleteCookie:cookie];
+                }
+        }
+}
+
 - (void)fbSessionInvalidated{}
 
 
