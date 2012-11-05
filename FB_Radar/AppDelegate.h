@@ -14,5 +14,6 @@
 @property (retain, nonatomic) UITabBarController *tabBarController;
 
 - (void)showSplashWithAnimation:(BOOL) animated;
+- (void)showSplashWithAnimation:(BOOL) animated showLoginButton:(BOOL)isShow;
 
 @end

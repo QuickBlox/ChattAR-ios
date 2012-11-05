@@ -132,6 +132,21 @@
     return YES;
 }
 
+- (void)showSplashWithAnimation:(BOOL) animated showLoginButton:(BOOL)isShow{
+    
+    // show Splash
+    SplashController *splashViewController = [[SplashController alloc] initWithNibName:@"SplashController" bundle:nil];
+    splashViewController.openedAtStartApp = !animated;
+    [self.tabBarController presentModalViewController:splashViewController animated:animated];
+    [splashViewController release];
+    
+    // logout
+    if(animated){
+        [[FBService shared].facebook setSessionDelegate:splashViewController];
+        [splashViewController showLoginButton:isShow];
+    }
+}
+
 - (void)showSplashWithAnimation:(BOOL) animated{
     
     // show Splash

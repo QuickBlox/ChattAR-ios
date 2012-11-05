@@ -141,7 +141,7 @@
     [QBMessages TUnregisterSubscriptionWithDelegate:nil];
 
     // show splash
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES];
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES showLoginButton:YES];
     
     isInitialized = NO;
     

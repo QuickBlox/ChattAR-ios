@@ -18,5 +18,6 @@
 
 - (IBAction)login:(id)sender;
 - (void)startApplication;
+- (void)showLoginButton:(BOOL)isShow;
 
 @end

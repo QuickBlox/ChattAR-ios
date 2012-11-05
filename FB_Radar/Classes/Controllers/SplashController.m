@@ -54,9 +54,14 @@
         // show Login & Registrations buttons
         [activityIndicator stopAnimating];
         
-        loginButton.hidden = NO;
+        [self showLoginButton:YES];
+        //loginButton.hidden = NO;
     }
 
+}
+
+- (void)showLoginButton:(BOOL)isShow{
+    loginButton.hidden = !isShow;
 }
 
 - (void)createSessionWithDelegate:(id)delegate{
@@ -138,7 +143,8 @@
     [[FBService shared] userProfileWithDelegate:self];
     
     [activityIndicator startAnimating];
-    loginButton.hidden = YES;
+    [self showLoginButton:NO];
+    //loginButton.hidden = YES;
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled{}
@@ -189,7 +195,8 @@
                 // show Login & Registrations buttons
                 [activityIndicator stopAnimating];
                 
-                loginButton.hidden = NO;
+                [self showLoginButton:YES];
+                //loginButton.hidden = NO;
             }else{
                 // get user's profile
                 [[FBService shared] userProfileWithDelegate:self];
