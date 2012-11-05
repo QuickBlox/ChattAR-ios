@@ -4,7 +4,6 @@
 //
 //
 
-
 @interface RestRequest : NSObject<Cancelable>
 {
 	enum RestMethodKind method;
@@ -22,7 +21,7 @@
 	enum RestRequestBuildStyle buildStyle;
 	BOOL shouldRedirect;
     
-    ASIHTTPRequest* asirequest;
+    QBASIHTTPRequest* asirequest;
 }
 
 @property (nonatomic) enum RestMethodKind method;
@@ -37,7 +36,7 @@
 @property(nonatomic, readonly) NSString* httpMethod;
 @property(readonly) NSURLRequest *request;
 
-@property(readonly) ASIHTTPRequest* asirequestAsync;
+@property(readonly) QBASIHTTPRequest* asirequestAsync;
 
 
 @property(readonly) NSURL *finalURL;
@@ -52,10 +51,6 @@
 - (void)asyncRequestWithdelegate:(NSObject<RestRequestDelegate>*)delegate;
 
 + (NSString *)httpMethod:(enum RestMethodKind)method;
-- (void)setMultipartParts:(ASIFormDataRequest*)asireq;
-
-#pragma mark Deprecated
-- (RestResponse *)syncRequest;
-@property(readonly) ASIHTTPRequest* asirequest;
+- (void)setMultipartParts:(QBASIFormDataRequest*)asireq;
 
 @end

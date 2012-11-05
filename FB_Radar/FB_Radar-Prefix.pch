@@ -39,6 +39,7 @@
     // libs
     #import "Flurry.h"
 
+    #import "Reachability.h"
     #import "Macro.h"
 
 #endif

@@ -15,6 +15,7 @@
 #import "ARMarkerView.h"
 #import "TestManager.h"
 #import "WebViewController.h"
+#import "ProvisionManager.h"
 
 @interface ChatViewController ()
 
@@ -99,7 +100,11 @@
         return;
     }
     if([sendMessageActivityIndicator isAnimating]){
-        return;
+        if([Reachability internetConnected]){
+            [sendMessageActivityIndicator stopAnimating];
+        }else{
+            return;
+        }
     }
     
     [sendMessageActivityIndicator startAnimating];
@@ -712,14 +717,14 @@
             //
             QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
             
-            BOOL isDevEnv = NO;
-    #ifdef DEBUG
-            isDevEnv = YES;
-    #endif
+//            BOOL isDevEnv = NO;
+//    #ifdef DEBUG
+//            isDevEnv = YES;
+//    #endif
             // Send push
             [QBMessages TSendPush:message
                           toUsers:[NSString stringWithFormat:@"%d",  qbUser.ID]
-         isDevelopmentEnvironment:isDevEnv
+         isDevelopmentEnvironment:[ProvisionManager isDevelopmentProvision]
                          delegate:self];
             
             [message release];

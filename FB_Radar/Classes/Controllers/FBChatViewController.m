@@ -10,6 +10,7 @@
 #import "WebViewController.h"
 #import "AppDelegate.h"
 #import "DatetimeConverter.h"
+#import "ProvisionManager.h"
 
 
 #define VIEW_WIDTH    self.view.frame.size.width
@@ -556,6 +557,19 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)sendMessage 
 {
+    
+    if (![Reachability internetConnected]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"No internet connection."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+
 	NSString *rightTrimmedMessage =[chatInput.text stringByTrimmingTrailingWhitespaceAndNewlineCharacters];
     
     // Don't send blank messages.
@@ -651,15 +665,15 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 			//
 			QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
 			
-            BOOL isDevEnv = NO;
-#ifdef DEBUG
-            isDevEnv = YES;
-#endif
+//            BOOL isDevEnv = NO;
+//#ifdef DEBUG
+//            isDevEnv = YES;
+//#endif
             
 			// Send push
 			[QBMessages TSendPush:message
 								 toUsers:[NSString stringWithFormat:@"%d", _result.user.ID]
-				  isDevelopmentEnvironment:isDevEnv
+				  isDevelopmentEnvironment:[ProvisionManager isDevelopmentProvision]
 								delegate:nil];
             
             [message release];

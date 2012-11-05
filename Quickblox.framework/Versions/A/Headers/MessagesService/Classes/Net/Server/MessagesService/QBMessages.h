@@ -25,7 +25,7 @@
  Type of Result - QBMPushTokenResult
  
  @param pushToken An instance of QBMPushToken
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMPushTokenResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMPushTokenResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)createPushToken:(QBMPushToken *)pushToken delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -41,7 +41,7 @@
  Type of Result - QBMPushTokenResult
  
  @param ID An ID of instance of QBMPushToken that will be deleted
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMPushTokenResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMPushTokenResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)deletePushTokenWithID:(NSUInteger)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -57,7 +57,7 @@
  Type of Result - QBMSubscriptionResult
  
  @param subscriber An instance of QBMSubscription
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSubscriptionResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMSubscriptionResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)createSubscription:(QBMSubscription *)subscriber delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -73,7 +73,7 @@
  Type of Result - QBMSubscriptionPagedResult
  
  @param subscriber An instance of QBMSubscription
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSubscriptionPagedResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMSubscriptionPagedResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)subscriptionsWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -89,7 +89,7 @@
  Type of Result - QBMSubscriptionResult
  
  @param ID An ID of instance of QBMSubscription that will be deleted
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSubscriptionResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMSubscriptionResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)deleteSubscriptionWithID:(NSUInteger)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -104,7 +104,7 @@
  Type of Result - QBMEventResult
  
  @param event An instance of QBMEvent to create
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)createEvent:(QBMEvent *)event delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -119,7 +119,7 @@
  Type of Result - QBMEventResult
  
  @param ID ID of QBMEvent to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)eventWithID:(NSUInteger)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -134,7 +134,7 @@
  Type of Result - QBMEventResult
  
  @param event An instance of QBMEvent to update
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)updateEvent:(QBMEvent *)event delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -149,7 +149,7 @@
  Type of Result - QBMEventResult
  
  @param ID ID of QBMEvent to be deleted.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)deleteEventWithID:(NSUInteger)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -163,7 +163,7 @@
  
  Type of Result - QBMEventPagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)eventsWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -175,7 +175,7 @@
  Type of Result - QBMEventPagedResult
  
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)eventsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -189,7 +189,7 @@
  
  Type of Result - QBMEventPagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMEventPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)pullEventsWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -209,7 +209,7 @@
  
  Type of Result - QBMRegisterSubscriptionTaskResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMRegisterSubscriptionTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMRegisterSubscriptionTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)TRegisterSubscriptionWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -225,7 +225,7 @@
  
  Type of Result - QBMUnregisterSubscriptionTaskResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMUnregisterSubscriptionTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMUnregisterSubscriptionTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)TUnregisterSubscriptionWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -241,7 +241,7 @@
  
  @param pushMessage composed push message to send
  @param usersIDs users identifiers who will get the message. Contain a string of users ids divided by comas.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSendPushTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMSendPushTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 
@@ -259,7 +259,7 @@
  
  @param pushMessage composed push message to send
  @param usersTags users tags who will get the message. Contain a string of users tags divided by comas.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBMSendPushTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBMSendPushTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)TSendPush:(QBMPushMessage *)pushMessage 

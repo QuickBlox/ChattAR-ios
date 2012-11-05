@@ -14,7 +14,7 @@
 	id context;
 	enum RestRequestBuildStyle requestBuildStyle;
 }
-@property (nonatomic,assign) NSObject<QBActionStatusDelegate>* delegate;
+@property (nonatomic,retain) NSObject<QBActionStatusDelegate>* delegate;
 @property (nonatomic,retain) NSObject<Cancelable>* canceler;
 @property (nonatomic,retain) NSRecursiveLock* canceledLock;
 @property (nonatomic,retain) id context;
@@ -33,9 +33,5 @@
 - (void)setFiles:(RestRequest*)request;
 - (void)setShouldRedirect:(RestRequest*)request;
 - (void)finishedSuccess;
-
-#pragma mark Deprecated
--(Result *)perform;
-- (RestRequest*)request;
 
 @end

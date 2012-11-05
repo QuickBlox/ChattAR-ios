@@ -9,7 +9,6 @@
 #import "SplashController.h"
 #import "AppDelegate.h"
 #import "NumberToLetterConverter.h"
-#import "Reachability.h"
 
 @interface SplashController ()
 
@@ -43,10 +42,10 @@
         [activityIndicator startAnimating];
 		
 		[NSTimer scheduledTimerWithTimeInterval:60*60*2-600 // Expiration date of access token is 2 hours. Repeat request for new token every 1 hour and 50 minutes.
-														  target:self 
-														selector:@selector(createSession) 
-														userInfo:nil 
-														 repeats:YES];
+                                         target:self 
+                                       selector:@selector(createSession) 
+                                       userInfo:nil 
+                                        repeats:YES];
         
          [self createSessionWithDelegate:self];
 		

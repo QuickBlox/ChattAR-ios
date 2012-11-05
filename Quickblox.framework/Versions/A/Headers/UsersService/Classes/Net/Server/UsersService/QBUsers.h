@@ -26,7 +26,7 @@
  
  @param login Login of QBUUser which authenticates.
  @param password Password of QBUUser which authenticates.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)logInWithUserLogin:(NSString *)login password:(NSString *)password delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -39,7 +39,7 @@
  
  @param email Email of QBUUser which authenticates.
  @param password Password of QBUUser which authenticates.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)logInWithUserEmail:(NSString *)email password:(NSString *)password delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -52,7 +52,7 @@
  Type of Result - QBUUserLogInResult
  
  @param provider Social provider. Posible values: facebook, twitter.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserAuthenticateResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)logInWithSocialProvider:(NSString *)provider delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -67,7 +67,7 @@
  
  Type of Result - QBUUserLogOutResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserLogoutResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserLogoutResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)logOutWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -82,7 +82,7 @@
  
  Type of Result - QBUUserPagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -94,7 +94,7 @@
  Type of Result - QBUUserPagedResult
  
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -110,7 +110,7 @@
  Type of Result - QBUUserResult
  
  @param user An instance of QBUUser, describing the user to be created.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)signUp:(QBUUser *)user delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -126,7 +126,7 @@
  Type of Result - QBUUserResult
  
  @param userID ID of QBUUser to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithID:(NSUInteger)userID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -142,7 +142,7 @@
  Type of Result - QBUUserResult
  
  @param userLogin Login of user to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithLogin:(NSString *)userLogin delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -159,7 +159,7 @@
  
  
  @param userFullName Full name of users to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithFullName:(NSString *)userFullName delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -172,7 +172,7 @@
  
  @param userFullName Full name of users to be retrieved.
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithFullName:(NSString *)userFullName pagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -189,7 +189,7 @@
  
  
  @param tags Tags of users to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithTags:(NSArray *)tags delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -202,7 +202,7 @@
  
  @param tags Tags of users to be retrieved.
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)usersWithTags:(NSArray *)tags pagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -218,7 +218,7 @@
  Type of Result - QBUUserResult
  
  @param userFacebookID Facebook ID of user to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithFacebookID:(NSString *)userFacebookID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -234,7 +234,7 @@
  Type of Result - QBUUserResult
  
  @param userTwitterID Twitter ID of user to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithTwitterID:(NSString *)userTwitterID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -250,7 +250,7 @@
  Type of Result - QBUUserResult
  
  @param userEmail Email of user to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithEmail:(NSString *)userEmail delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -266,7 +266,7 @@
  Type of Result - QBUUserResult
  
  @param userExternalID External ID of user to be retrieved.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)userWithExternalID:(NSUInteger)userExternalID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -282,7 +282,7 @@
  Type of Result - QBUUserResult
  
  @param user An instance of QBUUser, describing the user to be edited.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)updateUser:(QBUUser *)user delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -298,7 +298,7 @@
  Type of Result - QBUUserResult
  
  @param userID ID of user to be removed.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)deleteUserWithID:(NSUInteger)userID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -314,7 +314,7 @@
  Type of Result - QBUUserResult
  
  @param userExternalID External ID of user to be removed.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)deleteUserWithExternalID:(NSUInteger)userExternalID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -330,7 +330,7 @@
  Type of Result - Result
  
  @param email User's email
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of Result class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of Result class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)resetUserPasswordWithEmail:(NSString *)email delegate:(NSObject<QBActionStatusDelegate> *)delegate;

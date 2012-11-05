@@ -25,7 +25,7 @@
  Type of Result - QBLGeoDataResult
  
  @param geodata An instance of QBLGeoData
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)createGeoData:(QBLGeoData *)geodata delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -41,7 +41,7 @@
  Type of Result - QBLGeoDataResult
  
  @param geodataID ID of instance of QBLGeoData that will be retrieved
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)geoDataWithID:(NSUInteger)geodataID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -57,7 +57,7 @@
  Type of Result - QBLGeoDataPagedResult
  
  @param geodataRequest Search request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLGeoDataPagedResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLGeoDataPagedResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)geoDataWithRequest:(QBLGeoDataGetRequest *)geodataRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -73,7 +73,7 @@
  Type of Result - QBLGeoDataResult
  
  @param geodata An instance of QBLGeoData
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLGeoDataResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)updateGeoData:(QBLGeoData *)geodata delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -121,7 +121,7 @@
  Type of Result - QBLPlaceResult
  
  @param data An instance of QBLPlace
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)createPlace:(QBLPlace *)place delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -137,7 +137,7 @@
  Type of Result - QBLPlaceResult
  
  @param data An instance of QBLPlace
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)updatePlace:(QBLPlace *)place delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -152,7 +152,7 @@
  
  Type of Result - QBLPlacePagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlacePagedResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlacePagedResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)placesWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -164,7 +164,7 @@
  Type of Result - QBLPlacePagedResult
  
  @param pagedRequest Paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlacePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlacePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)placesWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -180,7 +180,7 @@
  Type of Result - QBLPlaceResult
  
  @param placeID ID of instance of QBLPlace that will be retrieved
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)placeWithID:(NSUInteger)placeID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -196,7 +196,7 @@
  Type of Result - QBLPlaceResult
  
  @param placeID ID of instance of QBLPlace that will be deleted
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBLPlaceResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable> *)deletePlaceWithID:(NSUInteger)placeID delegate:(NSObject<QBActionStatusDelegate> *)delegate;

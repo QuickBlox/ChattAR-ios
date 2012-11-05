@@ -26,7 +26,7 @@
  Type of Result - QBCBlobResult
  
  @param blob An instance of QBCBlob, describing the file to be uploaded.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCBlobResult class.    
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCBlobResult class.    
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)createBlob:(QBCBlob*)blob delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -42,7 +42,7 @@
  Type of Result - QBCBlobResult
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of QBCBlobResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of QBCBlobResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */ 
 + (NSObject<Cancelable>*)blobWithID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -57,7 +57,7 @@
  
  Type of Result - QBCBlobPagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCBlobPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCBlobPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)blobsWithDelegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -69,7 +69,7 @@
  Type of Result - QBCBlobPagedResult
  
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)blobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -84,7 +84,7 @@
  
  Type of Result - QBCBlobPagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCBlobPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCBlobPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)taggedBlobsWithDelegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -96,7 +96,7 @@
  Type of Result - QBCBlobPagedResult
  
  @param pagedRequest paged request
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBUUserPagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)taggedBlobsWithPagedRequest:(PagedRequest *)pagedRequest delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -112,7 +112,7 @@
  Type of Result - QBCBlobResult
 
  @param blob An instance of QBCBlob, describing the file to be updated.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of QBCBlobResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of QBCBlobResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */ 
 + (NSObject<Cancelable>*)updateBlob:(QBCBlob*)blob delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -128,7 +128,7 @@
  Type of Result - Result
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of Result class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of Result class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)deleteBlobWithID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -144,7 +144,7 @@
  Type of Result - Result
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of Result class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of Result class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)retainBlobWithID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -161,7 +161,7 @@
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
  @param size Size of uploaded file, in bytes
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of Result class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of Result class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)completeBlobWithID:(NSUInteger)blobID size:(NSUInteger)size delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -177,7 +177,7 @@
  Type of Result - QBCBlobObjectAccessResult
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of QBCBlobObjectAccessResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of QBCBlobObjectAccessResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)blobObjectAccessWithBlobID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -194,7 +194,7 @@
  
  @param data File
  @param access An instance of QBCBlobObjectAccess
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of Result class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of Result class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)uploadFile:(NSData *)data blobWithWriteAccess:(QBCBlob *)blobWithWriteAccess delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -210,7 +210,7 @@
  Type of Result - QBCFileResult
  
  @param UID File unique identifier, value of UID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained. Upon finish of the request, result will be an instance of QBCFileResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained. Upon finish of the request, result will be an instance of QBCFileResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation. 
  */
 + (NSObject<Cancelable>*)downloadFileWithUID:(NSString *)UID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -233,7 +233,7 @@
  @param fileName name of the file
  @param contentType type of the content in mime format
  @param isPublic blob's visibility
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCFileUploadTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCFileUploadTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)TUploadFile:(NSData*)data
@@ -258,15 +258,10 @@
  Type of Result - QBCDownloadFileTaskResult
  
  @param blobID Unique blob identifier, value of ID property of the QBCBlob instance.
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBCUploadFileTaskResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCUploadFileTaskResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*)TDownloadFileWithBlobID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate;
 + (NSObject<Cancelable>*)TDownloadFileWithBlobID:(NSUInteger)blobID delegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
-
-
-
-#pragma mark Deprecated
-+ (QBCFileResult *)downloadFileSyncWithUID:(NSString*)blobUID;
 
 @end

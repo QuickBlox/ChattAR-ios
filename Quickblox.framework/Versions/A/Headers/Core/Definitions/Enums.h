@@ -23,7 +23,7 @@ enum RestMethodKind
     RestMethodKindHEAD
 };
 
-//ASIHTTPRequest
+//QBASIHTTPRequest
 enum RestResponseType
 {
 	RestResponseTypeXML,

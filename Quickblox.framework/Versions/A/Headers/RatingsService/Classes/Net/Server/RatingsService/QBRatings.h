@@ -22,7 +22,7 @@
  Type of Result - QBRGameModeResult
  
  @param title Title of new game mode
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*) createGameModeWithTitle:(NSString*)title 
@@ -41,7 +41,7 @@
  Type of Result - QBRGameModeResult
  
  @param gameModeId ID of game mode
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*) gameModeWithID:(NSUInteger)gameModeId
@@ -59,7 +59,7 @@
  
  Type of Result - QBRGameModePagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*) gameModesWithDelegate:(NSObject<QBActionStatusDelegate>*)delegate;
@@ -76,7 +76,7 @@
  Type of Result - QBRGameModeResult
  
  @param gameMode An instance of QBRGameMode which will be updated
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*) updateGameMode:(QBRGameMode *)gameMode
@@ -95,7 +95,7 @@
  Type of Result - QBRGameModeResult
  
  @param gameModeId ID of game mode
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable>*) deleteGameModeWithID:(NSUInteger)gameModeId
@@ -118,7 +118,7 @@
  Type of Result - QBRScoreResult
  
  @param score An instance of QBRScore
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)createScore:(QBRScore *)score delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -134,7 +134,7 @@
  Type of Result - QBRScoreResult
  
  @param score An instance of QBRScore
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)updateScore:(QBRScore *)score delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -150,7 +150,7 @@
  Type of Result - QBRScoreResult
  
  @param scoreId An ID of QBRScore that will be retrieved
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)scoreWithID:(NSUInteger)scoreId delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -166,7 +166,7 @@
  Type of Result - QBRScoreResult
  
  @param scoreId An ID of QBRScore that will be deleted
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScoreResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)deleteScoreWithID:(NSUInteger)scoreId delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -183,7 +183,7 @@
  
  @param topN A number of the results, which is specified as a limit of Scores
  @param gameModeId ID of game mode
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)topNScores:(int)topN gameModeID:(NSUInteger)gameModeID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -197,7 +197,7 @@
  @param topN A number of the results, which is specified as a limit of Scores
  @param gameModeId ID of game mode
  @param extendedRequest  Extended set of request parameters (pagination included)
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)topNScores:(int)topN gameModeID:(NSUInteger)gameModeID extendedRequest:(QBRScoreGetRequest *)extendedRequest delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -213,7 +213,7 @@
  Type of Result - QBRScorePagedResult
  
  @param userID ID of QBUUser who scores will be retrieved
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)scoresWithUserID:(NSUInteger)userID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -226,7 +226,7 @@
  
  @param userID ID of QBUUser who scores will be retrieved
  @param extendedRequest  Extended set of request parameters (pagination included)
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRScorePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)scoresWithUserID:(NSUInteger)userID extendedRequest:(QBRScoreGetRequest *)extendedRequest delegate:(NSObject <QBActionStatusDelegate> *)delegate;
@@ -246,7 +246,7 @@
  Type of Result - QBRAvarageResult
  
  @param gameModeId ID of game mode
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRAvarageResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRAvarageResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)averageWithGameModeID:(NSUInteger)gameModeId delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -261,7 +261,7 @@
  
  Type of Result - QBRAvaragePagedResult
  
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRAvaragePagedResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRAvaragePagedResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)averagesForApplicationWithDelegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -282,7 +282,7 @@
  Type of Result - QBRGameModeParameterValueResult
  
  @param gameModeParameterValue An instance of QBRGameModeParameterValue
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)createGameModeParameterValue:(QBRGameModeParameterValue *)gameModeParameterValue delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -298,7 +298,7 @@
  Type of Result - QBRGameModeParameterValueResult
  
  @param gameModeParameterValueID An ID of instance of QBRGameModeParameterValue that will be retrieved
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)gameModeParameterValueWithID:(NSUInteger)gameModeParameterValueID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
@@ -315,7 +315,7 @@
  Type of Result - QBRGameModeParameterValueResult
  
  @param gameModeParameterValue An instance of QBRGameModeParameterValue
- @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is not retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBRGameModeParameterValueResult class.
  @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
  */
 + (NSObject<Cancelable> *)updateGameModeParameterValue:(QBRGameModeParameterValue *)gameModeParameterValue delegate:(NSObject<QBActionStatusDelegate> *)delegate;

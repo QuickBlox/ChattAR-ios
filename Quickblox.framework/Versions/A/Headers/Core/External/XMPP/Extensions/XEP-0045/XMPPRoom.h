@@ -16,6 +16,7 @@
 	NSString *invitedUser;
 	BOOL _isJoined;
 	NSMutableDictionary *occupants;
+    BOOL isPrivateRoom;
 }
 
 - (id)initWithRoomName:(NSString *)roomName nickName:(NSString *)nickName;
@@ -31,6 +32,8 @@
 
 @property (readwrite, copy) NSString *invitedUser;
 
+@property (nonatomic, assign) BOOL isPrivateRoom;
+
 - (void)createOrJoinRoom;
 - (void)joinRoom;
 - (void)leaveRoom;
@@ -44,6 +47,8 @@
 
 - (void)sendMessage:(NSString *)msg;
 
++ (NSDictionary *)Errors;
+
 @end
 
 @protocol XMPPRoomDelegate <NSObject>
@@ -51,6 +56,7 @@
 
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender;
 - (void)xmppRoomDidEnter:(XMPPRoom *)sender;
+- (void)xmppRoomDidNotEnter:(XMPPRoom *)sender error:(NSError *)error;
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender;
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromNick:(NSString *)nick;
 - (void)xmppRoom:(XMPPRoom *)sender didChangeOccupants:(NSDictionary *)occupants;

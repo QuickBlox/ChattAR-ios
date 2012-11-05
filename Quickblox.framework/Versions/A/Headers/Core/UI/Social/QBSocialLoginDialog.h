@@ -17,7 +17,7 @@
     UIView* _modalBackgroundView;
 }
 @property (retain) SocialLoginAnswer *answer;
-@property (retain) ASIWebPageRequest *request;
+@property (retain) QBASIWebPageRequest *request;
 
 - (void) showWithHTML:(NSString *)html;
 - (void) hide;
