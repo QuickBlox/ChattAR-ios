@@ -78,9 +78,9 @@
     [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
     [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
     [QBSettings setRestAPIVersion:@"0.1.1"];
-//#ifndef DEBUG
+#ifndef DEBUG
     [QBSettings setLogLevel:QBLogLevelNothing];
-//#endif
+#endif
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory) 
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
@@ -237,7 +237,7 @@
 
 void uncaughtExceptionHandler(NSException *exception) {
 #ifndef DEBUG
-    [FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+    [Flurry logError:@"Uncaught" message:@"Crash!" exception:exception];
 #endif
 }
 

@@ -665,11 +665,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 			//
 			QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
 			
-//            BOOL isDevEnv = NO;
-//#ifdef DEBUG
-//            isDevEnv = YES;
-//#endif
-            
 			// Send push
 			[QBMessages TSendPush:message
 								 toUsers:[NSString stringWithFormat:@"%d", _result.user.ID]

@@ -24,21 +24,16 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    //[self startApplication];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(startApplication)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)startApplication{
-    
-    [QBSettings setLogLevel:QBLogLevelDebug];
 
     // QuickBlox application autorization
     if(openedAtStartApp){
 		
-        //[QBAuthService authorizeAppId:appID key:authKey secret:authSecret delegate:self];
         [activityIndicator startAnimating];
 		
 		[NSTimer scheduledTimerWithTimeInterval:60*60*2-600 // Expiration date of access token is 2 hours. Repeat request for new token every 1 hour and 50 minutes.
@@ -151,17 +146,16 @@
                expiresAt:(NSDate*)expiresAt{}
 
 - (void)fbDidLogout{
+    // Clear cookies
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (cookie in [storage cookies])
-        {
-            NSString* domainName = [cookie domain];
-            NSRange domainRange = [domainName rangeOfString:@"facebook"];
-            if(domainRange.length > 0)
-                {
-                    [storage deleteCookie:cookie];
-                }
+    for (cookie in [storage cookies]){
+        NSString* domainName = [cookie domain];
+        NSRange domainRange = [domainName rangeOfString:@"facebook"];
+        if(domainRange.length > 0){
+            [storage deleteCookie:cookie];
         }
+    }
 }
 
 - (void)fbSessionInvalidated{}
