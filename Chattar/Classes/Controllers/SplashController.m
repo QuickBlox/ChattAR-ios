@@ -27,6 +27,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(startApplication)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    if(IS_HEIGHT_GTE_568){
+        [self.backgroundImage setImage:[UIImage imageNamed:@"Default-568h@2x.png"]];
+    }
 }
 
 - (void)startApplication{
@@ -83,6 +87,7 @@
     activityIndicator = nil;
     loginButton = nil;
     
+    [self setBackgroundImage:nil];
     [super viewDidUnload];
 }
 
@@ -116,6 +121,7 @@
 }
 
 - (void)dealloc {
+    [_backgroundImage release];
     [super dealloc];
 }
 

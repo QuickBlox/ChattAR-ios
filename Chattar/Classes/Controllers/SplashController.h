@@ -16,6 +16,7 @@
 
 @property (nonatomic) BOOL openedAtStartApp;
 
+@property (retain, nonatomic) IBOutlet UIImageView *backgroundImage;
 - (IBAction)login:(id)sender;
 - (void)startApplication;
 - (void)showLoginButton:(BOOL)isShow;
