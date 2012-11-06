@@ -635,8 +635,6 @@ static FBService *instance = nil;
         // set query type
         [result setQueryType:queryType];
         
-        //NSLog(@"responseResult=%@",result.body);
-        
         // return result to delegate 
         if(context){
             [delegate performSelectorOnMainThread:@selector(completedWithFBResult:context:) withObject:[result autorelease] withObject:context waitUntilDone:YES];

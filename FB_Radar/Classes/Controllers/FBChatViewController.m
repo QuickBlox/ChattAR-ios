@@ -363,22 +363,6 @@ static CGFloat const kChatBarHeight4    = 94.0f;
     return cellHeight + 28;
 }
 
-//// determine date of message
-//NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//[dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'+0000'"];
-//NSDate *dateFromString = [dateFormatter dateFromString:dateInterval];
-//[dateFormatter release];
-//
-//NSString *dateVal;
-//if ([dateFromString timeIntervalSinceNow] > -86400){
-//    dateVal = NSLocalizedString(@"Today", nil);
-//}else if (([dateFromString timeIntervalSinceNow] < -86400) && ([dateFromString timeIntervalSinceNow] > -172800)){
-//    dateVal = NSLocalizedString(@"Yesterday", nil);
-//}else{
-//    dateVal = [[dateFromString description] substringToIndex:10];
-//}
-
-
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

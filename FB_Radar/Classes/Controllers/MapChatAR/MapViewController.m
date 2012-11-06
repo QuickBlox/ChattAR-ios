@@ -37,6 +37,7 @@
     
     canRotate = NO;
     
+    //add rotation gesture 
     UIGestureRecognizer *rotationGestureRecognizer;
     rotationGestureRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(spin:)];
     [rotationGestureRecognizer setDelegate:self];
@@ -49,6 +50,7 @@
     
     annotationsViewCount = 0;
     
+    //add frames for change zoom map
     mapFrameZoomOut.size.width  = 320.0f;
     mapFrameZoomOut.size.height = 387.0f;
     
@@ -71,6 +73,7 @@
         mapFrameZoomIn.origin.y = -49.0f;
     }
     
+    //add compass image
     compass = [[UIImageView alloc] init];
     
     CGRect compassFrame;

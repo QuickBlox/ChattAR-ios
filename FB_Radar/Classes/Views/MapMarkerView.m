@@ -57,10 +57,7 @@
         [userPhotoView release];
         
         
-        // add userName
-        //
-        
-        //============================================================================================
+        //add user marker
         userNameBG = [[UIImageView alloc] init];
         [userNameBG setFrame:CGRectMake(45, 0, 55, 23)];
         
@@ -79,7 +76,8 @@
         
         [container addSubview: userNameBG];
         [userNameBG release];
-        //
+    
+        // add userName
         userName = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, userNameBG.frame.size.width-3, userNameBG.frame.size.height)];
         [userName setBackgroundColor:[UIColor clearColor]];
         [userName setText:annotation.userName];
