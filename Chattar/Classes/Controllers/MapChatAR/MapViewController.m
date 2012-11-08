@@ -178,18 +178,12 @@
             [marker setTransform:CGAffineTransformMakeRotation(-count)];
         }
     } else{
-        annotationsViewCount++;
-        if(annotationsViewCount == [self.mapView.annotations count]){
-            annotationsViewCount = 0;
-            [self rotateAnnotations:(-count)];
-            double delayInSeconds = 0.00001;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^{
-                [marker setTransform:CGAffineTransformMakeRotation(-count)];
-            });
-        }
+        double delayInSeconds = 0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [marker setTransform:CGAffineTransformMakeRotation(-count)];
+        });
     }
-    
     
 	return marker;
 }
@@ -210,7 +204,6 @@
     if( ((self.mapView.region.span.longitudeDelta / longitudeDeltaZoomOut) < zoomOun) && !canRotate ){
         
         [self.mapView setFrame:mapFrameZoomIn];
-        
         canRotate = YES;
         
         [self.compass setAlpha:1.0f];
@@ -220,12 +213,17 @@
     // rotate map to init state
     if(((self.mapView.region.span.longitudeDelta / longitudeDeltaZoomIn) > zoomIn) && canRotate){
         
-        canRotate = NO;
+        
         [self.compass setAlpha:0.0f];
         
         count = 0;
         
-        [self performSelector:@selector(setZoomOut) withObject:nil afterDelay:1];
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            [self.mapView setFrame:mapFrameZoomOut];
+            canRotate = NO;
+        });
         
         [UIView animateWithDuration:0.3f
                          animations:^{
@@ -236,11 +234,6 @@
          ];
     }
 }
-
-- (void)setZoomOut{
-    [self.mapView setFrame:mapFrameZoomOut];
-}
-
 
 #pragma mark -
 #pragma mark UIGestureRecognizerDelegate
