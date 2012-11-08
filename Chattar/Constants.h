@@ -1,13 +1,10 @@
 //
 //  Constants.h
-//  FB_Radar
+//  ChattAR
 //
-//  Created by Sonny Black on 04.05.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by QuickBlox developers on 04.05.12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
-
-#ifndef FB_Radar_Constants_h
-#define FB_Radar_Constants_h
 
 // FB constants
 #define FBAccessTokenKey @"FBAccessTokenKey"
@@ -15,7 +12,6 @@
 //
 // FB Chattar
 #define APP_ID @"464189473609303"
-#define APP_SECRET @"bee15c5e5d9db2d63c4499f5186f70aa"
 #define FB_COOKIES @"FB_COOKIES"
 
 // notifications
@@ -29,5 +25,3 @@
 // Flurry
 #define FLURRY_API_KEY @"KMD7NSM4DF344W9JVCGN"
 #define FLURRY_EVENT_USER_DID_LOGIN @"User did login"
-
-#endif

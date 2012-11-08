@@ -1,9 +1,9 @@
 //
 //  ChatViewController.m
-//  Fbmsg
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko on 3/27/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/27/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #define messageWidth 250
@@ -13,7 +13,6 @@
 #import "ChatViewController.h"
 #import "MapChatARViewController.h"
 #import "ARMarkerView.h"
-#import "TestManager.h"
 #import "WebViewController.h"
 #import "ProvisionManager.h"
 
@@ -114,13 +113,6 @@
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"@" withString:@""];
     
 	QBLGeoData *geoData = [QBLGeoData currentGeoData];
-#ifdef DEBUG
-    NSArray *coord = [[TestManager shared].testLocations objectForKey:[DataManager shared].currentFBUserId];
-    if(coord != nil){
-        geoData.latitude = (CLLocationDegrees)[[coord objectAtIndex:0] doubleValue];
-        geoData.longitude = (CLLocationDegrees)[[coord objectAtIndex:1] doubleValue];
-    }
-#endif
 	geoData.user = [DataManager shared].currentQBUser;
 	
     // set body - with quote or without

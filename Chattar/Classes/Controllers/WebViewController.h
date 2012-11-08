@@ -1,8 +1,8 @@
 //
 //  WebViewController.h
-//  FB_Radar
+//  ChattAR for Facebook
 //
-//  Created by Sonny Black on 07.06.12.
+//  Created by QuickBlox developers on 07.06.12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 

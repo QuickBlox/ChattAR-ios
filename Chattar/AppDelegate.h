@@ -1,9 +1,9 @@
 //
 //  AppDelegate.h
-//  FB_Radar
+//  ChattAR for Facebook
 //
-//  Created by Sonny Black on 03.05.12.
-//  Copyright (c) 2012 Injoit. All rights ячс reserved.
+//  Created by QuickBlox developers on 03.05.12.
+//  Copyright (c) 2012 QuickBlox. All rights ячс reserved.
 //
 
 #import <UIKit/UIKit.h>

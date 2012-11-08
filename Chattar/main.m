@@ -1,10 +1,10 @@
 
 //
 //  main.m
-//  FB_Radar
+//  ChattAR for Facebook
 //
-//  Created by Sonny Black on 03.05.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by QuickBlox developers on 03.05.12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

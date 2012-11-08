@@ -1,9 +1,9 @@
 //
 //  FBCheckinModel.h
-//  Chattar
+//  ChattAR for facebook
 //
-//  Created by IgorKh on 8/2/12.
-//
+//  Created by QuickBlox developers on 8/2/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

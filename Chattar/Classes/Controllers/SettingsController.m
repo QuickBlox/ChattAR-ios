@@ -2,8 +2,8 @@
 //  SettingsController.m
 //  FB Radar
 //
-//  Created by md314 on 3/10/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/10/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "SettingsController.h"
@@ -122,7 +122,7 @@
 -(IBAction)linksAction:(id)sender{
     NSString *url;
 	if (((ButtonWithUnderlining*)sender).tag == 0){
-		url = @"http://injoit.com/";
+		url = @"http://QuickBlox.com/";
 	}else {
 		url = @"http://quickblox.com/";
 	}

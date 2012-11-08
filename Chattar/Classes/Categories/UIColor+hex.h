@@ -1,9 +1,9 @@
 //
 //  UIColor+hex.h
-//  Vkmsg
+//  ChattAR for Facebook
 //
-//  Created by Rostislav Kobizsky on 3/28/12.
-//  Copyright (c) 2012 Injoit Ltd. All rights reserved.
+//  Created by QuickBlox developers on 3/28/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

@@ -1,9 +1,9 @@
 //
 //  NotificationManager.h
-//  Fbmsg
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko on 4/2/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 4/2/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

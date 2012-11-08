@@ -2,9 +2,9 @@
 
 //
 //  ContactsController.m
-//  FB_Radar
+//  ChattAR for Facebook
 //
-//  Created by md314 on 3/10/12.
+//  Created by QuickBlox developers on 3/10/12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 

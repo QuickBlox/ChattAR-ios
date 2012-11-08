@@ -1,9 +1,9 @@
 //
 //  MapChatARViewController.m
-//  Fbmsg
+//  ChattAR for Facebook
 //
 //  Created by Alexey on 21.03.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #define mapSearch @"mapSearch"

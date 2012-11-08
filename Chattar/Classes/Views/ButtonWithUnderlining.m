@@ -1,9 +1,9 @@
 //
 //  ButtonWithUnderlining.m
-//  Nova Head & Neck
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko on 14.04.11.
-//  Copyright 2011 injoit. All rights reserved.
+//  Created by QuickBlox developers on 14.04.11.
+//  Copyright 2011 QuickBlox. All rights reserved.
 //
 
 #import "ButtonWithUnderlining.h"

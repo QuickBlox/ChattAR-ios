@@ -1,13 +1,10 @@
 //
 //  Definitions.h
-//  FB_Radar
+//  ChattAR for Facebook
 //
-//  Created by Sonny Black on 07.05.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by QuickBlox developers on 07.05.12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
-
-#ifndef FB_Radar_Definitions_h
-#define FB_Radar_Definitions_h
 
 #define FB @"https://graph.facebook.com"
 
@@ -89,5 +86,3 @@ typedef enum {
     FBQueriesTypesGetInboxMessages,	
     
 } FBQueriesTypes;
-
-#endif

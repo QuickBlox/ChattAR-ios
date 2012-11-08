@@ -1,9 +1,9 @@
 //
 //  Extender.h
-//  Chattar
+//  ChattAR for facebook
 //
-//  Created by Igor Khomenko on 7/9/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 7/9/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <sys/sysctl.h>

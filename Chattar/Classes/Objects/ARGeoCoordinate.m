@@ -1,9 +1,9 @@
 //
 //  ARGeoCoordinate.m
-//  MashApp-location_users-ar-ios
+//  ChattAR for facebook
 //
-//  Created by Igor Khomenko on 3/26/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/26/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "ARGeoCoordinate.h"

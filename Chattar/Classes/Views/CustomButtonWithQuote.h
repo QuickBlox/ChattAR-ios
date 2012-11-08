@@ -1,9 +1,9 @@
 //
 //  CustomButtonWithQuote.h
-//  FB_Radar
+//  ChattAR for Facebook
 //
 //  Created by Alexey on 11.06.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

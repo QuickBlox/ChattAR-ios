@@ -1,9 +1,9 @@
 //
 //  NSArray+convert.m
-//  Vkmsg
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko on 3/22/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/22/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "NSArray+convert.h"

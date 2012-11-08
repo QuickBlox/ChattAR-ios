@@ -1,9 +1,9 @@
 //
 //  UIImage+ImageExtension.m
-//  Fbmsg
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko, Alexander Morgun on 3/29/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/29/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "UIImage+ImageExtension.h"

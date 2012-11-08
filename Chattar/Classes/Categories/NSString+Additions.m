@@ -1,3 +1,11 @@
+//
+//  NSString+Additions.m
+//  ChattAR for Facebook
+//
+//  Created by QuickBlox developers on 07.05.12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
+//
+
 #import "NSString+Additions.h"
 
 @implementation NSString (Acani)

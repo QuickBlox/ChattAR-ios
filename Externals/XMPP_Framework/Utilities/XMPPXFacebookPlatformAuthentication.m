@@ -3,7 +3,7 @@
 //  iPhoneXMPP
 //
 //  Created by Eric Chamberlain on 10/1/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright 2011 QuickBlox. All rights reserved.
 //
 
 #import "XMPPXFacebookPlatformAuthentication.h"

@@ -1,9 +1,9 @@
 //
 //  ProvisionManager.m
-//  Chattar
+//  ChattAR for Facebook
 //
-//  Created by Ruslan on 11/5/12.
-//
+//  Created by QuickBlox developers on 10/10/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "ProvisionManager.h"

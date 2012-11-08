@@ -1,9 +1,9 @@
 //
 //  MapViewController.m
-//  Fbmsg
+//  ChattAR for Facebook
 //
-//  Created by Igor Khomenko on 3/27/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/27/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import "MapViewController.h"
@@ -196,9 +196,6 @@
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
-    NSLog(@"%f", self.mapView.region.span.longitudeDelta / 255.0f);
-    NSLog(@"regionDidChangeAnimated");
-    
     float longitudeDeltaZoomOut = 255.0f;
     float longitudeDeltaZoomIn  = 353.671875f;
     
@@ -219,6 +216,8 @@
         [self.compass setAlpha:1.0f];
         
     }
+    
+    // rotate map to init state
     if(((self.mapView.region.span.longitudeDelta / longitudeDeltaZoomIn) > zoomIn) && canRotate){
         
         canRotate = NO;
@@ -241,6 +240,7 @@
 - (void)setZoomOut{
     [self.mapView setFrame:mapFrameZoomOut];
 }
+
 
 #pragma mark -
 #pragma mark UIGestureRecognizerDelegate

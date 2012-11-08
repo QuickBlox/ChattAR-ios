@@ -1,9 +1,9 @@
 //
 //  SettingsController.h
-//  Fbmsg
+//  ChattAR for Facebook
 //
-//  Created by md314 on 3/10/12.
-//  Copyright (c) 2012 Injoit. All rights reserved.
+//  Created by QuickBlox developers on 3/10/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

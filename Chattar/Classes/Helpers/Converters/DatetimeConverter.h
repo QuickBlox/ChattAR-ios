@@ -1,9 +1,9 @@
 //
 //  DatetimeConverter.h
-//  Chattar
+//  ChattAR for facebook
 //
-//  Created by IgorKh on 9/19/12.
-//
+//  Created by QuickBlox developers on 9/19/12.
+//  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
