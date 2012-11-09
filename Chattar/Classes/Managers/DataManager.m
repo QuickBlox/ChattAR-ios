@@ -18,7 +18,7 @@
 
 #define kFirstSwitchAllFriends [NSString stringWithFormat:@"kFirstSwitchAllFriends_%@", [DataManager shared].currentFBUserId]
 
-#define qbCheckinsFetchLimit 50
+#define qbCheckinsFetchLimit 150
 #define fbCheckinsFetchLimit 50
 #define qbChatMessagesFetchLimit 40
 
@@ -575,7 +575,25 @@ static DataManager *instance = nil;
     NSError *error;
     NSArray* results = [ctx executeFetchRequest:fetchRequest error:&error];
     [fetchRequest release];
-    return results;
+    
+    //select users with nonzero coordinates
+    NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
+    for(QBCheckinModel *model in results){
+        if(((UserAnnotation *)model.body).coordinate.latitude != 0 && ((UserAnnotation *)model.body).coordinate.longitude != 0){
+            [result addObject:model];
+        }
+    }
+    
+    //select only 50 last users
+    if([result count] > 50){
+        NSMutableArray *res = [[[NSMutableArray alloc] init] autorelease];
+        for(int i = [result count] - 1; i >= [result count] - 50; i--){
+            [res addObject:[result objectAtIndex:i]];
+        }
+        return res;
+    }
+    
+    return result;
 }
 
 

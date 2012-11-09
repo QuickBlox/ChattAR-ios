@@ -1502,9 +1502,13 @@
                     if([self.mapPointsIDs containsObject:[NSString stringWithFormat:@"%d", geodata.ID]]){
                         continue;
                     }
-                    [fbMapUsersIds addObject:geodata.user.facebookID];
                     
-                    [geodataProcessed addObject:geodata];
+                    //add users with only nonzero coordinates
+                    if(geodata.latitude != 0 && geodata.longitude != 0){
+                        [fbMapUsersIds addObject:geodata.user.facebookID];
+                    
+                        [geodataProcessed addObject:geodata];
+                    }
                 }
                 if([fbMapUsersIds count] == 0){
                     [fbMapUsersIds release];
@@ -1624,7 +1628,10 @@
                 }
                 [fbChatUsersIds addObject:geodata.user.facebookID];
                 
-                [geodataProcessed addObject:geodata];
+                //add users with only nonzero coordinates
+                if(geodata.longitude != 0 && geodata.latitude != 0){
+                    [geodataProcessed addObject:geodata];
+                }
             }
             
             if(fbChatUsersIds == nil){
