@@ -585,12 +585,8 @@ static DataManager *instance = nil;
     }
     
     //select only 50 last users
-    if([result count] > 50){
-        NSMutableArray *res = [NSMutableArray array];
-        for(int i = [result count] - 1; i >= [result count] - 50; i--){
-            [res addObject:[result objectAtIndex:i]];
-        }
-        return res;
+    while([result count] > 50){
+            [result removeLastObject];
     }
     
     return result;
