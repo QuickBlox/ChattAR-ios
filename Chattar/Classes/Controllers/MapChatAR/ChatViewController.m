@@ -724,40 +724,48 @@
         // get more messages result
 		if([((NSString *)contextInfo) isEqualToString:getMoreChatMessages])
 		{
-            QBLGeoDataPagedResult *geoDataSearchResult = (QBLGeoDataPagedResult *)result;
             
-            // empty
-            if([geoDataSearchResult.geodata count] == 0){
-                // remove loading cell
-                [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-                [messagesTableView reloadData];
-                isLoadingMoreMessages = NO;
+            dispatch_queue_t queue = dispatch_queue_create("completedWithResult", 0ul);
+            
+            dispatch_async(queue, ^{
                 
-                return;
-            }
-            
-            
-            
-			// get fb users info
-			NSMutableArray *fbChatUsersIds = [[NSMutableArray alloc] init];
-			for (QBLGeoData *geodata in geoDataSearchResult.geodata){
-				[fbChatUsersIds addObject:geodata.user.facebookID];
-			}
-			//
-			NSMutableString* ids = [[NSMutableString alloc] init];
-			for (NSString* userID in fbChatUsersIds)
-			{
-				[ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
-			}
-			
-			if ([ids length] != 0)
-			{
-				NSString* q = [ids substringToIndex:[ids length]-1];
-				[[FBService shared] usersProfilesWithIds:q delegate:self context:geoDataSearchResult.geodata];
-			}
-			[ids release];
-			//
-			[fbChatUsersIds release];
+                QBLGeoDataPagedResult *geoDataSearchResult = (QBLGeoDataPagedResult *)result;
+                    
+                // empty
+                if([geoDataSearchResult.geodata count] == 0){
+                    // remove loading cell
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
+                        [messagesTableView reloadData];
+                        isLoadingMoreMessages = NO;
+                    });   
+                    return;
+                }
+                    
+                    
+                    
+                // get fb users info
+                NSMutableArray *fbChatUsersIds = [[NSMutableArray alloc] init];
+                for (QBLGeoData *geodata in geoDataSearchResult.geodata){
+                    [fbChatUsersIds addObject:geodata.user.facebookID];
+                }
+                //
+                NSMutableString* ids = [[NSMutableString alloc] init];
+                for (NSString* userID in fbChatUsersIds)
+                {
+                    [ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
+                }
+                    
+                if ([ids length] != 0)
+                {
+                    NSString* q = [ids substringToIndex:[ids length]-1];
+                    [[FBService shared] usersProfilesWithIds:q delegate:self context:geoDataSearchResult.geodata];
+                }
+                [ids release];
+                //
+                [fbChatUsersIds release];
+            });
         }
 	}else{
 //        
@@ -828,41 +836,50 @@
     // get FB Users profiles result 
     if (result.queryType == FBQueriesTypesUsersProfiles)
     {
+        dispatch_queue_t queue = dispatch_queue_create("completedWithFBResult", 0ul);
         
-        // remove loading cell
-        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-
-        if([result.body isKindOfClass:NSDictionary.class]){
-            NSDictionary *resultError = [result.body objectForKey:kError];
-            if(resultError != nil){
-                [messagesTableView reloadData];
-                return;
-            }
+        dispatch_async(queue, ^{
             
-
-            // nem messages
-            for (QBLGeoData *geodata in context) {
+            // remove loading cell
+            [((MapChatARViewController *)delegate).chatPoints removeLastObject];
                 
-                NSDictionary *fbUser = nil;
-                for(NSDictionary *user in [result.body allValues]){
-                    if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
-                        fbUser = user;
-                        break;
-                    }
+            if([result.body isKindOfClass:NSDictionary.class]){
+                NSDictionary *resultError = [result.body objectForKey:kError];
+                if(resultError != nil){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [messagesTableView reloadData];
+                    });
+                    return;
                 }
+                    
+                    
+                // nem messages
+                for (QBLGeoData *geodata in context) {
+                        
+                    NSDictionary *fbUser = nil;
+                    for(NSDictionary *user in [result.body allValues]){
+                        if([geodata.user.facebookID isEqualToString:[user objectForKey:kId]]){
+                            fbUser = user;
+                            break;
+                        }
+                    }
+                        
+                    // add point
+                    [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
+                                                                                             withGeoData:geodata addToTop:NO withReloadTable:NO];
+                        
+                }
+                    
+                // refresh table
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self refresh];
+                });
                 
-                // add point
-                [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
-                                                                                withGeoData:geodata addToTop:NO withReloadTable:NO];
+                // Undefined format
+            }else{
+                // ...
             }
-            
-            // refresh table
-            [self refresh];
-        
-        // Undefined format
-        }else{
-            // ...
-        }
+        });
     }
 }
 

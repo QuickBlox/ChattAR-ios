@@ -1580,15 +1580,6 @@
         }else{
             [activityIndicator removeFromSuperview];
             activityIndicator = nil;
-            
-//            NSString *message = [result.errors stringValue];
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
-//                                                            message:message
-//                                                           delegate:self
-//                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
-//                                                  otherButtonTitles:nil];
-//            [alert show];
-//            [alert release];
         }
     }
 }

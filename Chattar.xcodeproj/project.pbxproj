@@ -12,6 +12,8 @@
 		436C0AF815D50EB80054D9BC /* kmBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF615D50EB80054D9BC /* kmBG.png */; };
 		436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C0AF715D50EB80054D9BC /* kmBG@2x.png */; };
 		4388BA7D1647C5B30052AB59 /* ProvisionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4388BA7C1647C5B30052AB59 /* ProvisionManager.m */; };
+		43892AE716512901008B32BC /* Compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 43892AE516512901008B32BC /* Compass.png */; };
+		43892AE816512901008B32BC /* Compass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43892AE616512901008B32BC /* Compass@2x.png */; };
 		438B8EBC16392CC2003692E1 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBB16392CC2003692E1 /* libFlurry.a */; };
 		438B8EBE16392D54003692E1 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 438B8EBD16392D54003692E1 /* libidn.a */; };
 		43A387C316490725000C50C8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A387B916490722000C50C8 /* Icon.png */; };
@@ -25,7 +27,6 @@
 		43B8CC7116494AC5005FFDB8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B8CC6F16494AC5005FFDB8 /* Default.png */; };
 		43B8CC7216494AC5005FFDB8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B8CC7016494AC5005FFDB8 /* Default@2x.png */; };
 		43B8CC7616494C9F005FFDB8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43B8CC7516494C9F005FFDB8 /* Default-568h@2x.png */; };
-		43EEE6D9163E999600B4FE89 /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 43EEE6D8163E999600B4FE89 /* compass.png */; };
 		43FAAFBC163AEE4E0035424C /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FAAFBB163AEE4E0035424C /* Reachability.m */; };
 		6303E3461580A8DF00F6F0B0 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6303E3441580A8DF00F6F0B0 /* WebViewController.m */; };
 		6303E34A1580B63900F6F0B0 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6303E3491580B63900F6F0B0 /* WebViewController.xib */; };
@@ -218,6 +219,8 @@
 		436C0AF715D50EB80054D9BC /* kmBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kmBG@2x.png"; sourceTree = "<group>"; };
 		4388BA7B1647C5B30052AB59 /* ProvisionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvisionManager.h; sourceTree = "<group>"; };
 		4388BA7C1647C5B30052AB59 /* ProvisionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvisionManager.m; sourceTree = "<group>"; };
+		43892AE516512901008B32BC /* Compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Compass.png; sourceTree = "<group>"; };
+		43892AE616512901008B32BC /* Compass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Compass@2x.png"; sourceTree = "<group>"; };
 		438B8EBA16392CC2003692E1 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		438B8EBB16392CC2003692E1 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		438B8EBD16392D54003692E1 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
@@ -239,7 +242,6 @@
 		43B8CC6F16494AC5005FFDB8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		43B8CC7016494AC5005FFDB8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		43B8CC7516494C9F005FFDB8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		43EEE6D8163E999600B4FE89 /* compass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compass.png; sourceTree = "<group>"; };
 		43FAAFB8163AEDBA0035424C /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		43FAAFBB163AEE4E0035424C /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		6303E3431580A8DF00F6F0B0 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Classes/Controllers/WebViewController.h; sourceTree = "<group>"; };
@@ -736,7 +738,8 @@
 		8A566CB61578ACA0006CEFF6 /* RadarMarker */ = {
 			isa = PBXGroup;
 			children = (
-				43EEE6D8163E999600B4FE89 /* compass.png */,
+				43892AE516512901008B32BC /* Compass.png */,
+				43892AE616512901008B32BC /* Compass@2x.png */,
 				8ADCA8D015A4767A00C015E7 /* Marker_arrow.png */,
 				8ADCA8D115A4767A00C015E7 /* Marker_arrow@2x.png */,
 				8ADCA8D215A4767B00C015E7 /* Marker.png */,
@@ -1305,7 +1308,6 @@
 				436C0AF815D50EB80054D9BC /* kmBG.png in Resources */,
 				436C0AF915D50EB80054D9BC /* kmBG@2x.png in Resources */,
 				FAC6B88215D8F07B00F3B10F /* bubble_green-1.png in Resources */,
-				43EEE6D9163E999600B4FE89 /* compass.png in Resources */,
 				43A387C316490725000C50C8 /* Icon.png in Resources */,
 				43A387C416490725000C50C8 /* Icon@2x.png in Resources */,
 				43B8CC7116494AC5005FFDB8 /* Default.png in Resources */,
@@ -1313,6 +1315,8 @@
 				43B8CC7616494C9F005FFDB8 /* Default-568h@2x.png in Resources */,
 				FAD8E4E6164BB61300CBCB79 /* Icon~ipad.png in Resources */,
 				FAD8E4E7164BB61300CBCB79 /* Icon~ipad@2x.png in Resources */,
+				43892AE716512901008B32BC /* Compass.png in Resources */,
+				43892AE816512901008B32BC /* Compass@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

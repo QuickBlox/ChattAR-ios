@@ -83,7 +83,7 @@
     compassFrame.origin.x = 260;
     compassFrame.origin.y = 15;
     
-    [self.compass setImage:[UIImage imageNamed:@"compass.png" ]];
+    [self.compass setImage:[UIImage imageNamed:@"Compass.png" ]];
     [self.compass setAlpha:0.0f];
     [self.compass setFrame:compassFrame];
     [self.view addSubview:compass];
