@@ -577,7 +577,7 @@ static DataManager *instance = nil;
     [fetchRequest release];
     
     //select users with nonzero coordinates
-    NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *result = [NSMutableArray array];
     for(QBCheckinModel *model in results){
         if(((UserAnnotation *)model.body).coordinate.latitude != 0 && ((UserAnnotation *)model.body).coordinate.longitude != 0){
             [result addObject:model];
@@ -586,7 +586,7 @@ static DataManager *instance = nil;
     
     //select only 50 last users
     if([result count] > 50){
-        NSMutableArray *res = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray *res = [NSMutableArray array];
         for(int i = [result count] - 1; i >= [result count] - 50; i--){
             [res addObject:[result objectAtIndex:i]];
         }
