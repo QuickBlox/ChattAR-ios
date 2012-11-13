@@ -90,6 +90,7 @@
 }
 
 - (void)dealloc {
+    dispatch_release(getMoreMessagesWorkQueue);
     [super dealloc];
 }
 
@@ -211,7 +212,7 @@
 	
 	// get points for chat
 	QBLGeoDataGetRequest *searchChatMessagesRequest = [[QBLGeoDataGetRequest alloc] init];
-	searchChatMessagesRequest.perPage = kGetGeoDataCount; // Pins limit for each page
+	searchChatMessagesRequest.perPage = 30; // Pins limit for each page
 	searchChatMessagesRequest.page = page;
 	searchChatMessagesRequest.status = YES;
 	searchChatMessagesRequest.sortBy = GeoDataSortByKindCreatedAt;
@@ -725,25 +726,19 @@
 		if([((NSString *)contextInfo) isEqualToString:getMoreChatMessages])
 		{
             
-            dispatch_queue_t queue = dispatch_queue_create("completedWithResult", 0ul);
+            QBLGeoDataPagedResult *geoDataSearchResult = (QBLGeoDataPagedResult *)result;
             
-            dispatch_async(queue, ^{
+            // empty
+            if([geoDataSearchResult.geodata count] == 0){
+                [((MapChatARViewController *)delegate).chatPoints removeLastObject];
+                [messagesTableView reloadData];
+                isLoadingMoreMessages = NO;
                 
-                QBLGeoDataPagedResult *geoDataSearchResult = (QBLGeoDataPagedResult *)result;
-                    
-                // empty
-                if([geoDataSearchResult.geodata count] == 0){
-                    // remove loading cell
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-                        [messagesTableView reloadData];
-                        isLoadingMoreMessages = NO;
-                    });   
-                    return;
-                }
-                    
-                    
+                return;
+            }
+            
+            // process responce
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
                 // get fb users info
                 NSMutableArray *fbChatUsersIds = [[NSMutableArray alloc] init];
@@ -754,7 +749,7 @@
                 NSMutableString* ids = [[NSMutableString alloc] init];
                 for (NSString* userID in fbChatUsersIds)
                 {
-                    [ids appendFormat:[NSString stringWithFormat:@"%@,", userID]];
+                    [ids appendFormat:@"%@,", userID];
                 }
                     
                 if ([ids length] != 0)
@@ -768,10 +763,7 @@
             });
         }
 	}else{
-//        
-//        // remove loading cell
-//        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-        
+
         NSString *message = [result.errors stringValue];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Errors", nil)
                                                         message:message
@@ -780,7 +772,6 @@
                                               otherButtonTitles:nil];
         [alert show];
         [alert release];
-
     }
 }
 
@@ -836,23 +827,22 @@
     // get FB Users profiles result 
     if (result.queryType == FBQueriesTypesUsersProfiles)
     {
-        dispatch_queue_t queue = dispatch_queue_create("completedWithFBResult", 0ul);
         
-        dispatch_async(queue, ^{
-            
-            // remove loading cell
-            [((MapChatARViewController *)delegate).chatPoints removeLastObject];
-                
-            if([result.body isKindOfClass:NSDictionary.class]){
-                NSDictionary *resultError = [result.body objectForKey:kError];
-                if(resultError != nil){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [messagesTableView reloadData];
-                    });
-                    return;
-                }
-                    
-                    
+        // remove loading cell
+        [((MapChatARViewController *)delegate).chatPoints removeLastObject];
+        
+        if([result.body isKindOfClass:NSDictionary.class]){
+            NSDictionary *resultError = [result.body objectForKey:kError];
+            if(resultError != nil){
+                [messagesTableView reloadData];
+                return;
+            }
+        
+            if(getMoreMessagesWorkQueue == NULL){
+                getMoreMessagesWorkQueue = dispatch_queue_create("com.quickblox.chattar.process.oldmessages.queue", 0);
+            }
+            dispatch_async(getMoreMessagesWorkQueue, ^{
+
                 // nem messages
                 for (QBLGeoData *geodata in context) {
                         
@@ -866,7 +856,9 @@
                         
                     // add point
                     [((MapChatARViewController *)delegate) createAndAddNewAnnotationToMapChatARForFBUser:fbUser
-                                                                                             withGeoData:geodata addToTop:NO withReloadTable:NO];
+                                                                                             withGeoData:geodata
+                                                                                                addToTop:NO
+                                                                                         withReloadTable:NO];
                         
                 }
                     
@@ -874,12 +866,13 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self refresh];
                 });
+            });
                 
-                // Undefined format
-            }else{
-                // ...
-            }
-        });
+            
+        // Undefined format
+        }else{
+            // ...
+        }
     }
 }
 

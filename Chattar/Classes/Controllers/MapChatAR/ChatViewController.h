@@ -26,6 +26,8 @@
 	int page;
 
 	BOOL isLoadingMoreMessages;
+    
+    dispatch_queue_t getMoreMessagesWorkQueue;
 }
 
 @property (nonatomic, assign) id delegate;
