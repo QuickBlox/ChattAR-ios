@@ -262,6 +262,8 @@ static CGFloat const kChatBarHeight4    = 94.0f;
 
 - (void)rightButtonDidPress:(id)sender
 {
+    [chatInput resignFirstResponder];
+    
     // Show profile
 	NSString *url = [NSString stringWithFormat:@"http://www.facebook.com/profile.php?id=%@", [chatHistory.to objectForKey:kId]];
     

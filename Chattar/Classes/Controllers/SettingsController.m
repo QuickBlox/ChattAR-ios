@@ -122,7 +122,7 @@
 -(IBAction)linksAction:(id)sender{
     NSString *url;
 	if (((ButtonWithUnderlining*)sender).tag == 0){
-		url = @"http://QuickBlox.com/";
+		url = @"http://injoit.com/";
 	}else {
 		url = @"http://quickblox.com/";
 	}
