@@ -507,36 +507,39 @@
 {
     int index			= 0;
 
-	for (ARGeoCoordinate *geoLocation in self.coordinates) 
-	{
+    if([self.coordinates count]){
+        for (ARGeoCoordinate *geoLocation in self.coordinates) 
+        {
 		
-		if ([geoLocation isKindOfClass:[ARGeoCoordinate class]]) {
-			[geoLocation calibrateUsingOrigin:_centerLocation];
+            if ([geoLocation isKindOfClass:[ARGeoCoordinate class]]) {
+                [geoLocation calibrateUsingOrigin:_centerLocation];
 			
-			if (geoLocation.radialDistance > self.maximumScaleDistance) {
-				self.maximumScaleDistance = geoLocation.radialDistance;
+                if (geoLocation.radialDistance > self.maximumScaleDistance) {
+                    self.maximumScaleDistance = geoLocation.radialDistance;
+                }
             }
-		}
         
-        // update distance
-        ARMarkerView *marker = [coordinateViews objectAtIndex:index];
-        [marker updateDistance:_centerLocation];
+            // update distance
+            ARMarkerView *marker = [coordinateViews objectAtIndex:index];
+            [marker updateDistance:_centerLocation];
         
-        ++index;
-	}
+            ++index;
+        }
     
+
     
-    // sort markers by distance
-    int i,j;
-    UIView *temp;
-    int n = [coordinateViews count];
-    for (i=0; i<n-1; i++) {
-        for (j=0; j<n-1-i; j++) {
-            if ([[coordinateViews objectAtIndex:j] distance] > [[coordinateViews objectAtIndex:j+1] distance]) {
-				temp = [[coordinateViews objectAtIndex:j] retain];
-				[coordinateViews replaceObjectAtIndex:j withObject:[coordinateViews objectAtIndex:j+1]];
-				[coordinateViews replaceObjectAtIndex:j+1 withObject:temp];
-                [temp release];
+        // sort markers by distance
+        int i,j;
+        UIView *temp;
+        int n = [coordinateViews count];
+        for (i=0; i<n-1; i++) {
+            for (j=0; j<n-1-i; j++) {
+                if ([[coordinateViews objectAtIndex:j] distance] > [[coordinateViews objectAtIndex:j+1] distance]) {
+                    temp = [[coordinateViews objectAtIndex:j] retain];
+                    [coordinateViews replaceObjectAtIndex:j withObject:[coordinateViews objectAtIndex:j+1]];
+                    [coordinateViews replaceObjectAtIndex:j+1 withObject:temp];
+                    [temp release];
+                }
             }
         }
     }
