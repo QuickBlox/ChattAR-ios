@@ -400,7 +400,11 @@
     [self.chatPoints addObjectsFromArray:self.allChatPoints];
     //
     // add all checkins
-    [self.chatPoints addObjectsFromArray:self.allCheckins];
+    for(UserAnnotation *checkinAnnotatin in self.allCheckins){
+        if(![self.chatPoints containsObject:checkinAnnotatin]){
+            [self.chatPoints addObject:checkinAnnotatin];
+        }
+    }
     
     
     
@@ -463,7 +467,11 @@
     [friendsIds release];
     //
     // add all checkins
-    [self.chatPoints addObjectsFromArray:self.allCheckins];
+    for(UserAnnotation *checkinAnnotatin in self.allCheckins){
+        if(![self.chatPoints containsObject:checkinAnnotatin]){
+            [self.chatPoints addObject:checkinAnnotatin];
+        }
+    }
     
     [mapViewController refreshWithNewPoints:self.mapPoints];
     [arViewController refreshWithNewPoints:self.mapPoints];
@@ -1205,14 +1213,16 @@
                 [self addNewPointToMapAR:checkinAnnotation isFBCheckin:YES];
 
                 // show Message on Chat
-                [self addNewMessageToChat:checkinAnnotation addToTop:NO withReloadTable:NO isFBCheckin:YES];
+                UserAnnotation *chatAnnotation = [checkinAnnotation copy];
                 
+                [self addNewMessageToChat:chatAnnotation addToTop:NO withReloadTable:NO isFBCheckin:YES];
                 
                 previousPlaceID = [place objectForKey:kId];
                 previousFBUserID = fbUserID;
                 
-                [self.allCheckins addObject:checkinAnnotation];
+                [self.allCheckins addObject:chatAnnotation];
                 [checkinAnnotation release];
+                [chatAnnotation release];
             }
         }
     }

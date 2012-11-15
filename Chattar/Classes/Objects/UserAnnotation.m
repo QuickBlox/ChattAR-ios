@@ -115,5 +115,35 @@
     return desc;
 }
 
+#pragma mark -
+#pragma mark NSCopying
+
+-(id)copyWithZone:(NSZone *)zone
+{
+    UserAnnotation *copy = [[[self class] allocWithZone:zone] init];
+    
+    copy.userPhotoUrl       = [[self.userPhotoUrl copyWithZone:zone] autorelease];
+    copy.userName           = [[self.userName copyWithZone:zone] autorelease];
+    copy.userStatus         = [[self.userStatus copyWithZone:zone] autorelease];
+    copy.coordinate         = self.coordinate;
+    copy.createdAt          = [[self.createdAt copyWithZone:zone] autorelease];
+    
+    copy.fbUser             = [[self.fbUser copyWithZone:zone] autorelease];
+    copy.fbUserId           = [[self.fbUserId copyWithZone:zone] autorelease];
+    copy.geoDataID          = self.geoDataID;
+    copy.fbCheckinID        = [[self.fbCheckinID copyWithZone:zone] autorelease];
+    copy.fbPlaceID          = [[self.fbPlaceID copyWithZone:zone] autorelease];
+    copy.qbUserID           = self.qbUserID;
+    
+    copy.distance           = self.distance;
+    
+    copy.quotedUserFBId     = [[self.quotedUserFBId copyWithZone:zone] autorelease];
+    copy.quotedUserPhotoURL = [[self.quotedUserPhotoURL copyWithZone:zone] autorelease];
+    copy.quotedUserName     = [[self.quotedUserName copyWithZone:zone] autorelease];
+    copy.quotedMessageDate  = [[self.quotedMessageDate copyWithZone:zone] autorelease];
+    copy.quotedMessageText  = [[self.quotedMessageText copyWithZone:zone] autorelease];
+    
+    return copy;
+}
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 /** Map Annotation class */
-@interface UserAnnotation : NSObject <MKAnnotation, NSCoding>{
+@interface UserAnnotation : NSObject <MKAnnotation, NSCoding, NSCopying>{
     NSString *userPhotoUrl;
     NSString *userName;
     NSString *userStatus;
