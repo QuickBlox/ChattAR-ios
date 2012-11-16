@@ -630,15 +630,15 @@
     // Add to Chat
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable isFBCheckin:NO];
     
+    if(newAnnotation.coordinate.latitude != 0.0f && newAnnotation.coordinate.longitude != 0.0f){
+        // Add to Map
+        [self addNewPointToMapAR:[newAnnotation copy]isFBCheckin:NO];
     
-    // Add to Map
-    [self addNewPointToMapAR:newAnnotation isFBCheckin:NO];
-	
+        // update AR
+        [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
+    }
+
 	[newAnnotation release];
-    
-    
-    // update AR
-    [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
 }
 
 - (void)addNewPointToMapAR:(UserAnnotation *)point isFBCheckin:(BOOL)isFBCheckin{

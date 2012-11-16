@@ -53,7 +53,6 @@
         [activityIndicator stopAnimating];
         
         [self showLoginButton:YES];
-        //loginButton.hidden = NO;
     }
 
 }
@@ -144,7 +143,6 @@
     
     [activityIndicator startAnimating];
     [self showLoginButton:NO];
-    //loginButton.hidden = YES;
 }
 
 - (void)fbDidNotLogin:(BOOL)cancelled{}
@@ -209,7 +207,6 @@
                 [activityIndicator stopAnimating];
                 
                 [self showLoginButton:YES];
-                //loginButton.hidden = NO;
             }else{
                 // get user's profile
                 [[FBService shared] userProfileWithDelegate:self];
