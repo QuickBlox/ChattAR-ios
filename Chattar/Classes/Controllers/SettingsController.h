@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
 
-@interface SettingsController : UIViewController{
+@interface SettingsController : UIViewController <UIAlertViewDelegate>{
     BOOL isInitialized;
 }
 

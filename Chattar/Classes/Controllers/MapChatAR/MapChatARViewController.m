@@ -1336,7 +1336,7 @@
                 contextArray = (NSArray *)context;
                 
                 // basic
-                if(![[contextArray lastObject] isKindOfClass:QBLGeoData.class]){
+                if(![[contextArray lastObject] isKindOfClass:QBLGeoData.class] && [contextArray count]){
                     contextType = [contextArray objectAtIndex:0];
                     points = [contextArray objectAtIndex:1];
                 }// else{
@@ -1629,10 +1629,7 @@
                 }
                 [fbChatUsersIds addObject:geodata.user.facebookID];
                 
-                //add users with only nonzero coordinates
-                if(geodata.longitude != 0 && geodata.latitude != 0){
-                    [geodataProcessed addObject:geodata];
-                }
+                [geodataProcessed addObject:geodata];
             }
             
             if(fbChatUsersIds == nil){

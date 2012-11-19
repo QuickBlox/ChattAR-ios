@@ -12,6 +12,9 @@
 #import "AppDelegate.h"
 #import "WebViewController.h"
 
+#define isLogoutAlert 101
+#define isClearCasheAlert 102
+
 @interface SettingsController ()
 
 @end
@@ -136,36 +139,28 @@
 
 // logout
 -(void)logoutButtonDidPress{
-    
-    // remove push subscription to this device
-    [QBMessages TUnregisterSubscriptionWithDelegate:nil];
-
-    // show splash
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES showLoginButton:YES];
-    
-    isInitialized = NO;
-    
-    // notify
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLogout object:nil];
-    
-    // logout
-    [[FBService shared].facebook logout];
-    dispatch_async( dispatch_get_main_queue(), ^{
-        [[FBService shared] logOutChat];
-    });
-}
-
-- (IBAction)clearCache:(id)sender {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Do you really want to clear the cache?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+        
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure you want to sign out?"
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"Yes"
+                                              otherButtonTitles:@"No", nil];
+    [alert setTag:isLogoutAlert];
     [alert show];
     [alert release];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if(buttonIndex == 1){
-        [[DataManager shared] clearCache];
-    }
+// claer cashe
+- (IBAction)clearCache:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:@"Do you really want to clear the cache?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Yes", nil];
+    [alert setTag:isClearCasheAlert];
+    [alert show];
+    [alert release];
 }
 
 // Sound/Vibro
@@ -185,6 +180,46 @@
         // PopUp - enable/disable 
         case 3:
             [NotificationManager popUpEnable:switchView.on];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - 
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    switch (alertView.tag) {
+        // claer cashe
+        case isClearCasheAlert:
+            if(buttonIndex == 1){
+                [[DataManager shared] clearCache];
+            }
+            break;
+            
+        // logout
+        case isLogoutAlert:
+            if(buttonIndex == 0){
+                // remove push subscription to this device
+                [QBMessages TUnregisterSubscriptionWithDelegate:nil];
+            
+                // show splash
+                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) showSplashWithAnimation:YES showLoginButton:YES];
+            
+                isInitialized = NO;
+            
+                // notify
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLogout object:nil];
+            
+                // logout
+                [[FBService shared].facebook logout];
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [[FBService shared] logOutChat];
+                });
+            }
             break;
             
         default:
