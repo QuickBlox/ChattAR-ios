@@ -626,19 +626,76 @@
     
     newAnnotation.distance  = [geoData.location distanceFromLocation:self.locationManager.location];
     
+    if(newAnnotation.coordinate.latitude == 0.0f && newAnnotation.coordinate.longitude == 0.0f)
+    {
+        newAnnotation.distance = 0;
+    }
     
     // Add to Chat
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable isFBCheckin:NO];
     
-    if(newAnnotation.coordinate.latitude != 0.0f && newAnnotation.coordinate.longitude != 0.0f){
+    if(newAnnotation.coordinate.latitude == 0.0f && newAnnotation.coordinate.longitude == 0.0f){
+        [self updateStatus:newAnnotation];
+    }else{
         // Add to Map
         [self addNewPointToMapAR:[newAnnotation copy]isFBCheckin:NO];
-    
+        
         // update AR
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
     }
 
 	[newAnnotation release];
+}
+
+- (void)updateStatus:(UserAnnotation *)point{
+    
+    NSArray *currentMapAnnotations = [mapViewController.mapView.annotations copy];
+    
+    // Check for Map
+    BOOL isExistPoint = NO;
+    for (UserAnnotation *annotation in currentMapAnnotations)
+	{
+        // already exist, change status
+        if([point.fbUserId isEqualToString:annotation.fbUserId])
+		{
+            dispatch_async( dispatch_get_main_queue(), ^{
+                MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                [marker updateStatus:point.userStatus];// update status
+            });
+            
+            isExistPoint = YES;
+            
+            break;
+        }
+    }
+    
+    [currentMapAnnotations release];
+    
+    
+    // Check for AR
+    if(isExistPoint){
+        
+        NSArray *currentARMarkers = [arViewController.coordinateViews copy];
+        
+        for (ARMarkerView *marker in currentARMarkers)
+		{
+            // already exist, change status
+            if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
+			{
+                
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                    [marker updateStatus:point.userStatus];// update status
+                });
+                
+                isExistPoint = YES;
+                
+                break;
+            }
+        }
+        
+        [currentARMarkers release];
+    }
 }
 
 - (void)addNewPointToMapAR:(UserAnnotation *)point isFBCheckin:(BOOL)isFBCheckin{
@@ -766,7 +823,7 @@
         if(addedToCurrentChatState && reloadTable){
             // on main thread
             
-                [chatViewController.messagesTableView reloadData];
+            [chatViewController.messagesTableView reloadData];
          
         }
     });
@@ -1064,6 +1121,11 @@
         
         chatAnnotation.distance  = [geodata.location distanceFromLocation:self.locationManager.location];
         
+        if(chatAnnotation.coordinate.latitude == 0.0f && chatAnnotation.coordinate.longitude == 0.0f)
+        {
+            chatAnnotation.distance = 0;
+        }
+        
         [qbMessagesMutable replaceObjectAtIndex:index withObject:chatAnnotation];
         [chatAnnotation release];
         
@@ -1200,6 +1262,10 @@
                 
                 CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
                 checkinAnnotation.distance = [checkinLocation distanceFromLocation:self.locationManager.location];
+                if(checkinAnnotation.coordinate.latitude == 0.0f && checkinAnnotation.coordinate.longitude == 0.0f)
+                {
+                    checkinAnnotation.distance = 0;
+                }
                 [checkinLocation release];
                 
                 // add to Storage
