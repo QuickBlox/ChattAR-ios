@@ -533,7 +533,7 @@
         activityIndicator.tag = 1101;
         [self.view addSubview:activityIndicator];
         [activityIndicator startAnimating];
-        
+        [self.allFriendsSwitch setAlpha:0.0f];
 
     }
     
@@ -843,6 +843,7 @@
 
     // hide wheel
     [activityIndicator removeFromSuperview];
+    [self.allFriendsSwitch setAlpha:1.0f];
     activityIndicator = nil;
     
     
@@ -1361,6 +1362,9 @@
 
 - (void)logoutDone{
     isInitialized = NO;
+
+    [self.allFriendsSwitch setValue:1.0f];
+    [self.allFriendsSwitch setAlpha:1.0f];
     
     [self.allChatPoints removeAllObjects];
 	[self.allCheckins removeAllObjects];
@@ -1655,6 +1659,7 @@
         // errors
         }else{
             [activityIndicator removeFromSuperview];
+            [self.allFriendsSwitch setAlpha:1.0f];
             activityIndicator = nil;
         }
     }
