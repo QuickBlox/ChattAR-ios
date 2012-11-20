@@ -27,6 +27,8 @@
     UIActivityIndicatorView *activityIndicator;
     
     dispatch_queue_t processCheckinsQueue;
+    
+    BOOL showAllUsers;
 }
 
 @property (assign) NSMutableArray* allMapPoints;

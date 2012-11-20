@@ -91,6 +91,7 @@
         
         isInitialized = NO;
         
+        showAllUsers = NO;
         
         // logout
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logoutDone) name:kNotificationLogout object:nil];
@@ -345,13 +346,19 @@
     switch (stateValue) {
         // show Friends
         case 0:{
-            [self showFriends];
+            if(!showAllUsers){
+                [self showFriends];
+                showAllUsers = YES;
+            }
         }
         break;
             
         // show World
         case 1:{
-            [self showWorld];
+            if(showAllUsers){
+                [self showWorld];
+                showAllUsers = NO;
+            }
         }
         break;
     }
@@ -638,7 +645,7 @@
         [self updateStatus:newAnnotation];
     }else{
         // Add to Map
-        [self addNewPointToMapAR:[newAnnotation copy]isFBCheckin:NO];
+        [self addNewPointToMapAR:[[newAnnotation copy] autorelease] isFBCheckin:NO];
         
         // update AR
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
@@ -687,8 +694,6 @@
                     ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
                     [marker updateStatus:point.userStatus];// update status
                 });
-                
-                isExistPoint = YES;
                 
                 break;
             }

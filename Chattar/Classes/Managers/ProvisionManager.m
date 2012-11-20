@@ -12,7 +12,7 @@
 
 +(BOOL)isDevelopmentProvision{
     
-    BOOL isDev;
+    BOOL isDev = NO;
     
     NSString *profilePath = [[NSBundle mainBundle] pathForResource:@"embedded.mobileprovision" ofType:nil];
     NSString *profileAsString = [NSString stringWithContentsOfFile:profilePath encoding:NSISOLatin1StringEncoding error:NULL];
