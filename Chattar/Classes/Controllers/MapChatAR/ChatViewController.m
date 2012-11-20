@@ -600,7 +600,7 @@
                 distanceLabel.text = [NSString stringWithFormat:@"%i km", currentAnnotation.distance/1000];
             } else if(currentAnnotation.distance == 0){
                 [distanceLabel setFont:[UIFont boldSystemFontOfSize:10]];
-                distanceLabel.text = [NSString stringWithFormat:@"undefined"];
+                 distanceLabel.text = [NSString stringWithFormat:@"-"];
             }else{
                 distanceLabel.text = [NSString stringWithFormat:@"%i m", currentAnnotation.distance];
             }

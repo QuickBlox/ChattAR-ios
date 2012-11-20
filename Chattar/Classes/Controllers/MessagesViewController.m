@@ -193,9 +193,9 @@
         [currentMessage release];
         
 		// last message's date
-		lastMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(220, 7, 100, 13)];
+		lastMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 100, 13)];
 		lastMessageDate.tag = 1104;
-		[lastMessageDate setFont:[UIFont systemFontOfSize:12]];
+		[lastMessageDate setFont:[UIFont systemFontOfSize:10]];
 		[lastMessageDate setTextColor:[UIColor grayColor]];
 		[lastMessageDate setBackgroundColor:[UIColor clearColor]];
 		[cell.contentView addSubview:lastMessageDate];
