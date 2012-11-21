@@ -30,6 +30,13 @@
     
     if(IS_HEIGHT_GTE_568){
         [self.backgroundImage setImage:[UIImage imageNamed:@"Default-568h@2x.png"]];
+        CGRect loginButtonFrame = self->loginButton.frame;
+        loginButtonFrame.origin.y -= 22;
+        [self->loginButton setFrame:loginButtonFrame];
+        
+        CGRect activityIndicatorFrame = self->activityIndicator.frame;
+        activityIndicatorFrame.origin.y -= 22;
+        [self->activityIndicator setFrame:activityIndicatorFrame];
     }
 }
 

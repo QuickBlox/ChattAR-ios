@@ -102,7 +102,9 @@
 
 - (void)dealloc
 {
-    dispatch_release(processCheckinsQueue);
+    if(processCheckinsQueue != NULL){
+        dispatch_release(processCheckinsQueue);
+    }
     
     self.mapViewController = nil;
     self.chatViewController = nil;

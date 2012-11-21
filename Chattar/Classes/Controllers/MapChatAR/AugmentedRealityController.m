@@ -101,6 +101,7 @@
     
 	distanceSlider = [[UISlider alloc] init];
 	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
+    
 	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
 	distanceSlider.minimumValue =  0;
 	distanceSlider.maximumValue = [sliderNumbers count]-1;
@@ -122,6 +123,16 @@
     // set dist
     NSUInteger index = distanceSlider.value;
     switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+    
+    if(IS_HEIGHT_GTE_568){
+        CGRect distanceSliderFrame = self.distanceSlider.frame;
+        distanceSliderFrame.origin.y += 44;
+        [self.distanceSlider setFrame:distanceSliderFrame];
+        
+        CGRect distanceLabelFrame = self.distanceLabel.frame;
+        distanceLabelFrame.origin.y += 44;
+        [self.distanceLabel setFrame:distanceLabelFrame];
+    }
 }
 
 -(void)distanceDidChanged:(UISlider *)slider

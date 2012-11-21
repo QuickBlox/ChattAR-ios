@@ -1462,8 +1462,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = "";
@@ -1472,8 +1472,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "95F3EABD-F7E1-4D80-B351-CC221D213D51";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "95F3EABD-F7E1-4D80-B351-CC221D213D51";
+				PROVISIONING_PROFILE = "2B219950-DF90-4E98-A1C7-7C2DFB3A1832";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6811ABB8-7064-4FE0-B6D4-54C1AFA42A2A";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1510,8 +1510,8 @@
 		636735FC1552CF590061BF75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Externals\"",
@@ -1529,8 +1529,8 @@
 				);
 				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Chattar;
-				PROVISIONING_PROFILE = "95F3EABD-F7E1-4D80-B351-CC221D213D51";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "95F3EABD-F7E1-4D80-B351-CC221D213D51";
+				PROVISIONING_PROFILE = "2B219950-DF90-4E98-A1C7-7C2DFB3A1832";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6811ABB8-7064-4FE0-B6D4-54C1AFA42A2A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
