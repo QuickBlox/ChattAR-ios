@@ -714,14 +714,18 @@
     BOOL isExistPoint = NO;
     for (UserAnnotation *annotation in currentMapAnnotations)
 	{
+        NSDate *newCreateDateTime = point.createdAt;
+        NSDate *currentCreateDateTime = annotation.createdAt;
         // already exist, change status
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
-            dispatch_async( dispatch_get_main_queue(), ^{
-                MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-                [marker updateStatus:point.userStatus];// update status
-                [marker updateCoordinate:point.coordinate];
-            });
+            if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                    [marker updateStatus:point.userStatus];// update status
+                    [marker updateCoordinate:point.coordinate];
+                });
+            }
 
             isExistPoint = YES;
             
@@ -739,16 +743,19 @@
         
         for (ARMarkerView *marker in currentARMarkers)
 		{
+            NSDate *newCreateDateTime = point.createdAt;
+            NSDate *currentCreateDateTime = marker.userAnnotation.createdAt;
             // already exist, change status
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
+                if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
+                    dispatch_async( dispatch_get_main_queue(), ^{
+                        ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                        [marker updateStatus:point.userStatus];// update status
+                        [marker updateCoordinate:point.coordinate]; // update location  
+                    });
+                }
                 
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                    [marker updateStatus:point.userStatus];// update status
-                    [marker updateCoordinate:point.coordinate]; // update location  
-                });
-                               
                 isExistPoint = YES;
                                
                 break;
@@ -1271,10 +1278,6 @@
                 
                 CLLocation *checkinLocation = [[CLLocation alloc] initWithLatitude: coordinate.latitude longitude: coordinate.longitude];
                 checkinAnnotation.distance = [checkinLocation distanceFromLocation:self.locationManager.location];
-                if(checkinAnnotation.coordinate.latitude == 0.0f && checkinAnnotation.coordinate.longitude == 0.0f)
-                {
-                    checkinAnnotation.distance = 0;
-                }
                 [checkinLocation release];
                 
                 // add to Storage
@@ -1444,7 +1447,12 @@
                 
                     // conversation
                     NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil];
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    if(processCheckinsQueue == NULL){
+                        processCheckinsQueue = dispatch_queue_create("com.quickblox.chattar.process.checkins.queue", NULL);
+                    }
+                    // convert checkins
+                    dispatch_async(processCheckinsQueue, ^{
                         [self processQBCheckins:data];
                     });
                 
@@ -1474,7 +1482,12 @@
 
                     // conversation
                     NSArray *data = [NSArray arrayWithObjects:[result.body allValues], points, nil]; 
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    if(processCheckinsQueue == NULL){
+                        processCheckinsQueue = dispatch_queue_create("com.quickblox.chattar.process.checkins.queue", NULL);
+                    }
+                    // convert checkins
+                    dispatch_async(processCheckinsQueue, ^{
                         [self processQBChatMessages:data];
                     });
                 
@@ -1552,11 +1565,10 @@
                 }
             }
             
-            if(processCheckinsQueue == NULL){
-                processCheckinsQueue = dispatch_queue_create("com.quickblox.chattar.process.checkins.queue", NULL);  
-            }
-            
             if([result.body isKindOfClass:NSArray.class]){
+                if(processCheckinsQueue == NULL){
+                    processCheckinsQueue = dispatch_queue_create("com.quickblox.chattar.process.checkins.queue", NULL);
+                }
                 // convert checkins
                 dispatch_async(processCheckinsQueue, ^{
                     [self processFBCheckins:(NSArray *)result.body];

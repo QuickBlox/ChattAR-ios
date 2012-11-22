@@ -95,6 +95,19 @@
 }
 
 - (IBAction)sendMessageDidPress:(id)sender{
+    
+    if (![Reachability internetConnected]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"No internet connection."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
     // check for empty
     if ([[messageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0) {
         return;
