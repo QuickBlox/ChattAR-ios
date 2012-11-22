@@ -105,6 +105,7 @@
 
 - (void)logoutDone{
     isInitialized = NO;
+    [self.searchField setText:nil];
 }
 
 - (void)touchOnView:(UIView *)view

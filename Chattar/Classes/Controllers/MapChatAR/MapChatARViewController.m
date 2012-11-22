@@ -293,7 +293,6 @@
         if(IS_HEIGHT_GTE_568){
             [arViewController.view setFrame:CGRectMake(0, 0, 320, 475)];
         }else{
-            //[arViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
             [arViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
         }
     
@@ -309,7 +308,6 @@
 	
     if([chatViewController.view superview] == nil){
         [self.view addSubview:chatViewController.view];
-//        [chatViewController.view setFrame:CGRectMake(0, 0, 320, 387)];
     }
     [mapViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];
@@ -322,7 +320,6 @@
 	
     if([mapViewController.view superview] == nil){
         [self.view addSubview:mapViewController.view];
-//        [mapViewController.view setFrame:CGRectMake(0, 0, 320, 462)];
     }
     [chatViewController.view removeFromSuperview];
     [arViewController.view removeFromSuperview];
@@ -542,7 +539,9 @@
         activityIndicator.tag = 1101;
         [self.view addSubview:activityIndicator];
         [activityIndicator startAnimating];
-        [self.allFriendsSwitch setAlpha:0.0f];
+        [self.allFriendsSwitch setEnabled:NO];
+        [self.chatViewController.messageField setEnabled:NO];
+        [self.arViewController.distanceSlider setEnabled:NO];
 
     }
     
@@ -850,7 +849,9 @@
 
     // hide wheel
     [activityIndicator removeFromSuperview];
-    [self.allFriendsSwitch setAlpha:1.0f];
+    [self.allFriendsSwitch setEnabled:YES];
+    [self.chatViewController.messageField setEnabled:YES];
+    [self.arViewController.distanceSlider setEnabled:YES];
     activityIndicator = nil;
     
     
@@ -1369,9 +1370,14 @@
 
 - (void)logoutDone{
     isInitialized = NO;
+    showAllUsers  = NO;
 
     [self.allFriendsSwitch setValue:1.0f];
-    [self.allFriendsSwitch setAlpha:1.0f];
+    
+    [self.arViewController.distanceLabel setText:[NSString stringWithFormat:@"%d km", 10]];
+    [self.arViewController.distanceSlider setValue:2];
+    
+    [self.chatViewController.messageField setText:nil];
     
     [self.allChatPoints removeAllObjects];
 	[self.allCheckins removeAllObjects];
@@ -1666,7 +1672,9 @@
         // errors
         }else{
             [activityIndicator removeFromSuperview];
-            [self.allFriendsSwitch setAlpha:1.0f];
+            [self.allFriendsSwitch setEnabled:YES];
+            [self.chatViewController.messageField setEnabled:YES];
+            [self.arViewController.distanceSlider setEnabled:YES];
             activityIndicator = nil;
         }
     }
