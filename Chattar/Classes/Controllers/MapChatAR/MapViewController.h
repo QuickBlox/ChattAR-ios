@@ -19,6 +19,8 @@
     
     BOOL canRotate;
     int annotationsViewCount;
+    
+    MKCoordinateRegion initialRegion;
 }
 
 @property (nonatomic, assign) id delegate;

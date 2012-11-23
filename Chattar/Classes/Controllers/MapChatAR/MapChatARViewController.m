@@ -485,7 +485,7 @@
 }
 
 - (BOOL)isAllShowed{
-    if(allFriendsSwitch.value == worldValue){
+    if(allFriendsSwitch.value >= worldValue){
         return YES;
     }
     

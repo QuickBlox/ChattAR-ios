@@ -83,6 +83,8 @@
     compassFrame.origin.x = 260;
     compassFrame.origin.y = 15;
     
+    initialRegion = self.mapView.region;
+    
     [self.compass setImage:[UIImage imageNamed:@"Compass.png" ]];
     [self.compass setAlpha:0.0f];
     [self.compass setFrame:compassFrame];
@@ -149,6 +151,9 @@
 }
 
 - (void)clear{
+    
+    [self.mapView setRegion:initialRegion animated:NO];
+    
     [mapView setUserInteractionEnabled:NO];
     [mapView removeAnnotations:mapView.annotations];
 	mapView.userInteractionEnabled = YES;
