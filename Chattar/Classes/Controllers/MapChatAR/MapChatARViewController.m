@@ -667,8 +667,10 @@
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
             dispatch_async( dispatch_get_main_queue(), ^{
-                MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-                [marker updateStatus:point.userStatus];// update status
+                if (![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier]){
+                    MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                    [marker updateStatus:point.userStatus];// update status
+                }
             });
             
             isExistPoint = YES;
@@ -692,8 +694,10 @@
 			{
                 
                 dispatch_async( dispatch_get_main_queue(), ^{
-                    ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                    [marker updateStatus:point.userStatus];// update status
+                    if (![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier]){
+                        ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                        [marker updateStatus:point.userStatus];// update status
+                    }
                 });
                 
                 break;
@@ -721,9 +725,12 @@
 		{
             if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
                 dispatch_async( dispatch_get_main_queue(), ^{
-                    MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-                    [marker updateStatus:point.userStatus];// update status
-                    [marker updateCoordinate:point.coordinate];
+                    
+                    if (![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier]){
+                            MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                        [marker updateStatus:point.userStatus];// update status
+                        [marker updateCoordinate:point.coordinate];
+                    }
                 });
             }
 
@@ -750,9 +757,11 @@
 			{
                 if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
                     dispatch_async( dispatch_get_main_queue(), ^{
-                        ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                        [marker updateStatus:point.userStatus];// update status
-                        [marker updateCoordinate:point.coordinate]; // update location  
+                        if (![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier]){
+                            ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                            [marker updateStatus:point.userStatus];// update status
+                            [marker updateCoordinate:point.coordinate]; // update location
+                        }
                     });
                 }
                 
