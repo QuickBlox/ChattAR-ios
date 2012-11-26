@@ -725,7 +725,7 @@
 		{
             if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
                 dispatch_async( dispatch_get_main_queue(), ^{
-                    if ([point.userStatus length] < 6 || ([point.userStatus length] > 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                    if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
                             MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
                         [marker updateStatus:point.userStatus];// update status
                         [marker updateCoordinate:point.coordinate];
@@ -756,7 +756,7 @@
 			{
                 if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
                     dispatch_async( dispatch_get_main_queue(), ^{
-                        if ([point.userStatus length] < 6 || ([point.userStatus length] > 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                        if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
                             ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
                             [marker updateStatus:point.userStatus];// update status
                             [marker updateCoordinate:point.coordinate]; // update location
