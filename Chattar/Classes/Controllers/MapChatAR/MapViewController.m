@@ -73,6 +73,8 @@
         mapFrameZoomIn.origin.y = -49.0f;
     }
     
+    [self.mapView setFrame:mapFrameZoomOut];
+    
     //add compass image
     compass = [[UIImageView alloc] init];
     
