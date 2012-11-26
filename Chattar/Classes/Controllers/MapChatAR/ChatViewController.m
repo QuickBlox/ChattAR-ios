@@ -127,6 +127,11 @@
     messageField.text = [messageField.text  stringByReplacingOccurrencesOfString:@"@" withString:@""];
     
 	QBLGeoData *geoData = [QBLGeoData currentGeoData];
+    if(geoData.latitude == 0 && geoData.longitude == 0){
+        CLLocationManager *locationManager = [[[CLLocationManager alloc] init] autorelease];
+        [geoData setLatitude:locationManager.location.coordinate.latitude];
+        [geoData setLongitude:locationManager.location.coordinate.longitude];
+    }
 	geoData.user = [DataManager shared].currentQBUser;
 	
     // set body - with quote or without
