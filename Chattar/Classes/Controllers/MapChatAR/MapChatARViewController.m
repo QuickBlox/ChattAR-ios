@@ -135,6 +135,12 @@
 {
     [super viewDidLoad];
     
+    if(IS_HEIGHT_GTE_568){
+        CGRect mapChatARFrame = self.view.frame;
+        mapChatARFrame.size.height += 88;
+        [self.view setFrame:mapChatARFrame];
+    }
+    
 	[locationManager startUpdatingLocation];
 	
     // AR/Map/Chat segment
