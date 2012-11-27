@@ -649,10 +649,14 @@
     [self addNewMessageToChat:newAnnotation addToTop:toTop withReloadTable:reloadTable isFBCheckin:NO];
     
     if(newAnnotation.coordinate.latitude == 0.0f && newAnnotation.coordinate.longitude == 0.0f){
-        [self updateStatus:newAnnotation];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self updateStatus:newAnnotation];
+        });
     }else{
         // Add to Map
-        [self addNewPointToMapAR:[[newAnnotation copy] autorelease] isFBCheckin:NO];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self addNewPointToMapAR:[[newAnnotation copy] autorelease] isFBCheckin:NO];
+        });
         
         // update AR
         [arViewController updateMarkersPositionsForCenterLocation:arViewController.centerLocation];
@@ -672,12 +676,10 @@
         // already exist, change status
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
-            dispatch_async( dispatch_get_main_queue(), ^{
-                if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
-                    MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-                    [marker updateStatus:point.userStatus];// update status
-                }
-            });
+            if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                [marker updateStatus:point.userStatus];// update status
+            }
             
             isExistPoint = YES;
             
@@ -698,13 +700,10 @@
             // already exist, change status
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
-                
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
-                        ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                        [marker updateStatus:point.userStatus];// update status
-                    }
-                });
+                if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                    ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                    [marker updateStatus:point.userStatus];// update status
+                }
                 
                 break;
             }
@@ -730,13 +729,11 @@
         if([point.fbUserId isEqualToString:annotation.fbUserId])
 		{
             if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
-                            MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
-                        [marker updateStatus:point.userStatus];// update status
-                        [marker updateCoordinate:point.coordinate];
-                    }
-                });
+                if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                        MapMarkerView *marker = (MapMarkerView *)[mapViewController.mapView viewForAnnotation:annotation];
+                    [marker updateStatus:point.userStatus];// update status
+                    [marker updateCoordinate:point.coordinate];
+                }
             }
 
             isExistPoint = YES;
@@ -761,13 +758,11 @@
             if([point.fbUserId isEqualToString:marker.userAnnotation.fbUserId])
 			{
                 if([newCreateDateTime compare:currentCreateDateTime] == NSOrderedDescending){
-                    dispatch_async( dispatch_get_main_queue(), ^{
-                        if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
-                            ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
-                            [marker updateStatus:point.userStatus];// update status
-                            [marker updateCoordinate:point.coordinate]; // update location
-                        }
-                    });
+                    if ([point.userStatus length] < 6 || ([point.userStatus length] >= 6 && ![[point.userStatus substringToIndex:6] isEqualToString:fbidIdentifier])){
+                        ARMarkerView *marker = (ARMarkerView *)[arViewController viewForExistAnnotation:point];
+                        [marker updateStatus:point.userStatus];// update status
+                        [marker updateCoordinate:point.coordinate]; // update location
+                    }
                 }
                 
                 isExistPoint = YES;
@@ -782,10 +777,8 @@
     
     // new -> add to Map, AR
     if(!isExistPoint){
-        __block BOOL addedToCurrentMapState = NO;
-        
-        dispatch_async( dispatch_get_main_queue(), ^{
-        
+            BOOL addedToCurrentMapState = NO;
+
             [self.allMapPoints addObject:point];
             
             if(point.geoDataID != -1){
@@ -803,8 +796,6 @@
                     [arViewController addPoint:point];
       
             }
-            
-        });
     }
     
     // Save to cache
@@ -1078,7 +1069,9 @@
         ++index;
         
         // show Point on Map/AR
-        [self addNewPointToMapAR:mapAnnotation isFBCheckin:NO];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [self addNewPointToMapAR:mapAnnotation isFBCheckin:NO];
+        });
     }
     
     // update AR
@@ -1302,7 +1295,9 @@
                 }
 
                 // show Point on Map/AR
-                [self addNewPointToMapAR:checkinAnnotation isFBCheckin:YES];
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [self addNewPointToMapAR:checkinAnnotation isFBCheckin:YES];
+                });
 
                 // show Message on Chat
                 UserAnnotation *chatAnnotation = [checkinAnnotation copy];
