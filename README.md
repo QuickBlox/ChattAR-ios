@@ -1,36 +1,59 @@
-<h2>ChattAR, Augmented Reality Chat for iOS</h2>
-ChattAR project is a code sample for [QuickBlox](http://quickblox.com/) platform and a real app at the same time. It is a great way for developers using QuickBlox platform to learn how to implement specific APIs. ChattAR features [Facebook API](http://developers.facebook.com/docs/), [Location](http://quickblox.com/developers/Location), [Chat](http://quickblox.com/developers/Chat) and Augmented Reality view
+# SASlideMenu
 
-This is an iOS build, integrated QuickBlox components are described below:
+Created by **stefanoa**
 
-<strong>Location Based Chat (MapChat) for iOS</strong>:
-This blox allows to see users POIs and content over GoogleMap
-![Location based Chat iOS](http://image.quickblox.com/d2b1370636df8c395673b363dc3f.injoit.png)
+A simple library to create sliding menus that can be used in storyboards and support static cells. Sliding menus are used in a number of popular applications like Facebook, Path 2.0, GMail, Glassboard and many others.
+
+The repository is an Xcode 4 project that contains two example of the usage of the library and the library itself.
+
+# Usage
+You can use SASlide menu with both static cells and dynamic cell prototypes. In the project you will find two different target that use both type of cells to create a slide menu.
+To use it in your project follow these steps:
+* Add the SASlideMenu subdir and it's contents to your project
+* Add a new class that inherits from **SASlideMenuViewController** and include/implement **SASlideMenuDataSource** and **SASlideMenuDelegate**.
+  * **SASlideMenuDataSource** is where you will code your customization while **SASlideMenuDelegate** is where you will add your code to implement the behavior of your app related to the **SASlideMenu** events.
+
+* Add a new **SASlideMenuRootViewController** in your storyboard
+* Add a **UITableViewController** and make it of the **SASlideMenuViewController** subclass you already implemented and customize it in accordance with your needs.
+* Connect the **SASlideMenuRootViewController** with your subclass with a custom segue of type **SASlideMenuLeftMenuSegue**, set the segue identifier to **leftMenu**.
+* To add Content ViewController you have to to do the following:
+ * Create your content view controller and embed it in a **UINavigationController**
+ * Connect it to the **SASlideMenuViewController** via a SASlideMenuContentSegue. If you are using static cells and you simply connect from the corresponding cell it is not possible to cache the content view controller and the **segueIdForIndexPath** must not be implemented. If you are using dynamic cell prototype or you are using static cells and you want to cache the content view controller, assign an identifier that will be returned in the **sugueIdForIndexPath:** method linked to the desired indexPath.
+ * To add a contextual right menu to that content, connect a new **UINavigationController** containing a **UITableViewController** to the **UINavigationController** using a **SASlideMenuRightMenuSegue** and set the segue identifier to **rightMenu**. Your **SASlideMenuDataSource** then have to return YES **hasRightMenuForIndexPath:(NSIndexPath*)indexPath**.
+
+Test it and you are done!
 
 
-Augmented Reality Chat (AR Chat) for iOS
-This blox allows to see users' POIs and content in Augmented Reality world (phone camera overlay)
+# Screenshots
+![Dynamic](https://raw.github.com/stefanoa/SASlideMenu/master/SASlideMenu/Screenshot-Dynamic-Menu.png)
 
-![Augmented Reality Chat iOS](http://image.quickblox.com/18756fed0ef2e040dd9c429f8ae4.injoit.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![AR Chat](http://image.quickblox.com/ef09e72520ae22cafcd3c9fb2d4c.injoit.png)
+![Dynamic Right Menu](https://raw.github.com/stefanoa/SASlideMenu/master/SASlideMenu/Screenshot-Dynamic-Right.png)
 
+![Static](https://raw.github.com/stefanoa/SASlideMenu/master/SASlideMenu/Screenshot-Static-Menu.png)
 
-Group Chat (Local Chat room) for iOS
-This blox allows to connect local users in a group chat room
-![Group Chat room iOS](http://image.quickblox.com/8ad72a6f221fec8cbe60540aaec7.injoit.png)
+# Requirements
 
+It needs iOS 5.1
+# License
 
-<h3>Important - how to build your own Augmented Reality Chat app</h3>
+**SASlideMenu** is available under the MIT license:
 
-If you want to build your own iOS app using ChattAR as a basis, please do the following:<br />
-Note: you can also watch our [video turotial](http://youtu.be/AgJZYBoxKz0) on Youtube.<br />
-1) download the project from here (GIT)<br />
-2) register a QuickBlox account (if you don't have one yet): http://admin.quickblox.com/register<br />
-3) log in to QuickBlox admin panel [http://admin.quickblox.com/signin]http://admin.quickblox.com/signin<br />
-4) create a new app <br />
-5) click on the app title in the list to reveal app details:<br />
+*Copyright (c) 2012 stefanoa*
 
-![App credentials](http://image.quickblox.com/592aa599660a52a97be4e478e3e6.injoit.png)
+*Permission is hereby granted, free of charge, to any person obtaining a copy*
+*of this software and associated documentation files (the "Software"), to deal*
+*in the Software without restriction, including without limitation the rights*
+*to use, copy, modify, merge, publish, distribute, sublicense, and/or sell*
+*copies of the Software, and to permit persons to whom the Software is*
+*furnished to do so, subject to the following conditions:*
 
-6) copy credentials (App ID, Authorization key, Authorization secret) into your ChattAR project code in /Chattar/FB_Radar/AppDelegate.m<br />
-7) Enjoy!
+*The above copyright notice and this permission notice shall be included in*
+*all copies or substantial portions of the Software.*
 
+*THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR*
+*IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,*
+*FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE*
+*AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER*
+*LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,*
+*OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN*
+*THE SOFTWARE.*
