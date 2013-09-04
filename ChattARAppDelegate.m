@@ -13,6 +13,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    // Set QuickBlox credentials
+    [QBSettings setApplicationID:771];
+    [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
+    [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
+    [QBSettings setRestAPIVersion:@"0.1.1"];
+    
+    
     return YES;
 }
 							

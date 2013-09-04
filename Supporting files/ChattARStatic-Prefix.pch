@@ -13,4 +13,10 @@
     #import <Foundation/Foundation.h>
     #import <Quickblox/Quickblox.h>
     #import <FacebookSDK/FacebookSDK.h>
+    #import <AudioToolbox/AudioToolbox.h>
+    #import <CoreAudio/CoreAudioTypes.h>
+    #import "Definitions.h"
+    #import "FBDefinitions.h"
+    #import "Reachability.h"
+    #import <AudioUnit/AudioUnit.h>
 #endif

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : UIViewController
+@interface SplashViewController : UIViewController <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>{
+    NSTimer		*presenceTimer;
+}
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
 
 -(IBAction)logIn:(id)sender;
 
