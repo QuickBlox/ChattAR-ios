@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-
+#import "FBServiceResultDelegate.h"
 
 @class XMPPStream;
 
-@interface FBService : NSObject 
+@interface FBService : NSObject <FBRequestDelegate>
 {
 	XMPPStream	*xmppStream;
 	
@@ -23,7 +23,10 @@
 @property (strong, nonatomic) FBSession *session;
 + (FBService *)shared;
 
+#pragma mark -
+#pragma mark Me
 
+- (void) userProfileWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate;
 
 #pragma mark -
 #pragma mark Messages & Chat

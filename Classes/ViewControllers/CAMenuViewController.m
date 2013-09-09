@@ -7,9 +7,15 @@
 //
 
 #import "CAMenuViewController.h"
-
+#import "SplashViewController.h"
+#import "FBService.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MenuCell.h"
+#import "ProfileCell.h"
+#import "DataManager.h"
+
+#define kGetFBFirstName     [[DataManager shared].currentFBUser objectForKey:kFirstName]
+#define kGetFBLastName      [[DataManager shared].currentFBUser objectForKey:kLastName]
 
 
 @implementation CAMenuViewController
@@ -75,6 +81,14 @@
 }
 
 
+-(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"%@",[[DataManager shared].currentFBUser objectForKey:kFirstName]);
+    NSLog(@"%@",[[DataManager shared].currentFBUser objectForKey:kLastName]);
+    NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
+    [self.firstNameField setText:firstLastName];
+    [super viewWillAppear:NO];
+}
+
 #pragma mark -
 #pragma mark SASlideMenuDelegate
 
@@ -97,6 +111,37 @@
 }
 -(void) slideMenuDidSlideOut{
     NSLog(@"slideMenuDidSlideOut");
+}
+
+- (void)viewDidUnload {
+    [self setFirstNameField:nil];
+    [super viewDidUnload];
+}
+
+
+#pragma mark -
+#pragma mark Log Out ChattAR
+
+- (IBAction)logOutChat:(id)sender {    
+    
+    // logout XMPP fb chat
+    [[FBService shared] logOutChat];
+
+    //log out from facebook
+    if ([FBSession activeSession].state == FBSessionStateOpen) {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+    }
+
+    //log out from QBChat
+    [[QBChat instance] logout];
+
+    //Destroy QBSession
+    [QBAuth destroySessionWithDelegate:nil];
+    
+    //clear  FBAccessToken and FBUser from DataManager
+    [[DataManager shared] clearFBAccess];
+    [[DataManager shared] clearFBUser];
+    
 }
 
 @end

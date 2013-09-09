@@ -87,6 +87,9 @@ static DataManager *instance = nil;
     return nil;
 }
 
+-(void)clearFBUser{
+    currentFBUser = nil;
+}
 
 #pragma mark -
 #pragma mark Application's documents directory

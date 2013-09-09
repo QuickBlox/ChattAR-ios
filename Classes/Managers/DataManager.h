@@ -59,6 +59,7 @@
 - (void) saveFBToken:(NSString *)token;
 - (void)clearFBAccess;
 - (NSDictionary *) fbUserToken;
+-(void)clearFBUser;
 
 
 

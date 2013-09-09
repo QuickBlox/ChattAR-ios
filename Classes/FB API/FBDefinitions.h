@@ -38,7 +38,6 @@
 #define kId                 @"id"
 #define kPlace              @"place"
 #define kPhoto              @"photo"
-#define kUserFirstName      @"first_name"
 #define kCountry            @"country"
 #define kCity               @"city"
 #define kLatitude           @"latitude"

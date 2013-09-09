@@ -5,15 +5,16 @@
 //  Created by QuickBlox developers on 07.05.12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
-
+#import "FBServiceResultDelegate.h"
 #import "FBService.h"
 #import "XMPPFramework.h"
-#import "DDLog.h"
 #import "DDTTYLogger.h"
 #import "XMPPStream.h"
 #import "DataManager.h"
 
-static FBService *instance = nil;
+
+
+static FBService *service = nil;
 
 @implementation FBService
 @synthesize fbToken;
@@ -23,12 +24,12 @@ static FBService *instance = nil;
 
 + (FBService *)shared {
 	@synchronized (self) {
-		if (instance == nil){ 
-            instance = [[self alloc] init];
+		if (service == nil){
+            service = [[self alloc] init];
         }
 	}
 	
-	return instance;
+	return service;
 }
 
 - (id)init{
@@ -38,6 +39,23 @@ static FBService *instance = nil;
 		[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
     }
     return self;
+}
+
+#pragma mark -
+#pragma mark Me
+
+// Get profile
+- (void) userProfileWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate{
+    FBRequest *meRequest = [FBRequest requestForMe];
+    [meRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+       // NSLog(@"result = %@, error = %@, kind %@", result, error, [result class]);
+        
+        FBGraphObject *user = (FBGraphObject *)result;
+        //save FB User
+        [DataManager shared].currentFBUser = [user mutableCopy];
+        NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
+        NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
+    }];
 }
 
 

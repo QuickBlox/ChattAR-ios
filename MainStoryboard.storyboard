@@ -42,11 +42,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ftf-Io-p04">
-                                <rect key="frame" x="71" y="487" width="178" height="27"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="I0v-LF-9tr">
+                                <rect key="frame" x="80" y="479" width="160" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" backgroundImage="loginButton.png">
+                                <state key="normal" image="loginButton.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -54,7 +54,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="logIn:" destination="2NK-i8-eUl" eventType="touchUpInside" id="tVA-z8-Y93"/>
+                                    <action selector="logIn:" destination="2NK-i8-eUl" eventType="touchUpInside" id="kON-J1-OJu"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -62,12 +62,12 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImage" destination="0G2-KS-0wp" id="PTl-6R-U8c"/>
-                        <outlet property="loginButton" destination="Ftf-Io-p04" id="TQd-ng-d7T"/>
+                        <outlet property="loginButton" destination="I0v-LF-9tr" id="qZL-MG-9Uj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3U-QH-eD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="782" y="-906"/>
+            <point key="canvasLocation" x="896" y="-906"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="0pQ-K8-zlO">
@@ -112,20 +112,32 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="fb_mnu@2x.png" id="bIl-LH-7Gm">
-                                                    <rect key="frame" x="20" y="7" width="37" height="29"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="logout_mnu@2x.png" id="L5o-St-Za9">
-                                                    <rect key="frame" x="189" y="2" width="42" height="37"/>
+                                                    <rect key="frame" x="11" y="8" width="22" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="John Pope" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Oa7-cT-stz">
-                                                    <rect key="frame" x="65" y="3" width="116" height="38"/>
+                                                    <rect key="frame" x="41" y="3" width="163" height="38"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="0.84534222146739135" green="0.84534222146739135" blue="0.84534222146739135" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l1M-mX-E6Y">
+                                                    <rect key="frame" x="197" y="8" width="31" height="26"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Button" image="logout_mnu@2x.png">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logOutChat:" destination="C3g-DQ-fRD" eventType="touchUpInside" id="7CQ-dT-DFv"/>
+                                                        <segue destination="2NK-i8-eUl" kind="custom" customClass="SplashViewSegue" id="GXn-8Q-nrq"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -253,6 +265,7 @@
                     </tableView>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     <connections>
+                        <outlet property="firstNameField" destination="Oa7-cT-stz" id="0rF-qm-iZl"/>
                         <segue destination="doc-P0-YCL" kind="custom" identifier="Chat" customClass="SASlideMenuContentSegue" id="POg-Df-gpJ"/>
                         <segue destination="FgT-Db-JXl" kind="custom" identifier="Map" customClass="SASlideMenuContentSegue" id="jgz-po-BPx"/>
                         <segue destination="79Z-YM-vAE" kind="custom" identifier="AR" customClass="SASlideMenuContentSegue" id="0IC-8a-lf6"/>
@@ -491,6 +504,10 @@
         </class>
         <class className="CAMenuViewController" superclassName="SASlideMenuViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CAMenuViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logOutChat:"/>
+                <relationship kind="outlet" name="firstNameField" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="ChatViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
@@ -500,10 +517,6 @@
         </class>
         <class className="MenuCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MenuCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="disclosureImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="itemDescription" candidateClass="UILabel"/>
-            </relationships>
         </class>
         <class className="MessagesViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MessagesViewController.h"/>
@@ -534,4 +547,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="GXn-8Q-nrq"/>
+    </inferredMetricsTieBreakers>
 </document>

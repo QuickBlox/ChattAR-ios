@@ -9,9 +9,10 @@
 #import "SplashViewController.h"
 #import "DataManager.h"
 #import "FBService.h"
+#import "Reachability.h"
 
 @implementation SplashViewController
-@synthesize backgroundImage;
+@synthesize backgroundImage, loginButton;
 
 
 #pragma mark
@@ -28,10 +29,13 @@
         [backgroundImage setImage:[UIImage imageNamed:@"Default@2x.png"]];
     }
     
-    
     // if session isn't open
+    NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_checkins", @"user_location", @"friends_checkins",
+                            @"friends_location", @"friends_status", @"read_mailbox",@"photo_upload",@"read_stream",
+                            @"publish_stream", @"user_photos", @"xmpp_login", @"user_about_me", nil];
+    
     if (![[FBService shared].session isOpen]) {
-        [FBService shared].session = [[FBSession alloc] init];
+        [FBService shared].session = [[FBSession alloc] initWithPermissions:permissions];
         [FBSession setActiveSession:[FBService shared].session];
     }
 
@@ -55,6 +59,7 @@
 #pragma mark Actions
 
 -(IBAction)logIn:(id)sender{
+    
     [self checkFBSession];
 }
 
@@ -85,6 +90,7 @@
                 
                 // create QB session
                 [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
+                [[FBService shared] userProfileWithDelegate:self];
             }
         }]; 
     }
@@ -93,12 +99,18 @@
     if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
         [self hideLoginButton:YES];
         
+        [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+            [[FBService shared] userProfileWithDelegate:self];
+        }];
+        
         // login to FB XMPP Chat
         [self loginToFacebookChat];
         
         // create QB session
         [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
+        
     }
+    
 }
 
 // LogIn to XMPP

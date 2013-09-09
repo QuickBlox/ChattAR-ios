@@ -10,8 +10,6 @@
 
 @implementation MenuCell
 
-@synthesize itemDescription;
-@synthesize disclosureImage;
 
 -(void) layoutSubviews{
     [super layoutSubviews];

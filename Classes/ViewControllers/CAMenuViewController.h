@@ -10,5 +10,9 @@
 #import "SASlideMenuViewController.h"
 #import "SASlideMenuDataSource.h"
 
-@interface CAMenuViewController :SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate>
+@interface CAMenuViewController :SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate, UIAlertViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+@property (strong, nonatomic) IBOutlet UILabel *firstNameField;
+
+- (IBAction)logOutChat:(id)sender;
+
 @end
