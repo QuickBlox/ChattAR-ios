@@ -15,9 +15,9 @@
     // Override point for customization after application launch.
     
     // Set QuickBlox credentials
-    [QBSettings setApplicationID:771];
-    [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
-    [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
+    [QBSettings setApplicationID:3997];
+    [QBSettings setAuthorizationKey:@"33B-kJF-teRCKDx"];
+    [QBSettings setAuthorizationSecret:@"rq3emCudpdLHmHh"];
     [QBSettings setRestAPIVersion:@"0.1.1"];
     
     

@@ -41,6 +41,7 @@
 
     //checkFBSession
     if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
+        [self.activityIndicatior startAnimating];
         [self checkFBSession];
     }
 }
@@ -51,6 +52,7 @@
 - (void)viewDidUnload {
     [self setBackgroundImage:nil];
     [self setLoginButton:nil];
+    [self setActivityIndicatior:nil];
     [super viewDidUnload];
 }
 
@@ -81,6 +83,7 @@
                 
             } else {
                 [self hideLoginButton:YES];
+                [self.activityIndicatior startAnimating];
                 
                 // save FB Token
                 [[DataManager shared] saveFBToken:[FBService shared].session.accessTokenData.accessToken];
@@ -90,7 +93,16 @@
                 
                 // create QB session
                 [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
-                [[FBService shared] userProfileWithDelegate:self];
+                
+                [[FBService shared] userProfileWithResultBlock:^(id result) {
+                    
+                    //save FB User
+                    FBGraphObject *user = (FBGraphObject *)result;
+                    [DataManager shared].currentFBUser = [user mutableCopy];
+                    
+                    NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
+                    NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
+                }];
             }
         }]; 
     }
@@ -100,7 +112,15 @@
         [self hideLoginButton:YES];
         
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            [[FBService shared] userProfileWithDelegate:self];
+            [[FBService shared] userProfileWithResultBlock:^(id result) {
+                
+                //save FB User
+                FBGraphObject *user = (FBGraphObject *)result;
+                [DataManager shared].currentFBUser = [user mutableCopy];
+                
+                NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
+                NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
+            }];
         }];
         
         // login to FB XMPP Chat
@@ -160,7 +180,7 @@
 
 -(void)chatDidLogin{
     NSLog(@"Chat login success");
-    
+    [self.activityIndicatior stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
 }
 

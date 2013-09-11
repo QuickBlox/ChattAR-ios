@@ -5,7 +5,6 @@
 //  Created by QuickBlox developers on 07.05.12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
-#import "FBServiceResultDelegate.h"
 #import "FBService.h"
 #import "XMPPFramework.h"
 #import "DDTTYLogger.h"
@@ -17,7 +16,6 @@
 static FBService *service = nil;
 
 @implementation FBService
-@synthesize fbToken;
 
 #pragma mark -
 #pragma mark Singletone
@@ -45,16 +43,10 @@ static FBService *service = nil;
 #pragma mark Me
 
 // Get profile
-- (void) userProfileWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate{
+- (void) userProfileWithResultBlock:(FBResultBlock)resultBlock{
     FBRequest *meRequest = [FBRequest requestForMe];
     [meRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-       // NSLog(@"result = %@, error = %@, kind %@", result, error, [result class]);
-        
-        FBGraphObject *user = (FBGraphObject *)result;
-        //save FB User
-        [DataManager shared].currentFBUser = [user mutableCopy];
-        NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
-        NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
+        resultBlock(result);
     }];
 }
 

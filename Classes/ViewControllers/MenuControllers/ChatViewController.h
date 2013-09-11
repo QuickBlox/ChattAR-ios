@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatViewController : UIViewController
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate>
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

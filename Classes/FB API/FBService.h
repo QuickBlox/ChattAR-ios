@@ -6,27 +6,21 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-#import "FBServiceResultDelegate.h"
-
 @class XMPPStream;
 
-@interface FBService : NSObject <FBRequestDelegate>
+@interface FBService : NSObject
 {
 	XMPPStream	*xmppStream;
-	
-	BOOL		allowSelfSignedCertificates;
-	BOOL		allowSSLHostNameMismatch;
-	
 	NSTimer		*presenceTimer;
 }
-@property (nonatomic, strong) NSString *fbToken;
 @property (strong, nonatomic) FBSession *session;
+
 + (FBService *)shared;
 
 #pragma mark -
 #pragma mark Me
 
-- (void) userProfileWithDelegate:(NSObject <FBServiceResultDelegate> *)delegate;
+- (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
 
 #pragma mark -
 #pragma mark Messages & Chat

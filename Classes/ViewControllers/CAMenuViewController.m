@@ -137,7 +137,6 @@
 
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];
-    
     //clear  FBAccessToken and FBUser from DataManager
     [[DataManager shared] clearFBAccess];
     [[DataManager shared] clearFBUser];

@@ -78,6 +78,9 @@
 #define maxRequestsInBatch 50
 #define fmaxRequestsInBatch 50.f
 
+// QuickBlox ChatRoom Class
+#define kChatRoom   @"Chatroom"
+
 
 // methods type
 
@@ -94,3 +97,5 @@ typedef enum {
     FBQueriesTypesGetInboxMessages,	
     
 } FBQueriesTypes;
+
+typedef void(^FBResultBlock)(id);
