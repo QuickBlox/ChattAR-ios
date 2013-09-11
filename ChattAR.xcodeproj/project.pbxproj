@@ -175,8 +175,6 @@
 		6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C43217CDD579003C6893 /* SettingsViewController.m */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
-		6981247C17DE37FA00974C6A /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6981247B17DE37FA00974C6A /* TrendingDataSource.m */; };
-		6981247F17DE380D00974C6A /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 6981247E17DE380D00974C6A /* LocationDataSource.m */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
 		69A4028D17D740F900E7BE1F /* upic_local.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026617D740F900E7BE1F /* upic_local.png */; };
@@ -217,6 +215,8 @@
 		69A4779D17C50ADA00591A28 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A4779B17C50ADA00591A28 /* Quickblox.framework */; };
 		69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A4779F17C50AF800591A28 /* FacebookSDK.framework */; };
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
+		69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */; };
+		69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */; };
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
@@ -548,10 +548,6 @@
 		6954C43217CDD579003C6893 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6981247717DDFF2C00974C6A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		6981247A17DE37FA00974C6A /* TrendingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingDataSource.h; sourceTree = "<group>"; };
-		6981247B17DE37FA00974C6A /* TrendingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingDataSource.m; sourceTree = "<group>"; };
-		6981247D17DE380D00974C6A /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
-		6981247E17DE380D00974C6A /* LocationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataSource.m; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		69A4026417D740F900E7BE1F /* local_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = local_icon.png; sourceTree = "<group>"; };
 		69A4026517D740F900E7BE1F /* local_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_icon@2x.png"; sourceTree = "<group>"; };
@@ -595,6 +591,10 @@
 		69A4779B17C50ADA00591A28 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = SOURCE_ROOT; };
 		69A4779F17C50AF800591A28 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = External/FacebookSDK.framework; sourceTree = SOURCE_ROOT; };
 		69A477A517C513C100591A28 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
+		69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataSource.m; sourceTree = "<group>"; };
+		69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingDataSource.h; sourceTree = "<group>"; };
+		69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingDataSource.m; sourceTree = "<group>"; };
 		7B8C3FDE15D8D55800E42A41 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1465,6 +1465,7 @@
 		693C7F0217CCFDB400D7F0A9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				69E8ECCA17E0AB0300D614AA /* DataSources */,
 				690E4B2417D79B5900BD2792 /* FB API */,
 				69A402B117D7452D00E7BE1F /* Segues */,
 				6911FB0E17D5DA3D00FEADB4 /* Managers */,
@@ -1489,10 +1490,6 @@
 		693C7F0617CCFDB400D7F0A9 /* MenuControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6981247A17DE37FA00974C6A /* TrendingDataSource.h */,
-				6981247B17DE37FA00974C6A /* TrendingDataSource.m */,
-				6981247D17DE380D00974C6A /* LocationDataSource.h */,
-				6981247E17DE380D00974C6A /* LocationDataSource.m */,
 				6954C42517CDD502003C6893 /* ChatViewController.h */,
 				6954C42617CDD502003C6893 /* ChatViewController.m */,
 				6954C42817CDD53E003C6893 /* MapViewController.h */,
@@ -1607,6 +1604,17 @@
 				69A402B317D7452E00E7BE1F /* SplashViewSegue.m */,
 			);
 			path = Segues;
+			sourceTree = "<group>";
+		};
+		69E8ECCA17E0AB0300D614AA /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */,
+				69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */,
+				69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */,
+				69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */,
+			);
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 		7B8C3FCF15D8D55800E42A41 = {
@@ -1916,8 +1924,8 @@
 				69A402B017D7431E00E7BE1F /* CAMenuViewController.m in Sources */,
 				69A402B417D7452E00E7BE1F /* SplashViewSegue.m in Sources */,
 				690E4B2B17D79B5900BD2792 /* FBService.m in Sources */,
-				6981247C17DE37FA00974C6A /* TrendingDataSource.m in Sources */,
-				6981247F17DE380D00974C6A /* LocationDataSource.m in Sources */,
+				69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */,
+				69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
