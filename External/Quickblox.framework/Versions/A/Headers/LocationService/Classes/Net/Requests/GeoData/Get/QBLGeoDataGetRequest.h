@@ -18,6 +18,7 @@
 	// Filters
 	NSDate *createdAt;
 	NSUInteger userID;
+    NSArray *userIDs;
 	NSString *userName;
 	
 	// Diapazones
@@ -45,6 +46,9 @@
 
 /** User id. When specified, it will return only the instances created by QBUUser with id = userID. */
 @property (nonatomic) NSUInteger userID;
+
+/** User ids. When specified, it will return only the instances created by QBUUsers with ids = userIDs. */
+@property (nonatomic, retain) NSArray *userIDs;
 
 /** Substring. Search for API Users full_name and login fields. When specified, it will return only the instances created by API Users who have in login or full_name passed substring.*/
 @property (nonatomic, retain) NSString *userName;

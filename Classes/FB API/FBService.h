@@ -14,6 +14,7 @@
 	NSTimer		*presenceTimer;
 }
 @property (strong, nonatomic) FBSession *session;
+@property (strong, nonatomic) NSString *roomName;
 
 + (FBService *)shared;
 
@@ -21,6 +22,7 @@
 #pragma mark Me
 
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
+- (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock;
 
 #pragma mark -
 #pragma mark Messages & Chat

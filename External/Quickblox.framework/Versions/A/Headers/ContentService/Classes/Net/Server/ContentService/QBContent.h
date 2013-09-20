@@ -250,6 +250,26 @@
 
 
 #pragma mark -
+#pragma mark Update File Task
+
+/**
+ Update File task. Contains 3 quieries: Update Blob, Upload file, Declaring file uploaded
+ 
+ @param data file to be uploaded
+ @param blob file which need to be updated
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCFileUploadTaskResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable>*)TUpdateFileWithData:(NSData *)data
+                                        file:(QBCBlob *)file
+                                    delegate:(NSObject<QBActionStatusDelegate>*)delegate;
+
++ (NSObject<Cancelable>*)TUpdateFileWithData:(NSData*)data
+                                        file:(QBCBlob *)file
+                                    delegate:(NSObject<QBActionStatusDelegate>*)delegate context:(void *)context;
+
+
+#pragma mark -
 #pragma mark Download File Task
 
 /**

@@ -9,12 +9,13 @@
 #import "ChatViewController.h"
 #import "TrendingDataSource.h"
 #import "LocationDataSource.h"
+#import "FBService.h"
 
 @interface ChatViewController ()
 @property (nonatomic, strong) IBOutlet UITableView *trendingTableView;
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
-@property (nonatomic, strong) NSArray *names;
-@property (nonatomic, strong) NSArray *geoDataArray;
+
+@property (nonatomic, strong) NSArray *locations;
 @property (nonatomic, strong) TrendingDataSource *trendingDataSource;
 @property (nonatomic, strong) LocationDataSource *locationDataSource;
 @end
@@ -28,11 +29,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *array = [[NSArray alloc] initWithObjects:@"Andrey", @"Anton", @"Alex", @"Alexey",@"Alexandr", @"Bob", @"Bogdan", @"Denis", @"Dmitriy", @"Evgeniy", @"Elisey",@"Fillipp",@"Greg", @"Georg", @"Gleb", @"Igor",@"Illya", @"John", @"Job", @"Konstantin",@"Mitya", nil];
-    self.names = array;
+
+//    self.trendingTableView.layer.shadowRadius = 5.0f;
+//    self.trendingTableView.layer.shadowOffset = CGSizeMake(4.0f, 0.0);
+//    self.trendingTableView.layer.shadowOpacity = 1.0f;
+//    self.trendingTableView.layer.borderWidth = 0.1f;
+//    self.trendingTableView.layer.masksToBounds = NO;
+//    self.trendingTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    //self.trendingTableView.layer.borderColor = [[UIColor blackColor] CGColor];
+    
+//    NSArray *array = [[NSArray alloc] initWithObjects:@"Andrey", @"Anton", @"Alex", @"Alexey",@"Alexandr", @"Bob", @"Bogdan", @"Denis", @"Dmitriy", @"Evgeniy", @"Elisey",@"Fillipp",@"Greg", @"Georg", @"Gleb", @"Igor",@"Illya", @"John", @"Job", @"Konstantin",@"Mitya", nil];
     
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
+    self.trendingTableView.delegate = self;
+    self.locationTableView.delegate = self;
     
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
@@ -47,6 +58,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self getChatRooms];
     [super viewWillAppear:animated];
+    
+    // send presence
+    if (self.presenceTimer == nil) {
+        self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)viewDidUnload
@@ -87,6 +103,22 @@
     return _locationDataSource;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"kSegue"]){
+        
+    }
+}
+
+#pragma mark -
+#pragma mark Table View Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    QBCOCustomObject *currentObject = [_locations objectAtIndex:[indexPath row]];
+    NSString *room = [currentObject.fields objectForKey:kName];
+    [FBService shared].roomName = room;
+    [self performSegueWithIdentifier:@"kSegue" sender:nil];
+}
 
 #pragma mark -
 #pragma mark Custom Objects
@@ -104,9 +136,10 @@
         if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
             
             // reload tables
-            QBCOCustomObjectPagedResult *customObject = (QBCOCustomObjectPagedResult *)result;
-            _trendingDataSource.chatRooms = customObject.objects;
-            _locationDataSource.chatRooms = customObject.objects;
+            QBCOCustomObjectPagedResult *customObjects = (QBCOCustomObjectPagedResult *)result;
+            _trendingDataSource.chatRooms = customObjects.objects;
+            _locationDataSource.chatRooms = customObjects.objects;
+            _locations = customObjects.objects;
             [self.trendingTableView reloadData];
             [self.locationTableView reloadData];
         }

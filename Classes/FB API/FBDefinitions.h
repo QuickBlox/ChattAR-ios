@@ -67,6 +67,12 @@
 #define quoteDelimiter @"|"
 
 
+
+
+#define kGetFBFirstName     [[DataManager shared].currentFBUser objectForKey:kFirstName]
+#define kGetFBLastName      [[DataManager shared].currentFBUser objectForKey:kLastName]
+
+
 // online-offline statuses
 #define kOnOffStatus		@"on/off"
 #define kOnline				[NSNumber numberWithInt:1]

@@ -87,6 +87,8 @@
                 
                 // save FB Token
                 [[DataManager shared] saveFBToken:[FBService shared].session.accessTokenData.accessToken];
+                [DataManager shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
+                //NSLog(@"Access Token: %@", [DataManager shared].accessToken);
                 
                 // login to FB XMPP Chat
                 [self loginToFacebookChat];
@@ -101,7 +103,6 @@
                     [DataManager shared].currentFBUser = [user mutableCopy];
                     
                     NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
-                    NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
                 }];
             }
         }]; 
@@ -111,6 +112,9 @@
     if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
         [self hideLoginButton:YES];
         
+        [DataManager shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
+        //NSLog(@"Access Token: %@", [DataManager shared].accessToken);
+        
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             [[FBService shared] userProfileWithResultBlock:^(id result) {
                 
@@ -119,13 +123,11 @@
                 [DataManager shared].currentFBUser = [user mutableCopy];
                 
                 NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
-                NSLog(@"Mutable copy %@", [[DataManager shared].currentFBUser class]);
             }];
         }];
         
         // login to FB XMPP Chat
         [self loginToFacebookChat];
-        
         // create QB session
         [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
         
@@ -167,6 +169,7 @@
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
+        //NSMutableDictionary *dictionary = [DataManager shared].currentFBUser;
         
         // Login to QB Chat
         [QBChat instance].delegate = self;
@@ -181,6 +184,10 @@
 -(void)chatDidLogin{
     NSLog(@"Chat login success");
     [self.activityIndicatior stopAnimating];
+    
+    //caching self with FB ID
+    [[DataManager shared].fbUsersLoggedIn setObject:[DataManager shared].currentFBUser forKey:[[DataManager shared].currentFBUser objectForKey:kId]];
+
     [self dismissModalViewControllerAnimated:YES];
 }
 

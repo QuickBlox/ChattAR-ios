@@ -39,6 +39,7 @@ static FBService *service = nil;
     return self;
 }
 
+
 #pragma mark -
 #pragma mark Me
 
@@ -46,6 +47,17 @@ static FBService *service = nil;
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock{
     FBRequest *meRequest = [FBRequest requestForMe];
     [meRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        resultBlock(result);
+    }];
+}
+
+
+#pragma mark -
+#pragma mark User with ID
+
+- (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock{
+    FBRequest *requestForID = [FBRequest requestForGraphPath:userID];
+    [requestForID startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         resultBlock(result);
     }];
 }

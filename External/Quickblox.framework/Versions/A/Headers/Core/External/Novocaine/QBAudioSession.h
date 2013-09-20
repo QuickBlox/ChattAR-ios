@@ -61,7 +61,7 @@ void qbSessionInterruptionListener(void *inClientData, UInt32 inInterruption);
 typedef void (^QBOutputBlock)(float *data, UInt32 numFrames, UInt32 numChannels);
 typedef void (^QBInputBlock)(float *data, UInt32 numFrames, UInt32 numChannels);
 
-@interface QBNovocaine : NSObject <UIAlertViewDelegate>{
+@interface QBAudioSession : NSObject <UIAlertViewDelegate>{
     
 	// Audio Handling
 	AudioUnit inputUnit;
@@ -112,7 +112,7 @@ typedef void (^QBInputBlock)(float *data, UInt32 numFrames, UInt32 numChannels);
 @property BOOL managingFromApplication;
 
 // Singleton methods
-+ (QBNovocaine *) audioManager;
++ (QBAudioSession *) audioManager;
 
 
 // Audio Unit methods

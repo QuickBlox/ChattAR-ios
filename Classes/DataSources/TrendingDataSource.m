@@ -18,6 +18,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TrendingCell"];
+    cell.backgroundColor = [UIColor whiteColor];
     NSUInteger row = [indexPath row];
     cell.imageView.image = [UIImage imageNamed:@"trendings_uicon@2x.png"];
     QBCOCustomObject *currentObject = [self.chatRooms objectAtIndex:row];

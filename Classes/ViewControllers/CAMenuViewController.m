@@ -14,9 +14,6 @@
 #import "ProfileCell.h"
 #import "DataManager.h"
 
-#define kGetFBFirstName     [[DataManager shared].currentFBUser objectForKey:kFirstName]
-#define kGetFBLastName      [[DataManager shared].currentFBUser objectForKey:kLastName]
-
 
 @implementation CAMenuViewController
 

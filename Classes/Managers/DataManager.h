@@ -20,37 +20,14 @@
 // FB access
 @property (nonatomic, retain) NSString				*accessToken;
 @property (nonatomic, retain) NSDate				*expirationDate;
-
+// cached users
+@property (nonatomic, retain) NSMutableDictionary   *fbUsersLoggedIn;
 // current User
 @property (nonatomic, retain) QBUUser				*currentQBUser;
 @property (nonatomic, retain) NSMutableDictionary	*currentFBUser;
 @property (nonatomic, retain) NSString				*currentFBUserId;
 
-// friends
-@property (nonatomic, retain) NSMutableArray		*myFriends;
-@property (nonatomic, retain) NSMutableDictionary	*myFriendsAsDictionary;
-@property (nonatomic, retain) NSMutableSet		    *myPopularFriends;
-
-// messages
-@property (nonatomic, retain) NSMutableDictionary	*historyConversation;
-@property (nonatomic, retain) NSMutableArray	    *historyConversationAsArray;
-
-// Core Data
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
 + (DataManager *) shared;
-
-- (void)sortMessagesArray;
-
-- (void)clearCache;
-
-#pragma mark -
-#pragma mark Friends
-
-- (void)makeFriendsDictionary;
-- (void)addPopularFriendID:(NSString *)friendID;
 
 
 #pragma mark -

@@ -54,7 +54,7 @@
 @property (nonatomic, retain) QBGCDAsyncSocket *tcpSocketControl;
 @property (nonatomic, retain) QBGCDAsyncSocket *tcpSocketData;
 
-@property (nonatomic, assign) id<QBTURNClientDelegate>delegate;
+@property (nonatomic, retain) id<QBTURNClientDelegate>delegate;
 
 // TURN
 //

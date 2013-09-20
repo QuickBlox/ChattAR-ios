@@ -12,6 +12,7 @@
 }
 
 @property (nonatomic, retain) NSString *token;
+@property (nonatomic, retain) NSDate *tokenExpirationDate;
 @property (nonatomic, assign) enum QBSessionType sessionType;
 @property (nonatomic, retain) QBASessionCreationRequest *sessionCreationRequest;
 

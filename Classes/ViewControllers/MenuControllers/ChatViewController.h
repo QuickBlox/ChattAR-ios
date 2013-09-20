@@ -10,5 +10,6 @@
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) NSTimer *presenceTimer;
 
 @end

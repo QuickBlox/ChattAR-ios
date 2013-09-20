@@ -40,9 +40,6 @@ static DataManager *instance = nil;
 @synthesize currentFBUser;
 @synthesize currentFBUserId;
 
-@synthesize myFriends, myFriendsAsDictionary, myPopularFriends;
-
-@synthesize historyConversation, historyConversationAsArray;
 
 + (DataManager *)shared {
 	@synchronized (self) {
@@ -54,6 +51,13 @@ static DataManager *instance = nil;
 	return instance;
 }
 
+-(id)init{
+    self = [super init];
+    if (self) {
+        self.fbUsersLoggedIn = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 #pragma mark -
 #pragma mark FB access
