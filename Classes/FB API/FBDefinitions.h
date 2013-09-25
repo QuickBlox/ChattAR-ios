@@ -52,6 +52,10 @@
 #define kError              @"error"
 #define kPaging             @"paging"
 #define kNext               @"next"
+#define kUserName           @"username"
+#define kQuote              @"quote"
+#define kUserPhotoUrl       @"user_photo_url"
+#define kDateTime           @"datetime"
 
 #define kGET                @"GET"
 

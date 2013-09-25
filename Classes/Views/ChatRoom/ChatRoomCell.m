@@ -14,7 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.distance = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 50, 15)];
-        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 170, 20)];
+        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 180, 20)];
         self.message = [[UILabel alloc] init];
         self.colorBuble = [[UIImageView alloc] init];
         self.userPhoto = [[AsyncImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];

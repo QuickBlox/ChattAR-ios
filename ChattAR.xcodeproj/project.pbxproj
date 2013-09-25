@@ -20,6 +20,8 @@
 		6911FB3D17D6248D00FEADB4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB3C17D6248C00FEADB4 /* CoreVideo.framework */; };
 		6911FB3F17D6255800FEADB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB3E17D6255800FEADB4 /* QuartzCore.framework */; };
 		6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB4217D62AE400FEADB4 /* Accelerate.framework */; };
+		6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */; };
+		6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */; };
 		69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69357E3717CCA58700EB3CDF /* Default-568h@2x.png */; };
 		69357E7117CCAC2100EB3CDF /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7017CCAC2100EB3CDF /* libresolv.dylib */; };
 		69357E7517CCB01600EB3CDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7417CCB01600EB3CDF /* libz.dylib */; };
@@ -260,6 +262,8 @@
 		6911FB3C17D6248C00FEADB4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		6911FB3E17D6255800FEADB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6911FB4217D62AE400FEADB4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow-1.png"; sourceTree = "<group>"; };
+		6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow@2x.png"; sourceTree = "<group>"; };
 		69357E3717CCA58700EB3CDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		69357E7017CCAC2100EB3CDF /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		69357E7417CCB01600EB3CDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1708,6 +1712,8 @@
 		69ECC0B317E1AD9F00187CF8 /* chatroom */ = {
 			isa = PBXGroup;
 			children = (
+				6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */,
+				6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */,
 				69ECC0B417E1AD9F00187CF8 /* 01_back.png */,
 				69ECC0B517E1AD9F00187CF8 /* 01_back@2x.png */,
 				69ECC0B617E1AD9F00187CF8 /* 01_blue_chat_bubble.png */,
@@ -1889,6 +1895,8 @@
 				69ECC0C717E1AD9F00187CF8 /* green_chat_bubble@2x.png in Resources */,
 				696B59F617E99EF900D60537 /* Icon.png in Resources */,
 				696B59F717E99EF900D60537 /* Icon@2x.png in Resources */,
+				6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */,
+				6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

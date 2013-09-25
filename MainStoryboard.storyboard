@@ -530,6 +530,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="deletingRoom:" destination="x2E-WD-CCp" eventType="touchUpInside" id="VEi-js-cvp"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -749,6 +752,7 @@
         <class className="ChatViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
             <relationships>
+                <relationship kind="action" name="deletingRoom:"/>
                 <relationship kind="outlet" name="locationTableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="trendingTableView" candidateClass="UITableView"/>

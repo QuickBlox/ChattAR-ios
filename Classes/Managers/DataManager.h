@@ -26,6 +26,7 @@
 @property (nonatomic, retain) QBUUser				*currentQBUser;
 @property (nonatomic, retain) NSMutableDictionary	*currentFBUser;
 @property (nonatomic, retain) NSString				*currentFBUserId;
+@property (nonatomic, retain) QBChatRoom            *chatRoom;
 
 + (DataManager *) shared;
 

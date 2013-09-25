@@ -10,6 +10,7 @@
 #import "TrendingDataSource.h"
 #import "LocationDataSource.h"
 #import "FBService.h"
+#import "DataManager.h"
 
 @interface ChatViewController ()
 @property (nonatomic, strong) IBOutlet UITableView *trendingTableView;
@@ -29,16 +30,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    self.trendingTableView.layer.shadowRadius = 5.0f;
-//    self.trendingTableView.layer.shadowOffset = CGSizeMake(4.0f, 0.0);
-//    self.trendingTableView.layer.shadowOpacity = 1.0f;
-//    self.trendingTableView.layer.borderWidth = 0.1f;
-//    self.trendingTableView.layer.masksToBounds = NO;
-//    self.trendingTableView.layer.shadowColor = [[UIColor blackColor] CGColor];
-//    //self.trendingTableView.layer.borderColor = [[UIColor blackColor] CGColor];
-    
-//    NSArray *array = [[NSArray alloc] initWithObjects:@"Andrey", @"Anton", @"Alex", @"Alexey",@"Alexandr", @"Bob", @"Bogdan", @"Denis", @"Dmitriy", @"Evgeniy", @"Elisey",@"Fillipp",@"Greg", @"Georg", @"Gleb", @"Igor",@"Illya", @"John", @"Job", @"Konstantin",@"Mitya", nil];
     
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
@@ -144,6 +135,11 @@
             [self.locationTableView reloadData];
         }
     }
+}
+
+#pragma  mark - Button
+
+- (IBAction)deletingRoom:(id)sender {
 }
 
 @end
