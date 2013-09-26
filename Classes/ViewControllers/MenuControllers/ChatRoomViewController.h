@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CachedUser.h"
+#import "Utilites.h"
 
 @interface ChatRoomViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *chatRoomTable;
-@property (nonatomic, strong) CachedUser *cashedUser;
 
 typedef struct {
     CGFloat latitude;

@@ -30,7 +30,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // quote:
-        self.qColorBuble = [[UIImageView alloc] initWithFrame:CGRectMake(108, 10, 202, 50)];
+        self.qColorBuble = [[UIImageView alloc] initWithFrame:CGRectMake(108, 10, 202, 70)];
         self.qColorBuble.image = [[UIImage imageNamed:@"01_grey_chat_bubble.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
         self.qUserPhoto = [[AsyncImageView alloc] initWithFrame:CGRectMake(63, 10, 40, 40)];
         self.qUserPhoto.image = [UIImage imageNamed:@"Icon@2x.png"];
@@ -84,6 +84,21 @@
         self.rDistance.textColor = [UIColor darkGrayColor];
         self.rDistance.backgroundColor = [UIColor clearColor];
         self.rDistance.textAlignment = UITextAlignmentLeft;
+        
+        // putting all subviews
+        [self.contentView addSubview:qUserPhoto];
+        [self.contentView addSubview:replyImg];
+        [self.contentView addSubview:qColorBuble];
+        [self.contentView addSubview:qUserName];
+        [self.contentView addSubview:qMessage];
+        [self.contentView addSubview:qDateTime];
+        
+        [self.contentView addSubview:rUserPhoto];
+        [self.contentView addSubview:rDistance];
+        [self.contentView addSubview:rColorBuble];
+        [self.contentView addSubview:rUserName];
+        [self.contentView addSubview:rMessage];
+        [self.contentView addSubview:rDateTime];
     }
     return self;
 }

@@ -79,8 +79,6 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"%@",[[DataManager shared].currentFBUser objectForKey:kFirstName]);
-    NSLog(@"%@",[[DataManager shared].currentFBUser objectForKey:kLastName]);
     NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
     [self.firstNameField setText:firstLastName];
     [super viewWillAppear:NO];

@@ -40,6 +40,14 @@
         self.distance.textColor = [UIColor darkGrayColor];
         self.distance.backgroundColor = [UIColor clearColor];
         self.distance.textAlignment = UITextAlignmentLeft;
+        
+        // adding to subwiew
+        [self.contentView addSubview:self.userPhoto];
+        [self.contentView addSubview:self.colorBuble];
+        [self.contentView addSubview:self.message];
+        [self.contentView addSubview:self.userName];
+        [self.contentView addSubview:self.postMessageDate];
+        [self.contentView addSubview:self.distance];
     }
     return self;
 }

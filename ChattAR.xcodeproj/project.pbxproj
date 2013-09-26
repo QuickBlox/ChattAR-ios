@@ -169,6 +169,7 @@
 		693C7EDF17CCDCF300D7F0A9 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 693C7E5617CCDCF300D7F0A9 /* libidn.a */; };
 		693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */; };
 		693E05AE17EB5B540043299C /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E05AD17EB5B540043299C /* TrendingCell.m */; };
+		69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 69447BFA17F44CDF00E959DF /* 05_sendtn.png */; };
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42C17CDD54F003C6893 /* ARViewController.m */; };
@@ -226,6 +227,7 @@
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
 		69B96E3917E89F1E00C94DB7 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3617E89F1D00C94DB7 /* ImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		69DC972917F485AD004770C5 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DC972817F485AD004770C5 /* Utilites.m */; };
 		69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */; };
 		69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */; };
 		69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */; };
@@ -557,6 +559,7 @@
 		693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
 		693E05AC17EB5B540043299C /* TrendingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCell.h; sourceTree = "<group>"; };
 		693E05AD17EB5B540043299C /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
+		69447BFA17F44CDF00E959DF /* 05_sendtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_sendtn.png; sourceTree = "<group>"; };
 		6954C42517CDD502003C6893 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		6954C42617CDD502003C6893 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		6954C42817CDD53E003C6893 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -630,6 +633,8 @@
 		69B96E3617E89F1D00C94DB7 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		69B96E3717E89F1D00C94DB7 /* ImageCacheObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCacheObject.h; sourceTree = "<group>"; };
 		69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCacheObject.m; sourceTree = "<group>"; };
+		69DC972717F485AD004770C5 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
+		69DC972817F485AD004770C5 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
 		69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
 		69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataSource.m; sourceTree = "<group>"; };
 		69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingDataSource.h; sourceTree = "<group>"; };
@@ -1683,6 +1688,8 @@
 				69B96E3417E89F1D00C94DB7 /* AsyncImageLoaderCache */,
 				69A51AB517EC86450089B06D /* CachedUser.h */,
 				69A51AB617EC86450089B06D /* CachedUser.m */,
+				69DC972717F485AD004770C5 /* Utilites.h */,
+				69DC972817F485AD004770C5 /* Utilites.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1712,6 +1719,7 @@
 		69ECC0B317E1AD9F00187CF8 /* chatroom */ = {
 			isa = PBXGroup;
 			children = (
+				69447BFA17F44CDF00E959DF /* 05_sendtn.png */,
 				6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */,
 				6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */,
 				69ECC0B417E1AD9F00187CF8 /* 01_back.png */,
@@ -1855,6 +1863,7 @@
 				69A4029117D740F900E7BE1F /* ar_mnu@2x.png in Resources */,
 				69A4029217D740F900E7BE1F /* chat_mnu.png in Resources */,
 				69A4029317D740F900E7BE1F /* chat_mnu@2x.png in Resources */,
+				69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */,
 				69A4029417D740F900E7BE1F /* fb_mnu.png in Resources */,
 				69A4029517D740F900E7BE1F /* fb_mnu@2x.png in Resources */,
 				69A4029617D740F900E7BE1F /* logout_mnu.png in Resources */,
@@ -2027,6 +2036,7 @@
 				693C7ED017CCDCF300D7F0A9 /* XMPPStringPrep.m in Sources */,
 				693C7ED117CCDCF300D7F0A9 /* GCDAsyncSocket.m in Sources */,
 				693C7ED217CCDCF300D7F0A9 /* DDAbstractDatabaseLogger.m in Sources */,
+				69DC972917F485AD004770C5 /* Utilites.m in Sources */,
 				693C7ED317CCDCF300D7F0A9 /* DDASLLogger.m in Sources */,
 				693C7ED417CCDCF300D7F0A9 /* DDFileLogger.m in Sources */,
 				693C7ED517CCDCF300D7F0A9 /* DDLog.m in Sources */,
@@ -2142,10 +2152,10 @@
 					"\"$(SRCROOT)/External\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nightstep/ChattARv2/Supporting files/ChattARStatic-Prefix.pch";
+				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "/Users/nightstep/ChattARv2/Supporting files/ChattARStatic-Info.plist";
+				INFOPLIST_FILE = "Supporting files/ChattARStatic-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2175,9 +2185,9 @@
 					"\"$(SRCROOT)/External\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/nightstep/ChattARv2/Supporting files/ChattARStatic-Prefix.pch";
+				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "/Users/nightstep/ChattARv2/Supporting files/ChattARStatic-Info.plist";
+				INFOPLIST_FILE = "Supporting files/ChattARStatic-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

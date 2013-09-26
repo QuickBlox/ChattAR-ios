@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="VKh-QN-AtT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="VKh-QN-AtT">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Slide Menu Root View Controller-->
@@ -9,7 +10,7 @@
             <objects>
                 <viewController id="VKh-QN-AtT" customClass="SASlideMenuRootViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Iy-73-w7Q">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3p2-Bz-x63">
@@ -22,13 +23,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <segue destination="C3g-DQ-fRD" kind="custom" identifier="leftMenu" customClass="SASlideMenuLeftMenuSegue" id="PVD-2Y-rxg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4r5-SS-30D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1223" y="-243"/>
+            <point key="canvasLocation" x="-1220" y="-243"/>
         </scene>
         <!--Chat Room View Controller-->
         <scene sceneID="KcF-fe-sHD">
@@ -51,23 +53,19 @@
                                 <rect key="frame" x="0.0" y="458" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
-                                        <rect key="frame" x="233" y="9" width="73" height="31"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
+                                        <rect key="frame" x="243" y="8" width="68" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                        <state key="normal" title="Send">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="05_sendtn.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="sendMessageButton:" destination="Vch-rc-7Oy" eventType="touchUpInside" id="Sr4-hu-SPN"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="input text" minimumFontSize="17" id="mNm-br-NIt">
-                                        <rect key="frame" x="13" y="9" width="206" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="mNm-br-NIt">
+                                        <rect key="frame" x="10" y="8" width="225" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -86,10 +84,10 @@
                         <barButtonItem key="leftBarButtonItem" width="30" style="plain" id="HnT-Rx-gFE">
                             <inset key="imageInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zp5-ar-Rov">
-                                <rect key="frame" x="5" y="11" width="13" height="21"/>
+                                <rect key="frame" x="16" y="11" width="13" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" image="01_back@2x.png">
+                                <state key="normal" image="01_back.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -100,10 +98,10 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="FQc-QS-hpP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mze-kH-TDO">
-                                <rect key="frame" x="295" y="11" width="20" height="21"/>
+                                <rect key="frame" x="284" y="11" width="20" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="01_share@2x.png">
+                                <state key="normal" image="01_share.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -122,22 +120,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2g-Wd-Tl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="580" y="-1611"/>
+            <point key="canvasLocation" x="896" y="-1579"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="iug-PX-dnV">
             <objects>
                 <viewController id="2NK-i8-eUl" customClass="SplashViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8Y3-u8-6vk">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default-568h@2x.png" id="0G2-KS-0wp">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Default-568h.png" id="0G2-KS-0wp">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="I0v-LF-9tr">
-                                <rect key="frame" x="62" y="474" width="196" height="30"/>
+                                <rect key="frame" x="62" y="494" width="196" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="loginButton.png">
@@ -152,12 +150,13 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" id="wTw-7J-6ci">
-                                <rect key="frame" x="150" y="479" width="20" height="20"/>
+                                <rect key="frame" x="150" y="499" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="activityIndicatior" destination="wTw-7J-6ci" id="1Cv-Wr-6au"/>
                         <outlet property="backgroundImage" destination="0G2-KS-0wp" id="PTl-6R-U8c"/>
@@ -172,8 +171,8 @@
         <scene sceneID="0pQ-K8-zlO">
             <objects>
                 <tableViewController storyboardIdentifier="Static" id="C3g-DQ-fRD" customClass="CAMenuViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bounces="NO" dataMode="static" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="O8j-gz-Sfk">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bounces="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="O8j-gz-Sfk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.12260105298913049" green="0.12260105298913049" blue="0.12260105298913049" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="separatorColor" red="0.11782906788224386" green="0.11945727136005245" blue="0.12434188179347827" alpha="1" colorSpace="calibratedRGB"/>
@@ -183,11 +182,11 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="45" id="Mp3-r4-m6A" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mp3-r4-m6A" id="LiX-1x-9Sf">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="mrquick_mnu@2x.png" id="QHH-MB-1Zw">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="mrquick_mnu.png" id="QHH-MB-1Zw">
                                                     <rect key="frame" x="0.0" y="0.0" width="252" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -199,18 +198,17 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.32194718070652173" green="0.32194718070652173" blue="0.32194718070652173" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="42" id="Yao-AR-fRV" customClass="ProfileCell">
                                         <rect key="frame" x="0.0" y="45" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yao-AR-fRV" id="Jog-h2-xJ2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="fb_mnu@2x.png" id="bIl-LH-7Gm">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="fb_mnu.png" id="bIl-LH-7Gm">
                                                     <rect key="frame" x="11" y="8" width="22" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -222,10 +220,10 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l1M-mX-E6Y">
-                                                    <rect key="frame" x="197" y="8" width="31" height="26"/>
+                                                    <rect key="frame" x="212" y="8" width="26" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal" title="Button" image="logout_mnu@2x.png">
+                                                    <state key="normal" image="logout_mnu.png">
                                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -238,14 +236,13 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellka" rowHeight="65" id="Y5R-hn-9ln" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="87" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y5R-hn-9ln" id="tz2-gG-NAx">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -256,19 +253,18 @@
                                                     <color key="textColor" red="0.84457795516304346" green="0.84457795516304346" blue="0.84457795516304346" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="chat_mnu@2x.png" id="8bd-jK-dX0">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="chat_mnu.png" id="8bd-jK-dX0">
                                                     <rect key="frame" x="20" y="10" width="33" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.38784391983695654" green="0.38481766708888671" blue="0.36946630059290797" alpha="1" colorSpace="calibratedRGB"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="EGj-9f-HYm" customClass="MenuCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="EGj-9f-HYm" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="152" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EGj-9f-HYm" id="VCy-cE-lnk">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -276,21 +272,20 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.84457795520000001" green="0.84457795520000001" blue="0.84457795520000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.62635869565217384" green="0.62635869565217384" blue="0.62635869565217384" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map_mnu@2x.png" id="Px8-jb-08q">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map_mnu.png" id="Px8-jb-08q">
                                                     <rect key="frame" x="20" y="10" width="33" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="2Tf-Yg-M1H" customClass="MenuCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="2Tf-Yg-M1H" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="217" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2Tf-Yg-M1H" id="IWh-kK-RXG">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -298,21 +293,20 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.84457795520000001" green="0.84457795520000001" blue="0.84457795520000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.62659222146739135" green="0.62659222146739135" blue="0.62659222146739135" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ar_mnu@2x.png" id="Q5A-Ge-v3S">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ar_mnu.png" id="Q5A-Ge-v3S">
                                                     <rect key="frame" x="20" y="10" width="33" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="gJg-EI-Mzc" customClass="MenuCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="gJg-EI-Mzc" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="282" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gJg-EI-Mzc" id="Jya-yG-mtW">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -320,21 +314,20 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.84457795520000001" green="0.84457795520000001" blue="0.84457795520000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.62854534646739135" green="0.62854534646739135" blue="0.62854534646739135" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="messages_mnu@2x.png" id="ZyB-Aj-M9e">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="messages_mnu.png" id="ZyB-Aj-M9e">
                                                     <rect key="frame" x="20" y="10" width="33" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                        </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="sS8-6J-wuI" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="347" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sS8-6J-wuI" id="bfn-7u-dLL">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -345,14 +338,13 @@
                                                     <color key="textColor" red="0.84457795520000001" green="0.84457795520000001" blue="0.84457795520000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="settings_mnu@2x.png" id="Mui-mY-6ag">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="settings_mnu.png" id="Mui-mY-6ag">
                                                     <rect key="frame" x="20" y="10" width="33" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <color key="backgroundColor" red="0.75469174592391308" green="0.75262570309305499" blue="0.72109816830541795" alpha="1" colorSpace="calibratedRGB"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -362,7 +354,7 @@
                             <outlet property="delegate" destination="C3g-DQ-fRD" id="fNz-SL-hmC"/>
                         </connections>
                     </tableView>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="firstNameField" destination="Oa7-cT-stz" id="0rF-qm-iZl"/>
                         <segue destination="doc-P0-YCL" kind="custom" identifier="Chat" customClass="SASlideMenuContentSegue" id="POg-Df-gpJ"/>
@@ -380,14 +372,19 @@
         <scene sceneID="bZ3-Hh-inT">
             <objects>
                 <navigationController definesPresentationContext="YES" id="doc-P0-YCL" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="N6o-yJ-8r8">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="N6o-yJ-8r8">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.010773144986404401" green="0.0" blue="0.52974269701086962" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.034737905077933139" green="0.0094158577236569726" blue="0.59294327445652173" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.99470979439121343" green="0.98905115549983358" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textShadowColor" red="0.28223285500251721" green="0.28062730751645887" blue="0.28373386548913049" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="pqr-1O-oE7">
-                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -410,7 +407,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="10X-Ra-BBE">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="10X-Ra-BBE">
                                         <rect key="frame" x="0.0" y="0.0" width="260" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -418,7 +415,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="260" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="trendings_icon@2x.png" id="3X9-M6-Ugs">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="trendings_icon.png" id="3X9-M6-Ugs">
                                                     <rect key="frame" x="20" y="7" width="33" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -436,27 +433,26 @@
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrendingCell" textLabel="5jJ-cy-kzm" detailTextLabel="yBh-Wf-LQT" style="IBUITableViewCellStyleSubtitle" id="FAv-sL-Nuq">
                                                 <rect key="frame" x="0.0" y="66" width="260" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FAv-sL-Nuq" id="TfR-oK-ZsS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="227" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5jJ-cy-kzm">
-                                                            <rect key="frame" x="10" y="2" width="38" height="22"/>
+                                                            <rect key="frame" x="15" y="2" width="36" height="22"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yBh-Wf-LQT">
-                                                            <rect key="frame" x="10" y="24" width="47" height="18"/>
+                                                            <rect key="frame" x="15" y="24" width="50" height="17"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                </tableViewCellContentView>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             </tableViewCell>
                                         </prototypes>
@@ -466,7 +462,7 @@
                                             <outlet property="delegate" destination="x2E-WD-CCp" id="Ayv-aN-9p5"/>
                                         </connections>
                                     </tableView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AMp-bx-rym">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AMp-bx-rym">
                                         <rect key="frame" x="259" y="0.0" width="263" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -474,7 +470,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="263" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="local_icon@2x.png" id="cKI-MY-NJi">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="local_icon.png" id="cKI-MY-NJi">
                                                     <rect key="frame" x="20" y="6" width="29" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
@@ -485,7 +481,7 @@
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow_main@2x.png" id="lSt-3Y-0CI">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow_main.png" id="lSt-3Y-0CI">
                                                     <rect key="frame" x="0.0" y="0.0" width="12" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -496,17 +492,16 @@
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocalCell" id="j2C-ww-fZo">
                                                 <rect key="frame" x="0.0" y="66" width="263" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j2C-ww-fZo" id="BBT-cU-Usv">
                                                     <rect key="frame" x="0.0" y="0.0" width="263" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow_main@2x.png" id="gR4-cn-FqO">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="shadow_main.png" id="gR4-cn-FqO">
                                                             <rect key="frame" x="0.0" y="0.0" width="13" height="43"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -519,11 +514,11 @@
                     <navigationItem key="navigationItem" title="Rooms" id="PdG-rF-XOn">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="tUH-Ef-Xs4">
                             <button key="customView" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XMM-yH-oBf">
-                                <rect key="frame" x="286" y="9" width="29" height="26"/>
+                                <rect key="frame" x="275" y="9" width="29" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <size key="titleShadowOffset" width="7" height="7"/>
-                                <state key="normal" image="create_room@2x.png">
+                                <state key="normal" image="create_room.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -536,6 +531,7 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="locationTableView" destination="AMp-bx-rym" id="xYP-xx-TIN"/>
                         <outlet property="scrollView" destination="G8h-07-dLG" id="Np0-Cs-TLr"/>
@@ -552,7 +548,7 @@
         <scene sceneID="1bs-EI-xmB">
             <objects>
                 <navigationController definesPresentationContext="YES" id="79Z-YM-vAE" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackOpaque" id="iz7-93-LxL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="iz7-93-LxL">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -586,11 +582,11 @@
             <objects>
                 <viewController id="CJX-Z9-Ud1" customClass="MapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KiK-IR-cBq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ISO-i2-A3i">
-                                <rect key="frame" x="25" y="207" width="280" height="90"/>
+                                <rect key="frame" x="25" y="239" width="280" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -610,11 +606,11 @@
             <objects>
                 <viewController id="b4C-tU-pxk" customClass="ARViewController" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="XuP-hg-UCV">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="AR Controller" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ff2-uh-uzG">
-                                <rect key="frame" x="20" y="207" width="280" height="90"/>
+                                <rect key="frame" x="20" y="239" width="280" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -633,8 +629,12 @@
         <scene sceneID="nwr-U9-G4l">
             <objects>
                 <navigationController definesPresentationContext="YES" id="hhr-D8-IaV" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LpE-Oa-Mjx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="LpE-Oa-Mjx">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.034737905079999999" green="0.0094158577240000003" blue="0.59294327449999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="QVh-v7-S6J" kind="relationship" relationship="rootViewController" id="nf1-ls-dkR"/>
@@ -688,11 +688,11 @@
             <objects>
                 <viewController id="Ou1-lz-3uP" customClass="MessagesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZIW-vR-Hv7">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Messages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dDW-fL-JOz">
-                                <rect key="frame" x="20" y="207" width="280" height="90"/>
+                                <rect key="frame" x="20" y="239" width="280" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -709,86 +709,24 @@
         </scene>
     </scenes>
     <resources>
-        <image name="01_back@2x.png" width="24" height="40"/>
-        <image name="01_share@2x.png" width="40" height="44"/>
-        <image name="Default-568h@2x.png" width="640" height="1136"/>
-        <image name="ar_mnu@2x.png" width="62" height="34"/>
-        <image name="chat_mnu@2x.png" width="62" height="54"/>
-        <image name="create_room@2x.png" width="58" height="52"/>
-        <image name="fb_mnu@2x.png" width="40" height="38"/>
-        <image name="local_icon@2x.png" width="38" height="62"/>
+        <image name="01_back.png" width="12" height="20"/>
+        <image name="01_share.png" width="20" height="22"/>
+        <image name="05_sendtn.png" width="68" height="29"/>
+        <image name="Default-568h.png" width="640" height="1136"/>
+        <image name="ar_mnu.png" width="31" height="17"/>
+        <image name="chat_mnu.png" width="31" height="27"/>
+        <image name="create_room.png" width="29" height="26"/>
+        <image name="fb_mnu.png" width="20" height="19"/>
+        <image name="local_icon.png" width="19" height="31"/>
         <image name="loginButton.png" width="196" height="29"/>
-        <image name="logout_mnu@2x.png" width="54" height="42"/>
-        <image name="map_mnu@2x.png" width="60" height="52"/>
-        <image name="messages_mnu@2x.png" width="54" height="42"/>
-        <image name="mrquick_mnu@2x.png" width="472" height="90"/>
-        <image name="settings_mnu@2x.png" width="46" height="48"/>
-        <image name="shadow_main@2x.png" width="28" height="1010"/>
-        <image name="trendings_icon@2x.png" width="60" height="52"/>
+        <image name="logout_mnu.png" width="27" height="21"/>
+        <image name="map_mnu.png" width="30" height="26"/>
+        <image name="messages_mnu.png" width="27" height="21"/>
+        <image name="mrquick_mnu.png" width="236" height="45"/>
+        <image name="settings_mnu.png" width="23" height="24"/>
+        <image name="shadow_main.png" width="14" height="505"/>
+        <image name="trendings_icon.png" width="30" height="26"/>
     </resources>
-    <classes>
-        <class className="ARViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ARViewController.h"/>
-        </class>
-        <class className="CAMenuViewController" superclassName="SASlideMenuViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CAMenuViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOutChat:"/>
-                <relationship kind="outlet" name="firstNameField" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ChatRoomViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatRoomViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backToRooms:"/>
-                <relationship kind="action" name="sendMessageButton:"/>
-                <relationship kind="action" name="textEditDone:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="chatRoomTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="inputMessageField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="inputTextView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="ChatViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChatViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="deletingRoom:"/>
-                <relationship kind="outlet" name="locationTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="trendingTableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-        </class>
-        <class className="MenuCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MenuCell.h"/>
-        </class>
-        <class className="MessagesViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MessagesViewController.h"/>
-        </class>
-        <class className="ProfileCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileCell.h"/>
-        </class>
-        <class className="SASlideMenuRootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SASlideMenuRootViewController.h"/>
-        </class>
-        <class className="SASlideMenuViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SASlideMenuViewController.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-        </class>
-        <class className="SplashViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SplashViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logIn:"/>
-                <relationship kind="outlet" name="activityIndicatior" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

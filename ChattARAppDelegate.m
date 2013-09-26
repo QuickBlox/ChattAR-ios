@@ -13,7 +13,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     // Set QuickBlox credentials
     [QBSettings setApplicationID:4228];
     [QBSettings setAuthorizationKey:@"fSdLsATEPQeGPKQ"];

@@ -57,7 +57,6 @@
     self.inputTextView.layer.shadowOpacity = 1.0f;
     self.inputTextView.layer.borderWidth = 0.1f;
 
-    self.cashedUser = [[CachedUser alloc] init];
     // getting my location...
     self.currentLocation = [[CLLocationManager alloc] init];
     self.currentLocation.delegate = self;
@@ -121,13 +120,6 @@ static CGFloat padding = 20.0;
     if (roomCell == nil)
     {
         roomCell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
-        
-        [roomCell.contentView addSubview:roomCell.userPhoto];
-        [roomCell.contentView addSubview:roomCell.colorBuble];
-        [roomCell.contentView addSubview:roomCell.message];
-        [roomCell.contentView addSubview:roomCell.userName];
-        [roomCell.contentView addSubview:roomCell.postMessageDate];
-        [roomCell.contentView addSubview:roomCell.distance];
     }
     
     // Buble
@@ -155,15 +147,13 @@ static CGFloat padding = 20.0;
     CLLocationDistance distanceToMe = [self.currentLocation.location distanceFromLocation:userLocation];
 
     // post message date
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
-    NSString *time = [dateFormatter stringFromDate:currentMessage.datetime];
+    
+    NSString *time = [[Utilites action].dateFormatter stringFromDate:currentMessage.datetime];
     
     // putting data to fields
     [roomCell.userPhoto loadImageFromURL:url];
     roomCell.colorBuble.image = img;
-    roomCell.distance.text = [self distanceFormatter:distanceToMe];
+    roomCell.distance.text = [[Utilites action] distanceFormatter:distanceToMe];
     roomCell.message.text = [tempDict objectForKey:kMessage];
     roomCell.userName.text = [tempDict objectForKey:kUserName];
     roomCell.postMessageDate.text = time;
@@ -186,20 +176,6 @@ static CGFloat padding = 20.0;
     QuotedChatRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[QuotedChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        // putting all subviews
-        [cell.contentView addSubview:cell.qUserPhoto];
-        [cell.contentView addSubview:cell.replyImg];
-        [cell.contentView addSubview:cell.qColorBuble];
-        [cell.contentView addSubview:cell.qUserName];
-        [cell.contentView addSubview:cell.qMessage];
-        [cell.contentView addSubview:cell.qDateTime];
-        
-        [cell.contentView addSubview:cell.rUserPhoto];
-        [cell.contentView addSubview:cell.rDistance];
-        [cell.contentView addSubview:cell.rColorBuble];
-        [cell.contentView addSubview:cell.rUserName];
-        [cell.contentView addSubview:cell.rMessage];
-        [cell.contentView addSubview:cell.rDateTime];
     }
     
     QBChatMessage *currentMessage = [_chatHistory objectAtIndex:[indexPath row]];
@@ -232,17 +208,15 @@ static CGFloat padding = 20.0;
     NSURL *urlImg = [NSURL URLWithString:uStr];
     
     // date formatter
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm"];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
-    NSString *time = [dateFormatter stringFromDate:currentMessage.datetime];
+    
+    NSString *time = [[Utilites action].dateFormatter stringFromDate:currentMessage.datetime];
     
     // getting location
     CGFloat latutude = [[quoteDict objectForKey:kLatitude] floatValue];
     CGFloat longitude = [[quoteDict objectForKey:kLongitude] floatValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latutude longitude:longitude];
     CLLocationDistance distanceToMe = [self.currentLocation.location distanceFromLocation:userLocation];
-    NSString *distance = [self distanceFormatter:distanceToMe];
+    NSString *distance = [[Utilites action] distanceFormatter:distanceToMe];
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };
@@ -488,24 +462,5 @@ static CGFloat padding = 20.0;
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [self hideKeyboard];
 }
-
-
-#pragma mark -
-#pragma mark Converter
-
-
--(NSString *)distanceFormatter:(CLLocationDistance)distance{
-    NSString *formatedDistance;
-    NSInteger dist = round(distance);
-    if (distance <=999) {
-        formatedDistance = [NSString stringWithFormat:@"%d m", dist];
-    } else{
-        dist = round(dist) / 1000;
-        formatedDistance = [NSString stringWithFormat:@"%d km",dist];
-    }
-    return formatedDistance;
-}
-
-
 
 @end
