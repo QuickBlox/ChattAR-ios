@@ -34,6 +34,7 @@
         self.qColorBuble.image = [[UIImage imageNamed:@"01_grey_chat_bubble.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
         self.qUserPhoto = [[AsyncImageView alloc] initWithFrame:CGRectMake(63, 10, 40, 40)];
         self.qUserPhoto.image = [UIImage imageNamed:@"Icon@2x.png"];
+        self.qUserPhoto.backgroundColor = [UIColor clearColor];
         
         replyImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"05_reply_arrow-1.png"]];
         replyImg.frame = CGRectMake(58 - replyImg.image.size.width, 45- replyImg.image.size.height, replyImg.image.size.width, replyImg.frame.size.height);
@@ -86,19 +87,19 @@
         self.rDistance.textAlignment = UITextAlignmentLeft;
         
         // putting all subviews
-        [self.contentView addSubview:qUserPhoto];
-        [self.contentView addSubview:replyImg];
-        [self.contentView addSubview:qColorBuble];
-        [self.contentView addSubview:qUserName];
-        [self.contentView addSubview:qMessage];
-        [self.contentView addSubview:qDateTime];
+        [self.contentView addSubview:self.qUserPhoto];
+        [self.contentView addSubview:self.replyImg];
+        [self.contentView addSubview:self.qColorBuble];
+        [self.contentView addSubview:self.qUserName];
+        [self.contentView addSubview:self.qMessage];
+        [self.contentView addSubview:self.qDateTime];
         
-        [self.contentView addSubview:rUserPhoto];
-        [self.contentView addSubview:rDistance];
-        [self.contentView addSubview:rColorBuble];
-        [self.contentView addSubview:rUserName];
-        [self.contentView addSubview:rMessage];
-        [self.contentView addSubview:rDateTime];
+        [self.contentView addSubview:self.rUserPhoto];
+        [self.contentView addSubview:self.rDistance];
+        [self.contentView addSubview:self.rColorBuble];
+        [self.contentView addSubview:self.rUserName];
+        [self.contentView addSubview:self.rMessage];
+        [self.contentView addSubview:self.rDateTime];
     }
     return self;
 }
