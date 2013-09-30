@@ -17,6 +17,7 @@ typedef struct {
     CGFloat latitude;
     CGFloat longitude;
 } LocationCoordinates;
+
 - (IBAction)share:(id)sender;
 
 @end

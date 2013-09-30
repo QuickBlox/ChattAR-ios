@@ -179,6 +179,8 @@
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
+		69A0ACC717F9883200230A27 /* ChatRooms.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC617F9883200230A27 /* ChatRooms.m */; };
+		69A0ACCA17F9966A00230A27 /* GeoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC917F9966A00230A27 /* GeoData.m */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
 		69A4028D17D740F900E7BE1F /* upic_local.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026617D740F900E7BE1F /* upic_local.png */; };
@@ -219,7 +221,6 @@
 		69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A4779F17C50AF800591A28 /* FacebookSDK.framework */; };
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
 		69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */; };
-		69A51AB717EC86450089B06D /* CachedUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A51AB617EC86450089B06D /* CachedUser.m */; };
 		69B96E2417E869E700C94DB7 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69B96E2317E869E700C94DB7 /* Quickblox.framework */; };
 		69B96E2F17E89EED00C94DB7 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2817E89EED00C94DB7 /* AsyncImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */; };
@@ -574,6 +575,10 @@
 		696B59F517E99EF900D60537 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6981247717DDFF2C00974C6A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		69A0ACC517F9883200230A27 /* ChatRooms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRooms.h; sourceTree = "<group>"; };
+		69A0ACC617F9883200230A27 /* ChatRooms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRooms.m; sourceTree = "<group>"; };
+		69A0ACC817F9966A00230A27 /* GeoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoData.h; sourceTree = "<group>"; };
+		69A0ACC917F9966A00230A27 /* GeoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoData.m; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		69A4026417D740F900E7BE1F /* local_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = local_icon.png; sourceTree = "<group>"; };
 		69A4026517D740F900E7BE1F /* local_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_icon@2x.png"; sourceTree = "<group>"; };
@@ -618,8 +623,6 @@
 		69A477A517C513C100591A28 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		69A51AB217EC82EC0089B06D /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
 		69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotedChatRoomCell.m; sourceTree = "<group>"; };
-		69A51AB517EC86450089B06D /* CachedUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedUser.h; sourceTree = "<group>"; };
-		69A51AB617EC86450089B06D /* CachedUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedUser.m; sourceTree = "<group>"; };
 		69B96E2317E869E700C94DB7 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
 		69B96E2717E89EED00C94DB7 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		69B96E2817E89EED00C94DB7 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
@@ -1686,10 +1689,12 @@
 			isa = PBXGroup;
 			children = (
 				69B96E3417E89F1D00C94DB7 /* AsyncImageLoaderCache */,
-				69A51AB517EC86450089B06D /* CachedUser.h */,
-				69A51AB617EC86450089B06D /* CachedUser.m */,
 				69DC972717F485AD004770C5 /* Utilites.h */,
 				69DC972817F485AD004770C5 /* Utilites.m */,
+				69A0ACC517F9883200230A27 /* ChatRooms.h */,
+				69A0ACC617F9883200230A27 /* ChatRooms.m */,
+				69A0ACC817F9966A00230A27 /* GeoData.h */,
+				69A0ACC917F9966A00230A27 /* GeoData.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1916,6 +1921,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69A0ACC717F9883200230A27 /* ChatRooms.m in Sources */,
 				69357E8B17CCBAA400EB3CDF /* ChattARAppDelegate.m in Sources */,
 				69357E9317CCBAEE00EB3CDF /* main.m in Sources */,
 				693C7E5B17CCDCF300D7F0A9 /* SASlideMenuContentSegue.m in Sources */,
@@ -2040,6 +2046,7 @@
 				693C7ED317CCDCF300D7F0A9 /* DDASLLogger.m in Sources */,
 				693C7ED417CCDCF300D7F0A9 /* DDFileLogger.m in Sources */,
 				693C7ED517CCDCF300D7F0A9 /* DDLog.m in Sources */,
+				69A0ACCA17F9966A00230A27 /* GeoData.m in Sources */,
 				693C7ED617CCDCF300D7F0A9 /* DDTTYLogger.m in Sources */,
 				693C7ED717CCDCF300D7F0A9 /* ContextFilterLogFormatter.m in Sources */,
 				693C7ED817CCDCF300D7F0A9 /* DispatchQueueLogFormatter.m in Sources */,
@@ -2069,7 +2076,6 @@
 				69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */,
 				693E05AE17EB5B540043299C /* TrendingCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
-				69A51AB717EC86450089B06D /* CachedUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

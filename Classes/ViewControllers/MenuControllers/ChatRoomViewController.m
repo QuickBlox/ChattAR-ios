@@ -8,15 +8,16 @@
 #import "ChatViewController.h"
 #import "ChatRoomViewController.h"
 #import "ChatRoomCell.h"
+#import "ChatRooms.h"
 #import "QuotedChatRoomCell.h"
 #import "DataManager.h"
 #import "FBService.h"
+#import "GeoData.h"
 #import <CoreLocation/CoreLocation.h>
 
 
 @interface ChatRoomViewController ()
-@property (strong, nonatomic) CLLocationManager *currentLocation;
-@property (assign, nonatomic) CLLocationCoordinate2D myCoordinates;
+
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 @property (strong, nonatomic) NSMutableDictionary *quote;
 @property (strong, nonatomic) QBChatRoom *currentRoom;
@@ -31,10 +32,6 @@
 -(IBAction)textEditDone:(id)sender;
 - (IBAction)backToRooms:(id)sender;
 - (IBAction)sendMessageButton:(id)sender;
-
-//parsing...
-- (NSString *)gettingLocationFromString:(NSString *)string;
-- (CLLocationCoordinate2D)stringToCoordinates:(NSString *)subString;
 
 @end
 
@@ -58,11 +55,6 @@
     self.inputTextView.layer.borderWidth = 0.1f;
 
     // getting my location...
-    self.currentLocation = [[CLLocationManager alloc] init];
-    self.currentLocation.delegate = self;
-    [self.currentLocation setDistanceFilter:1];
-    [self.currentLocation setDesiredAccuracy:kCLLocationAccuracyBest];
-    [self.currentLocation startUpdatingLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -144,7 +136,7 @@ static CGFloat padding = 20.0;
     CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
     CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    CLLocationDistance distanceToMe = [self.currentLocation.location distanceFromLocation:userLocation];
+    CLLocationDistance distanceToMe = [[GeoData getData].myLocation distanceFromLocation:userLocation];
 
     // post message date
     
@@ -215,7 +207,7 @@ static CGFloat padding = 20.0;
     CGFloat latutude = [[quoteDict objectForKey:kLatitude] floatValue];
     CGFloat longitude = [[quoteDict objectForKey:kLongitude] floatValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latutude longitude:longitude];
-    CLLocationDistance distanceToMe = [self.currentLocation.location distanceFromLocation:userLocation];
+    CLLocationDistance distanceToMe = [[GeoData getData].myLocation distanceFromLocation:userLocation];
     NSString *distance = [[Utilites action] distanceFormatter:distanceToMe];
     
     //changing hight
@@ -262,20 +254,6 @@ static CGFloat padding = 20.0;
     }
     
     return cellHeight;
-}
-
-
-#pragma mark -
-#pragma mark CoreLocationDelegate
-
-- (void) locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error{
-    NSLog(@"Error: %@", error);
-}
-
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    CLLocation *lastLocation = [locations lastObject];
-    self.myCoordinates = lastLocation.coordinate;
 }
 
 
@@ -346,44 +324,26 @@ static CGFloat padding = 20.0;
 
 
 #pragma mark -
-#pragma mark QBActionStatusDelegate
-
--(void)completedWithResult:(Result *)result{
-    if (result.success) {
-        if ([result isKindOfClass:[QBUUserResult class]]) {
-            QBUUserResult *activeResult = (QBUUserResult *)result;
-            QBUUser *user = activeResult.user;
-            [DataManager shared].currentQBUser = user;
-            [[DataManager shared].fbUsersLoggedIn setObject:user forKey:[NSString stringWithFormat:@"%i", user.ID]];
-        }
-       // Room Rank Increment:
-        if ([result isKindOfClass:[QBCOCustomObjectResult class]]) {
-            QBCOCustomObjectResult *getObject = (QBCOCustomObjectResult *)result;
-            NSNumber *rank = [[getObject.object fields] objectForKey:@"rank"];
-            NSUInteger intRank = [rank intValue];
-            intRank+=1;
-            
-            QBCOCustomObject *chat = [QBCOCustomObject customObject];
-            chat.className = kChatRoom;
-            chat.ID = [FBService shared].roomID;
-            [chat.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
-            // sending rank value:
-            [QBCustomObjects updateObject:chat delegate:nil];
-        }
-    }
-}
-
-#pragma mark -
 #pragma mark QBChatDelegate
 
 // if chat room is created or user is joined
 -(void)chatRoomDidEnter:(QBChatRoom *)room{
     NSLog(@"Chat Room is opened");
-    //getting custom object(room):
-    [QBCustomObjects objectWithClassName:kChatRoom ID:[FBService shared].roomID delegate:self];
-    
     //get room
     self.currentRoom = room;
+    
+    //getting custom object(room):
+    QBCOCustomObject *getObject = [[[ChatRooms action] getAllRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
+    NSNumber *rank = [getObject.fields objectForKey:@"rank"];
+    NSUInteger intRank = [rank intValue];
+    intRank+=1;
+    
+    QBCOCustomObject *chat = [QBCOCustomObject customObject];
+    chat.className = kChatRoom;
+    chat.ID = [FBService shared].roomID;
+    [chat.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+    // sending rank value:
+    [QBCustomObjects updateObject:chat delegate:nil];
 }
 
 - (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error{
@@ -399,8 +359,8 @@ static CGFloat padding = 20.0;
     if ([self.inputMessageField.text isEqual:@""]) {
         //don't send
     } else {
-        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",self.myCoordinates.latitude];
-        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", self.myCoordinates.longitude];
+        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[GeoData getData] getMyCoorinates].latitude];
+        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[GeoData getData] getMyCoorinates].longitude];
         NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName], [[DataManager shared].currentFBUser objectForKey:kLastName]];
         
         NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[DataManager shared].currentFBUser objectForKey:kId], [DataManager shared].accessToken];

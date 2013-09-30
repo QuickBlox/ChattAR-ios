@@ -56,6 +56,7 @@
 #define kQuote              @"quote"
 #define kUserPhotoUrl       @"user_photo_url"
 #define kDateTime           @"datetime"
+#define kRank               @"rank"
 
 #define kGET                @"GET"
 

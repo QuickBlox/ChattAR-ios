@@ -10,6 +10,7 @@
 #import "DataManager.h"
 #import "FBService.h"
 #import "Reachability.h"
+#import "GeoData.h"
 
 @implementation SplashViewController
 @synthesize backgroundImage, loginButton;
@@ -187,7 +188,9 @@
     
     //caching self with FB ID
     [[DataManager shared].fbUsersLoggedIn setObject:[DataManager shared].currentFBUser forKey:[[DataManager shared].currentFBUser objectForKey:kId]];
-
+    //start getting location:
+    [[GeoData getData] startUpdateLocation];
+    //dismiss splash
     [self dismissModalViewControllerAnimated:YES];
 }
 
