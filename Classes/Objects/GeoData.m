@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         self.myLocationManager = [[CLLocationManager alloc] init];
-        [myLocationManager setDelegate:self];
+        self.myLocationManager.delegate = self;
         [myLocationManager setDistanceFilter:1];
         [myLocationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     }
@@ -60,6 +60,7 @@
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     myLocation = [locations lastObject];
+    NSLog(@"Location: %@", myLocation);
 }
 
 @end
