@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) NSTimer *presenceTimer;
-- (IBAction)deletingRoom:(id)sender;
+
+- (IBAction)createPrivateRoom:(id)sender;
+
 
 @end

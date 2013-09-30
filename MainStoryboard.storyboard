@@ -108,6 +108,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="share:" destination="Vch-rc-7Oy" eventType="touchUpInside" id="Dmr-IH-p8i"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -526,7 +529,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="deletingRoom:" destination="x2E-WD-CCp" eventType="touchUpInside" id="VEi-js-cvp"/>
+                                    <action selector="createPrivateRoom:" destination="x2E-WD-CCp" eventType="touchUpInside" id="q8T-bg-cHT"/>
                                 </connections>
                             </button>
                         </barButtonItem>

@@ -54,6 +54,7 @@
     if (self.presenceTimer == nil) {
         self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     }
+    [self.trendingTableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -108,6 +109,7 @@
     QBCOCustomObject *currentObject = [_locations objectAtIndex:[indexPath row]];
     NSString *room = [currentObject.fields objectForKey:kName];
     [FBService shared].roomName = room;
+    [FBService shared].roomID = currentObject.ID;
     [self performSegueWithIdentifier:@"kSegue" sender:nil];
 }
 
@@ -115,7 +117,9 @@
 #pragma mark Custom Objects
 
 -(void)getChatRooms{
-    [QBCustomObjects objectsWithClassName:kChatRoom delegate:self];
+    NSMutableDictionary *extRequest = [NSMutableDictionary dictionary];
+    [extRequest setObject:@"rank" forKey:@"sort_desc"];
+    [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extRequest delegate:self];
 }
 
 
@@ -128,18 +132,55 @@
             
             // reload tables
             QBCOCustomObjectPagedResult *customObjects = (QBCOCustomObjectPagedResult *)result;
-            _trendingDataSource.chatRooms = customObjects.objects;
-            _locationDataSource.chatRooms = customObjects.objects;
             _locations = customObjects.objects;
+            _trendingDataSource.chatRooms = _locations;
+            _locationDataSource.chatRooms = customObjects.objects;
             [self.trendingTableView reloadData];
             [self.locationTableView reloadData];
         }
     }
 }
 
-#pragma  mark - Button
 
-- (IBAction)deletingRoom:(id)sender {
+//#pragma mark - Sort
+//
+//-(NSArray *)sortingCustomObjects:(NSArray *)rooms{
+//    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"fields.rank" ascending:NO selector:@selector(localizedCompare:)];
+//    NSArray *sortedRooms = [rooms sortedArrayUsingDescriptors:@[descriptor]];
+//    return sortedRooms;
+//}
+
+
+#pragma mark - 
+#pragma mark Private Room
+
+- (IBAction)createPrivateRoom:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+
+#pragma mark - 
+#pragma mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 1:
+            if (![[[alertView textFieldAtIndex:0] text] isEqual:@""]) {
+                [FBService shared].roomName = [[alertView textFieldAtIndex:0] text];
+                [self performSegueWithIdentifier:@"kSegue" sender:nil];
+            }
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView{
+    return YES;
 }
 
 @end

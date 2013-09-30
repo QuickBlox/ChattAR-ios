@@ -356,6 +356,20 @@ static CGFloat padding = 20.0;
             [DataManager shared].currentQBUser = user;
             [[DataManager shared].fbUsersLoggedIn setObject:user forKey:[NSString stringWithFormat:@"%i", user.ID]];
         }
+       // Room Rank Increment:
+        if ([result isKindOfClass:[QBCOCustomObjectResult class]]) {
+            QBCOCustomObjectResult *getObject = (QBCOCustomObjectResult *)result;
+            NSNumber *rank = [[getObject.object fields] objectForKey:@"rank"];
+            NSUInteger intRank = [rank intValue];
+            intRank+=1;
+            
+            QBCOCustomObject *chat = [QBCOCustomObject customObject];
+            chat.className = kChatRoom;
+            chat.ID = [FBService shared].roomID;
+            [chat.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+            // sending rank value:
+            [QBCustomObjects updateObject:chat delegate:nil];
+        }
     }
 }
 
@@ -365,6 +379,9 @@ static CGFloat padding = 20.0;
 // if chat room is created or user is joined
 -(void)chatRoomDidEnter:(QBChatRoom *)room{
     NSLog(@"Chat Room is opened");
+    //getting custom object(room):
+    [QBCustomObjects objectWithClassName:kChatRoom ID:[FBService shared].roomID delegate:self];
+    
     //get room
     self.currentRoom = room;
 }
@@ -461,6 +478,16 @@ static CGFloat padding = 20.0;
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [self hideKeyboard];
+}
+
+
+#pragma mark -
+#pragma mark Sharing
+
+- (IBAction)share:(id)sender {
+
+    UIActivityViewController *shareKit = [[UIActivityViewController alloc] initWithActivityItems:@[@"I use ChattAR 2.0"] applicationActivities:nil];
+    [self presentViewController:shareKit animated:YES completion:nil];
 }
 
 @end
