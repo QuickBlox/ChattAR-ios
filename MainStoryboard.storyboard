@@ -360,6 +360,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="firstNameField" destination="Oa7-cT-stz" id="0rF-qm-iZl"/>
+                        <outlet property="menuTable" destination="O8j-gz-Sfk" id="YVa-re-JBF"/>
                         <segue destination="doc-P0-YCL" kind="custom" identifier="Chat" customClass="SASlideMenuContentSegue" id="POg-Df-gpJ"/>
                         <segue destination="FgT-Db-JXl" kind="custom" identifier="Map" customClass="SASlideMenuContentSegue" id="jgz-po-BPx"/>
                         <segue destination="79Z-YM-vAE" kind="custom" identifier="AR" customClass="SASlideMenuContentSegue" id="0IC-8a-lf6"/>
@@ -736,6 +737,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yX7-1Z-Wv0"/>
+        <segue reference="GXn-8Q-nrq"/>
     </inferredMetricsTieBreakers>
 </document>

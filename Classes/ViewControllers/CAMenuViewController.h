@@ -12,6 +12,7 @@
 
 @interface CAMenuViewController :SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate, UIAlertViewDelegate, QBActionStatusDelegate, QBChatDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *firstNameField;
+@property (strong, nonatomic) IBOutlet UITableView *menuTable;
 
 - (IBAction)logOutChat:(id)sender;
 

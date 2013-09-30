@@ -82,6 +82,10 @@
     NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
     [self.firstNameField setText:firstLastName];
     [super viewWillAppear:NO];
+    UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
+    UIImageView *logoImage = [[UIImageView alloc] initWithImage:img];
+    logoImage.frame = CGRectMake(10, _menuTable.frame.size.height - (img.size.height + 10), img.size.width, img.size.height);
+    [self.menuTable addSubview:logoImage];
 }
 
 #pragma mark -
