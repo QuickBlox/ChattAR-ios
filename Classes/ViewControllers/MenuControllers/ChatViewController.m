@@ -21,6 +21,9 @@
 @property (nonatomic, strong) NSArray *locations;
 @property (nonatomic, strong) TrendingDataSource *trendingDataSource;
 @property (nonatomic, strong) LocationDataSource *locationDataSource;
+
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UILabel *footerLabel;
 @end
 
 @implementation ChatViewController
@@ -32,11 +35,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _locations = [[NSMutableArray alloc] init];
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
     self.trendingTableView.delegate = self;
     self.locationTableView.delegate = self;
+    
+    // paginator:
+    self.myPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
+    self.trendingTableView.tableFooterView = [self creatingTableViewFooter];
     
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
@@ -51,6 +58,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self getChatRooms];
     [super viewWillAppear:animated];
+    if ([_locations count] == 0) {
+        [self.myPaginator fetchFirstPage];
+    }
     
     // send presence
     if (self.presenceTimer == nil) {
@@ -70,6 +80,80 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Paginator
+
+- (void)fetchNextPage
+{
+    [self.myPaginator fetchNextPage];
+    [self.activityIndicator startAnimating];
+}
+
+- (void)updateTableViewFooter
+{
+    if ([self.myPaginator.results count] != 0)
+    {
+        self.footerLabel.text = [NSString stringWithFormat:@"%d results out of %d", [self.myPaginator.results count], self.myPaginator.total];
+    } else
+    {
+        self.footerLabel.text = @"";
+    }
+    
+    [self.footerLabel setNeedsDisplay];
+}
+
+-(UIView *)creatingTableViewFooter {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
+    footerView.backgroundColor = [UIColor clearColor];
+    _footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
+    _footerLabel.backgroundColor = [UIColor clearColor];
+    _footerLabel.textAlignment = UITextAlignmentCenter;
+    _footerLabel.textColor = [UIColor lightGrayColor];
+    _footerLabel.font = [UIFont systemFontOfSize:16];
+    _footerLabel.text = @"10 out of nil";
+    [footerView addSubview:_footerLabel];
+    
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.center = CGPointMake(44.0, 22.0);
+    self.activityIndicator.hidesWhenStopped = YES;
+    [footerView addSubview:self.activityIndicator];
+    return footerView;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    // when reaching bottom, load a new page
+    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
+    {
+        // ask next page only if we haven't reached last page
+        if(![self.myPaginator reachedLastPage])
+        {
+            // fetch next page of results
+            [self fetchNextPage];
+        }
+    }
+}
+
+
+#pragma mark -
+#pragma mark NMPaginatorDelegate
+
+- (void)paginator:(id)paginator didReceiveResults:(NSArray *)results
+{
+    [self updateTableViewFooter];
+    // handle new results
+    NSLog(@"%@",results);
+    _locations = [_locations arrayByAddingObjectsFromArray:results];
+    [self.activityIndicator stopAnimating];
+    [self viewWillAppear:NO];
+}
+
+- (void)paginatorDidReset:(id)paginator
+{
+    [self.trendingTableView reloadData];
+    [self updateTableViewFooter];
 }
 
 
@@ -126,7 +210,6 @@
             
             // reload tables
             QBCOCustomObjectPagedResult *customObjects = (QBCOCustomObjectPagedResult *)result;
-            _locations = customObjects.objects;
             [[ChatRooms action] setRooms:_locations];
             _trendingDataSource.chatRooms = _locations;
             _locationDataSource.chatRooms = customObjects.objects;

@@ -228,6 +228,8 @@
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
 		69B96E3917E89F1E00C94DB7 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3617E89F1D00C94DB7 /* ImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
+		69CB6ADC17FAC7590005A76C /* MyPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6ADB17FAC7590005A76C /* MyPaginator.m */; };
 		69DC972917F485AD004770C5 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DC972817F485AD004770C5 /* Utilites.m */; };
 		69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */; };
 		69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */; };
@@ -636,6 +638,10 @@
 		69B96E3617E89F1D00C94DB7 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		69B96E3717E89F1D00C94DB7 /* ImageCacheObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCacheObject.h; sourceTree = "<group>"; };
 		69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCacheObject.m; sourceTree = "<group>"; };
+		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
+		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
+		69CB6ADA17FAC7590005A76C /* MyPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPaginator.h; sourceTree = "<group>"; };
+		69CB6ADB17FAC7590005A76C /* MyPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPaginator.m; sourceTree = "<group>"; };
 		69DC972717F485AD004770C5 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
 		69DC972817F485AD004770C5 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
 		69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
@@ -746,6 +752,7 @@
 		693C7D0017CCDCF200D7F0A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				69CB6AD617FAC6EC0005A76C /* NMPaginator */,
 				6911FB1617D5E3B000FEADB4 /* Reachability */,
 				693C7D0317CCDCF200D7F0A9 /* SASlideMenu */,
 				693C7D1817CCDCF200D7F0A9 /* XMPPFramework */,
@@ -1695,6 +1702,8 @@
 				69A0ACC617F9883200230A27 /* ChatRooms.m */,
 				69A0ACC817F9966A00230A27 /* GeoData.h */,
 				69A0ACC917F9966A00230A27 /* GeoData.m */,
+				69CB6ADA17FAC7590005A76C /* MyPaginator.h */,
+				69CB6ADB17FAC7590005A76C /* MyPaginator.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1708,6 +1717,15 @@
 				69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */,
 			);
 			path = AsyncImageLoaderCache;
+			sourceTree = "<group>";
+		};
+		69CB6AD617FAC6EC0005A76C /* NMPaginator */ = {
+			isa = PBXGroup;
+			children = (
+				69CB6AD717FAC7040005A76C /* NMPaginator.h */,
+				69CB6AD817FAC7040005A76C /* NMPaginator.m */,
+			);
+			path = NMPaginator;
 			sourceTree = "<group>";
 		};
 		69E8ECCA17E0AB0300D614AA /* DataSources */ = {
@@ -1961,6 +1979,7 @@
 				693C7E7E17CCDCF300D7F0A9 /* XMPPUserCoreDataStorageObject.m in Sources */,
 				693C7E7F17CCDCF300D7F0A9 /* XMPPResourceMemoryStorageObject.m in Sources */,
 				693C7E8017CCDCF300D7F0A9 /* XMPPRosterMemoryStorage.m in Sources */,
+				69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */,
 				693C7E8117CCDCF300D7F0A9 /* XMPPUserMemoryStorageObject.m in Sources */,
 				693C7E8217CCDCF300D7F0A9 /* XMPPRoster.m in Sources */,
 				693C7E8317CCDCF300D7F0A9 /* XMPPSystemInputActivityMonitor.m in Sources */,
@@ -2073,6 +2092,7 @@
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
 				69B96E3917E89F1E00C94DB7 /* ImageCache.m in Sources */,
+				69CB6ADC17FAC7590005A76C /* MyPaginator.m in Sources */,
 				69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */,
 				693E05AE17EB5B540043299C /* TrendingCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
