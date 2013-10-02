@@ -9,7 +9,6 @@
 #import "ChatRooms.h"
 
 @implementation ChatRooms
-@synthesize allChatRooms = _allChatRooms;
 @synthesize currentPath = _currentPath;
 
 
@@ -26,7 +25,8 @@
 - (id)init{
     self = [super init];
     if (self) {
-        self.allChatRooms = [[NSArray alloc] init];
+        self.allTrendingRooms = [[NSArray alloc] init];
+        self.allLocalRooms = [[NSArray alloc] init];
     }
     return self;
 }
@@ -35,13 +35,20 @@
 #pragma mark - 
 #pragma mark Setter & Getter
 
--(void)setRooms:(NSArray *)rooms{
-    self.allChatRooms = rooms;
+-(void)setTrendingRooms:(NSArray *)rooms{
+    self.allTrendingRooms = rooms;
 }
 
--(NSArray *)getAllRooms{
-    NSArray *chatRooms = self.allChatRooms;
-    return chatRooms;
+-(void)setLocalRooms:(NSArray *)rooms{
+    self.allLocalRooms = rooms;
+}
+
+-(NSArray *)getTrendingRooms{
+    return self.allTrendingRooms;
+}
+
+-(NSArray *)getLocalRooms{
+    return self.allLocalRooms;
 }
 
 @end

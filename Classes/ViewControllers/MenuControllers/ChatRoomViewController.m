@@ -333,7 +333,14 @@ static CGFloat padding = 20.0;
     self.currentRoom = room;
     
     //getting custom object(room):
-    QBCOCustomObject *getObject = [[[ChatRooms action] getAllRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
+    QBCOCustomObject *getObject;
+    if ([ChatRooms action].tableViewTag == kTrendingTableViewTag) {
+        getObject = [[[ChatRooms action] getTrendingRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
+    }
+    if ([ChatRooms action].tableViewTag == kLocalTableViewTag) {
+        getObject = [[[ChatRooms action] getLocalRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
+    }
+    
     NSNumber *rank = [getObject.fields objectForKey:@"rank"];
     NSUInteger intRank = [rank intValue];
     intRank+=1;

@@ -11,7 +11,8 @@
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate, UIAlertViewDelegate, NMPaginatorDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) MyPaginator *myPaginator;
+@property (strong, nonatomic) MyPaginator *trendingPaginator;
+@property (strong, nonatomic) MyPaginator *localPaginator;
 @property (strong, nonatomic) NSTimer *presenceTimer;
 
 - (IBAction)createPrivateRoom:(id)sender;

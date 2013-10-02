@@ -12,8 +12,10 @@
     NSArray *allChatRooms;
     NSIndexPath *currentPath;
 }
-@property (nonatomic, strong) NSArray *allChatRooms;
+@property (nonatomic, strong) NSArray *allTrendingRooms;
+@property (nonatomic, strong) NSArray *allLocalRooms;
 @property (strong, nonatomic) NSIndexPath *currentPath;
+@property (assign, nonatomic) NSInteger tableViewTag;
 
 +(ChatRooms *)action;
 
@@ -21,7 +23,10 @@
 #pragma mark -
 #pragma mark Setter & Getter
 
--(void)setRooms:(NSArray *)rooms;
--(NSArray *)getAllRooms;
+-(void)setTrendingRooms:(NSArray *)rooms;
+-(void)setLocalRooms:(NSArray *)rooms;
+
+-(NSArray *)getTrendingRooms;
+-(NSArray *)getLocalRooms;
 
 @end

@@ -14,16 +14,22 @@
 #import "ChatRooms.h"
 #import "GeoData.h"
 
+
 @interface ChatViewController ()
 @property (nonatomic, strong) IBOutlet UITableView *trendingTableView;
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
 
+@property (nonatomic, strong) NSArray *trendings;
 @property (nonatomic, strong) NSArray *locations;
+
 @property (nonatomic, strong) TrendingDataSource *trendingDataSource;
 @property (nonatomic, strong) LocationDataSource *locationDataSource;
 
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, strong) UILabel *footerLabel;
+@property (nonatomic, strong) UIActivityIndicatorView *trendingActivityIndicator;
+@property (nonatomic, strong) UILabel *trendingFooterLabel;
+@property (nonatomic, strong) UIActivityIndicatorView *localActivityIndicator;
+@property (nonatomic, strong) UILabel *localFooterLabel;
+
 @end
 
 @implementation ChatViewController
@@ -35,15 +41,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _locations = [[NSMutableArray alloc] init];
+    _trendings = [[NSArray alloc] init];
+    _locations = [[NSArray alloc] init];
+    
+    _trendingTableView.tag = kTrendingTableViewTag;
+    _locationTableView.tag = kLocalTableViewTag;
+    
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
+    
     self.trendingTableView.delegate = self;
     self.locationTableView.delegate = self;
     
     // paginator:
-    self.myPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
-    self.trendingTableView.tableFooterView = [self creatingTableViewFooter];
+    self.trendingPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
+    self.localPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
+
+    self.trendingPaginator.tag = kTrendingPaginatorTag;
+    self.localPaginator.tag = kLocalPaginatorTag;
+    
+    self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
+    self.locationTableView.tableFooterView = [self creatingLocalFooter];
     
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
@@ -56,10 +74,12 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self getChatRooms];
     [super viewWillAppear:animated];
+    if ([_trendings count] == 0) {
+        [self.trendingPaginator fetchFirstPage];
+    }
     if ([_locations count] == 0) {
-        [self.myPaginator fetchFirstPage];
+        [self.localPaginator fetchFirstPage];
     }
     
     // send presence
@@ -67,6 +87,7 @@
         self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     }
     [self.trendingTableView reloadData];
+    [self.locationTableView reloadData];
 }
 
 - (void)viewDidUnload
@@ -85,40 +106,73 @@
 
 #pragma mark - Paginator
 
-- (void)fetchNextPage
+- (void)fetchNextPage:(MyPaginator *)paginator
 {
-    [self.myPaginator fetchNextPage];
-    [self.activityIndicator startAnimating];
+    [paginator fetchNextPage];
+    if (paginator.tag == kTrendingPaginatorTag) {
+        [self.trendingActivityIndicator startAnimating];
+    }
+    if (paginator.tag == kLocalPaginatorTag) {
+        [self.localActivityIndicator startAnimating];
+    }
 }
 
-- (void)updateTableViewFooter
+- (void)updateTableViewFooterWithPaginator:(MyPaginator *)paginator
 {
-    if ([self.myPaginator.results count] != 0)
+    if ([paginator.results count] != 0)
     {
-        self.footerLabel.text = [NSString stringWithFormat:@"%d results out of %d", [self.myPaginator.results count], self.myPaginator.total];
+        if (paginator.tag == kTrendingPaginatorTag) {
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of %d", [paginator.results count], paginator.total];
+            [self.trendingFooterLabel setNeedsDisplay];
+        }
+        if (paginator.tag == kLocalPaginatorTag) {
+            self.localFooterLabel.text = [NSString stringWithFormat:@"%d results out of %d", [paginator.results count], paginator.total];
+            [self.localFooterLabel setNeedsDisplay];
+        }
     } else
     {
-        self.footerLabel.text = @"";
+        self.trendingFooterLabel.text = @"";
+        self.localFooterLabel.text = @"";
+        [self.trendingFooterLabel setNeedsDisplay];
+        [self.localFooterLabel setNeedsDisplay];
     }
-    
-    [self.footerLabel setNeedsDisplay];
 }
 
--(UIView *)creatingTableViewFooter {
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
+-(UIView *)creatingTrendingFooter {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _trendingTableView.frame.size.width, 44.0f)];
     footerView.backgroundColor = [UIColor clearColor];
-    _footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
-    _footerLabel.backgroundColor = [UIColor clearColor];
-    _footerLabel.textAlignment = UITextAlignmentCenter;
-    _footerLabel.textColor = [UIColor lightGrayColor];
-    _footerLabel.font = [UIFont systemFontOfSize:16];
-    _footerLabel.text = @"10 out of nil";
-    [footerView addSubview:_footerLabel];
+    _trendingFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _trendingTableView.frame.size.width, 44.0f)];
+    _trendingFooterLabel.backgroundColor = [UIColor clearColor];
+    _trendingFooterLabel.textAlignment = UITextAlignmentCenter;
+    _trendingFooterLabel.textColor = [UIColor lightGrayColor];
+    _trendingFooterLabel.font = [UIFont systemFontOfSize:16];
+    [footerView addSubview:_trendingFooterLabel];
     
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicator.center = CGPointMake(44.0, 22.0);
-    self.activityIndicator.hidesWhenStopped = YES;
-    [footerView addSubview:self.activityIndicator];
+    self.trendingActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.trendingActivityIndicator.center = CGPointMake(40.0, 22.0);
+    self.trendingActivityIndicator.hidesWhenStopped = YES;
+    [footerView addSubview:self.trendingActivityIndicator];
+    return footerView;
+}
+
+-(UIView *)creatingLocalFooter {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _locationTableView.frame.size.width, 44.0f)];
+    footerView.backgroundColor = [UIColor clearColor];
+    _localFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _locationTableView.frame.size.width, 44.0f)];
+    _localFooterLabel.backgroundColor = [UIColor clearColor];
+    _localFooterLabel.textAlignment = UITextAlignmentCenter;
+    _localFooterLabel.textColor = [UIColor lightGrayColor];
+    _localFooterLabel.font = [UIFont systemFontOfSize:16];
+    [footerView addSubview:_localFooterLabel];
+    
+    self.localActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.localActivityIndicator.center = CGPointMake(40.0, 22.0);
+    self.localActivityIndicator.hidesWhenStopped = YES;
+    [footerView addSubview:self.localActivityIndicator];
+    
+    UIImageView *shadow = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 13, 44)];
+    shadow.image = [UIImage imageNamed:@"shadow_main.png"];
+    [footerView addSubview:shadow];
     return footerView;
 }
 
@@ -127,11 +181,21 @@
     // when reaching bottom, load a new page
     if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
     {
+        if (scrollView.tag == kTrendingTableViewTag) {
+            // ask next page only if we haven't reached last page
+            if(![self.trendingPaginator reachedLastPage])
+            {
+                // fetch next page of results
+                [self fetchNextPage:self.trendingPaginator];
+            }
+        }
+        if (scrollView.tag == kLocalTableViewTag) {
         // ask next page only if we haven't reached last page
-        if(![self.myPaginator reachedLastPage])
-        {
-            // fetch next page of results
-            [self fetchNextPage];
+        if(![self.localPaginator reachedLastPage])
+            {
+                // fetch next page of results
+                [self fetchNextPage:self.localPaginator];
+            }
         }
     }
 }
@@ -142,18 +206,32 @@
 
 - (void)paginator:(id)paginator didReceiveResults:(NSArray *)results
 {
-    [self updateTableViewFooter];
+    [self updateTableViewFooterWithPaginator:paginator];
     // handle new results
-    NSLog(@"%@",results);
-    _locations = [_locations arrayByAddingObjectsFromArray:results];
-    [self.activityIndicator stopAnimating];
-    [self viewWillAppear:NO];
+    if ([paginator tag] == kTrendingPaginatorTag) {
+        _trendings = [_trendings arrayByAddingObjectsFromArray:results];
+        [[ChatRooms action] setTrendingRooms:_trendings];
+        _trendingDataSource.chatRooms = _trendings;
+        [self.trendingActivityIndicator stopAnimating];
+    }
+    
+    if ([paginator tag] == kLocalPaginatorTag) {
+        _locations = [_locations arrayByAddingObjectsFromArray:results];
+        [[ChatRooms alloc] setLocalRooms:_locations];
+        _locationDataSource.chatRooms = _locations;
+        [self.localActivityIndicator stopAnimating];
+    }
+    
+    [self updateTableViewFooterWithPaginator:paginator];
+    //reload tables:
+    [self.trendingTableView reloadData];
+    [self.locationTableView reloadData];
 }
 
 - (void)paginatorDidReset:(id)paginator
 {
     [self.trendingTableView reloadData];
-    [self updateTableViewFooter];
+    [self updateTableViewFooterWithPaginator:paginator];
 }
 
 
@@ -192,8 +270,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [ChatRooms action].tableViewTag = tableView.tag;
     [ChatRooms action].currentPath = indexPath;
-    QBCOCustomObject *currentObject = [_locations objectAtIndex:[indexPath row]];
+    QBCOCustomObject *currentObject = [_trendings objectAtIndex:[indexPath row]];
     NSString *room = [currentObject.fields objectForKey:kName];
     [FBService shared].roomName = room;
     [FBService shared].roomID = currentObject.ID;
@@ -206,16 +285,6 @@
 
 -(void)completedWithResult:(Result *)result{
     if ([result success]) {
-        if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
-            
-            // reload tables
-            QBCOCustomObjectPagedResult *customObjects = (QBCOCustomObjectPagedResult *)result;
-            [[ChatRooms action] setRooms:_locations];
-            _trendingDataSource.chatRooms = _locations;
-            _locationDataSource.chatRooms = customObjects.objects;
-            [self.trendingTableView reloadData];
-            [self.locationTableView reloadData];
-        }
         if([result isKindOfClass:QBCOCustomObjectResult.class]){
             QBCOCustomObjectResult *createObjectResult = (QBCOCustomObjectResult *)result;
             NSLog(@"Created object: %@", createObjectResult.object);
@@ -228,12 +297,6 @@
 #pragma mark - 
 #pragma mark Actions
 
--(void)getChatRooms{
-    NSMutableDictionary *extRequest = [NSMutableDictionary dictionary];
-    [extRequest setObject:@"rank" forKey:@"sort_desc"];
-    [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extRequest delegate:self];
-}
-
 - (IBAction)createPrivateRoom:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -242,7 +305,6 @@
 
 -(NSArray *)getNamesOfRooms:(NSArray *)rooms{
     NSMutableArray *names = [[NSMutableArray alloc] init];
-    
     for (int i=0; i<[rooms count]; i++) {
         QBCOCustomObject *object = [rooms objectAtIndex:i];
         [names addObject:[object.fields objectForKey:kName]];
@@ -263,7 +325,8 @@
 
                 NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[GeoData getData] getMyCoorinates].latitude];
                 NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[GeoData getData] getMyCoorinates].longitude];
-                NSArray *names = [self getNamesOfRooms:[[ChatRooms action] getAllRooms]];
+                NSArray *names = [self getNamesOfRooms:[[ChatRooms action] getTrendingRooms]];
+#warning Change rooms!!!
                 BOOL flag = NO;
                 for (NSString *name in names) {
                     if ([alertText isEqual:name]) {

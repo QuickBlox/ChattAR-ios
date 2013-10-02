@@ -9,6 +9,7 @@
 #import "MyPaginator.h"
 
 @implementation MyPaginator
+@synthesize tag=_tag;
 
 - (void)fetchResultsWithPage:(NSInteger)page pageSize:(NSInteger)pageSize
 {
@@ -34,7 +35,7 @@
             // todo:
             QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
             NSArray *gettingRooms = pagedResult.objects;
-            NSInteger roomsCount = 23;
+            NSInteger roomsCount = 30;
             [self receivedResults:gettingRooms total:roomsCount];
             
         }

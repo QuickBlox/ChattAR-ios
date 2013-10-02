@@ -72,6 +72,12 @@
 #define quoteDelimiter @"|"
 
 
+// Table Tags:
+#define  kTrendingTableViewTag      1011
+#define  kLocalTableViewTag         1012
+
+#define kTrendingPaginatorTag       1001
+#define kLocalPaginatorTag          1002
 
 
 #define kGetFBFirstName     [[DataManager shared].currentFBUser objectForKey:kFirstName]
