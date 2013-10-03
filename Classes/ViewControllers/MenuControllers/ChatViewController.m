@@ -176,10 +176,14 @@
     return footerView;
 }
 
+
+#pragma mark - 
+#pragma mark ScrollViewDelegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     // when reaching bottom, load a new page
-    if (scrollView.contentOffset.y == scrollView.contentSize.height - scrollView.bounds.size.height)
+    if (scrollView.contentOffset.y == (scrollView.contentSize.height - scrollView.bounds.size.height))
     {
         if (scrollView.tag == kTrendingTableViewTag) {
             // ask next page only if we haven't reached last page
@@ -210,14 +214,12 @@
     // handle new results
     if ([paginator tag] == kTrendingPaginatorTag) {
         _trendings = [_trendings arrayByAddingObjectsFromArray:results];
-        [[ChatRooms action] setTrendingRooms:_trendings];
         _trendingDataSource.chatRooms = _trendings;
         [self.trendingActivityIndicator stopAnimating];
     }
     
     if ([paginator tag] == kLocalPaginatorTag) {
         _locations = [_locations arrayByAddingObjectsFromArray:results];
-        [[ChatRooms alloc] setLocalRooms:_locations];
         _locationDataSource.chatRooms = _locations;
         [self.localActivityIndicator stopAnimating];
     }
@@ -231,6 +233,7 @@
 - (void)paginatorDidReset:(id)paginator
 {
     [self.trendingTableView reloadData];
+    [self.locationTableView reloadData];
     [self updateTableViewFooterWithPaginator:paginator];
 }
 
@@ -272,7 +275,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [ChatRooms action].tableViewTag = tableView.tag;
     [ChatRooms action].currentPath = indexPath;
-    QBCOCustomObject *currentObject = [_trendings objectAtIndex:[indexPath row]];
+    QBCOCustomObject *currentObject;
+    if (tableView.tag == kTrendingTableViewTag) {
+        [[ChatRooms action] setTrendingRooms:_trendings];
+       currentObject =  [_trendings objectAtIndex:[indexPath row]];
+    }
+    if (tableView.tag == kLocalTableViewTag) {
+        [[ChatRooms action] setLocalRooms:_locations];
+       currentObject = [_locations objectAtIndex:[indexPath row]];
+    }
+    
     NSString *room = [currentObject.fields objectForKey:kName];
     [FBService shared].roomName = room;
     [FBService shared].roomID = currentObject.ID;

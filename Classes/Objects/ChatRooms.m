@@ -11,9 +11,8 @@
 @implementation ChatRooms
 @synthesize currentPath = _currentPath;
 
-
+   static ChatRooms *defaultChatRoom = nil;
 + (ChatRooms *)action{
-    static ChatRooms *defaultChatRoom = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultChatRoom = [[self alloc] init];

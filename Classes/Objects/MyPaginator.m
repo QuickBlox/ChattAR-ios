@@ -13,8 +13,6 @@
 
 - (void)fetchResultsWithPage:(NSInteger)page pageSize:(NSInteger)pageSize
 {
-    // you code goes here
-    // once you receive the results for the current page, just call [self receivedResults:results total:total];
     // records skiped
     NSInteger skipedRecords = (page - 1) * pageSize;
     
