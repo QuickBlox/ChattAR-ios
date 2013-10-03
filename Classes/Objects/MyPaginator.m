@@ -35,7 +35,6 @@
             NSArray *gettingRooms = pagedResult.objects;
             NSInteger roomsCount = 30;
             [self receivedResults:gettingRooms total:roomsCount];
-            
         }
     }
 }
