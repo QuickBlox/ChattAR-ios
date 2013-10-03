@@ -22,6 +22,10 @@
 		6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB4217D62AE400FEADB4 /* Accelerate.framework */; };
 		6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */; };
 		6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */; };
+		691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691A1B3417FDB94000C2A87D /* MapKit.framework */; };
+		691A1B3A17FDD9A100C2A87D /* 03_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3717FDD9A100C2A87D /* 03_pin.png */; };
+		691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */; };
+		691A1B3C17FDD9A100C2A87D /* bollywood chatroom logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */; };
 		69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69357E3717CCA58700EB3CDF /* Default-568h@2x.png */; };
 		69357E7117CCAC2100EB3CDF /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7017CCAC2100EB3CDF /* libresolv.dylib */; };
 		69357E7517CCB01600EB3CDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7417CCB01600EB3CDF /* libz.dylib */; };
@@ -179,6 +183,7 @@
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
+		698FC7A917FD9ECF003AA0FE /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 698FC7A817FD9ECF003AA0FE /* MapPin.m */; };
 		69A0ACC717F9883200230A27 /* ChatRooms.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC617F9883200230A27 /* ChatRooms.m */; };
 		69A0ACCA17F9966A00230A27 /* GeoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC917F9966A00230A27 /* GeoData.m */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
@@ -269,6 +274,10 @@
 		6911FB4217D62AE400FEADB4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow-1.png"; sourceTree = "<group>"; };
 		6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow@2x.png"; sourceTree = "<group>"; };
+		691A1B3417FDB94000C2A87D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		691A1B3717FDD9A100C2A87D /* 03_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03_pin.png; sourceTree = "<group>"; };
+		691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03_pin@2x.png"; sourceTree = "<group>"; };
+		691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bollywood chatroom logo.jpg"; sourceTree = "<group>"; };
 		69357E3717CCA58700EB3CDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		69357E7017CCAC2100EB3CDF /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		69357E7417CCB01600EB3CDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -577,6 +586,8 @@
 		696B59F517E99EF900D60537 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6981247717DDFF2C00974C6A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		698FC7A717FD9ECF003AA0FE /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		698FC7A817FD9ECF003AA0FE /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
 		69A0ACC517F9883200230A27 /* ChatRooms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRooms.h; sourceTree = "<group>"; };
 		69A0ACC617F9883200230A27 /* ChatRooms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRooms.m; sourceTree = "<group>"; };
 		69A0ACC817F9966A00230A27 /* GeoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoData.h; sourceTree = "<group>"; };
@@ -671,6 +682,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */,
 				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */,
 				6911FB3F17D6255800FEADB4 /* QuartzCore.framework in Frameworks */,
@@ -727,6 +739,16 @@
 				6911FB1817D5E3B000FEADB4 /* Reachability.m */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		691A1B3617FDD9A100C2A87D /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				691A1B3717FDD9A100C2A87D /* 03_pin.png */,
+				691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */,
+				691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		6934A2D317CCCA6800D9A846 /* Resources */ = {
@@ -1576,6 +1598,7 @@
 		69A4026217D740F900E7BE1F /* images */ = {
 			isa = PBXGroup;
 			children = (
+				691A1B3617FDD9A100C2A87D /* Map */,
 				69A4026817D740F900E7BE1F /* loginButton.png */,
 				69ECC0B317E1AD9F00187CF8 /* chatroom */,
 				69A4026317D740F900E7BE1F /* Local */,
@@ -1704,6 +1727,8 @@
 				69A0ACC917F9966A00230A27 /* GeoData.m */,
 				69CB6ADA17FAC7590005A76C /* MyPaginator.h */,
 				69CB6ADB17FAC7590005A76C /* MyPaginator.m */,
+				698FC7A717FD9ECF003AA0FE /* MapPin.h */,
+				698FC7A817FD9ECF003AA0FE /* MapPin.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1790,6 +1815,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				691A1B3417FDB94000C2A87D /* MapKit.framework */,
 				69B96E2317E869E700C94DB7 /* Quickblox.framework */,
 				6911FB4217D62AE400FEADB4 /* Accelerate.framework */,
 				6911FB3817D6244200FEADB4 /* AddressBookUI.framework */,
@@ -1879,6 +1905,7 @@
 				693C7EDE17CCDCF300D7F0A9 /* build-libidn.sh in Resources */,
 				69A4028B17D740F900E7BE1F /* local_icon.png in Resources */,
 				69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */,
+				691A1B3C17FDD9A100C2A87D /* bollywood chatroom logo.jpg in Resources */,
 				69A4028D17D740F900E7BE1F /* upic_local.png in Resources */,
 				69A4028E17D740F900E7BE1F /* upic_local@2x.png in Resources */,
 				69A4028F17D740F900E7BE1F /* loginButton.png in Resources */,
@@ -1896,6 +1923,7 @@
 				69A4029A17D740F900E7BE1F /* messages_mnu.png in Resources */,
 				69A4029B17D740F900E7BE1F /* messages_mnu@2x.png in Resources */,
 				69A4029C17D740F900E7BE1F /* mrquick_mnu.png in Resources */,
+				691A1B3A17FDD9A100C2A87D /* 03_pin.png in Resources */,
 				69A4029D17D740F900E7BE1F /* mrquick_mnu@2x.png in Resources */,
 				69A4029E17D740F900E7BE1F /* qb_mnu_grey.png in Resources */,
 				69A4029F17D740F900E7BE1F /* qb_mnu_grey@2x.png in Resources */,
@@ -1919,6 +1947,7 @@
 				69ECC0BF17E1AD9F00187CF8 /* 01_back@2x.png in Resources */,
 				69ECC0C017E1AD9F00187CF8 /* 01_blue_chat_bubble.png in Resources */,
 				69ECC0C117E1AD9F00187CF8 /* 01_blue_chat_bubble@2x.png in Resources */,
+				691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */,
 				69ECC0C217E1AD9F00187CF8 /* 01_green_chat_bubble.png in Resources */,
 				69ECC0C317E1AD9F00187CF8 /* 01_grey_chat_bubble.png in Resources */,
 				69ECC0C417E1AD9F00187CF8 /* 01_grey_chat_bubble@2x.png in Resources */,
@@ -2003,6 +2032,7 @@
 				693C7E9517CCDCF300D7F0A9 /* XMPPMessage+XEP0045.m in Sources */,
 				693C7E9617CCDCF300D7F0A9 /* XMPPMUC.m in Sources */,
 				693C7E9717CCDCF300D7F0A9 /* XMPPRoom.m in Sources */,
+				698FC7A917FD9ECF003AA0FE /* MapPin.m in Sources */,
 				693C7E9817CCDCF300D7F0A9 /* XMPPvCard.xcdatamodeld in Sources */,
 				693C7E9917CCDCF300D7F0A9 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				693C7E9A17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorage.m in Sources */,

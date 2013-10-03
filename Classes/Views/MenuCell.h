@@ -10,7 +10,5 @@
 
 @interface MenuCell : UITableViewCell
 
-//@property (nonatomic, weak) IBOutlet UILabel* itemDescription;
-//@property (nonatomic, weak) IBOutlet UIImageView* disclosureImage;
 
 @end

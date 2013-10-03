@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="VKh-QN-AtT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="VKh-QN-AtT">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -253,7 +253,7 @@
                                                     <rect key="frame" x="72" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.84457795516304346" green="0.84457795516304346" blue="0.84457795516304346" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="chat_mnu.png" id="8bd-jK-dX0">
@@ -275,7 +275,7 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.62635869565217384" green="0.62635869565217384" blue="0.62635869565217384" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map_mnu.png" id="Px8-jb-08q">
@@ -296,7 +296,7 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.62659222146739135" green="0.62659222146739135" blue="0.62659222146739135" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.59519361413043481" green="0.59519361413043481" blue="0.59519361413043481" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ar_mnu.png" id="Q5A-Ge-v3S">
@@ -317,7 +317,7 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.62854534646739135" green="0.62854534646739135" blue="0.62854534646739135" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.59519361410000005" green="0.59519361410000005" blue="0.59519361410000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="messages_mnu.png" id="ZyB-Aj-M9e">
@@ -338,7 +338,7 @@
                                                     <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.84457795520000001" green="0.84457795520000001" blue="0.84457795520000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="settings_mnu.png" id="Mui-mY-6ag">
@@ -381,7 +381,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="N6o-yJ-8r8">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.034737905077933139" green="0.0094158577236569726" blue="0.59294327445652173" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="4.0890600690000003e-05" blue="0.49857761550000002" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.99470979439121343" green="0.98905115549983358" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="textShadowColor" red="0.28223285500251721" green="0.28062730751645887" blue="0.28373386548913049" alpha="1" colorSpace="calibratedRGB"/>
@@ -556,6 +556,7 @@
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="4.0890600690000003e-05" blue="0.49857761550000002" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="b4C-tU-pxk" kind="relationship" relationship="rootViewController" id="eh1-q4-wth"/>
@@ -569,9 +570,14 @@
         <scene sceneID="VmR-Dj-S6u">
             <objects>
                 <navigationController definesPresentationContext="YES" id="FgT-Db-JXl" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uCm-wN-rWp">
+                    <navigationBar key="navigationBar" alpha="0.29999999999999966" contentMode="scaleToFill" id="uCm-wN-rWp">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.12144778502029398" green="0.057812620033168255" blue="0.55256453804347827" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.10207201086956519" green="0.10207201086956519" blue="0.10207201086956519" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="CJX-Z9-Ud1" kind="relationship" relationship="rootViewController" id="YCO-Sv-3eP"/>
@@ -589,17 +595,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ISO-i2-A3i">
-                                <rect key="frame" x="25" y="239" width="280" height="90"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="un4-8I-qP2">
+                                <rect key="frame" x="0.0" y="-64" width="320" height="632"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="CJX-Z9-Ud1" id="ut3-Oa-twD"/>
+                                </connections>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Map" id="ZWg-I4-oI8"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="un4-8I-qP2" id="HBJ-I8-fz9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="osR-NV-VvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -635,7 +646,7 @@
                 <navigationController definesPresentationContext="YES" id="hhr-D8-IaV" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="LpE-Oa-Mjx">
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.034737905079999999" green="0.0094158577240000003" blue="0.59294327449999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="4.0890600690000003e-05" blue="0.49857761550000002" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
@@ -678,6 +689,7 @@
                 <navigationController definesPresentationContext="YES" id="Rew-m3-V6v" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qko-WT-8dg">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="4.0890600690000003e-05" blue="0.49857761550000002" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Ou1-lz-3uP" kind="relationship" relationship="rootViewController" id="drr-p0-hBq"/>
@@ -737,6 +749,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yX7-1Z-Wv0"/>
+        <segue reference="GXn-8Q-nrq"/>
     </inferredMetricsTieBreakers>
 </document>
