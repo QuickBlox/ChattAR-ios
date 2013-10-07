@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AsyncImageView.h"
 #import <MapKit/MapKit.h>
 
 @interface MapPin : NSObject <MKAnnotation> {

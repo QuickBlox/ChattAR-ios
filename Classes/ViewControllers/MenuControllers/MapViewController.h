@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "CAnotationView.h"
 
 @interface MapViewController : UIViewController <QBActionStatusDelegate, MKMapViewDelegate>
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;

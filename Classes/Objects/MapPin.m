@@ -15,6 +15,7 @@
 - (id)initWithCoordinates:(CLLocationCoordinate2D)coordinates{
     self = [super init];
     if (self) {
+        
         self.coordinate = coordinates;
     }
     return self;

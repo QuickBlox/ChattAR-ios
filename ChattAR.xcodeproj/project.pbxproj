@@ -25,7 +25,8 @@
 		691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691A1B3417FDB94000C2A87D /* MapKit.framework */; };
 		691A1B3A17FDD9A100C2A87D /* 03_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3717FDD9A100C2A87D /* 03_pin.png */; };
 		691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */; };
-		691A1B3C17FDD9A100C2A87D /* bollywood chatroom logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */; };
+		691A1B3C17FDD9A100C2A87D /* room.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 691A1B3917FDD9A100C2A87D /* room.jpg */; };
+		6924A75C1802AD5400D61E5E /* CAnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6924A75B1802AD5400D61E5E /* CAnotationView.m */; };
 		69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69357E3717CCA58700EB3CDF /* Default-568h@2x.png */; };
 		69357E7117CCAC2100EB3CDF /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7017CCAC2100EB3CDF /* libresolv.dylib */; };
 		69357E7517CCB01600EB3CDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7417CCB01600EB3CDF /* libz.dylib */; };
@@ -277,7 +278,9 @@
 		691A1B3417FDB94000C2A87D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		691A1B3717FDD9A100C2A87D /* 03_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 03_pin.png; sourceTree = "<group>"; };
 		691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03_pin@2x.png"; sourceTree = "<group>"; };
-		691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bollywood chatroom logo.jpg"; sourceTree = "<group>"; };
+		691A1B3917FDD9A100C2A87D /* room.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = room.jpg; sourceTree = "<group>"; };
+		6924A75A1802AD5400D61E5E /* CAnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAnotationView.h; sourceTree = "<group>"; };
+		6924A75B1802AD5400D61E5E /* CAnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAnotationView.m; sourceTree = "<group>"; };
 		69357E3717CCA58700EB3CDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		69357E7017CCAC2100EB3CDF /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		69357E7417CCB01600EB3CDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -746,7 +749,7 @@
 			children = (
 				691A1B3717FDD9A100C2A87D /* 03_pin.png */,
 				691A1B3817FDD9A100C2A87D /* 03_pin@2x.png */,
-				691A1B3917FDD9A100C2A87D /* bollywood chatroom logo.jpg */,
+				691A1B3917FDD9A100C2A87D /* room.jpg */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1698,6 +1701,8 @@
 				69B96E2E17E89EED00C94DB7 /* ProfileCell.m */,
 				693E05AC17EB5B540043299C /* TrendingCell.h */,
 				693E05AD17EB5B540043299C /* TrendingCell.m */,
+				6924A75A1802AD5400D61E5E /* CAnotationView.h */,
+				6924A75B1802AD5400D61E5E /* CAnotationView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1905,7 +1910,7 @@
 				693C7EDE17CCDCF300D7F0A9 /* build-libidn.sh in Resources */,
 				69A4028B17D740F900E7BE1F /* local_icon.png in Resources */,
 				69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */,
-				691A1B3C17FDD9A100C2A87D /* bollywood chatroom logo.jpg in Resources */,
+				691A1B3C17FDD9A100C2A87D /* room.jpg in Resources */,
 				69A4028D17D740F900E7BE1F /* upic_local.png in Resources */,
 				69A4028E17D740F900E7BE1F /* upic_local@2x.png in Resources */,
 				69A4028F17D740F900E7BE1F /* loginButton.png in Resources */,
@@ -2077,6 +2082,7 @@
 				693C7EC117CCDCF300D7F0A9 /* XMPPPing.m in Sources */,
 				693C7EC217CCDCF300D7F0A9 /* XMPPAutoTime.m in Sources */,
 				693C7EC317CCDCF300D7F0A9 /* XMPPTime.m in Sources */,
+				6924A75C1802AD5400D61E5E /* CAnotationView.m in Sources */,
 				693C7EC417CCDCF300D7F0A9 /* NSXMLElement+XEP_0203.m in Sources */,
 				693C7EC517CCDCF300D7F0A9 /* XEP_0223.m in Sources */,
 				693C7EC617CCDCF300D7F0A9 /* XMPPAttentionModule.m in Sources */,

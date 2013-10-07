@@ -214,12 +214,14 @@
     if ([paginator tag] == kTrendingPaginatorTag) {
         _trendings = [_trendings arrayByAddingObjectsFromArray:results];
         _trendingDataSource.chatRooms = _trendings;
+        [[ChatRooms action] setTrendingRooms:_trendings];
         [self.trendingActivityIndicator stopAnimating];
     }
     
     if ([paginator tag] == kLocalPaginatorTag) {
         _locations = [_locations arrayByAddingObjectsFromArray:results];
         _locationDataSource.chatRooms = _locations;
+        [[ChatRooms action] setLocalRooms:_locations];
         [self.localActivityIndicator stopAnimating];
     }
     
@@ -276,11 +278,9 @@
     [ChatRooms action].currentPath = indexPath;
     QBCOCustomObject *currentObject;
     if (tableView.tag == kTrendingTableViewTag) {
-        [[ChatRooms action] setTrendingRooms:_trendings];
        currentObject =  [_trendings objectAtIndex:[indexPath row]];
     }
     if (tableView.tag == kLocalTableViewTag) {
-        [[ChatRooms action] setLocalRooms:_locations];
        currentObject = [_locations objectAtIndex:[indexPath row]];
     }
     

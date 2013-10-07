@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "MapPin.h"
+#import "ChatRooms.h"
 
 @interface MapViewController ()
 
@@ -21,11 +22,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _mapView.showsUserLocation = YES;
-    _mapView.userTrackingMode = MKUserTrackingModeFollow;
     _mapView.mapType = MKMapTypeStandard;
-	// Do any additional setup after loading the view.
-    [QBCustomObjects objectsWithClassName:kChatRoom delegate:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    _chatRooms = [[ChatRooms action] getLocalRooms];
+    [self setAnnotationsToMap:_chatRooms];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,31 +48,20 @@
     }
 }
 
-#pragma mark - 
-#pragma mark QBActionStatusDelegate
-
--(void)completedWithResult:(Result *)result{
-    if ([result success]) {
-        if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
-            QBCOCustomObjectPagedResult *customObjcects = (QBCOCustomObjectPagedResult *)result;
-            _chatRooms = customObjcects.objects;
-            [self setAnnotationsToMap:_chatRooms];
-        }
-    }
-}
-
 
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+-(CAnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     
     static NSString *annotationIdentifier = @"annotationIdentifier";
-    MKAnnotationView *aView = [mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+    CAnotationView *aView = (CAnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
     if (aView == nil) {
-        aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        aView = [[CAnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
     }
+    aView.centerOffset = CGPointZero;
     aView.image = [UIImage imageNamed:@"03_pin.png"];
+    aView.avatar.image = [UIImage imageNamed:@"room.jpg"];
     return aView;
 }
 
