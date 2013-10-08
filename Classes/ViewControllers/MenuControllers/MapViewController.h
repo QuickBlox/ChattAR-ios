@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "SASlideMenuDataSource.h"
 #import "CAnotationView.h"
 
-@interface MapViewController : UIViewController <QBActionStatusDelegate, MKMapViewDelegate>
+@interface MapViewController : UIViewController <QBActionStatusDelegate, MKMapViewDelegate, SASlideMenuDataSource, UIActionSheetDelegate>
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 
 @end

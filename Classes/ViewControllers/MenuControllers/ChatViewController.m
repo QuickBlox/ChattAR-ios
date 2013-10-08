@@ -13,6 +13,7 @@
 #import "DataManager.h"
 #import "ChatRooms.h"
 #import "GeoData.h"
+#import "Utilites.h"
 
 
 @interface ChatViewController ()
@@ -66,15 +67,16 @@
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
     if(IS_HEIGHT_GTE_568){
-        self.scrollView.contentSize = CGSizeMake(522, 504);
+        self.scrollView.contentSize = CGSizeMake(500, 504);
     } else {
-        self.scrollView.contentSize = CGSizeMake(522, 416);
+        self.scrollView.contentSize = CGSizeMake(500, 416);
     }
     [self performSegueWithIdentifier:@"Splash" sender:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    //[[Utilites action] checkAndPutStatusBarColor];
     if ([_trendings count] == 0) {
         [self.trendingPaginator fetchFirstPage];
     }

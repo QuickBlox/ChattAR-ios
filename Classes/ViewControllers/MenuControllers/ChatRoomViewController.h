@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Utilites.h"
+#import "SASlideMenuDelegate.h"
 
-@interface ChatRoomViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
+@interface ChatRoomViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, SASlideMenuDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *chatRoomTable;
 

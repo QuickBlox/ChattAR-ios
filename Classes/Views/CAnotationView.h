@@ -11,5 +11,6 @@
 @interface CAnotationView : MKAnnotationView
 
 @property (nonatomic, strong) UIImageView *avatar;
+@property (nonatomic, strong) NSString *annotationTitle;
 
 @end

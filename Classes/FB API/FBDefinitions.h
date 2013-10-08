@@ -71,6 +71,9 @@
 #define qbidIdentifier @"@qbid="
 #define quoteDelimiter @"|"
 
+// Map View Tag
+#define kMapViewControllerTag  1231
+
 
 // Table Tags:
 #define  kTrendingTableViewTag      1011

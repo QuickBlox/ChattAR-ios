@@ -92,7 +92,7 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"Row selected: %i", [indexPath row]);
-    if ([indexPath row] == 4 || [indexPath row] == 5) {
+    if ([indexPath row] == 4) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else{
     [self loadContentAtIndexPath:indexPath];

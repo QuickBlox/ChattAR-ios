@@ -8,6 +8,7 @@
 
 #import "CAMenuViewController.h"
 #import "SplashViewController.h"
+#import "SASlideMenuRootViewController.h"
 #import "FBService.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MenuCell.h"
@@ -21,6 +22,10 @@
     return YES;
 }
 
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    
+}
 
 #pragma mark -
 #pragma mark SASlideMenuDataSource
@@ -38,8 +43,6 @@
     }else if (indexPath.row == 4){
         return @"AR";
     } else if (indexPath.row == 5) {
-        return @"Messages";
-    } else if (indexPath.row == 6) {
         return @"Settings";
     } else return @"";
 }
@@ -84,7 +87,7 @@
     [super viewWillAppear:NO];
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
     UIImageView *logoImage = [[UIImageView alloc] initWithImage:img];
-    logoImage.frame = CGRectMake(10, _menuTable.frame.size.height - (img.size.height + 10), img.size.width, img.size.height);
+    logoImage.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height + 30), img.size.width, img.size.height);
     [self.menuTable addSubview:logoImage];
 }
 
@@ -99,6 +102,7 @@
 }
 -(void) slideMenuWillSlideToSide{
     NSLog(@"slideMenuWillSlideToSide");
+    [[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject] endEditing:YES];
 }
 -(void) slideMenuDidSlideToSide{
     NSLog(@"slideMenuDidSlideToSide");

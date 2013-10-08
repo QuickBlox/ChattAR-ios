@@ -43,7 +43,6 @@
 
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
     self.title = @"Default";
     self.chatHistory = [[NSMutableArray alloc] init];
@@ -53,8 +52,6 @@
     self.inputTextView.layer.shadowOffset = CGSizeMake(0.0f, 4.0f);
     self.inputTextView.layer.shadowOpacity = 1.0f;
     self.inputTextView.layer.borderWidth = 0.1f;
-
-    // getting my location...
 }
 
 - (void)didReceiveMemoryWarning

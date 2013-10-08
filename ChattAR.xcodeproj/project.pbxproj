@@ -36,6 +36,10 @@
 		69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */; };
 		69357E9317CCBAEE00EB3CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69357E9017CCBAEE00EB3CDF /* main.m */; };
 		6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */; };
+		693B5B1D180405FB000F5374 /* menu_btn_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B19180405FB000F5374 /* menu_btn_b.png */; };
+		693B5B1E180405FB000F5374 /* menu_btn_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */; };
+		693B5B1F180405FB000F5374 /* menu_btn_gr.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1B180405FB000F5374 /* menu_btn_gr.png */; };
+		693B5B20180405FB000F5374 /* menu_btn_gr@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1C180405FB000F5374 /* menu_btn_gr@2x.png */; };
 		693C7CF717CCD88E00D7F0A9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693C7CF617CCD88E00D7F0A9 /* CoreData.framework */; };
 		693C7CF917CCD8A200D7F0A9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693C7CF817CCD8A200D7F0A9 /* CoreLocation.framework */; };
 		693C7CFB17CCD8BA00D7F0A9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693C7CFA17CCD8BA00D7F0A9 /* SystemConfiguration.framework */; };
@@ -178,7 +182,6 @@
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42C17CDD54F003C6893 /* ARViewController.m */; };
-		6954C43017CDD56A003C6893 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42F17CDD56A003C6893 /* MessagesViewController.m */; };
 		6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C43217CDD579003C6893 /* SettingsViewController.m */; };
 		696B59F617E99EF900D60537 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F417E99EF900D60537 /* Icon.png */; };
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
@@ -292,6 +295,10 @@
 		69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		69357E9017CCBAEE00EB3CDF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		693B5B19180405FB000F5374 /* menu_btn_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_b.png; sourceTree = "<group>"; };
+		693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_btn_b@2x.png"; sourceTree = "<group>"; };
+		693B5B1B180405FB000F5374 /* menu_btn_gr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_gr.png; sourceTree = "<group>"; };
+		693B5B1C180405FB000F5374 /* menu_btn_gr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_btn_gr@2x.png"; sourceTree = "<group>"; };
 		693C7CF617CCD88E00D7F0A9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		693C7CF817CCD8A200D7F0A9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		693C7CFA17CCD8BA00D7F0A9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -581,8 +588,6 @@
 		6954C42917CDD53E003C6893 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		6954C42B17CDD54F003C6893 /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewController.h; sourceTree = "<group>"; };
 		6954C42C17CDD54F003C6893 /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
-		6954C42E17CDD56A003C6893 /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
-		6954C42F17CDD56A003C6893 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		6954C43117CDD579003C6893 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6954C43217CDD579003C6893 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		696B59F417E99EF900D60537 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1588,8 +1593,6 @@
 				6954C42917CDD53E003C6893 /* MapViewController.m */,
 				6954C42B17CDD54F003C6893 /* ARViewController.h */,
 				6954C42C17CDD54F003C6893 /* ARViewController.m */,
-				6954C42E17CDD56A003C6893 /* MessagesViewController.h */,
-				6954C42F17CDD56A003C6893 /* MessagesViewController.m */,
 				6954C43117CDD579003C6893 /* SettingsViewController.h */,
 				6954C43217CDD579003C6893 /* SettingsViewController.m */,
 				69E8ECD217E0B4E900D614AA /* ChatRoomViewController.h */,
@@ -1652,6 +1655,10 @@
 		69A4027C17D740F900E7BE1F /* NavBar */ = {
 			isa = PBXGroup;
 			children = (
+				693B5B19180405FB000F5374 /* menu_btn_b.png */,
+				693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */,
+				693B5B1B180405FB000F5374 /* menu_btn_gr.png */,
+				693B5B1C180405FB000F5374 /* menu_btn_gr@2x.png */,
 				69A4027D17D740F900E7BE1F /* create_room.png */,
 				69A4027E17D740F900E7BE1F /* create_room@2x.png */,
 				69A4027F17D740F900E7BE1F /* mnubtn.png */,
@@ -1904,11 +1911,14 @@
 				69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */,
 				69357E9117CCBAEE00EB3CDF /* ChattARStatic-Info.plist in Resources */,
 				69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */,
+				693B5B20180405FB000F5374 /* menu_btn_gr@2x.png in Resources */,
 				6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */,
 				693C7ECA17CCDCF300D7F0A9 /* README.markdown in Resources */,
 				693C7ED917CCDCF300D7F0A9 /* README.txt in Resources */,
 				693C7EDE17CCDCF300D7F0A9 /* build-libidn.sh in Resources */,
+				693B5B1E180405FB000F5374 /* menu_btn_b@2x.png in Resources */,
 				69A4028B17D740F900E7BE1F /* local_icon.png in Resources */,
+				693B5B1F180405FB000F5374 /* menu_btn_gr.png in Resources */,
 				69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */,
 				691A1B3C17FDD9A100C2A87D /* room.jpg in Resources */,
 				69A4028D17D740F900E7BE1F /* upic_local.png in Resources */,
@@ -1951,6 +1961,7 @@
 				69ECC0BE17E1AD9F00187CF8 /* 01_back.png in Resources */,
 				69ECC0BF17E1AD9F00187CF8 /* 01_back@2x.png in Resources */,
 				69ECC0C017E1AD9F00187CF8 /* 01_blue_chat_bubble.png in Resources */,
+				693B5B1D180405FB000F5374 /* menu_btn_b.png in Resources */,
 				69ECC0C117E1AD9F00187CF8 /* 01_blue_chat_bubble@2x.png in Resources */,
 				691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */,
 				69ECC0C217E1AD9F00187CF8 /* 01_green_chat_bubble.png in Resources */,
@@ -2113,7 +2124,6 @@
 				6954C42717CDD502003C6893 /* ChatViewController.m in Sources */,
 				6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */,
 				6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */,
-				6954C43017CDD56A003C6893 /* MessagesViewController.m in Sources */,
 				6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */,
 				6911FB1117D5DA3D00FEADB4 /* DataManager.m in Sources */,
 				6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */,

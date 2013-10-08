@@ -13,5 +13,6 @@
 
 +(Utilites *)action;
 -(NSString *)distanceFormatter:(CLLocationDistance)distance;
+-(void)checkAndPutStatusBarColor;
 
 @end

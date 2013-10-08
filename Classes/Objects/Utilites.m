@@ -45,4 +45,17 @@
     return formatedDistance;
 }
 
+
+#pragma mark -
+#pragma mark Status Bar
+
+- (void)checkAndPutStatusBarColor{
+    if ([UIApplication sharedApplication].statusBarStyle == UIStatusBarStyleDefault) {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }
+}
+
+
+
+
 @end

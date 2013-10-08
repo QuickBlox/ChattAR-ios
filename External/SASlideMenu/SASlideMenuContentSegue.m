@@ -9,6 +9,10 @@
 #import "SASlideMenuContentSegue.h"
 #import "SASlideMenuRootViewController.h"
 #import "SASlideMenuViewController.h"
+#import "ChatViewController.h"
+#import "MapViewController.h"
+#import "ARViewController.h"
+#import "SettingsViewController.h"
 
 @implementation SASlideMenuContentSegue
 
@@ -19,7 +23,13 @@
     UINavigationController* destination = self.destinationViewController;
 
     UIButton* menuButton = [[UIButton alloc] init];
-    if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureMenuButton:)]) {
+    
+/*    id unknownController = [destination.viewControllers objectAtIndex:0];
+    if ([unknownController isKindOfClass:[MapViewController class]]) {
+        if ([unknownController respondsToSelector:@selector(configureMenuButton:)]) {
+            [unknownController configureMenuButton:menuButton];
+        }
+    } else*/ if ([rootController.leftMenu.slideMenuDataSource respondsToSelector:@selector(configureMenuButton:)]) {
         [rootController.leftMenu.slideMenuDataSource configureMenuButton:menuButton];
     }
     [menuButton addTarget:rootController action:@selector(doSlideToSide) forControlEvents:UIControlEventTouchUpInside];
