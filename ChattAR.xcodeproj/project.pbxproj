@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		690E4B2B17D79B5900BD2792 /* FBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 690E4B2717D79B5900BD2792 /* FBService.m */; };
-		6911FB1117D5DA3D00FEADB4 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6911FB1017D5DA3D00FEADB4 /* DataManager.m */; };
 		6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6911FB1817D5E3B000FEADB4 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */; };
 		6911FB2117D61DF800FEADB4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB2017D61DF800FEADB4 /* AudioToolbox.framework */; };
@@ -177,14 +176,14 @@
 		693C7EDE17CCDCF300D7F0A9 /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = 693C7E5417CCDCF300D7F0A9 /* build-libidn.sh */; };
 		693C7EDF17CCDCF300D7F0A9 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 693C7E5617CCDCF300D7F0A9 /* libidn.a */; };
 		693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */; };
-		693E05AE17EB5B540043299C /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E05AD17EB5B540043299C /* TrendingCell.m */; };
 		69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 69447BFA17F44CDF00E959DF /* 05_sendtn.png */; };
 		694746211805463F00928ED4 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746201805463F00928ED4 /* AsyncImageView.m */; };
-		6947462D1805469100928ED4 /* ChatRoomsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746241805469100928ED4 /* ChatRoomsService.m */; };
-		6947462E1805469100928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746261805469100928ED4 /* LocationService.m */; };
 		6947462F1805469100928ED4 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746281805469100928ED4 /* MapPin.m */; };
 		694746301805469100928ED4 /* ChatRoomsPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462A1805469100928ED4 /* ChatRoomsPaginator.m */; };
 		694746311805469100928ED4 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462C1805469100928ED4 /* Utilites.m */; };
+		6947463918054FCB00928ED4 /* ChatRoomsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463418054FCB00928ED4 /* ChatRoomsService.m */; };
+		6947463A18054FCB00928ED4 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463618054FCB00928ED4 /* DataManager.m */; };
+		6947463B18054FCB00928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463818054FCB00928ED4 /* LocationService.m */; };
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42C17CDD54F003C6893 /* ARViewController.m */; };
@@ -238,8 +237,8 @@
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
-		69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */; };
-		69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */; };
+		69E8ECCF17E0AB0300D614AA /* LocalChatRoomsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */; };
+		69E8ECD017E0AB0300D614AA /* TrendingChatRoomsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingChatRoomsDataSource.m */; };
 		69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */; };
 		69ECC0BE17E1AD9F00187CF8 /* 01_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0B417E1AD9F00187CF8 /* 01_back.png */; };
 		69ECC0BF17E1AD9F00187CF8 /* 01_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0B517E1AD9F00187CF8 /* 01_back@2x.png */; };
@@ -260,8 +259,6 @@
 		690E4B2517D79B5900BD2792 /* FBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDefinitions.h; sourceTree = "<group>"; };
 		690E4B2617D79B5900BD2792 /* FBService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBService.h; sourceTree = "<group>"; };
 		690E4B2717D79B5900BD2792 /* FBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBService.m; sourceTree = "<group>"; };
-		6911FB0F17D5DA3D00FEADB4 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		6911FB1017D5DA3D00FEADB4 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		6911FB1717D5E3B000FEADB4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		6911FB1817D5E3B000FEADB4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -577,21 +574,21 @@
 		693C7E5817CCDCF300D7F0A9 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPFramework.h; sourceTree = "<group>"; };
 		693C7F0717CCFDB400D7F0A9 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashViewController.h; sourceTree = "<group>"; };
 		693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashViewController.m; sourceTree = "<group>"; };
-		693E05AC17EB5B540043299C /* TrendingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCell.h; sourceTree = "<group>"; };
-		693E05AD17EB5B540043299C /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
 		69447BFA17F44CDF00E959DF /* 05_sendtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_sendtn.png; sourceTree = "<group>"; };
 		6947461F1805463F00928ED4 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		694746201805463F00928ED4 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
-		694746231805469100928ED4 /* ChatRoomsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsService.h; sourceTree = "<group>"; };
-		694746241805469100928ED4 /* ChatRoomsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsService.m; sourceTree = "<group>"; };
-		694746251805469100928ED4 /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
-		694746261805469100928ED4 /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
 		694746271805469100928ED4 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
 		694746281805469100928ED4 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
 		694746291805469100928ED4 /* ChatRoomsPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsPaginator.h; sourceTree = "<group>"; };
 		6947462A1805469100928ED4 /* ChatRoomsPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsPaginator.m; sourceTree = "<group>"; };
 		6947462B1805469100928ED4 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
 		6947462C1805469100928ED4 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
+		6947463318054FCB00928ED4 /* ChatRoomsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsService.h; sourceTree = "<group>"; };
+		6947463418054FCB00928ED4 /* ChatRoomsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsService.m; sourceTree = "<group>"; };
+		6947463518054FCB00928ED4 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		6947463618054FCB00928ED4 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		6947463718054FCB00928ED4 /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
+		6947463818054FCB00928ED4 /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
 		6954C42517CDD502003C6893 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		6954C42617CDD502003C6893 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		6954C42817CDD53E003C6893 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -657,10 +654,10 @@
 		69B96E2E17E89EED00C94DB7 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
 		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
 		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
-		69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
-		69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataSource.m; sourceTree = "<group>"; };
-		69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingDataSource.h; sourceTree = "<group>"; };
-		69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingDataSource.m; sourceTree = "<group>"; };
+		69E8ECCB17E0AB0300D614AA /* LocalChatRoomsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalChatRoomsDataSource.h; sourceTree = "<group>"; };
+		69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalChatRoomsDataSource.m; sourceTree = "<group>"; };
+		69E8ECCD17E0AB0300D614AA /* TrendingChatRoomsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingChatRoomsDataSource.h; sourceTree = "<group>"; };
+		69E8ECCE17E0AB0300D614AA /* TrendingChatRoomsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingChatRoomsDataSource.m; sourceTree = "<group>"; };
 		69E8ECD217E0B4E900D614AA /* ChatRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomViewController.h; sourceTree = "<group>"; };
 		69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomViewController.m; sourceTree = "<group>"; };
 		69ECC0B417E1AD9F00187CF8 /* 01_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01_back.png; sourceTree = "<group>"; };
@@ -723,15 +720,6 @@
 				690E4B2717D79B5900BD2792 /* FBService.m */,
 			);
 			path = "FB API";
-			sourceTree = "<group>";
-		};
-		6911FB0E17D5DA3D00FEADB4 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				6911FB0F17D5DA3D00FEADB4 /* DataManager.h */,
-				6911FB1017D5DA3D00FEADB4 /* DataManager.m */,
-			);
-			path = Managers;
 			sourceTree = "<group>";
 		};
 		6911FB1617D5E3B000FEADB4 /* Reachability */ = {
@@ -1560,8 +1548,8 @@
 				69B96E2517E89EED00C94DB7 /* Views */,
 				69E8ECCA17E0AB0300D614AA /* DataSources */,
 				690E4B2417D79B5900BD2792 /* FB API */,
+				6947463218054FCB00928ED4 /* Services */,
 				69A402B117D7452D00E7BE1F /* Segues */,
-				6911FB0E17D5DA3D00FEADB4 /* Managers */,
 				693C7F0317CCFDB400D7F0A9 /* ViewControllers */,
 			);
 			path = Classes;
@@ -1608,10 +1596,6 @@
 		694746221805469100928ED4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				694746231805469100928ED4 /* ChatRoomsService.h */,
-				694746241805469100928ED4 /* ChatRoomsService.m */,
-				694746251805469100928ED4 /* LocationService.h */,
-				694746261805469100928ED4 /* LocationService.m */,
 				694746271805469100928ED4 /* MapPin.h */,
 				694746281805469100928ED4 /* MapPin.m */,
 				694746291805469100928ED4 /* ChatRoomsPaginator.h */,
@@ -1620,6 +1604,19 @@
 				6947462C1805469100928ED4 /* Utilites.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6947463218054FCB00928ED4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6947463318054FCB00928ED4 /* ChatRoomsService.h */,
+				6947463418054FCB00928ED4 /* ChatRoomsService.m */,
+				6947463518054FCB00928ED4 /* DataManager.h */,
+				6947463618054FCB00928ED4 /* DataManager.m */,
+				6947463718054FCB00928ED4 /* LocationService.h */,
+				6947463818054FCB00928ED4 /* LocationService.m */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		69A4026217D740F900E7BE1F /* images */ = {
@@ -1727,8 +1724,6 @@
 				69B96E2C17E89EED00C94DB7 /* MenuCell.m */,
 				69B96E2D17E89EED00C94DB7 /* ProfileCell.h */,
 				69B96E2E17E89EED00C94DB7 /* ProfileCell.m */,
-				693E05AC17EB5B540043299C /* TrendingCell.h */,
-				693E05AD17EB5B540043299C /* TrendingCell.m */,
 				6924A75A1802AD5400D61E5E /* CAnotationView.h */,
 				6924A75B1802AD5400D61E5E /* CAnotationView.m */,
 			);
@@ -1758,10 +1753,10 @@
 		69E8ECCA17E0AB0300D614AA /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */,
-				69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */,
-				69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */,
-				69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */,
+				69E8ECCB17E0AB0300D614AA /* LocalChatRoomsDataSource.h */,
+				69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */,
+				69E8ECCD17E0AB0300D614AA /* TrendingChatRoomsDataSource.h */,
+				69E8ECCE17E0AB0300D614AA /* TrendingChatRoomsDataSource.m */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1983,6 +1978,7 @@
 				693C7E5F17CCDCF300D7F0A9 /* SASlideMenuRightMenuSegue.m in Sources */,
 				693C7E6017CCDCF300D7F0A9 /* SASlideMenuRightMenuViewController.m in Sources */,
 				693C7E6117CCDCF300D7F0A9 /* SASlideMenuRootViewController.m in Sources */,
+				6947463A18054FCB00928ED4 /* DataManager.m in Sources */,
 				693C7E6217CCDCF300D7F0A9 /* SASlideMenuViewController.m in Sources */,
 				693C7E6417CCDCF300D7F0A9 /* XMPPAnonymousAuthentication.m in Sources */,
 				693C7E6517CCDCF300D7F0A9 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
@@ -2004,6 +2000,7 @@
 				693C7E7417CCDCF300D7F0A9 /* XMPPStream.m in Sources */,
 				693C7E7517CCDCF300D7F0A9 /* XMPPBandwidthMonitor.m in Sources */,
 				693C7E7617CCDCF300D7F0A9 /* XMPPCoreDataStorage.m in Sources */,
+				6947463B18054FCB00928ED4 /* LocationService.m in Sources */,
 				693C7E7717CCDCF300D7F0A9 /* XMPPGoogleSharedStatus.m in Sources */,
 				693C7E7817CCDCF300D7F0A9 /* XMPPProcessOne.m in Sources */,
 				693C7E7917CCDCF300D7F0A9 /* XMPPReconnect.m in Sources */,
@@ -2053,6 +2050,7 @@
 				693C7EA417CCDCF300D7F0A9 /* XMPPvCardTempTel.m in Sources */,
 				693C7EA517CCDCF300D7F0A9 /* NSXMLElement+XEP_0059.m in Sources */,
 				693C7EA617CCDCF300D7F0A9 /* XMPPResultSet.m in Sources */,
+				6947463918054FCB00928ED4 /* ChatRoomsService.m in Sources */,
 				693C7EA717CCDCF300D7F0A9 /* XMPPIQ+XEP_0060.m in Sources */,
 				693C7EA817CCDCF300D7F0A9 /* XMPPPubSub.m in Sources */,
 				6947462F1805469100928ED4 /* MapPin.m in Sources */,
@@ -2062,7 +2060,6 @@
 				693C7EAC17CCDCF300D7F0A9 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				693C7EAD17CCDCF300D7F0A9 /* XMPPDateTimeProfiles.m in Sources */,
 				693C7EAE17CCDCF300D7F0A9 /* XMPPMessage+XEP_0085.m in Sources */,
-				6947462D1805469100928ED4 /* ChatRoomsService.m in Sources */,
 				693C7EAF17CCDCF300D7F0A9 /* XMPPTransports.m in Sources */,
 				693C7EB017CCDCF300D7F0A9 /* NSString+XEP_0106.m in Sources */,
 				693C7EB117CCDCF300D7F0A9 /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -2111,24 +2108,21 @@
 				693C7EDC17CCDCF300D7F0A9 /* DDXMLElement.m in Sources */,
 				693C7EDD17CCDCF300D7F0A9 /* DDXMLNode.m in Sources */,
 				693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */,
-				6947462E1805469100928ED4 /* LocationService.m in Sources */,
 				6954C42717CDD502003C6893 /* ChatViewController.m in Sources */,
 				6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */,
 				694746211805463F00928ED4 /* AsyncImageView.m in Sources */,
 				6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */,
 				6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */,
-				6911FB1117D5DA3D00FEADB4 /* DataManager.m in Sources */,
 				6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */,
 				69A402B017D7431E00E7BE1F /* CAMenuViewController.m in Sources */,
 				69A402B417D7452E00E7BE1F /* SplashViewSegue.m in Sources */,
 				690E4B2B17D79B5900BD2792 /* FBService.m in Sources */,
-				69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */,
-				69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */,
+				69E8ECCF17E0AB0300D614AA /* LocalChatRoomsDataSource.m in Sources */,
+				69E8ECD017E0AB0300D614AA /* TrendingChatRoomsDataSource.m in Sources */,
 				69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */,
 				69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
-				693E05AE17EB5B540043299C /* TrendingCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

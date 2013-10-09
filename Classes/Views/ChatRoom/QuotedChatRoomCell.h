@@ -10,20 +10,6 @@
 #import "AsyncImageView.h"
 
 @interface QuotedChatRoomCell : UITableViewCell {
-    // quoted message:
-    AsyncImageView *qUserPhoto;
-    UIImageView *qColorBuble;
-    UILabel *qUserName;
-    UILabel *qMessage;
-    UILabel *qDateTime;
-    
-    // reply user:
-    AsyncImageView *rUserPhoto;
-    UIImageView *rColorBuble;
-    UILabel *rDistance;
-    UILabel *rUserName;
-    UILabel *rMessage;
-    UILabel *rDateTime;
 }
 
 @property (nonatomic, strong) AsyncImageView *qUserPhoto;

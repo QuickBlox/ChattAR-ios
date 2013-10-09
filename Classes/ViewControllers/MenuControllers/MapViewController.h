@@ -12,6 +12,7 @@
 #import "CAnotationView.h"
 
 @interface MapViewController : UIViewController <QBActionStatusDelegate, MKMapViewDelegate, SASlideMenuDataSource, UIActionSheetDelegate>
+
 @property (nonatomic, strong) IBOutlet MKMapView *mapView;
 
 @end

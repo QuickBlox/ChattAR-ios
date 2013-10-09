@@ -11,20 +11,6 @@
 
 @implementation QuotedChatRoomCell
 
-@synthesize qColorBuble = _qColorBuble;
-@synthesize qDateTime = _qDateTime;
-@synthesize qMessage = _qMessage;
-@synthesize qUserName = _qUserName;
-@synthesize qUserPhoto = _qUserPhoto;
-@synthesize replyImg;
-
-@synthesize rColorBuble = _rColorBuble;
-@synthesize rDateTime = _rDateTime;
-@synthesize rDistance =_rDistance;
-@synthesize rMessage = _rMessage;
-@synthesize rUserName = _rUserName;
-@synthesize rUserPhoto = _rUserPhoto;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -36,8 +22,8 @@
         self.qUserPhoto.image = [UIImage imageNamed:@"Icon@2x.png"];
         self.qUserPhoto.backgroundColor = [UIColor clearColor];
         
-        replyImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"05_reply_arrow-1.png"]];
-        replyImg.frame = CGRectMake(58 - replyImg.image.size.width, 45- replyImg.image.size.height, replyImg.image.size.width, replyImg.frame.size.height);
+        self.replyImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"05_reply_arrow-1.png"]];
+        self.replyImg.frame = CGRectMake(58 - self.replyImg.image.size.width, 45- self.replyImg.image.size.height, self.replyImg.image.size.width, self.replyImg.frame.size.height);
         
         
         self.qUserName = [[UILabel alloc] initWithFrame:CGRectMake(128, 20, 132, 20)];
@@ -102,13 +88,6 @@
         [self.contentView addSubview:self.rDateTime];
     }
     return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

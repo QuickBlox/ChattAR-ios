@@ -10,12 +10,12 @@
 #import "ChatRoomsPaginator.h"
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate, UIAlertViewDelegate, NMPaginatorDelegate, UIScrollViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) ChatRoomsPaginator *trendingPaginator;
 @property (strong, nonatomic) ChatRoomsPaginator *localPaginator;
-@property (strong, nonatomic) NSTimer *presenceTimer;
 
-- (IBAction)createPrivateRoom:(id)sender;
+- (IBAction)createChatRoom:(id)sender;
 
 
 @end

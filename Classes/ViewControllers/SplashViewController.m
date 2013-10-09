@@ -186,6 +186,8 @@
     NSLog(@"Chat login success");
     [self.activityIndicatior stopAnimating];
     
+    [NSTimer scheduledTimerWithTimeInterval:60 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
+    
     //caching self with FB ID
     [[DataManager shared].fbUsersLoggedIn setObject:[DataManager shared].currentFBUser forKey:[[DataManager shared].currentFBUser objectForKey:kId]];
     //start getting location:

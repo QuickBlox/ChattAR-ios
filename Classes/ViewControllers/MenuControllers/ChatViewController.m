@@ -7,8 +7,8 @@
 //
 #import "SASlideMenuRootViewController.h"
 #import "ChatViewController.h"
-#import "TrendingDataSource.h"
-#import "LocationDataSource.h"
+#import "TrendingChatRoomsDataSource.h"
+#import "LocalChatRoomsDataSource.h"
 #import "FBService.h"
 #import "DataManager.h"
 #import "ChatRoomsService.h"
@@ -24,8 +24,8 @@
 @property (nonatomic, strong) NSArray *trendings;
 @property (nonatomic, strong) NSArray *locations;
 
-@property (nonatomic, strong) TrendingDataSource *trendingDataSource;
-@property (nonatomic, strong) LocationDataSource *locationDataSource;
+@property (nonatomic, strong) TrendingChatRoomsDataSource *trendingDataSource;
+@property (nonatomic, strong) LocalChatRoomsDataSource *locationDataSource;
 
 @property (nonatomic, strong) UIActivityIndicatorView *trendingActivityIndicator;
 @property (nonatomic, strong) UILabel *trendingFooterLabel;
@@ -85,10 +85,6 @@
         [self.localPaginator fetchFirstPage];
     }
     
-    // send presence
-    if (self.presenceTimer == nil) {
-        self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
-    }
     [self.trendingTableView reloadData];
     [self.locationTableView reloadData];
 }
@@ -98,11 +94,6 @@
     [self setScrollView:nil];
     [self setLocationTableView:nil];
     [super viewDidUnload];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 
@@ -246,21 +237,21 @@
 #pragma mark Data Sources
 
 
-- (TrendingDataSource *)trendingDataSource
+- (TrendingChatRoomsDataSource *)trendingDataSource
 {
     if (!_trendingDataSource)
     {
-        _trendingDataSource = [TrendingDataSource new];
+        _trendingDataSource = [TrendingChatRoomsDataSource new];
     }
     
     return _trendingDataSource;
 }
 
-- (LocationDataSource *)locationDataSource
+- (LocalChatRoomsDataSource *)locationDataSource
 {
     if (!_locationDataSource)
     {
-        _locationDataSource = [LocationDataSource new];
+        _locationDataSource = [LocalChatRoomsDataSource new];
     }
     
     return _locationDataSource;
@@ -302,7 +293,7 @@
         if([result isKindOfClass:QBCOCustomObjectResult.class]){
             QBCOCustomObjectResult *createObjectResult = (QBCOCustomObjectResult *)result;
             NSLog(@"Created object: %@", createObjectResult.object);
-            [self performSegueWithIdentifier:@"kSegue" sender:nil];
+            [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:nil];
         }
     }
 }
@@ -311,7 +302,7 @@
 #pragma mark - 
 #pragma mark Actions
 
-- (IBAction)createPrivateRoom:(id)sender {
+- (IBAction)createChatRoom:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alert show];
@@ -345,6 +336,7 @@
                 for (NSString *name in names) {
                     if ([alertText isEqual:name]) {
                         flag = YES;
+                        break;
                     }
                 }
                 

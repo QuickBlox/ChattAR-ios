@@ -11,10 +11,6 @@
 #define maxPopularFriends 40
 
 @interface DataManager : NSObject{
-    // Core Data
-    NSManagedObjectModel *managedObjectModel;
-    NSManagedObjectContext *managedObjectContext;
-    NSPersistentStoreCoordinator *persistentStoreCoordinator;
 }
 
 // FB access

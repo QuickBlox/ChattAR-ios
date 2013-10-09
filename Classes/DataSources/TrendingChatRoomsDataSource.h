@@ -1,5 +1,5 @@
 //
-//  LocationDataSource.h
+//  TrendingDataSource.h
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 09/09/2013.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocationDataSource : NSObject <UITableViewDataSource>
+@interface TrendingChatRoomsDataSource : NSObject <UITableViewDataSource>
 
 @property (strong, nonatomic) NSArray *chatRooms;
 

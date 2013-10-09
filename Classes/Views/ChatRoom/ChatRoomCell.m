@@ -13,7 +13,6 @@
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.distance = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 50, 15)];
         self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 180, 20)];
         self.message = [[UILabel alloc] init];
         self.colorBuble = [[UIImageView alloc] init];
@@ -36,6 +35,8 @@
         self.postMessageDate.backgroundColor = [UIColor clearColor];
         self.postMessageDate.font = [UIFont systemFontOfSize:13.0f];
         
+        // Distance to user label
+        self.distance = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 50, 15)];
         self.distance.font = [UIFont systemFontOfSize:11.0f];
         self.distance.textColor = [UIColor darkGrayColor];
         self.distance.backgroundColor = [UIColor clearColor];
@@ -51,14 +52,5 @@
     }
     return self;
 }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-
 
 @end

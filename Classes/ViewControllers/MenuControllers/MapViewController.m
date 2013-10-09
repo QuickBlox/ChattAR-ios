@@ -30,21 +30,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    // set status bar to black:
-    //[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     // getting local rooms:
     _chatRooms = [[ChatRoomsService shared] allLocalRooms];
     // setting local rooms at the map:
     [self setAnnotationsToMap:_chatRooms];
     [super viewWillAppear:NO];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 -(void)setAnnotationsToMap:(NSArray *)chatRooms {
     for (QBCOCustomObject *room in self.chatRooms) {
@@ -57,7 +48,6 @@
         [_mapView addAnnotation:pin];
     }
 }
-
 
 
 #pragma mark -

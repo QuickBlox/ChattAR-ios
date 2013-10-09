@@ -120,6 +120,9 @@ static CGFloat padding = 20.0;
     }
     UIImage *img = [roomCell.bubleImage resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     
+    
+    
+    
     // user message
     QBChatMessage *currentMessage = [self.chatHistory objectAtIndex:[indexPath row]];
     // getting dictionary from JSON
