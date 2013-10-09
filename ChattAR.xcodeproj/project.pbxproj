@@ -179,6 +179,12 @@
 		693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */; };
 		693E05AE17EB5B540043299C /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 693E05AD17EB5B540043299C /* TrendingCell.m */; };
 		69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 69447BFA17F44CDF00E959DF /* 05_sendtn.png */; };
+		694746211805463F00928ED4 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746201805463F00928ED4 /* AsyncImageView.m */; };
+		6947462D1805469100928ED4 /* ChatRoomsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746241805469100928ED4 /* ChatRoomsService.m */; };
+		6947462E1805469100928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746261805469100928ED4 /* LocationService.m */; };
+		6947462F1805469100928ED4 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746281805469100928ED4 /* MapPin.m */; };
+		694746301805469100928ED4 /* ChatRoomsPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462A1805469100928ED4 /* ChatRoomsPaginator.m */; };
+		694746311805469100928ED4 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462C1805469100928ED4 /* Utilites.m */; };
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42C17CDD54F003C6893 /* ARViewController.m */; };
@@ -187,9 +193,6 @@
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
-		698FC7A917FD9ECF003AA0FE /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 698FC7A817FD9ECF003AA0FE /* MapPin.m */; };
-		69A0ACC717F9883200230A27 /* ChatRooms.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC617F9883200230A27 /* ChatRooms.m */; };
-		69A0ACCA17F9966A00230A27 /* GeoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A0ACC917F9966A00230A27 /* GeoData.m */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
 		69A4028D17D740F900E7BE1F /* upic_local.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026617D740F900E7BE1F /* upic_local.png */; };
@@ -231,15 +234,10 @@
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
 		69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */; };
 		69B96E2417E869E700C94DB7 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69B96E2317E869E700C94DB7 /* Quickblox.framework */; };
-		69B96E2F17E89EED00C94DB7 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2817E89EED00C94DB7 /* AsyncImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */; };
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
-		69B96E3917E89F1E00C94DB7 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3617E89F1D00C94DB7 /* ImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
-		69CB6ADC17FAC7590005A76C /* MyPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6ADB17FAC7590005A76C /* MyPaginator.m */; };
-		69DC972917F485AD004770C5 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DC972817F485AD004770C5 /* Utilites.m */; };
 		69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */; };
 		69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingDataSource.m */; };
 		69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */; };
@@ -582,6 +580,18 @@
 		693E05AC17EB5B540043299C /* TrendingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCell.h; sourceTree = "<group>"; };
 		693E05AD17EB5B540043299C /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
 		69447BFA17F44CDF00E959DF /* 05_sendtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_sendtn.png; sourceTree = "<group>"; };
+		6947461F1805463F00928ED4 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		694746201805463F00928ED4 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		694746231805469100928ED4 /* ChatRoomsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsService.h; sourceTree = "<group>"; };
+		694746241805469100928ED4 /* ChatRoomsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsService.m; sourceTree = "<group>"; };
+		694746251805469100928ED4 /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
+		694746261805469100928ED4 /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
+		694746271805469100928ED4 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
+		694746281805469100928ED4 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
+		694746291805469100928ED4 /* ChatRoomsPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsPaginator.h; sourceTree = "<group>"; };
+		6947462A1805469100928ED4 /* ChatRoomsPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsPaginator.m; sourceTree = "<group>"; };
+		6947462B1805469100928ED4 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
+		6947462C1805469100928ED4 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
 		6954C42517CDD502003C6893 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		6954C42617CDD502003C6893 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		6954C42817CDD53E003C6893 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -594,12 +604,6 @@
 		696B59F517E99EF900D60537 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6981247717DDFF2C00974C6A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		698FC7A717FD9ECF003AA0FE /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
-		698FC7A817FD9ECF003AA0FE /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
-		69A0ACC517F9883200230A27 /* ChatRooms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRooms.h; sourceTree = "<group>"; };
-		69A0ACC617F9883200230A27 /* ChatRooms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRooms.m; sourceTree = "<group>"; };
-		69A0ACC817F9966A00230A27 /* GeoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoData.h; sourceTree = "<group>"; };
-		69A0ACC917F9966A00230A27 /* GeoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoData.m; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		69A4026417D740F900E7BE1F /* local_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = local_icon.png; sourceTree = "<group>"; };
 		69A4026517D740F900E7BE1F /* local_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_icon@2x.png"; sourceTree = "<group>"; };
@@ -645,24 +649,14 @@
 		69A51AB217EC82EC0089B06D /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
 		69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotedChatRoomCell.m; sourceTree = "<group>"; };
 		69B96E2317E869E700C94DB7 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
-		69B96E2717E89EED00C94DB7 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
-		69B96E2817E89EED00C94DB7 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		69B96E2917E89EED00C94DB7 /* ChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomCell.h; sourceTree = "<group>"; };
 		69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomCell.m; sourceTree = "<group>"; };
 		69B96E2B17E89EED00C94DB7 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		69B96E2C17E89EED00C94DB7 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		69B96E2D17E89EED00C94DB7 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
 		69B96E2E17E89EED00C94DB7 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
-		69B96E3517E89F1D00C94DB7 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
-		69B96E3617E89F1D00C94DB7 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
-		69B96E3717E89F1D00C94DB7 /* ImageCacheObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCacheObject.h; sourceTree = "<group>"; };
-		69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCacheObject.m; sourceTree = "<group>"; };
 		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
 		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
-		69CB6ADA17FAC7590005A76C /* MyPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPaginator.h; sourceTree = "<group>"; };
-		69CB6ADB17FAC7590005A76C /* MyPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPaginator.m; sourceTree = "<group>"; };
-		69DC972717F485AD004770C5 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
-		69DC972817F485AD004770C5 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
 		69E8ECCB17E0AB0300D614AA /* LocationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDataSource.h; sourceTree = "<group>"; };
 		69E8ECCC17E0AB0300D614AA /* LocationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDataSource.m; sourceTree = "<group>"; };
 		69E8ECCD17E0AB0300D614AA /* TrendingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingDataSource.h; sourceTree = "<group>"; };
@@ -782,6 +776,7 @@
 		693C7D0017CCDCF200D7F0A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				6947461E1805463F00928ED4 /* AsyncImageView */,
 				69CB6AD617FAC6EC0005A76C /* NMPaginator */,
 				6911FB1617D5E3B000FEADB4 /* Reachability */,
 				693C7D0317CCDCF200D7F0A9 /* SASlideMenu */,
@@ -1561,7 +1556,7 @@
 		693C7F0217CCFDB400D7F0A9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				69B96E3317E89F1D00C94DB7 /* Objects */,
+				694746221805469100928ED4 /* Models */,
 				69B96E2517E89EED00C94DB7 /* Views */,
 				69E8ECCA17E0AB0300D614AA /* DataSources */,
 				690E4B2417D79B5900BD2792 /* FB API */,
@@ -1599,6 +1594,32 @@
 				69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */,
 			);
 			path = MenuControllers;
+			sourceTree = "<group>";
+		};
+		6947461E1805463F00928ED4 /* AsyncImageView */ = {
+			isa = PBXGroup;
+			children = (
+				6947461F1805463F00928ED4 /* AsyncImageView.h */,
+				694746201805463F00928ED4 /* AsyncImageView.m */,
+			);
+			path = AsyncImageView;
+			sourceTree = "<group>";
+		};
+		694746221805469100928ED4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				694746231805469100928ED4 /* ChatRoomsService.h */,
+				694746241805469100928ED4 /* ChatRoomsService.m */,
+				694746251805469100928ED4 /* LocationService.h */,
+				694746261805469100928ED4 /* LocationService.m */,
+				694746271805469100928ED4 /* MapPin.h */,
+				694746281805469100928ED4 /* MapPin.m */,
+				694746291805469100928ED4 /* ChatRoomsPaginator.h */,
+				6947462A1805469100928ED4 /* ChatRoomsPaginator.m */,
+				6947462B1805469100928ED4 /* Utilites.h */,
+				6947462C1805469100928ED4 /* Utilites.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		69A4026217D740F900E7BE1F /* images */ = {
@@ -1717,43 +1738,12 @@
 		69B96E2617E89EED00C94DB7 /* ChatRoom */ = {
 			isa = PBXGroup;
 			children = (
-				69B96E2717E89EED00C94DB7 /* AsyncImageView.h */,
-				69B96E2817E89EED00C94DB7 /* AsyncImageView.m */,
 				69B96E2917E89EED00C94DB7 /* ChatRoomCell.h */,
 				69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */,
 				69A51AB217EC82EC0089B06D /* QuotedChatRoomCell.h */,
 				69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */,
 			);
 			path = ChatRoom;
-			sourceTree = "<group>";
-		};
-		69B96E3317E89F1D00C94DB7 /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-				69B96E3417E89F1D00C94DB7 /* AsyncImageLoaderCache */,
-				69DC972717F485AD004770C5 /* Utilites.h */,
-				69DC972817F485AD004770C5 /* Utilites.m */,
-				69A0ACC517F9883200230A27 /* ChatRooms.h */,
-				69A0ACC617F9883200230A27 /* ChatRooms.m */,
-				69A0ACC817F9966A00230A27 /* GeoData.h */,
-				69A0ACC917F9966A00230A27 /* GeoData.m */,
-				69CB6ADA17FAC7590005A76C /* MyPaginator.h */,
-				69CB6ADB17FAC7590005A76C /* MyPaginator.m */,
-				698FC7A717FD9ECF003AA0FE /* MapPin.h */,
-				698FC7A817FD9ECF003AA0FE /* MapPin.m */,
-			);
-			path = Objects;
-			sourceTree = "<group>";
-		};
-		69B96E3417E89F1D00C94DB7 /* AsyncImageLoaderCache */ = {
-			isa = PBXGroup;
-			children = (
-				69B96E3517E89F1D00C94DB7 /* ImageCache.h */,
-				69B96E3617E89F1D00C94DB7 /* ImageCache.m */,
-				69B96E3717E89F1D00C94DB7 /* ImageCacheObject.h */,
-				69B96E3817E89F1D00C94DB7 /* ImageCacheObject.m */,
-			);
-			path = AsyncImageLoaderCache;
 			sourceTree = "<group>";
 		};
 		69CB6AD617FAC6EC0005A76C /* NMPaginator */ = {
@@ -1984,7 +1974,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69A0ACC717F9883200230A27 /* ChatRooms.m in Sources */,
 				69357E8B17CCBAA400EB3CDF /* ChattARAppDelegate.m in Sources */,
 				69357E9317CCBAEE00EB3CDF /* main.m in Sources */,
 				693C7E5B17CCDCF300D7F0A9 /* SASlideMenuContentSegue.m in Sources */,
@@ -2008,6 +1997,7 @@
 				693C7E6E17CCDCF300D7F0A9 /* XMPPIQ.m in Sources */,
 				693C7E6F17CCDCF300D7F0A9 /* XMPPJID.m in Sources */,
 				693C7E7017CCDCF300D7F0A9 /* XMPPMessage.m in Sources */,
+				694746301805469100928ED4 /* ChatRoomsPaginator.m in Sources */,
 				693C7E7117CCDCF300D7F0A9 /* XMPPModule.m in Sources */,
 				693C7E7217CCDCF300D7F0A9 /* XMPPParser.m in Sources */,
 				693C7E7317CCDCF300D7F0A9 /* XMPPPresence.m in Sources */,
@@ -2048,7 +2038,6 @@
 				693C7E9517CCDCF300D7F0A9 /* XMPPMessage+XEP0045.m in Sources */,
 				693C7E9617CCDCF300D7F0A9 /* XMPPMUC.m in Sources */,
 				693C7E9717CCDCF300D7F0A9 /* XMPPRoom.m in Sources */,
-				698FC7A917FD9ECF003AA0FE /* MapPin.m in Sources */,
 				693C7E9817CCDCF300D7F0A9 /* XMPPvCard.xcdatamodeld in Sources */,
 				693C7E9917CCDCF300D7F0A9 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				693C7E9A17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorage.m in Sources */,
@@ -2066,12 +2055,14 @@
 				693C7EA617CCDCF300D7F0A9 /* XMPPResultSet.m in Sources */,
 				693C7EA717CCDCF300D7F0A9 /* XMPPIQ+XEP_0060.m in Sources */,
 				693C7EA817CCDCF300D7F0A9 /* XMPPPubSub.m in Sources */,
+				6947462F1805469100928ED4 /* MapPin.m in Sources */,
 				693C7EA917CCDCF300D7F0A9 /* TURNSocket.m in Sources */,
 				693C7EAA17CCDCF300D7F0A9 /* XMPPIQ+XEP_0066.m in Sources */,
 				693C7EAB17CCDCF300D7F0A9 /* XMPPMessage+XEP_0066.m in Sources */,
 				693C7EAC17CCDCF300D7F0A9 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				693C7EAD17CCDCF300D7F0A9 /* XMPPDateTimeProfiles.m in Sources */,
 				693C7EAE17CCDCF300D7F0A9 /* XMPPMessage+XEP_0085.m in Sources */,
+				6947462D1805469100928ED4 /* ChatRoomsService.m in Sources */,
 				693C7EAF17CCDCF300D7F0A9 /* XMPPTransports.m in Sources */,
 				693C7EB017CCDCF300D7F0A9 /* NSString+XEP_0106.m in Sources */,
 				693C7EB117CCDCF300D7F0A9 /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -2079,6 +2070,7 @@
 				693C7EB317CCDCF300D7F0A9 /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				693C7EB417CCDCF300D7F0A9 /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				693C7EB517CCDCF300D7F0A9 /* XMPPCapabilities.m in Sources */,
+				694746311805469100928ED4 /* Utilites.m in Sources */,
 				693C7EB617CCDCF300D7F0A9 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				693C7EB717CCDCF300D7F0A9 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				693C7EB817CCDCF300D7F0A9 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
@@ -2108,11 +2100,9 @@
 				693C7ED017CCDCF300D7F0A9 /* XMPPStringPrep.m in Sources */,
 				693C7ED117CCDCF300D7F0A9 /* GCDAsyncSocket.m in Sources */,
 				693C7ED217CCDCF300D7F0A9 /* DDAbstractDatabaseLogger.m in Sources */,
-				69DC972917F485AD004770C5 /* Utilites.m in Sources */,
 				693C7ED317CCDCF300D7F0A9 /* DDASLLogger.m in Sources */,
 				693C7ED417CCDCF300D7F0A9 /* DDFileLogger.m in Sources */,
 				693C7ED517CCDCF300D7F0A9 /* DDLog.m in Sources */,
-				69A0ACCA17F9966A00230A27 /* GeoData.m in Sources */,
 				693C7ED617CCDCF300D7F0A9 /* DDTTYLogger.m in Sources */,
 				693C7ED717CCDCF300D7F0A9 /* ContextFilterLogFormatter.m in Sources */,
 				693C7ED817CCDCF300D7F0A9 /* DispatchQueueLogFormatter.m in Sources */,
@@ -2121,8 +2111,10 @@
 				693C7EDC17CCDCF300D7F0A9 /* DDXMLElement.m in Sources */,
 				693C7EDD17CCDCF300D7F0A9 /* DDXMLNode.m in Sources */,
 				693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */,
+				6947462E1805469100928ED4 /* LocationService.m in Sources */,
 				6954C42717CDD502003C6893 /* ChatViewController.m in Sources */,
 				6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */,
+				694746211805463F00928ED4 /* AsyncImageView.m in Sources */,
 				6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */,
 				6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */,
 				6911FB1117D5DA3D00FEADB4 /* DataManager.m in Sources */,
@@ -2133,13 +2125,9 @@
 				69E8ECCF17E0AB0300D614AA /* LocationDataSource.m in Sources */,
 				69E8ECD017E0AB0300D614AA /* TrendingDataSource.m in Sources */,
 				69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */,
-				69B96E2F17E89EED00C94DB7 /* AsyncImageView.m in Sources */,
 				69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
-				69B96E3917E89F1E00C94DB7 /* ImageCache.m in Sources */,
-				69CB6ADC17FAC7590005A76C /* MyPaginator.m in Sources */,
-				69B96E3A17E89F1E00C94DB7 /* ImageCacheObject.m in Sources */,
 				693E05AE17EB5B540043299C /* TrendingCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
 			);

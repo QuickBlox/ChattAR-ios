@@ -8,11 +8,11 @@
 #import "ChatViewController.h"
 #import "ChatRoomViewController.h"
 #import "ChatRoomCell.h"
-#import "ChatRooms.h"
+#import "ChatRoomsService.h"
 #import "QuotedChatRoomCell.h"
 #import "DataManager.h"
 #import "FBService.h"
-#import "GeoData.h"
+#import "LocationService.h"
 #import <CoreLocation/CoreLocation.h>
 
 
@@ -69,7 +69,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    self.title = [FBService shared].roomName;
+    NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
+    self.title = roomName;
     [self creatingOrJoiningRoom];
     [_chatRoomTable reloadData];
     [super viewWillAppear:animated];
@@ -133,16 +134,16 @@ static CGFloat padding = 20.0;
     CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
     CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    CLLocationDistance distanceToMe = [[GeoData getData].myLocation distanceFromLocation:userLocation];
+    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
 
     // post message date
     
-    NSString *time = [[Utilites action].dateFormatter stringFromDate:currentMessage.datetime];
+    NSString *time = [[Utilites shared].dateFormatter stringFromDate:currentMessage.datetime];
     
     // putting data to fields
-    [roomCell.userPhoto loadImageFromURL:url];
+    [roomCell.userPhoto setImageURL:url];
     roomCell.colorBuble.image = img;
-    roomCell.distance.text = [[Utilites action] distanceFormatter:distanceToMe];
+    roomCell.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
     roomCell.message.text = [tempDict objectForKey:kMessage];
     roomCell.userName.text = [tempDict objectForKey:kUserName];
     roomCell.postMessageDate.text = time;
@@ -178,7 +179,7 @@ static CGFloat padding = 20.0;
     //getting Avatar from url
     NSString *urlString = [quoted objectForKey:kUserPhotoUrl];
     NSURL *url = [NSURL URLWithString:urlString];
-    [cell.qUserPhoto loadImageFromURL:url];
+    [cell.qUserPhoto setImageURL:url];
     // getting data from dictionary
     cell.qUserName.text = [quoted objectForKey:kUserName];
     cell.qMessage.text = [quoted objectForKey:kMessage];
@@ -198,14 +199,14 @@ static CGFloat padding = 20.0;
     
     // date formatter
     
-    NSString *time = [[Utilites action].dateFormatter stringFromDate:currentMessage.datetime];
+    NSString *time = [[Utilites shared].dateFormatter stringFromDate:currentMessage.datetime];
     
     // getting location
     CGFloat latutude = [[quoteDict objectForKey:kLatitude] floatValue];
     CGFloat longitude = [[quoteDict objectForKey:kLongitude] floatValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latutude longitude:longitude];
-    CLLocationDistance distanceToMe = [[GeoData getData].myLocation distanceFromLocation:userLocation];
-    NSString *distance = [[Utilites action] distanceFormatter:distanceToMe];
+    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
+    NSString *distance = [[Utilites shared] distanceFormatter:distanceToMe];
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };
@@ -214,7 +215,7 @@ static CGFloat padding = 20.0;
     [cell.rMessage setFrame:CGRectMake(75, 43+50, 225, size.height)];
     [cell.rColorBuble setFrame:CGRectMake(55, 10+50, 255, size.height+padding*2)];
     
-    [cell.rUserPhoto loadImageFromURL:urlImg];
+    [cell.rUserPhoto setImageURL:urlImg];
     cell.rUserName.text = [quoteDict objectForKey:kUserName];
     cell.rMessage.text = [quoteDict objectForKey:kMessage];
     cell.rDateTime.text = time;
@@ -310,13 +311,11 @@ static CGFloat padding = 20.0;
 #pragma mark ChatRoom
 
 -(void)creatingOrJoiningRoom{
-    if ([QBChat instance].delegate == self) {
-        //nothing
-    } else {
+    
+    // Join room
     [QBChat instance].delegate = self;
-    }
-    [[QBChat instance] createOrJoinRoomWithName:[FBService shared].roomName nickname:[[DataManager shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:NO];
-    [_chatRoomTable reloadData];
+    NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
+    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[DataManager shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:NO];
 }
 
 
@@ -329,25 +328,13 @@ static CGFloat padding = 20.0;
     //get room
     self.currentRoom = room;
     
-    //getting custom object(room):
-    QBCOCustomObject *getObject;
-    if ([ChatRooms action].tableViewTag == kTrendingTableViewTag) {
-        getObject = [[[ChatRooms action] getTrendingRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
-    }
-    if ([ChatRooms action].tableViewTag == kLocalTableViewTag) {
-        getObject = [[[ChatRooms action] getLocalRooms] objectAtIndex:[[ChatRooms action].currentPath row]];
-    }
     
-    NSNumber *rank = [getObject.fields objectForKey:@"rank"];
+    // Update chat room rank
+    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
     NSUInteger intRank = [rank intValue];
     intRank+=1;
-    
-    QBCOCustomObject *chat = [QBCOCustomObject customObject];
-    chat.className = kChatRoom;
-    chat.ID = [FBService shared].roomID;
-    [chat.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
-    // sending rank value:
-    [QBCustomObjects updateObject:chat delegate:nil];
+    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
 }
 
 - (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error{
@@ -363,8 +350,8 @@ static CGFloat padding = 20.0;
     if ([self.inputMessageField.text isEqual:@""]) {
         //don't send
     } else {
-        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[GeoData getData] getMyCoorinates].latitude];
-        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[GeoData getData] getMyCoorinates].longitude];
+        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
+        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
         NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName], [[DataManager shared].currentFBUser objectForKey:kLastName]];
         
         NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[DataManager shared].currentFBUser objectForKey:kId], [DataManager shared].accessToken];

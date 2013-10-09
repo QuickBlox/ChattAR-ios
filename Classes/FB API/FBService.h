@@ -14,8 +14,6 @@
 	NSTimer		*presenceTimer;
 }
 @property (strong, nonatomic) FBSession *session;
-@property (strong, nonatomic) NSString *roomName;
-@property (strong, nonatomic) NSString *roomID;
 
 + (FBService *)shared;
 

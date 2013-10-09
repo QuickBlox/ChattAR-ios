@@ -37,11 +37,11 @@
             <objects>
                 <viewController id="Vch-rc-7Oy" customClass="ChatRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2GZ-eo-kOd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="458"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -50,7 +50,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="4e0-Cg-koI">
-                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="458" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
@@ -505,7 +505,7 @@
                         <outlet property="scrollView" destination="G8h-07-dLG" id="Np0-Cs-TLr"/>
                         <outlet property="trendingTableView" destination="10X-Ra-BBE" id="NYG-iK-REh"/>
                         <segue destination="2NK-i8-eUl" kind="custom" identifier="Splash" customClass="SplashViewSegue" id="yX7-1Z-Wv0"/>
-                        <segue destination="Vch-rc-7Oy" kind="push" identifier="kSegue" id="08e-u6-zeQ"/>
+                        <segue destination="Vch-rc-7Oy" kind="push" identifier="kSegueToChatRoomController" id="08e-u6-zeQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zX-p0-MWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -751,6 +751,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="GXn-8Q-nrq"/>
-        <segue reference="K6Z-1q-k1N"/>
+        <segue reference="08e-u6-zeQ"/>
     </inferredMetricsTieBreakers>
 </document>

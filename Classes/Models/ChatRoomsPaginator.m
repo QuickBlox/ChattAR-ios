@@ -6,10 +6,9 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "MyPaginator.h"
+#import "ChatRoomsPaginator.h"
 
-@implementation MyPaginator
-@synthesize tag=_tag;
+@implementation ChatRoomsPaginator
 
 - (void)fetchResultsWithPage:(NSInteger)page pageSize:(NSInteger)pageSize
 {

@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface Utilites : NSObject
+
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
-+(Utilites *)action;
--(NSString *)distanceFormatter:(CLLocationDistance)distance;
--(void)checkAndPutStatusBarColor;
++ (instancetype)shared;
+- (NSString *)distanceFormatter:(CLLocationDistance)distance;
+- (void)checkAndPutStatusBarColor;
 
 @end

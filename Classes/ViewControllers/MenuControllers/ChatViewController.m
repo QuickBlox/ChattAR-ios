@@ -11,9 +11,10 @@
 #import "LocationDataSource.h"
 #import "FBService.h"
 #import "DataManager.h"
-#import "ChatRooms.h"
-#import "GeoData.h"
+#import "ChatRoomsService.h"
+#import "LocationService.h"
 #import "Utilites.h"
+#import "ChatRoomViewController.h"
 
 
 @interface ChatViewController ()
@@ -55,8 +56,8 @@
     self.locationTableView.delegate = self;
     
     // paginator:
-    self.trendingPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
-    self.localPaginator = [[MyPaginator alloc] initWithPageSize:10 delegate:self];
+    self.trendingPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
+    self.localPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
 
     self.trendingPaginator.tag = kTrendingPaginatorTag;
     self.localPaginator.tag = kLocalPaginatorTag;
@@ -107,7 +108,7 @@
 
 #pragma mark - Paginator
 
-- (void)fetchNextPage:(MyPaginator *)paginator
+- (void)fetchNextPage:(ChatRoomsPaginator *)paginator
 {
     [paginator fetchNextPage];
     if (paginator.tag == kTrendingPaginatorTag) {
@@ -118,7 +119,7 @@
     }
 }
 
-- (void)updateTableViewFooterWithPaginator:(MyPaginator *)paginator
+- (void)updateTableViewFooterWithPaginator:(ChatRoomsPaginator *)paginator
 {
     if ([paginator.results count] != 0)
     {
@@ -216,14 +217,14 @@
     if ([paginator tag] == kTrendingPaginatorTag) {
         _trendings = [_trendings arrayByAddingObjectsFromArray:results];
         _trendingDataSource.chatRooms = _trendings;
-        [[ChatRooms action] setTrendingRooms:_trendings];
+        [[ChatRoomsService shared] setAllTrendingRooms:_trendings];
         [self.trendingActivityIndicator stopAnimating];
     }
     
     if ([paginator tag] == kLocalPaginatorTag) {
         _locations = [_locations arrayByAddingObjectsFromArray:results];
         _locationDataSource.chatRooms = _locations;
-        [[ChatRooms action] setLocalRooms:_locations];
+        [[ChatRoomsService shared] setAllLocalRooms:_locations];
         [self.localActivityIndicator stopAnimating];
     }
     
@@ -266,30 +267,30 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"kSegue"]){
-        
+    if ([segue.identifier isEqualToString:@"kSegueToChatRoomController"]){
+        // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
 }
+
 
 #pragma mark -
 #pragma mark Table View Delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [ChatRooms action].tableViewTag = tableView.tag;
-    [ChatRooms action].currentPath = indexPath;
-    QBCOCustomObject *currentObject;
+ 
+    // get current chat room
+    QBCOCustomObject *currentRoom;
     if (tableView.tag == kTrendingTableViewTag) {
-       currentObject =  [_trendings objectAtIndex:[indexPath row]];
-    }
-    if (tableView.tag == kLocalTableViewTag) {
-       currentObject = [_locations objectAtIndex:[indexPath row]];
+       currentRoom =  [_trendings objectAtIndex:[indexPath row]];
+    
+    }else if (tableView.tag == kLocalTableViewTag) {
+       currentRoom = [_locations objectAtIndex:[indexPath row]];
     }
     
-    NSString *room = [currentObject.fields objectForKey:kName];
-    [FBService shared].roomName = room;
-    [FBService shared].roomID = currentObject.ID;
-    [self performSegueWithIdentifier:@"kSegue" sender:nil];
+    // Open CHat Controller
+    [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:currentRoom];
 }
 
 
@@ -334,11 +335,11 @@
         case 1:
             if (![[[alertView textFieldAtIndex:0] text] isEqual:@""]) {
                 NSString *alertText = [[alertView textFieldAtIndex:0] text];
-                [FBService shared].roomName = alertText;
+//                [FBService shared].roomName = alertText;
 
-                NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[GeoData getData] getMyCoorinates].latitude];
-                NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[GeoData getData] getMyCoorinates].longitude];
-                NSArray *names = [self getNamesOfRooms:[[ChatRooms action] getTrendingRooms]];
+                NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
+                NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
+                NSArray *names = [self getNamesOfRooms:[[ChatRoomsService shared] allTrendingRooms]];
 #warning Change rooms!!!
                 BOOL flag = NO;
                 for (NSString *name in names) {

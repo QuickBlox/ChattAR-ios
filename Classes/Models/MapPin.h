@@ -7,13 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AsyncImageView.h"
 #import <MapKit/MapKit.h>
 
 @interface MapPin : NSObject <MKAnnotation> {
-    CLLocationCoordinate2D coordinate;
-    NSString *name;
-    NSString *description;
 }
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;

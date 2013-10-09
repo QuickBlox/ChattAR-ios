@@ -9,7 +9,7 @@
 #import "MapViewController.h"
 #import "FBService.h"
 #import "MapPin.h"
-#import "ChatRooms.h"
+#import "ChatRoomsService.h"
 
 
 @interface MapViewController ()
@@ -33,7 +33,7 @@
     // set status bar to black:
     //[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     // getting local rooms:
-    _chatRooms = [[ChatRooms action] getLocalRooms];
+    _chatRooms = [[ChatRoomsService shared] allLocalRooms];
     // setting local rooms at the map:
     [self setAnnotationsToMap:_chatRooms];
     [super viewWillAppear:NO];
@@ -101,7 +101,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
-            [FBService shared].roomName = self.roomName;
+//            [FBService shared].roomName = self.roomName;
             [self performSegueWithIdentifier:@"MapToChat" sender:self];
             break;
             

@@ -9,17 +9,13 @@
 #import "MapPin.h"
 
 @implementation MapPin
-@synthesize coordinate=_coordinate, name=_name, description=_description;
-
 
 - (id)initWithCoordinates:(CLLocationCoordinate2D)coordinates{
     self = [super init];
     if (self) {
-        
         self.coordinate = coordinates;
     }
     return self;
 }
-
 
 @end

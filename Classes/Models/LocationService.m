@@ -6,14 +6,12 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "GeoData.h"
+#import "LocationService.h"
 
-@implementation GeoData
-@synthesize myLocation = _myLocation;
-@synthesize myLocationManager = _myLocationManager;
+@implementation LocationService
 
-+(GeoData *)getData{
-    static GeoData *defaultData = nil;
++(instancetype)shared{
+    static LocationService *defaultData = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultData = [[self alloc] init];
@@ -26,8 +24,8 @@
     if (self) {
         self.myLocationManager = [[CLLocationManager alloc] init];
         self.myLocationManager.delegate = self;
-        [myLocationManager setDistanceFilter:1];
-        [myLocationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+        [_myLocationManager setDistanceFilter:1];
+        [_myLocationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     }
     return self;
 }
@@ -46,7 +44,7 @@
 
 #pragma mark - Requests
 -(CLLocationCoordinate2D)getMyCoorinates {
-    return myLocation.coordinate;
+    return _myLocation.coordinate;
 }
 
 
@@ -59,8 +57,8 @@
 }
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    myLocation = [locations lastObject];
-    NSLog(@"Location: %@", myLocation);
+    _myLocation = [locations lastObject];
+    NSLog(@"Location: %@", _myLocation);
 }
 
 @end

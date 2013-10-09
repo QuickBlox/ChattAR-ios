@@ -10,7 +10,7 @@
 
 @implementation Utilites
 
-+ (Utilites *)action {
++ (instancetype)shared {
     static Utilites *defaultKit = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -31,7 +31,6 @@
 
 #pragma mark -
 #pragma mark Converter
-
 
 -(NSString *)distanceFormatter:(CLLocationDistance)distance{
     NSString *formatedDistance;
@@ -54,8 +53,5 @@
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }
 }
-
-
-
 
 @end

@@ -10,21 +10,19 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@interface GeoData : NSObject <CLLocationManagerDelegate>{
-    CLLocationManager *myLocationManager;
-    CLLocation *myLocation;
+@interface LocationService : NSObject <CLLocationManagerDelegate>{
 }
 
 @property (nonatomic, strong) CLLocation *myLocation;
 @property (nonatomic, strong) CLLocationManager *myLocationManager;
 
-+(GeoData *)getData;
++ (instancetype)shared;
 
 #pragma mark - Update location
--(void)startUpdateLocation;
--(void)stopUpdateLocation;
+- (void)startUpdateLocation;
+- (void)stopUpdateLocation;
 
 #pragma mark - Requests
--(CLLocationCoordinate2D)getMyCoorinates;
+- (CLLocationCoordinate2D)getMyCoorinates;
 
 @end

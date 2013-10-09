@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *chatRoomTable;
 
+@property (strong, nonatomic) QBCOCustomObject *currentChatRoom;
+
 typedef struct {
     CGFloat latitude;
     CGFloat longitude;
