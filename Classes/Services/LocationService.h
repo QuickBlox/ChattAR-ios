@@ -10,8 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@interface LocationService : NSObject <CLLocationManagerDelegate>{
-}
+@interface LocationService : NSObject <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocation *myLocation;
 @property (nonatomic, strong) CLLocationManager *myLocationManager;

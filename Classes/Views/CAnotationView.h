@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) UIImageView *avatar;
 @property (nonatomic, strong) NSString *annotationTitle;
+@property (nonatomic, strong) QBCOCustomObject *chatRoom;
 
 @end

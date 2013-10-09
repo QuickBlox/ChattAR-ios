@@ -14,7 +14,6 @@
 -(void) layoutSubviews{
     [super layoutSubviews];
     [self setBackgroundColor:[UIColor colorWithWhite:0.20 alpha:1.0]];
-    //[self setBackgroundColor:[UIColor blueColor]];
 }    
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

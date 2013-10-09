@@ -13,7 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MenuCell.h"
 #import "ProfileCell.h"
-#import "DataManager.h"
+#import "FBStorage.h"
 
 
 @implementation CAMenuViewController
@@ -22,66 +22,16 @@
     return YES;
 }
 
--(void)viewDidLoad{
-    [super viewDidLoad];
-    
+
+#pragma mark - 
+#pragma mark ViewController Lifecycle
+
+- (void)viewDidUnload {
+    [self setFirstNameField:nil];
+    [super viewDidUnload];
 }
 
-#pragma mark -
-#pragma mark SASlideMenuDataSource
-
-// This is the indexPath selected at start-up
--(NSIndexPath*) selectedIndexPath{
-    return [NSIndexPath indexPathForRow:2 inSection:0];
-}
-
--(NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 2) {
-        return @"Chat";
-    }else if (indexPath.row == 3){
-        return @"Map";
-    }else if (indexPath.row == 4){
-        return @"AR";
-    } else if (indexPath.row == 5) {
-        return @"Settings";
-    } else return @"";
-}
-
--(Boolean) allowContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath{
-    return YES;
-}
-
--(Boolean) disablePanGestureForIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row ==0) {
-        return YES;
-    }
-    return NO;
-}
-
-// This is used to configure the menu button. The beahviour of the button should not be modified
--(void) configureMenuButton:(UIButton *)menuButton{
-    menuButton.frame = CGRectMake(0, 0, 40, 29);
-    [menuButton setImage:[UIImage imageNamed:@"mnubtn.png"] forState:UIControlStateNormal];
-    [menuButton setBackgroundColor:[UIColor clearColor]];
-}
-
--(void) configureSlideLayer:(CALayer *)layer{
-    layer.shadowColor = [UIColor blackColor].CGColor;
-    layer.shadowOpacity = 0.3;
-    layer.shadowOffset = CGSizeMake(-15, 0);
-    layer.shadowRadius = 10;
-    layer.masksToBounds = NO;
-    layer.shadowPath =[UIBezierPath bezierPathWithRect:layer.bounds].CGPath;
-}
-
--(CGFloat) leftMenuVisibleWidth{
-    return 250;
-}
--(void) prepareForSwitchToContentViewController:(UINavigationController *)content{
-}
-
-
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
     [self.firstNameField setText:firstLastName];
     [super viewWillAppear:NO];
@@ -90,6 +40,60 @@
     logoImage.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height + 30), img.size.width, img.size.height);
     [self.menuTable addSubview:logoImage];
 }
+
+#pragma mark -
+#pragma mark SASlideMenuDataSource
+
+// This is the indexPath selected at start-up
+- (NSIndexPath*) selectedIndexPath{
+    return [NSIndexPath indexPathForRow:2 inSection:0];
+}
+
+- (NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 2) {
+        return kChatSegueIdentifier;
+    }else if (indexPath.row == 3){
+        return kMapSegueIdentifier;
+    }else if (indexPath.row == 4){
+        return kARSegueIdentifier;
+    } else if (indexPath.row == 5) {
+        return kAboutSegueIdentifier;
+    } else return @"";
+}
+
+- (Boolean) allowContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (Boolean) disablePanGestureForIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row ==0) {
+        return YES;
+    }
+    return NO;
+}
+
+// This is used to configure the menu button. The beahviour of the button should not be modified
+- (void) configureMenuButton:(UIButton *)menuButton{
+    menuButton.frame = CGRectMake(0, 0, 40, 29);
+    [menuButton setImage:[UIImage imageNamed:@"mnubtn.png"] forState:UIControlStateNormal];
+    [menuButton setBackgroundColor:[UIColor clearColor]];
+}
+
+- (void) configureSlideLayer:(CALayer *)layer{
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOpacity = 0.3;
+    layer.shadowOffset = CGSizeMake(-15, 0);
+    layer.shadowRadius = 10;
+    layer.masksToBounds = NO;
+    layer.shadowPath =[UIBezierPath bezierPathWithRect:layer.bounds].CGPath;
+}
+
+- (CGFloat) leftMenuVisibleWidth{
+    return 250;
+}
+- (void)prepareForSwitchToContentViewController:(UINavigationController *)content{
+}
+
 
 #pragma mark -
 #pragma mark SASlideMenuDelegate
@@ -116,11 +120,6 @@
     NSLog(@"slideMenuDidSlideOut");
 }
 
-- (void)viewDidUnload {
-    [self setFirstNameField:nil];
-    [super viewDidUnload];
-}
-
 
 #pragma mark -
 #pragma mark Log Out ChattAR
@@ -141,9 +140,8 @@
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];
     //clear  FBAccessToken and FBUser from DataManager
-    [[DataManager shared] clearFBAccess];
-    [[DataManager shared] clearFBUser];
-    
+    [[FBStorage shared] clearFBAccess];
+    [[FBStorage shared] clearFBUser];
 }
 
 @end

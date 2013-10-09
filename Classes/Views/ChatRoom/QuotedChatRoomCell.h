@@ -26,4 +26,7 @@
 @property (nonatomic, strong) UILabel *rMessage;
 @property (nonatomic, strong) UILabel *rDateTime;
 
+- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath;
++ (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg;
+
 @end

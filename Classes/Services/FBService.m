@@ -9,7 +9,7 @@
 #import "XMPPFramework.h"
 #import "DDTTYLogger.h"
 #import "XMPPStream.h"
-#import "DataManager.h"
+#import "FBStorage.h"
 
 
 
@@ -134,7 +134,7 @@ static FBService *service = nil;
     NSLog(@"XMPP disconnected");
     
     // reconnect if disconnected
-    if([DataManager shared].currentFBUser && [Reachability internetConnected]){
+    if([FBStorage shared].currentFBUser && [Reachability internetConnected]){
         [self logInChat];
     }
 }

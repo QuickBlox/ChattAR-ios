@@ -19,4 +19,7 @@
 @property (nonatomic, strong) UIImage *bubleImage;
 @property (nonatomic, strong) UILabel *distance;
 
+- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath;
++ (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg;
+
 @end

@@ -17,7 +17,6 @@
     #import <CoreAudio/CoreAudioTypes.h>
     #import <MapKit/MapKit.h>
     #import "Definitions.h"
-    #import "FBDefinitions.h"
     #import "Reachability.h"
 
 #endif

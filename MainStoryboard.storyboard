@@ -37,11 +37,11 @@
             <objects>
                 <viewController id="Vch-rc-7Oy" customClass="ChatRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2GZ-eo-kOd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="458"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -50,7 +50,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="4e0-Cg-koI">
-                                <rect key="frame" x="0.0" y="458" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
@@ -344,7 +344,7 @@
                         <segue destination="doc-P0-YCL" kind="custom" identifier="Chat" customClass="SASlideMenuContentSegue" id="POg-Df-gpJ"/>
                         <segue destination="FgT-Db-JXl" kind="custom" identifier="Map" customClass="SASlideMenuContentSegue" id="jgz-po-BPx"/>
                         <segue destination="79Z-YM-vAE" kind="custom" identifier="AR" customClass="SASlideMenuContentSegue" id="0IC-8a-lf6"/>
-                        <segue destination="hhr-D8-IaV" kind="custom" identifier="Settings" customClass="SASlideMenuContentSegue" id="TAn-dJ-yQX"/>
+                        <segue destination="hhr-D8-IaV" kind="custom" identifier="About" customClass="SASlideMenuContentSegue" id="TAn-dJ-yQX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L1Z-u4-a1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -751,6 +751,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="GXn-8Q-nrq"/>
-        <segue reference="08e-u6-zeQ"/>
+        <segue reference="K6Z-1q-k1N"/>
     </inferredMetricsTieBreakers>
 </document>

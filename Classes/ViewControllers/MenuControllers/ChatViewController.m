@@ -10,7 +10,7 @@
 #import "TrendingChatRoomsDataSource.h"
 #import "LocalChatRoomsDataSource.h"
 #import "FBService.h"
-#import "DataManager.h"
+#import "FBStorage.h"
 #import "ChatRoomsService.h"
 #import "LocationService.h"
 #import "Utilites.h"
@@ -282,20 +282,6 @@
     
     // Open CHat Controller
     [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:currentRoom];
-}
-
-
-#pragma marak -
-#pragma mark QBActionStatusDelegate
-
--(void)completedWithResult:(Result *)result{
-    if ([result success]) {
-        if([result isKindOfClass:QBCOCustomObjectResult.class]){
-            QBCOCustomObjectResult *createObjectResult = (QBCOCustomObjectResult *)result;
-            NSLog(@"Created object: %@", createObjectResult.object);
-            [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:nil];
-        }
-    }
 }
 
 

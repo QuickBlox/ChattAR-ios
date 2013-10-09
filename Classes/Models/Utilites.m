@@ -32,7 +32,7 @@
 #pragma mark -
 #pragma mark Converter
 
--(NSString *)distanceFormatter:(CLLocationDistance)distance{
+- (NSString *)distanceFormatter:(CLLocationDistance)distance{
     NSString *formatedDistance;
     NSInteger dist = round(distance);
     if (distance <=999) {

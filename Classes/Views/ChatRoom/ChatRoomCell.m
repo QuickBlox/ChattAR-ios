@@ -7,33 +7,39 @@
 //
 
 #import "ChatRoomCell.h"
+#import "LocationService.h"
+#import "Utilites.h"
 
 @implementation ChatRoomCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 180, 20)];
-        self.message = [[UILabel alloc] init];
-        self.colorBuble = [[UIImageView alloc] init];
         self.userPhoto = [[AsyncImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-        self.postMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(245.0f, 20.0f, 55.0f, 20.0f)];
+        [self.contentView addSubview:self.userPhoto];
         
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.colorBuble = [[UIImageView alloc] init];
+        [self.contentView addSubview:self.colorBuble];
         
+        self.message = [[UILabel alloc] init];
         self.message.textColor = [UIColor whiteColor];
         self.message.backgroundColor = [UIColor clearColor];
         self.message.numberOfLines = 0;
+        [self.contentView addSubview:self.message];
         
+        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 180, 20)];
         self.userName.textColor = [UIColor whiteColor];
         self.userName.font = [UIFont boldSystemFontOfSize:18.0];
         self.userName.textAlignment = UITextAlignmentLeft;
         self.userName.backgroundColor = [UIColor clearColor];
-        
+        [self.contentView addSubview:self.userName];
+        // date time of message
+        self.postMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(245.0f, 20.0f, 55.0f, 20.0f)];
         self.postMessageDate.textAlignment = UITextAlignmentRight;
         self.postMessageDate.textColor = [UIColor whiteColor];
         self.postMessageDate.backgroundColor = [UIColor clearColor];
         self.postMessageDate.font = [UIFont systemFontOfSize:13.0f];
+        [self.contentView addSubview:self.postMessageDate];
         
         // Distance to user label
         self.distance = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 50, 15)];
@@ -41,16 +47,64 @@
         self.distance.textColor = [UIColor darkGrayColor];
         self.distance.backgroundColor = [UIColor clearColor];
         self.distance.textAlignment = UITextAlignmentLeft;
-        
-        // adding to subwiew
-        [self.contentView addSubview:self.userPhoto];
-        [self.contentView addSubview:self.colorBuble];
-        [self.contentView addSubview:self.message];
-        [self.contentView addSubview:self.userName];
-        [self.contentView addSubview:self.postMessageDate];
         [self.contentView addSubview:self.distance];
+        // set selection style: none
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
+}
+
+- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath{
+    // Buble
+    if ([indexPath row] % 2 == 0) {
+        self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    } else {
+        self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    }
+    self.colorBuble.image = self.bubleImage;
+    
+    // user message
+
+    // getting dictionary from JSON
+    NSData *dictData = [message.text dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *tempDict = [NSJSONSerialization JSONObjectWithData:dictData options:NSJSONReadingAllowFragments error:nil];
+    
+    //getting Avatar from url
+    NSString *urlString = [tempDict objectForKey:kUserPhotoUrl];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //getting location of a message sender
+    CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
+    CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
+    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
+    
+    // post message date
+    
+    NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
+    
+    // putting data to fields
+    [self.userPhoto setImageURL:url];
+    self.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
+    self.message.text = [tempDict objectForKey:kMessage];
+    self.userName.text = [tempDict objectForKey:kUserName];
+    self.postMessageDate.text = time;
+    
+    
+    //changing hight
+    CGSize textSize = { 225.0, 10000.0 };
+    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [self.message setFrame:CGRectMake(75, 43, 225, size.height)];
+    [self.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
+}
+
++ (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg {
+    CGSize textSize = { 225.0, 10000.0 };
+    //changing hight
+    CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    size.height += padding*2;
+    return size.height+10.0f;
 }
 
 @end

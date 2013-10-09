@@ -10,7 +10,7 @@
 #import "ChatRoomCell.h"
 #import "ChatRoomsService.h"
 #import "QuotedChatRoomCell.h"
-#import "DataManager.h"
+#import "FBStorage.h"
 #import "FBService.h"
 #import "LocationService.h"
 #import <CoreLocation/CoreLocation.h>
@@ -27,7 +27,6 @@
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property CGFloat cellSize;
-
 
 -(IBAction)textEditDone:(id)sender;
 - (IBAction)backToRooms:(id)sender;
@@ -46,6 +45,11 @@
     [super viewDidLoad];
     self.title = @"Default";
     self.chatHistory = [[NSMutableArray alloc] init];
+    self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
+    [self configureInputTextViewLayer];
+}
+
+- (void)configureInputTextViewLayer{
     self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.inputTextView.layer.shadowRadius = 7.0f;
     self.inputTextView.layer.masksToBounds = NO;
@@ -76,10 +80,9 @@
     [super viewWillAppear:animated];
 }
 
+
 #pragma mark -
 #pragma mark Table View Data Source
-
-static CGFloat padding = 20.0;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [_chatHistory count];
@@ -87,6 +90,8 @@ static CGFloat padding = 20.0;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
+    static NSString *roomCellIdentifier = @"RoomCellIdentifier";
+    static NSString *quotedRoomCellIdentifier = @"quotedRoomCellIdentifier";
     
     QBChatMessage *qbMessage = [_chatHistory objectAtIndex:[indexPath row]];
     NSString *string = [NSString stringWithFormat:@"%@", qbMessage.text];
@@ -94,166 +99,35 @@ static CGFloat padding = 20.0;
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     
-    if ([jsonDict objectForKey:@"quote"] == nil) {
-       cell = [self configureSimpleCellForTableView:tableView andIndexPath:indexPath];
+    // There are Two different cells: "Simple" and "Quoted"
+    if ([jsonDict objectForKey:kQuote] == nil) {
+        cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
+        if (cell == nil){
+            cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
+        }
+        [(ChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
     } else {
-        cell = [self configureQuotedCellForTableView:tableView andIndexPath:indexPath];
+        cell = (QuotedChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:quotedRoomCellIdentifier];
+        if (cell == nil) {
+            cell = [[QuotedChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quotedRoomCellIdentifier];
+        }
+        [(QuotedChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
     }
     return cell;
 }
-
-// There are Two different cells: "Simple" and "Quoted"
-
-- (ChatRoomCell *)configureSimpleCellForTableView:(UITableView *)tableView andIndexPath:(NSIndexPath *)indexPath {
-    static NSString *roomCellIdentifier = @"RoomCellIdentifier";
-    ChatRoomCell *roomCell = [tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
-    if (roomCell == nil)
-    {
-        roomCell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
-    }
-    
-    // Buble
-    if ([indexPath row] % 2 == 0) {
-        roomCell.bubleImage = [UIImage imageNamed:@"01_green_chat_bubble.png"];
-    } else {
-        roomCell.bubleImage = [UIImage imageNamed:@"01_blue_chat_bubble.png"];
-    }
-    UIImage *img = [roomCell.bubleImage resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    
-    
-    
-    
-    // user message
-    QBChatMessage *currentMessage = [self.chatHistory objectAtIndex:[indexPath row]];
-    // getting dictionary from JSON
-    NSData *dictData = [currentMessage.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableDictionary *tempDict = [NSJSONSerialization JSONObjectWithData:dictData options:NSJSONReadingAllowFragments error:nil];
-    
-    //getting Avatar from url
-    NSString *urlString = [tempDict objectForKey:kUserPhotoUrl];
-    NSURL *url = [NSURL URLWithString:urlString];
-
-    //getting location of a message sender
-    CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
-    CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
-    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
-
-    // post message date
-    
-    NSString *time = [[Utilites shared].dateFormatter stringFromDate:currentMessage.datetime];
-    
-    // putting data to fields
-    [roomCell.userPhoto setImageURL:url];
-    roomCell.colorBuble.image = img;
-    roomCell.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
-    roomCell.message.text = [tempDict objectForKey:kMessage];
-    roomCell.userName.text = [tempDict objectForKey:kUserName];
-    roomCell.postMessageDate.text = time;
-    
-    
-    //changing hight
-    CGSize textSize = { 225.0, 10000.0 };
-    CGSize size = [[roomCell.message text] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
-    
-    [roomCell.message setFrame:CGRectMake(75, 43, 225, size.height)];
-    [roomCell.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
-    
-    return roomCell;
-
-}
-
-- (UITableViewCell *)configureQuotedCellForTableView:(UITableView *)tableView andIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellIdentifier = @"CellIdentifier";
-    QuotedChatRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[QuotedChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
-    
-    QBChatMessage *currentMessage = [_chatHistory objectAtIndex:[indexPath row]];
-    NSData *data = [currentMessage.text dataUsingEncoding:NSUTF8StringEncoding];
-    // parsing JSON to dictionary
-    NSDictionary *quoteDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    // getting quote from message
-    NSDictionary *quoted = [quoteDict objectForKey:kQuote];
-    
-    //QUOTE:
-    //getting Avatar from url
-    NSString *urlString = [quoted objectForKey:kUserPhotoUrl];
-    NSURL *url = [NSURL URLWithString:urlString];
-    [cell.qUserPhoto setImageURL:url];
-    // getting data from dictionary
-    cell.qUserName.text = [quoted objectForKey:kUserName];
-    cell.qMessage.text = [quoted objectForKey:kMessage];
-    cell.qDateTime.text = [quoted objectForKey:kDateTime];
-    
-    
-    // REPLY
-    //buble( Offset: y:50)
-    if ([indexPath row] % 2 == 0) {
-        cell.rColorBuble.image = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    } else {
-        cell.rColorBuble.image = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    }
-    // getting avatar url
-    NSString *uStr = [quoteDict objectForKey:kUserPhotoUrl];
-    NSURL *urlImg = [NSURL URLWithString:uStr];
-    
-    // date formatter
-    
-    NSString *time = [[Utilites shared].dateFormatter stringFromDate:currentMessage.datetime];
-    
-    // getting location
-    CGFloat latutude = [[quoteDict objectForKey:kLatitude] floatValue];
-    CGFloat longitude = [[quoteDict objectForKey:kLongitude] floatValue];
-    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latutude longitude:longitude];
-    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
-    NSString *distance = [[Utilites shared] distanceFormatter:distanceToMe];
-    
-    //changing hight
-    CGSize textSize = { 225.0, 10000.0 };
-    CGSize size = [[quoteDict objectForKey:kMessage] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
-    
-    [cell.rMessage setFrame:CGRectMake(75, 43+50, 225, size.height)];
-    [cell.rColorBuble setFrame:CGRectMake(55, 10+50, 255, size.height+padding*2)];
-    
-    [cell.rUserPhoto setImageURL:urlImg];
-    cell.rUserName.text = [quoteDict objectForKey:kUserName];
-    cell.rMessage.text = [quoteDict objectForKey:kMessage];
-    cell.rDateTime.text = time;
-    cell.rDistance.text = distance;
-    
-    return cell;
-    
-}
-
-
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     CGFloat cellHeight;
-    QBChatMessage *chatMessage = [_chatHistory objectAtIndex:indexPath.row];
-    NSString *chatString = chatMessage.text;
+    NSString *chatString = [[_chatHistory objectAtIndex:indexPath.row] text];
     NSData *data = [chatString dataUsingEncoding:NSUTF8StringEncoding];
-    // all message (with quote)
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSString *currentMessage = [dictionary objectForKey:kMessage];
     if ([dictionary objectForKey:kQuote] == nil) {
-        CGSize textSize = { 225.0, 10000.0 };
-        NSString *currentMessage = [dictionary objectForKey:kMessage];
-        //changing hight
-        CGSize size = [currentMessage sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
-        size.height += padding*2;
-        cellHeight = size.height+10.0f;
+       cellHeight = [ChatRoomCell configureHeightForCellWithDictionary:currentMessage];
     } else {
-        CGSize textSize = { 225.0, 10000.0 };
-        NSString *currentMessage = [dictionary objectForKey:kMessage];
-        //changing hight
-        CGSize size = [currentMessage sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
-        size.height += padding*2;
-        cellHeight = size.height + 10.0f + 50.0f;
+        cellHeight = [QuotedChatRoomCell configureHeightForCellWithDictionary:currentMessage];
     }
-    
     return cellHeight;
 }
 
@@ -264,7 +138,7 @@ static CGFloat padding = 20.0;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.chatRoomTable deselectRowAtIndexPath:indexPath animated:YES];
     QBChatMessage *chatMsg = [_chatHistory objectAtIndex:[indexPath row]];
-    if (![chatMsg.senderNick isEqual:[[DataManager shared].currentFBUser objectForKey:kId]]) {
+    if (![chatMsg.senderNick isEqual:[[FBStorage shared].currentFBUser objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", nil];
@@ -283,7 +157,6 @@ static CGFloat padding = 20.0;
             NSLog(@"REPLY");
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
             
-            
             NSString *string = msg.text;
             cellPath = nil;
             // JSON parsing
@@ -294,11 +167,8 @@ static CGFloat padding = 20.0;
             if (quote == nil) {
                 quote = [[NSMutableDictionary alloc] init];
             }
-            
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"HH:mm"];
-            [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
-            NSString *time = [dateFormatter stringFromDate:msg.datetime];
+        
+            NSString *time = [[Utilites shared].dateFormatter stringFromDate:msg.datetime];
             
             [quote setValue:[jsonDict objectForKey:kUserPhotoUrl] forKey:kUserPhotoUrl];
             [quote setValue:[jsonDict objectForKey:kUserName] forKey:kUserName];
@@ -314,11 +184,10 @@ static CGFloat padding = 20.0;
 #pragma mark ChatRoom
 
 -(void)creatingOrJoiningRoom{
-    
     // Join room
     [QBChat instance].delegate = self;
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
-    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[DataManager shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:NO];
+    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:NO];
 }
 
 
@@ -330,7 +199,6 @@ static CGFloat padding = 20.0;
     NSLog(@"Chat Room is opened");
     //get room
     self.currentRoom = room;
-    
     
     // Update chat room rank
     NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
@@ -355,9 +223,9 @@ static CGFloat padding = 20.0;
     } else {
         NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
         NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-        NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName], [[DataManager shared].currentFBUser objectForKey:kLastName]];
+        NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName], [[FBStorage shared].currentFBUser objectForKey:kLastName]];
         
-        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[DataManager shared].currentFBUser objectForKey:kId], [DataManager shared].accessToken];
+        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].currentFBUser objectForKey:kId], [FBStorage shared].accessToken];
         
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setValue:myLatitude forKey:kLatitude];

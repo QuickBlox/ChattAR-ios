@@ -16,9 +16,9 @@
     NSInteger skipedRecords = (page - 1) * pageSize;
     
     NSMutableDictionary *extendedRequest = [NSMutableDictionary dictionary];
-    [extendedRequest setValue:[NSNumber numberWithInteger:pageSize] forKey:@"limit"];
-    [extendedRequest setValue:[NSNumber numberWithInteger:skipedRecords] forKey:@"skip"];
-    [extendedRequest setValue:@"rank" forKey:@"sort_desc"];
+    [extendedRequest setValue:[NSNumber numberWithInteger:pageSize] forKey:kLimit];
+    [extendedRequest setValue:[NSNumber numberWithInteger:skipedRecords] forKey:kSkip];
+    [extendedRequest setValue:kRank forKey:kSortDesc];
     
     [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extendedRequest delegate:self];
 }

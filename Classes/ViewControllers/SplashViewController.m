@@ -7,7 +7,7 @@
 //
 
 #import "SplashViewController.h"
-#import "DataManager.h"
+#import "FBStorage.h"
 #import "FBService.h"
 #import "Reachability.h"
 #import "LocationService.h"
@@ -87,9 +87,8 @@
                 [self.activityIndicatior startAnimating];
                 
                 // save FB Token
-                [[DataManager shared] saveFBToken:[FBService shared].session.accessTokenData.accessToken];
-                [DataManager shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
-                //NSLog(@"Access Token: %@", [DataManager shared].accessToken);
+                [[FBStorage shared] saveFBToken:[FBService shared].session.accessTokenData.accessToken];
+                [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
                 
                 // login to FB XMPP Chat
                 [self loginToFacebookChat];
@@ -101,9 +100,9 @@
                     
                     //save FB User
                     FBGraphObject *user = (FBGraphObject *)result;
-                    [DataManager shared].currentFBUser = [user mutableCopy];
+                    [FBStorage shared].currentFBUser = [user mutableCopy];
                     
-                    NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
+                    NSLog(@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName],[[FBStorage shared].currentFBUser objectForKey:kLastName]);
                 }];
             }
         }]; 
@@ -113,17 +112,16 @@
     if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
         [self hideLoginButton:YES];
         
-        [DataManager shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
-        //NSLog(@"Access Token: %@", [DataManager shared].accessToken);
+        [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
         
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             [[FBService shared] userProfileWithResultBlock:^(id result) {
                 
                 //save FB User
                 FBGraphObject *user = (FBGraphObject *)result;
-                [DataManager shared].currentFBUser = [user mutableCopy];
+                [FBStorage shared].currentFBUser = [user mutableCopy];
                 
-                NSLog(@"%@ %@",[[DataManager shared].currentFBUser objectForKey:kFirstName],[[DataManager shared].currentFBUser objectForKey:kLastName]);
+                NSLog(@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName],[[FBStorage shared].currentFBUser objectForKey:kLastName]);
             }];
         }];
         
@@ -170,7 +168,6 @@
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
-        //NSMutableDictionary *dictionary = [DataManager shared].currentFBUser;
         
         // Login to QB Chat
         [QBChat instance].delegate = self;
@@ -188,8 +185,6 @@
     
     [NSTimer scheduledTimerWithTimeInterval:60 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     
-    //caching self with FB ID
-    [[DataManager shared].fbUsersLoggedIn setObject:[DataManager shared].currentFBUser forKey:[[DataManager shared].currentFBUser objectForKey:kId]];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
     //dismiss splash

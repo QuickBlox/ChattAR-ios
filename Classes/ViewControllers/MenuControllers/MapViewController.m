@@ -10,12 +10,13 @@
 #import "FBService.h"
 #import "MapPin.h"
 #import "ChatRoomsService.h"
+#import "ChatRoomViewController.h"
 
 
 @interface MapViewController ()
 
 @property (nonatomic, strong) NSArray *chatRooms;
-@property (nonatomic, strong) NSString *roomName;
+@property (nonatomic, strong) QBCOCustomObject *chatRoom;
 
 @end
 
@@ -45,6 +46,7 @@
         MapPin *pin = [[MapPin alloc] initWithCoordinates:coord];
         pin.name = [room.fields valueForKey:kName];
         pin.description = [NSString stringWithFormat:@"%li visites", (long)[[room.fields valueForKey:kRank] integerValue]];
+        pin.room = room;
         [_mapView addAnnotation:pin];
     }
 }
@@ -64,13 +66,14 @@
     aView.image = [UIImage imageNamed:@"03_pin.png"];
     aView.avatar.image = [UIImage imageNamed:@"room.jpg"];
     aView.annotationTitle = annotation.name;
+    aView.chatRoom = annotation.room;
     return aView;
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(CAnotationView *)view{
     NSLog(@"Anotation selected.");
-    self.roomName = view.annotationTitle;
-    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:self.roomName delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:view.annotationTitle delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
+    _chatRoom = view.chatRoom;
     [action showInView:self.view];
 }
 
@@ -91,12 +94,18 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
         case 0:
-//            [FBService shared].roomName = self.roomName;
-            [self performSegueWithIdentifier:@"MapToChat" sender:self];
+            [self performSegueWithIdentifier:@"MapToChat" sender:_chatRoom];
             break;
             
         default:
             break;
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"MapToChat"]){
+        // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
 }
 

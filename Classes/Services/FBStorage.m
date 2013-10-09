@@ -6,42 +6,20 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-#import "DataManager.h"
-//#import "UserAnnotation.h"
-
-//#import "QBCheckinModel.h"
-//#import "QBChatMessageModel.h"
-//#import "FBCheckinModel.h"
-
-#define kFavoritiesFriends [NSString stringWithFormat:@"kFavoritiesFriends_%@", [DataManager shared].currentFBUserId]
-#define kFavoritiesFriendsIds [NSString stringWithFormat:@"kFavoritiesFriendsIds_%@", [DataManager shared].currentFBUserId]
-
-#define kFirstSwitchAllFriends [NSString stringWithFormat:@"kFirstSwitchAllFriends_%@", [DataManager shared].currentFBUserId]
-
-#define qbCheckinsFetchLimit 150
-#define fbCheckinsFetchLimit 50
-#define qbChatMessagesFetchLimit 40
-
-#define FBCheckinModelEntity @"FBCheckinModel"
-#define QBCheckinModelEntity @"QBCheckinModel"
-#define QBChatMessageModelEntity @"QBChatMessageModel"
-
-// FB Keys
+#import "FBStorage.h"
 
 
+@implementation FBStorage
 
-@implementation DataManager
-
-static DataManager *instance = nil;
+static FBStorage *instance = nil;
 
 @synthesize accessToken;
 
-@synthesize currentQBUser;
 @synthesize currentFBUser;
 @synthesize currentFBUserId;
 
 
-+ (DataManager *)shared {
++ (FBStorage *)shared {
 	@synchronized (self) {
 		if (instance == nil){ 
             instance = [[self alloc] init];
@@ -51,13 +29,6 @@ static DataManager *instance = nil;
 	return instance;
 }
 
--(id)init{
-    self = [super init];
-    if (self) {
-        self.fbUsersLoggedIn = [NSMutableDictionary dictionary];
-    }
-    return self;
-}
 
 #pragma mark -
 #pragma mark FB access

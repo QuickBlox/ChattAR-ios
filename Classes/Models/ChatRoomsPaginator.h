@@ -8,8 +8,8 @@
 
 #import "NMPaginator.h"
 
-@interface ChatRoomsPaginator : NMPaginator <QBActionStatusDelegate> {
-}
+@interface ChatRoomsPaginator : NMPaginator <QBActionStatusDelegate>
+
 @property (assign, nonatomic) NSInteger tag;
 
 @end

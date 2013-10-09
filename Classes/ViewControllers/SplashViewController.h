@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : UIViewController <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>{
-    NSTimer		*presenceTimer;
-}
+@interface SplashViewController : UIViewController <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatior;

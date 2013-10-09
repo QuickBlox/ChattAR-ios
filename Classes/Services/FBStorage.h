@@ -10,21 +10,16 @@
 
 #define maxPopularFriends 40
 
-@interface DataManager : NSObject{
+@interface FBStorage : NSObject{
 }
 
 // FB access
 @property (nonatomic, retain) NSString				*accessToken;
-@property (nonatomic, retain) NSDate				*expirationDate;
-// cached users
-@property (nonatomic, retain) NSMutableDictionary   *fbUsersLoggedIn;
-// current User
-@property (nonatomic, retain) QBUUser				*currentQBUser;
 @property (nonatomic, retain) NSMutableDictionary	*currentFBUser;
 @property (nonatomic, retain) NSString				*currentFBUserId;
-@property (nonatomic, retain) QBChatRoom            *chatRoom;
 
-+ (DataManager *) shared;
+
++ (FBStorage *) shared;
 
 
 #pragma mark -

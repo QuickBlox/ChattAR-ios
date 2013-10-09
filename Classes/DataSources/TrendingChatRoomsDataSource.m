@@ -17,15 +17,15 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TrendingCell"];
+    static NSString *trendingCellIdentifier = @"TrendingCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:trendingCellIdentifier];
     cell.backgroundColor = [UIColor whiteColor];
     NSUInteger row = [indexPath row];
     cell.imageView.image = [UIImage imageNamed:@"trendings_uicon@2x.png"];
     QBCOCustomObject *currentObject = [self.chatRooms objectAtIndex:row];
-    cell.textLabel.text = [currentObject.fields objectForKey:@"name"];
-    cell.detailTextLabel.text = @"Trending room";
+    cell.textLabel.text = [currentObject.fields objectForKey:kName];
+    
     return cell;
 }
-
 
 @end
