@@ -7,13 +7,16 @@
 //
 
 #import "ChattARAppDelegate.h"
+#import "AppDelegate+MemoryWarnings.h"
 
 @implementation ChattARAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     // Set QuickBlox credentials
     [QBSettings setApplicationID:4228];
     [QBSettings setAuthorizationKey:@"fSdLsATEPQeGPKQ"];

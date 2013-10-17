@@ -24,6 +24,7 @@
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateFormat:@"HH:mm"];
         [self.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+        self.userLoggedIn = NO;
     }
     return self;
 }
@@ -52,6 +53,29 @@
     if ([UIApplication sharedApplication].statusBarStyle == UIStatusBarStyleDefault) {
         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     }
+}
+
+
+#pragma mark -
+#pragma mark Supporting AR
+
++(BOOL)deviceSupportsAR{
+	BOOL support;
+	//Detect camera and compas
+	if((![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) || (![CLLocationManager headingAvailable])){
+		support = NO;
+	} else {
+        support = YES;
+    }
+	return support;
+}
+
+- (BOOL)isUserLoggedIn{
+    return self.userLoggedIn;
+}
+
+- (void)setUserLogIn{
+    self.userLoggedIn = YES;
 }
 
 @end

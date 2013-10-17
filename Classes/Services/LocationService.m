@@ -25,6 +25,7 @@
         self.myLocationManager = [[CLLocationManager alloc] init];
         self.myLocationManager.delegate = self;
         [_myLocationManager setDistanceFilter:1];
+        self.myLocationManager.headingFilter = kCLHeadingFilterNone;
         [_myLocationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     }
     return self;
@@ -35,10 +36,12 @@
 
 -(void)startUpdateLocation {
     [self.myLocationManager startUpdatingLocation];
+    [self.myLocationManager startUpdatingHeading];
 }
 
 -(void)stopUpdateLocation {
     [self.myLocationManager stopUpdatingLocation];
+    [self.myLocationManager stopUpdatingHeading];
 }
 
 

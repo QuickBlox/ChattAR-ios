@@ -10,10 +10,16 @@
 
 @interface Utilites : NSObject
 
+@property (nonatomic, assign) BOOL userLoggedIn;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 + (instancetype)shared;
 - (NSString *)distanceFormatter:(CLLocationDistance)distance;
 - (void)checkAndPutStatusBarColor;
++(BOOL)deviceSupportsAR;
+
+// Splash appearence options:
+- (BOOL)isUserLoggedIn;
+- (void)setUserLogIn;
 
 @end

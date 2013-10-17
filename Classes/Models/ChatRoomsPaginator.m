@@ -23,6 +23,7 @@
     [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extendedRequest delegate:self];
 }
 
+
 #pragma marak -
 #pragma mark QBActionStatusDelegate
 
@@ -31,11 +32,11 @@
         if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
             // todo:
             QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
-            NSArray *gettingRooms = pagedResult.objects;
-            NSInteger roomsCount = 30;
-            [self receivedResults:gettingRooms total:roomsCount];
+            NSInteger roomsCount = 100000;
+            [self receivedResults:pagedResult.objects total:roomsCount];
         }
     }
 }
+
 
 @end

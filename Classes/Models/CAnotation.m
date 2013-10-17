@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "MapPin.h"
+#import "CAnotation.h"
 
-@implementation MapPin
+@implementation CAnotation
 
 - (id)initWithCoordinates:(CLLocationCoordinate2D)coordinates{
     self = [super init];

@@ -5,7 +5,8 @@
 //  Created by Igor Alefirenko on 04/09/2013.
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
-
+#import "SASlideMenuViewController.h"
+#import "SASlideMenuRootViewController.h"
 #import "CAMenuViewController.h"
 #import "SplashViewController.h"
 #import "SASlideMenuRootViewController.h"
@@ -14,6 +15,7 @@
 #import "MenuCell.h"
 #import "ProfileCell.h"
 #import "FBStorage.h"
+#import "Utilites.h"
 
 
 @implementation CAMenuViewController
@@ -26,20 +28,56 @@
 #pragma mark - 
 #pragma mark ViewController Lifecycle
 
-- (void)viewDidUnload {
+- (void)viewDidUnload{
     [self setFirstNameField:nil];
     [super viewDidUnload];
+}
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    [self configureQButton];
+    // still supprots
+    if (![Utilites deviceSupportsAR]) {
+        double delayInSeconds = 3.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+            _isArNotAvailable = YES;
+            [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+        });
+    }
+}
+
+
+-(void)configureQButton{
+    UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
+    UIButton *qbButton = [[UIButton alloc] init];
+    qbButton.backgroundColor = [UIColor colorWithPatternImage:img];
+    qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height + 30), img.size.width, img.size.height);
+    [qbButton addTarget:self action:@selector(gotoQBSite) forControlEvents:UIControlEventTouchUpInside];
+    [self.menuTable addSubview:qbButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
     [self.firstNameField setText:firstLastName];
     [super viewWillAppear:NO];
-    UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
-    UIImageView *logoImage = [[UIImageView alloc] initWithImage:img];
-    logoImage.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height + 30), img.size.width, img.size.height);
-    [self.menuTable addSubview:logoImage];
+    //[self.menuTable reloadData];
 }
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSInteger rows;
+    if (_isArNotAvailable) {
+        rows = 5;
+    }else {
+        rows = 6;
+    }
+    return rows;
+}
+
+
+
 
 #pragma mark -
 #pragma mark SASlideMenuDataSource
@@ -50,15 +88,48 @@
 }
 
 - (NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 2) {
-        return kChatSegueIdentifier;
-    }else if (indexPath.row == 3){
-        return kMapSegueIdentifier;
-    }else if (indexPath.row == 4){
-        return kARSegueIdentifier;
-    } else if (indexPath.row == 5) {
-        return kAboutSegueIdentifier;
-    } else return @"";
+//    if ([Utilites deviceSupportsAR]) {
+//        if (indexPath.row == 2) {
+//            return kChatSegueIdentifier;
+//        }else if (indexPath.row == 3){
+//            return kMapSegueIdentifier;
+//        }else if (indexPath.row == 4){
+//            return kARSegueIdentifier;
+//        } else if (indexPath.row == 5) {
+//            return kAboutSegueIdentifier;
+//        } else return @"";
+//    } else {
+//        if (indexPath.row == 2) {
+//            return kChatSegueIdentifier;
+//        }else if (indexPath.row == 3){
+//            return kMapSegueIdentifier;
+//        }else if (indexPath.row == 4){
+//            return kAboutSegueIdentifier;
+//        }  else return @"";
+//    }
+    NSString *segue = [NSString string];
+    switch ([indexPath row]) {
+        case 2:
+            segue = kChatSegueIdentifier;
+            break;
+        case 3:
+            segue = kMapSegueIdentifier;
+            break;
+        case 4:
+            if (!_isArNotAvailable) {
+                segue = kARSegueIdentifier;
+            } else {
+            segue = kAboutSegueIdentifier;
+            }
+            break;
+        case 5:
+            segue = kAboutSegueIdentifier;
+            break;
+            
+        default:
+            break;
+    }
+    return segue;
 }
 
 - (Boolean) allowContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath{
@@ -94,6 +165,10 @@
 - (void)prepareForSwitchToContentViewController:(UINavigationController *)content{
 }
 
+- (void)gotoQBSite{
+    NSString* urlString = @"http://quickblox.com";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+}
 
 #pragma mark -
 #pragma mark SASlideMenuDelegate

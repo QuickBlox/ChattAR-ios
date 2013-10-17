@@ -10,6 +10,7 @@
 #import "SASlideMenuRootViewController.h"
 @interface SASlideMenuViewController ()<SASlideMenuDataSource,SASlideMenuDelegate>
 @property (nonatomic) NSIndexPath* currentContentIndexPath;
+@property (nonatomic, weak) NSIndexPath *lastPath;
 @end
 
 @implementation SASlideMenuViewController
@@ -41,11 +42,11 @@
 
 - (void)loadContentAtIndexPath:(NSIndexPath*)indexPath {
     if ([self.slideMenuDataSource respondsToSelector:@selector(segueIdForIndexPath:)]) {
-        UINavigationController* controller = [self.rootController controllerForIndexPath:indexPath];
-        if (controller) {
-            [self.rootController switchToContentViewController:controller];
-            return;
-        }
+//        UINavigationController* controller = [self.rootController controllerForIndexPath:indexPath];
+//        if (controller) {
+//            [self.rootController switchToContentViewController:controller];
+//            return;
+//        }
         NSString* segueId = [self.slideMenuDataSource segueIdForIndexPath:indexPath];
         if ([segueId isEqual:@""]) {
         }else [self performSegueWithIdentifier:segueId sender:self];
@@ -90,13 +91,15 @@
 #pragma mark -
 #pragma mark UITableViewDelegate
 
--(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"Row selected: %i", [indexPath row]);
-    if ([indexPath row] == 4) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else{
-    [self loadContentAtIndexPath:indexPath];
+
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if((indexPath.row == 1) || (indexPath.row == 0)){
+        return nil;
     }
+    [self loadContentAtIndexPath:indexPath];
+    NSLog(@"Row selected: %i", indexPath.row);
+    return indexPath;
 }
 
 @end

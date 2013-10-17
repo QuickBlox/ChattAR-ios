@@ -10,6 +10,8 @@
 #define ChattAR_Definitions_h
 
 #define IS_HEIGHT_GTE_568 [[UIScreen mainScreen ] bounds].size.height >= 568.0f
+#define IS_IOS_6 [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0f
+
 
 // QBCO Request keys:
 #define  kLimit      @"limit"
@@ -121,6 +123,16 @@
 
 // QuickBlox ChatRoom Class
 #define kChatRoom   @"Chatroom"
+
+// AR
+#define maxARDistance 20000000
+
+#define minARMarkerScale 0.65f
+#define countOfScaledChunks 7
+#define scaleStep() (1-minARMarkerScale)/countOfScaledChunks
+
+#define minARMarkerAlpha 0.6f
+#define alphaStep() (1-minARMarkerAlpha)/countOfScaledChunks
 
 typedef void(^FBResultBlock)(id);
 

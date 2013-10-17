@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690A708A1806A5A100F3C584 /* CoreMotion.framework */; };
+		690A70901806B8AE00F3C584 /* ARCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708D1806B8AE00F3C584 /* ARCoordinate.m */; };
+		690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */; };
+		690A70941806E0AD00F3C584 /* ARMarkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A70931806E0AD00F3C584 /* ARMarkerView.m */; };
+		690A709D18070B6900F3C584 /* Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709918070B6900F3C584 /* Marker.png */; };
+		690A709E18070B6900F3C584 /* Marker2.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709A18070B6900F3C584 /* Marker2.png */; };
+		690A709F18070B6900F3C584 /* Marker2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709B18070B6900F3C584 /* Marker2@2x.png */; };
+		690A70A018070B6900F3C584 /* Marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709C18070B6900F3C584 /* Marker@2x.png */; };
 		6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6911FB1817D5E3B000FEADB4 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */; };
 		6911FB2117D61DF800FEADB4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB2017D61DF800FEADB4 /* AudioToolbox.framework */; };
@@ -177,7 +185,7 @@
 		693C7F1117CCFDB400D7F0A9 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */; };
 		69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 69447BFA17F44CDF00E959DF /* 05_sendtn.png */; };
 		694746211805463F00928ED4 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746201805463F00928ED4 /* AsyncImageView.m */; };
-		6947462F1805469100928ED4 /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746281805469100928ED4 /* MapPin.m */; };
+		6947462F1805469100928ED4 /* CAnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746281805469100928ED4 /* CAnotation.m */; };
 		694746301805469100928ED4 /* ChatRoomsPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462A1805469100928ED4 /* ChatRoomsPaginator.m */; };
 		694746311805469100928ED4 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462C1805469100928ED4 /* Utilites.m */; };
 		694746451805A71600928ED4 /* ChatRoomsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463E1805A71600928ED4 /* ChatRoomsService.m */; };
@@ -186,12 +194,13 @@
 		694746481805A71600928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746441805A71600928ED4 /* LocationService.m */; };
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
-		6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42C17CDD54F003C6893 /* ARViewController.m */; };
 		6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C43217CDD579003C6893 /* SettingsViewController.m */; };
 		696B59F617E99EF900D60537 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F417E99EF900D60537 /* Icon.png */; };
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
+		69864D37180D25A300AAA554 /* AppDelegate+MemoryWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 69864D36180D25A300AAA554 /* AppDelegate+MemoryWarnings.m */; };
+		69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69864D39180D2CD700AAA554 /* ARViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
 		69A4028D17D740F900E7BE1F /* upic_local.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026617D740F900E7BE1F /* upic_local.png */; };
@@ -256,6 +265,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		690A708A1806A5A100F3C584 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		690A708C1806B8AE00F3C584 /* ARCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCoordinate.h; sourceTree = "<group>"; };
+		690A708D1806B8AE00F3C584 /* ARCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCoordinate.m; sourceTree = "<group>"; };
+		690A708E1806B8AE00F3C584 /* ARGeoCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARGeoCoordinate.h; sourceTree = "<group>"; };
+		690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARGeoCoordinate.m; sourceTree = "<group>"; };
+		690A70921806E0AD00F3C584 /* ARMarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerView.h; sourceTree = "<group>"; };
+		690A70931806E0AD00F3C584 /* ARMarkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerView.m; sourceTree = "<group>"; };
+		690A709918070B6900F3C584 /* Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker.png; sourceTree = "<group>"; };
+		690A709A18070B6900F3C584 /* Marker2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker2.png; sourceTree = "<group>"; };
+		690A709B18070B6900F3C584 /* Marker2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker2@2x.png"; sourceTree = "<group>"; };
+		690A709C18070B6900F3C584 /* Marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker@2x.png"; sourceTree = "<group>"; };
 		6911FB1717D5E3B000FEADB4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		6911FB1817D5E3B000FEADB4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -574,8 +594,8 @@
 		69447BFA17F44CDF00E959DF /* 05_sendtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_sendtn.png; sourceTree = "<group>"; };
 		6947461F1805463F00928ED4 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		694746201805463F00928ED4 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
-		694746271805469100928ED4 /* MapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapPin.h; sourceTree = "<group>"; };
-		694746281805469100928ED4 /* MapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapPin.m; sourceTree = "<group>"; };
+		694746271805469100928ED4 /* CAnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAnotation.h; sourceTree = "<group>"; };
+		694746281805469100928ED4 /* CAnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAnotation.m; sourceTree = "<group>"; };
 		694746291805469100928ED4 /* ChatRoomsPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsPaginator.h; sourceTree = "<group>"; };
 		6947462A1805469100928ED4 /* ChatRoomsPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsPaginator.m; sourceTree = "<group>"; };
 		6947462B1805469100928ED4 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
@@ -592,14 +612,16 @@
 		6954C42617CDD502003C6893 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		6954C42817CDD53E003C6893 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		6954C42917CDD53E003C6893 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
-		6954C42B17CDD54F003C6893 /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewController.h; sourceTree = "<group>"; };
-		6954C42C17CDD54F003C6893 /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
 		6954C43117CDD579003C6893 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6954C43217CDD579003C6893 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		696B59F417E99EF900D60537 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		696B59F517E99EF900D60537 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6981247717DDFF2C00974C6A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		69864D35180D25A300AAA554 /* AppDelegate+MemoryWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+MemoryWarnings.h"; sourceTree = "<group>"; };
+		69864D36180D25A300AAA554 /* AppDelegate+MemoryWarnings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MemoryWarnings.m"; sourceTree = "<group>"; };
+		69864D38180D2CD700AAA554 /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewController.h; sourceTree = "<group>"; };
+		69864D39180D2CD700AAA554 /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		69A4026417D740F900E7BE1F /* local_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = local_icon.png; sourceTree = "<group>"; };
 		69A4026517D740F900E7BE1F /* local_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_icon@2x.png"; sourceTree = "<group>"; };
@@ -680,6 +702,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */,
 				691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */,
 				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */,
@@ -711,6 +734,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		690A709818070B6900F3C584 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				690A709918070B6900F3C584 /* Marker.png */,
+				690A709A18070B6900F3C584 /* Marker2.png */,
+				690A709B18070B6900F3C584 /* Marker2@2x.png */,
+				690A709C18070B6900F3C584 /* Marker@2x.png */,
+			);
+			path = AR;
+			sourceTree = "<group>";
+		};
 		6911FB1617D5E3B000FEADB4 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -1558,12 +1592,12 @@
 		693C7F0617CCFDB400D7F0A9 /* MenuControllers */ = {
 			isa = PBXGroup;
 			children = (
+				69864D38180D2CD700AAA554 /* ARViewController.h */,
+				69864D39180D2CD700AAA554 /* ARViewController.m */,
 				6954C42517CDD502003C6893 /* ChatViewController.h */,
 				6954C42617CDD502003C6893 /* ChatViewController.m */,
 				6954C42817CDD53E003C6893 /* MapViewController.h */,
 				6954C42917CDD53E003C6893 /* MapViewController.m */,
-				6954C42B17CDD54F003C6893 /* ARViewController.h */,
-				6954C42C17CDD54F003C6893 /* ARViewController.m */,
 				6954C43117CDD579003C6893 /* SettingsViewController.h */,
 				6954C43217CDD579003C6893 /* SettingsViewController.m */,
 				69E8ECD217E0B4E900D614AA /* ChatRoomViewController.h */,
@@ -1584,8 +1618,12 @@
 		694746221805469100928ED4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				694746271805469100928ED4 /* MapPin.h */,
-				694746281805469100928ED4 /* MapPin.m */,
+				690A708C1806B8AE00F3C584 /* ARCoordinate.h */,
+				690A708D1806B8AE00F3C584 /* ARCoordinate.m */,
+				690A708E1806B8AE00F3C584 /* ARGeoCoordinate.h */,
+				690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */,
+				694746271805469100928ED4 /* CAnotation.h */,
+				694746281805469100928ED4 /* CAnotation.m */,
 				694746291805469100928ED4 /* ChatRoomsPaginator.h */,
 				6947462A1805469100928ED4 /* ChatRoomsPaginator.m */,
 				6947462B1805469100928ED4 /* Utilites.h */,
@@ -1612,6 +1650,7 @@
 		69A4026217D740F900E7BE1F /* images */ = {
 			isa = PBXGroup;
 			children = (
+				690A709818070B6900F3C584 /* AR */,
 				691A1B3617FDD9A100C2A87D /* Map */,
 				69A4026817D740F900E7BE1F /* loginButton.png */,
 				69ECC0B317E1AD9F00187CF8 /* chatroom */,
@@ -1716,6 +1755,8 @@
 				69B96E2E17E89EED00C94DB7 /* ProfileCell.m */,
 				6924A75A1802AD5400D61E5E /* CAnotationView.h */,
 				6924A75B1802AD5400D61E5E /* CAnotationView.m */,
+				690A70921806E0AD00F3C584 /* ARMarkerView.h */,
+				690A70931806E0AD00F3C584 /* ARMarkerView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1779,6 +1820,8 @@
 				6981247617DDFF2C00974C6A /* Default.png */,
 				6981247717DDFF2C00974C6A /* Default@2x.png */,
 				69357E3717CCA58700EB3CDF /* Default-568h@2x.png */,
+				69864D35180D25A300AAA554 /* AppDelegate+MemoryWarnings.h */,
+				69864D36180D25A300AAA554 /* AppDelegate+MemoryWarnings.m */,
 				69357E8917CCBAA400EB3CDF /* ChattARAppDelegate.h */,
 				69357E8A17CCBAA400EB3CDF /* ChattARAppDelegate.m */,
 				6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */,
@@ -1802,6 +1845,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				690A708A1806A5A100F3C584 /* CoreMotion.framework */,
 				691A1B3417FDB94000C2A87D /* MapKit.framework */,
 				69B96E2317E869E700C94DB7 /* Quickblox.framework */,
 				6911FB4217D62AE400FEADB4 /* Accelerate.framework */,
@@ -1909,6 +1953,7 @@
 				69A4029617D740F900E7BE1F /* logout_mnu.png in Resources */,
 				69A4029717D740F900E7BE1F /* logout_mnu@2x.png in Resources */,
 				69A4029817D740F900E7BE1F /* map_mnu.png in Resources */,
+				690A709D18070B6900F3C584 /* Marker.png in Resources */,
 				69A4029917D740F900E7BE1F /* map_mnu@2x.png in Resources */,
 				69A4029A17D740F900E7BE1F /* messages_mnu.png in Resources */,
 				69A4029B17D740F900E7BE1F /* messages_mnu@2x.png in Resources */,
@@ -1922,6 +1967,7 @@
 				69A402A217D740F900E7BE1F /* create_room.png in Resources */,
 				69A402A317D740F900E7BE1F /* create_room@2x.png in Resources */,
 				69A402A417D740F900E7BE1F /* mnubtn.png in Resources */,
+				690A70A018070B6900F3C584 /* Marker@2x.png in Resources */,
 				69A402A517D740F900E7BE1F /* mnubtn@2x.png in Resources */,
 				69A402A617D740F900E7BE1F /* shadow_main.png in Resources */,
 				69A402A717D740F900E7BE1F /* shadow_main@2x.png in Resources */,
@@ -1940,12 +1986,14 @@
 				69ECC0C117E1AD9F00187CF8 /* 01_blue_chat_bubble@2x.png in Resources */,
 				691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */,
 				69ECC0C217E1AD9F00187CF8 /* 01_green_chat_bubble.png in Resources */,
+				690A709E18070B6900F3C584 /* Marker2.png in Resources */,
 				69ECC0C317E1AD9F00187CF8 /* 01_grey_chat_bubble.png in Resources */,
 				69ECC0C417E1AD9F00187CF8 /* 01_grey_chat_bubble@2x.png in Resources */,
 				69ECC0C517E1AD9F00187CF8 /* 01_share.png in Resources */,
 				69ECC0C617E1AD9F00187CF8 /* 01_share@2x.png in Resources */,
 				69ECC0C717E1AD9F00187CF8 /* green_chat_bubble@2x.png in Resources */,
 				696B59F617E99EF900D60537 /* Icon.png in Resources */,
+				690A709F18070B6900F3C584 /* Marker2@2x.png in Resources */,
 				696B59F717E99EF900D60537 /* Icon@2x.png in Resources */,
 				6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */,
 				6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */,
@@ -2005,6 +2053,7 @@
 				693C7E8217CCDCF300D7F0A9 /* XMPPRoster.m in Sources */,
 				693C7E8317CCDCF300D7F0A9 /* XMPPSystemInputActivityMonitor.m in Sources */,
 				693C7E8417CCDCF300D7F0A9 /* XMPPIQ+JabberRPC.m in Sources */,
+				69864D37180D25A300AAA554 /* AppDelegate+MemoryWarnings.m in Sources */,
 				693C7E8517CCDCF300D7F0A9 /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				693C7E8617CCDCF300D7F0A9 /* XMPPJabberRPCModule.m in Sources */,
 				693C7E8717CCDCF300D7F0A9 /* XMPPIQ+LastActivity.m in Sources */,
@@ -2026,12 +2075,15 @@
 				694746471805A71600928ED4 /* FBStorage.m in Sources */,
 				693C7E9717CCDCF300D7F0A9 /* XMPPRoom.m in Sources */,
 				693C7E9817CCDCF300D7F0A9 /* XMPPvCard.xcdatamodeld in Sources */,
+				690A70941806E0AD00F3C584 /* ARMarkerView.m in Sources */,
 				693C7E9917CCDCF300D7F0A9 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				693C7E9A17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorage.m in Sources */,
 				693C7E9B17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				693C7E9C17CCDCF300D7F0A9 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				693C7E9D17CCDCF300D7F0A9 /* XMPPvCardTemp.m in Sources */,
+				690A70901806B8AE00F3C584 /* ARCoordinate.m in Sources */,
 				693C7E9E17CCDCF300D7F0A9 /* XMPPvCardTempAdr.m in Sources */,
+				69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */,
 				693C7E9F17CCDCF300D7F0A9 /* XMPPvCardTempAdrTypes.m in Sources */,
 				693C7EA017CCDCF300D7F0A9 /* XMPPvCardTempBase.m in Sources */,
 				693C7EA117CCDCF300D7F0A9 /* XMPPvCardTempEmail.m in Sources */,
@@ -2042,7 +2094,7 @@
 				693C7EA617CCDCF300D7F0A9 /* XMPPResultSet.m in Sources */,
 				693C7EA717CCDCF300D7F0A9 /* XMPPIQ+XEP_0060.m in Sources */,
 				693C7EA817CCDCF300D7F0A9 /* XMPPPubSub.m in Sources */,
-				6947462F1805469100928ED4 /* MapPin.m in Sources */,
+				6947462F1805469100928ED4 /* CAnotation.m in Sources */,
 				693C7EA917CCDCF300D7F0A9 /* TURNSocket.m in Sources */,
 				693C7EAA17CCDCF300D7F0A9 /* XMPPIQ+XEP_0066.m in Sources */,
 				693C7EAB17CCDCF300D7F0A9 /* XMPPMessage+XEP_0066.m in Sources */,
@@ -2100,7 +2152,6 @@
 				6954C42717CDD502003C6893 /* ChatViewController.m in Sources */,
 				6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */,
 				694746211805463F00928ED4 /* AsyncImageView.m in Sources */,
-				6954C42D17CDD54F003C6893 /* ARViewController.m in Sources */,
 				6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */,
 				6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */,
 				694746451805A71600928ED4 /* ChatRoomsService.m in Sources */,
@@ -2110,6 +2161,7 @@
 				69E8ECD017E0AB0300D614AA /* TrendingChatRoomsDataSource.m in Sources */,
 				69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */,
 				69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */,
+				690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,

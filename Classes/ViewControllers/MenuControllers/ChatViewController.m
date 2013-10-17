@@ -22,15 +22,13 @@
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
 
 @property (nonatomic, strong) NSArray *trendings;
-@property (nonatomic, strong) NSArray *locations;
+@property (nonatomic, strong) NSArray *locals;
 
 @property (nonatomic, strong) TrendingChatRoomsDataSource *trendingDataSource;
 @property (nonatomic, strong) LocalChatRoomsDataSource *locationDataSource;
 
 @property (nonatomic, strong) UIActivityIndicatorView *trendingActivityIndicator;
 @property (nonatomic, strong) UILabel *trendingFooterLabel;
-@property (nonatomic, strong) UIActivityIndicatorView *localActivityIndicator;
-@property (nonatomic, strong) UILabel *localFooterLabel;
 
 @end
 
@@ -44,7 +42,7 @@
 {
     [super viewDidLoad];
     _trendings = [[NSArray alloc] init];
-    _locations = [[NSArray alloc] init];
+    _locals = [[NSArray alloc] init];
     
     _trendingTableView.tag = kTrendingTableViewTag;
     _locationTableView.tag = kLocalTableViewTag;
@@ -57,13 +55,10 @@
     
     // paginator:
     self.trendingPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
-    self.localPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
 
     self.trendingPaginator.tag = kTrendingPaginatorTag;
-    self.localPaginator.tag = kLocalPaginatorTag;
     
     self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
-    self.locationTableView.tableFooterView = [self creatingLocalFooter];
     
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
@@ -72,18 +67,21 @@
     } else {
         self.scrollView.contentSize = CGSizeMake(500, 416);
     }
-    [self performSegueWithIdentifier:@"Splash" sender:self];
+    
+    if (![[Utilites shared] isUserLoggedIn]) {
+        [self performSegueWithIdentifier:@"Splash" sender:self];
+        [[Utilites shared] setUserLogIn];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //[[Utilites action] checkAndPutStatusBarColor];
     if ([_trendings count] == 0) {
         [self.trendingPaginator fetchFirstPage];
     }
-    if ([_locations count] == 0) {
-        [self.localPaginator fetchFirstPage];
-    }
+    if ([[ChatRoomsService shared] allLocalRooms] == nil) {
+        [self loadLocalRooms];
+    }else {_locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms]; }
     
     [self.trendingTableView reloadData];
     [self.locationTableView reloadData];
@@ -96,6 +94,27 @@
     [super viewDidUnload];
 }
 
+-(void)loadLocalRooms{
+    [QBCustomObjects objectsWithClassName:kChatRoom delegate:self];
+}
+
+
+#pragma marak -
+#pragma mark QBActionStatusDelegate
+
+-(void)completedWithResult:(Result *)result{
+    if ([result success]) {
+        if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
+            // todo:
+            QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
+            _locals = [self sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:pagedResult.objects];
+            _locationDataSource.chatRooms = _locals;
+            _locationDataSource.distances = [self arrayOfDistances:_locals];
+            [[ChatRoomsService shared] setAllLocalRooms:_locals];
+            [self.locationTableView reloadData];
+        }
+    }
+}
 
 #pragma mark - Paginator
 
@@ -105,9 +124,6 @@
     if (paginator.tag == kTrendingPaginatorTag) {
         [self.trendingActivityIndicator startAnimating];
     }
-    if (paginator.tag == kLocalPaginatorTag) {
-        [self.localActivityIndicator startAnimating];
-    }
 }
 
 - (void)updateTableViewFooterWithPaginator:(ChatRoomsPaginator *)paginator
@@ -115,19 +131,9 @@
     if ([paginator.results count] != 0)
     {
         if (paginator.tag == kTrendingPaginatorTag) {
-            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of %d", [paginator.results count], paginator.total];
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [paginator.results count]];
             [self.trendingFooterLabel setNeedsDisplay];
         }
-        if (paginator.tag == kLocalPaginatorTag) {
-            self.localFooterLabel.text = [NSString stringWithFormat:@"%d results out of %d", [paginator.results count], paginator.total];
-            [self.localFooterLabel setNeedsDisplay];
-        }
-    } else
-    {
-        self.trendingFooterLabel.text = @"";
-        self.localFooterLabel.text = @"";
-        [self.trendingFooterLabel setNeedsDisplay];
-        [self.localFooterLabel setNeedsDisplay];
     }
 }
 
@@ -148,50 +154,22 @@
     return footerView;
 }
 
--(UIView *)creatingLocalFooter {
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _locationTableView.frame.size.width, 44.0f)];
-    footerView.backgroundColor = [UIColor clearColor];
-    _localFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _locationTableView.frame.size.width, 44.0f)];
-    _localFooterLabel.backgroundColor = [UIColor clearColor];
-    _localFooterLabel.textAlignment = UITextAlignmentCenter;
-    _localFooterLabel.textColor = [UIColor lightGrayColor];
-    _localFooterLabel.font = [UIFont systemFontOfSize:16];
-    [footerView addSubview:_localFooterLabel];
-    
-    self.localActivityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.localActivityIndicator.center = CGPointMake(40.0, 22.0);
-    self.localActivityIndicator.hidesWhenStopped = YES;
-    [footerView addSubview:self.localActivityIndicator];
-    
-    UIImageView *shadow = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 13, 44)];
-    shadow.image = [UIImage imageNamed:@"shadow_main.png"];
-    [footerView addSubview:shadow];
-    return footerView;
-}
-
 
 #pragma mark - 
 #pragma mark ScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    // when reaching bottom, load a new page
-    if (scrollView.contentOffset.y == (scrollView.contentSize.height - scrollView.bounds.size.height))
-    {
-        if (scrollView.tag == kTrendingTableViewTag) {
-            // ask next page only if we haven't reached last page
-            if(![self.trendingPaginator reachedLastPage])
-            {
-                // fetch next page of results
-                [self fetchNextPage:self.trendingPaginator];
-            }
-        }
-        if (scrollView.tag == kLocalTableViewTag) {
-        // ask next page only if we haven't reached last page
-        if(![self.localPaginator reachedLastPage])
-            {
-                // fetch next page of results
-                [self fetchNextPage:self.localPaginator];
+    if (self.trendingTableView.tableFooterView  != nil) {
+        if (scrollView.contentOffset.y == (scrollView.contentSize.height - scrollView.bounds.size.height))
+        {
+            if (scrollView.tag == kTrendingTableViewTag) {
+                // ask next page only if we haven't reached last page
+                if(![self.trendingPaginator reachedLastPage])
+                {
+                    // fetch next page of results
+                    [self fetchNextPage:self.trendingPaginator];
+                }
             }
         }
     }
@@ -203,26 +181,21 @@
 
 - (void)paginator:(id)paginator didReceiveResults:(NSArray *)results
 {
-    [self updateTableViewFooterWithPaginator:paginator];
+    if(results.count != 10){
+        if ([paginator tag] == kTrendingPaginatorTag) {
+            self.trendingTableView.tableFooterView  = nil;
+        }
+        //return;
+    }
     // handle new results
-    if ([paginator tag] == kTrendingPaginatorTag) {
         _trendings = [_trendings arrayByAddingObjectsFromArray:results];
         _trendingDataSource.chatRooms = _trendings;
         [[ChatRoomsService shared] setAllTrendingRooms:_trendings];
         [self.trendingActivityIndicator stopAnimating];
-    }
-    
-    if ([paginator tag] == kLocalPaginatorTag) {
-        _locations = [_locations arrayByAddingObjectsFromArray:results];
-        _locationDataSource.chatRooms = _locations;
-        [[ChatRoomsService shared] setAllLocalRooms:_locations];
-        [self.localActivityIndicator stopAnimating];
-    }
     
     [self updateTableViewFooterWithPaginator:paginator];
-    //reload tables:
+    //reload table
     [self.trendingTableView reloadData];
-    [self.locationTableView reloadData];
 }
 
 - (void)paginatorDidReset:(id)paginator
@@ -261,6 +234,7 @@
     if ([segue.identifier isEqualToString:@"kSegueToChatRoomController"]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
+        //[segue.sourceViewController pushViewController:segue.destinationViewController animated:YES];
     }
 }
 
@@ -277,7 +251,7 @@
        currentRoom =  [_trendings objectAtIndex:[indexPath row]];
     
     }else if (tableView.tag == kLocalTableViewTag) {
-       currentRoom = [_locations objectAtIndex:[indexPath row]];
+       currentRoom = [_locals objectAtIndex:[indexPath row]];
     }
     
     // Open CHat Controller
@@ -337,6 +311,13 @@
                     [object.fields setObject:alertText forKey:kName];
                     [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
                     [QBCustomObjects createObject:object delegate:self];
+//                    _trendings = [_trendings arrayByAddingObject:object];
+//                    _trendingDataSource.chatRooms = _trendings;
+                    _locals = [_locals arrayByAddingObject:object];
+                    _locationDataSource.chatRooms = _locals;
+                    [_locationDataSource.distances arrayByAddingObject:object];
+                    
+                    [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
                 }
             }
             break;
@@ -344,11 +325,52 @@
         default:
             break;
     }
-
 }
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView{
     return YES;
+}
+
+
+#pragma mark - Sort
+
+-(NSArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms{
+    NSArray *sortedRooms = [rooms sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        CLLocation *room1 = [[CLLocation alloc] initWithLatitude:[[[obj1 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj1 fields] objectForKey:kLongitude] doubleValue]];
+        CLLocation *room2 = [[CLLocation alloc] initWithLatitude:[[[obj2 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj2 fields] objectForKey:kLongitude] doubleValue]];
+        NSInteger distance1 = [me distanceFromLocation:room1];
+        NSInteger distance2 = [me distanceFromLocation:room2];
+        
+        if ( distance1 < distance2) {
+            return (NSComparisonResult)NSOrderedAscending;
+        } else if ( distance1 > distance2) {
+            return (NSComparisonResult)NSOrderedDescending;
+        } else {
+            return (NSComparisonResult)NSOrderedSame;
+        }
+        
+    }];
+    NSMutableArray *neibRooms = [NSMutableArray array];
+    for (int i=0; i<30; i++) {
+        [neibRooms addObject:[sortedRooms objectAtIndex:i]];
+    }
+    return neibRooms;
+}
+
+-(NSArray *)arrayOfDistances:(NSArray *)objects{
+    NSMutableArray *chatRoomDistances = [NSMutableArray array];
+    for (QBCOCustomObject *object in objects) {
+        CLLocation *room = [[CLLocation alloc] initWithLatitude:[[[object fields] objectForKey:kLatitude] doubleValue] longitude:[[[object fields] objectForKey:kLongitude] doubleValue]];
+        NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:room];
+        [chatRoomDistances addObject:[NSNumber numberWithInt:distance]];
+    }
+    return chatRoomDistances;
+}
+
+-(NSInteger)distanceToCreatedRoom:(QBCOCustomObject *)room{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[[[room fields] objectForKey:kLatitude] doubleValue] longitude:[[[room fields] objectForKey:kLongitude] doubleValue]];
+    NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:location];
+    return distance;
 }
 
 @end

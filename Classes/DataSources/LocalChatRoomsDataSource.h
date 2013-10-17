@@ -11,5 +11,6 @@
 @interface LocalChatRoomsDataSource : NSObject <UITableViewDataSource>
 
 @property (strong, nonatomic) NSArray *chatRooms;
+@property (strong, nonatomic) NSArray *distances;
 
 @end

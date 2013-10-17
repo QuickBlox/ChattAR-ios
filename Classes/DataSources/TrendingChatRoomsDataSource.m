@@ -21,7 +21,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:trendingCellIdentifier];
     cell.backgroundColor = [UIColor whiteColor];
     NSUInteger row = [indexPath row];
-    cell.imageView.image = [UIImage imageNamed:@"trendings_uicon@2x.png"];
+    cell.imageView.image = [UIImage imageNamed:@"trendings_uicon.png"];
     QBCOCustomObject *currentObject = [self.chatRooms objectAtIndex:row];
     cell.textLabel.text = [currentObject.fields objectForKey:kName];
     

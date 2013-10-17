@@ -8,7 +8,7 @@
 
 #import "MapViewController.h"
 #import "FBService.h"
-#import "MapPin.h"
+#import "CAnotation.h"
 #import "ChatRoomsService.h"
 #import "ChatRoomViewController.h"
 
@@ -43,7 +43,7 @@
         CLLocationCoordinate2D coord;
         coord.latitude = [[room.fields valueForKey:kLatitude] floatValue];
         coord.longitude = [[room.fields valueForKey:kLongitude] floatValue];
-        MapPin *pin = [[MapPin alloc] initWithCoordinates:coord];
+        CAnotation *pin = [[CAnotation alloc] initWithCoordinates:coord];
         pin.name = [room.fields valueForKey:kName];
         pin.description = [NSString stringWithFormat:@"%li visites", (long)[[room.fields valueForKey:kRank] integerValue]];
         pin.room = room;
@@ -55,7 +55,7 @@
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
--(CAnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(MapPin *)annotation {
+-(CAnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(CAnotation *)annotation {
     
     static NSString *annotationIdentifier = @"annotationIdentifier";
     CAnotationView *aView = (CAnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];

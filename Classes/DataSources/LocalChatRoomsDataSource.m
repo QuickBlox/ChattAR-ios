@@ -20,11 +20,23 @@
     static NSString *localCellIdentifier = @"LocalCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:localCellIdentifier];
     NSUInteger row = [indexPath row];
-    cell.imageView.image = [UIImage imageNamed:@"upic_local@2x.png"];
+    cell.imageView.image = [UIImage imageNamed:@"upic_local.png"];
     QBCOCustomObject *currentObject = [self.chatRooms objectAtIndex:row];
     cell.textLabel.text = [currentObject.fields objectForKey:kName];
+    cell.detailTextLabel.text = [self distanceFormatter:[self.distances objectAtIndex:row]];
     
     return cell;
+}
+
+- (NSString *)distanceFormatter:(NSInteger)distance{
+    NSString *formatedDistance;
+    if (distance <=999) {
+        formatedDistance = [NSString stringWithFormat:@"%d m", distance];
+    } else{
+        distance = round(distance/1000);
+        formatedDistance = [NSString stringWithFormat:@"%d km",distance];
+    }
+    return formatedDistance;
 }
 
 @end
