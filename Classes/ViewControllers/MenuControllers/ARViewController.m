@@ -166,6 +166,8 @@
 }
 
 - (void)dealloc {
+    self.accelerometerManager.delegate = nil;
+    [LocationService shared].myLocationManager.delegate = [LocationService shared];
 	[coordinates release];
 	[captureSession release];
 	[centerLocation release];
@@ -311,6 +313,15 @@
     marker.target = delegate;
     marker.action = @selector(touchOnMarker:);
     return marker;
+}
+
+
+#pragma mark - Marker Action
+
+- (void)touchOnMarker:(UIView *)marker{
+    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Title" message:@"Message:" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+    [alert show];
+    [alert release];
 }
 /*
  Return view for exist user annotation

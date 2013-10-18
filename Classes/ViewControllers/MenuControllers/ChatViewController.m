@@ -22,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
 
 @property (nonatomic, strong) NSArray *trendings;
-@property (nonatomic, strong) NSArray *locals;
+@property (nonatomic, strong) NSMutableArray *locals;
 
 @property (nonatomic, strong) TrendingChatRoomsDataSource *trendingDataSource;
 @property (nonatomic, strong) LocalChatRoomsDataSource *locationDataSource;
@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     _trendings = [[NSArray alloc] init];
-    _locals = [[NSArray alloc] init];
+    _locals = [[NSMutableArray alloc] init];
     
     _trendingTableView.tag = kTrendingTableViewTag;
     _locationTableView.tag = kLocalTableViewTag;
@@ -55,9 +55,7 @@
     
     // paginator:
     self.trendingPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
-
     self.trendingPaginator.tag = kTrendingPaginatorTag;
-    
     self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
     
     // if iPhone 5
@@ -67,7 +65,7 @@
     } else {
         self.scrollView.contentSize = CGSizeMake(500, 416);
     }
-    
+    // hard code
     if (![[Utilites shared] isUserLoggedIn]) {
         [self performSegueWithIdentifier:@"Splash" sender:self];
         [[Utilites shared] setUserLogIn];
@@ -81,7 +79,10 @@
     }
     if ([[ChatRoomsService shared] allLocalRooms] == nil) {
         [self loadLocalRooms];
-    }else {_locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms]; }
+    }else {
+        _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
+        _locationDataSource.distances = [self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]];
+    }
     
     [self.trendingTableView reloadData];
     [self.locationTableView reloadData];
@@ -108,9 +109,9 @@
             // todo:
             QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
             _locals = [self sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:pagedResult.objects];
+            [[ChatRoomsService shared] setAllLocalRooms:_locals];
             _locationDataSource.chatRooms = _locals;
             _locationDataSource.distances = [self arrayOfDistances:_locals];
-            [[ChatRoomsService shared] setAllLocalRooms:_locals];
             [self.locationTableView reloadData];
         }
     }
@@ -251,7 +252,7 @@
        currentRoom =  [_trendings objectAtIndex:[indexPath row]];
     
     }else if (tableView.tag == kLocalTableViewTag) {
-       currentRoom = [_locals objectAtIndex:[indexPath row]];
+       currentRoom = [[[ChatRoomsService shared] allLocalRooms] objectAtIndex:[indexPath row]];
     }
     
     // Open CHat Controller
@@ -311,11 +312,9 @@
                     [object.fields setObject:alertText forKey:kName];
                     [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
                     [QBCustomObjects createObject:object delegate:self];
-//                    _trendings = [_trendings arrayByAddingObject:object];
-//                    _trendingDataSource.chatRooms = _trendings;
-                    _locals = [_locals arrayByAddingObject:object];
-                    _locationDataSource.chatRooms = _locals;
-                    [_locationDataSource.distances arrayByAddingObject:object];
+                    [_locals insertObject:object atIndex:0];
+                    _locals = [self sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
+                    [[ChatRoomsService shared] setAllLocalRooms:_locals];
                     
                     [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
                 }
@@ -334,7 +333,7 @@
 
 #pragma mark - Sort
 
--(NSArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms{
+-(NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms{
     NSArray *sortedRooms = [rooms sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CLLocation *room1 = [[CLLocation alloc] initWithLatitude:[[[obj1 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj1 fields] objectForKey:kLongitude] doubleValue]];
         CLLocation *room2 = [[CLLocation alloc] initWithLatitude:[[[obj2 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj2 fields] objectForKey:kLongitude] doubleValue]];
@@ -357,6 +356,7 @@
     return neibRooms;
 }
 
+// distances for local rooms
 -(NSArray *)arrayOfDistances:(NSArray *)objects{
     NSMutableArray *chatRoomDistances = [NSMutableArray array];
     for (QBCOCustomObject *object in objects) {
@@ -365,12 +365,6 @@
         [chatRoomDistances addObject:[NSNumber numberWithInt:distance]];
     }
     return chatRoomDistances;
-}
-
--(NSInteger)distanceToCreatedRoom:(QBCOCustomObject *)room{
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:[[[room fields] objectForKey:kLatitude] doubleValue] longitude:[[[room fields] objectForKey:kLongitude] doubleValue]];
-    NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:location];
-    return distance;
 }
 
 @end

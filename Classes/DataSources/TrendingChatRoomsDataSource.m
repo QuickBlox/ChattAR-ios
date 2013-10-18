@@ -8,6 +8,7 @@
 
 #import "ChatViewController.h"
 #import "TrendingChatRoomsDataSource.h"
+#import "TrendingCell.h"
 
 @implementation TrendingChatRoomsDataSource
 
@@ -18,12 +19,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *trendingCellIdentifier = @"TrendingCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:trendingCellIdentifier];
+    TrendingCell *cell = (TrendingCell *)[tableView dequeueReusableCellWithIdentifier:trendingCellIdentifier];
     cell.backgroundColor = [UIColor whiteColor];
     NSUInteger row = [indexPath row];
-    cell.imageView.image = [UIImage imageNamed:@"trendings_uicon.png"];
     QBCOCustomObject *currentObject = [self.chatRooms objectAtIndex:row];
-    cell.textLabel.text = [currentObject.fields objectForKey:kName];
+    cell.nameLabel.text = [currentObject.fields objectForKey:kName];
+    cell.rankLabel.text = [NSString stringWithFormat:@"%@",[currentObject.fields objectForKey:kRank]];
     
     return cell;
 }

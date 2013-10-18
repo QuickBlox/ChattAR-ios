@@ -259,6 +259,7 @@
 		69ECC0C517E1AD9F00187CF8 /* 01_share.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0BB17E1AD9F00187CF8 /* 01_share.png */; };
 		69ECC0C617E1AD9F00187CF8 /* 01_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0BC17E1AD9F00187CF8 /* 01_share@2x.png */; };
 		69ECC0C717E1AD9F00187CF8 /* green_chat_bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0BD17E1AD9F00187CF8 /* green_chat_bubble@2x.png */; };
+		69F20FE41811376300452C55 /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F20FE31811376300452C55 /* TrendingCell.m */; };
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
@@ -691,6 +692,8 @@
 		69ECC0BB17E1AD9F00187CF8 /* 01_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01_share.png; sourceTree = "<group>"; };
 		69ECC0BC17E1AD9F00187CF8 /* 01_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "01_share@2x.png"; sourceTree = "<group>"; };
 		69ECC0BD17E1AD9F00187CF8 /* green_chat_bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green_chat_bubble@2x.png"; sourceTree = "<group>"; };
+		69F20FE21811376300452C55 /* TrendingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCell.h; sourceTree = "<group>"; };
+		69F20FE31811376300452C55 /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
 		7B8C3FDE15D8D55800E42A41 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1757,6 +1760,8 @@
 				6924A75B1802AD5400D61E5E /* CAnotationView.m */,
 				690A70921806E0AD00F3C584 /* ARMarkerView.h */,
 				690A70931806E0AD00F3C584 /* ARMarkerView.m */,
+				69F20FE21811376300452C55 /* TrendingCell.h */,
+				69F20FE31811376300452C55 /* TrendingCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2139,6 +2144,7 @@
 				693C7ED117CCDCF300D7F0A9 /* GCDAsyncSocket.m in Sources */,
 				693C7ED217CCDCF300D7F0A9 /* DDAbstractDatabaseLogger.m in Sources */,
 				693C7ED317CCDCF300D7F0A9 /* DDASLLogger.m in Sources */,
+				69F20FE41811376300452C55 /* TrendingCell.m in Sources */,
 				693C7ED417CCDCF300D7F0A9 /* DDFileLogger.m in Sources */,
 				693C7ED517CCDCF300D7F0A9 /* DDLog.m in Sources */,
 				693C7ED617CCDCF300D7F0A9 /* DDTTYLogger.m in Sources */,
