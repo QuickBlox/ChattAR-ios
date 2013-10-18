@@ -182,6 +182,9 @@
 -(void) slideMenuWillSlideToSide{
     NSLog(@"slideMenuWillSlideToSide");
     [[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject] endEditing:YES];
+    [self.menuTable selectRowAtIndexPath:[self selectedIndexPath] animated:YES scrollPosition:UITableViewScrollPositionNone];
+    UITableViewCell *cell = [self.menuTable cellForRowAtIndexPath:[self selectedIndexPath]];
+    [cell setSelected:YES animated:YES];
 }
 -(void) slideMenuDidSlideToSide{
     NSLog(@"slideMenuDidSlideToSide");

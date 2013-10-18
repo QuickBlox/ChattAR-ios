@@ -42,6 +42,10 @@
     self.requestStatus = RequestStatusNone;
 }
 
+- (void)setPageTo:(NSUInteger)page{
+    self.page = page;
+}
+
 - (void)reset
 {
     [self setDefaultValues];

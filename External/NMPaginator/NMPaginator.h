@@ -35,6 +35,7 @@ typedef enum {
 - (id)initWithPageSize:(NSInteger)pageSize delegate:(id<NMPaginatorDelegate>)paginatorDelegate;
 - (void)reset;
 - (BOOL)reachedLastPage;
+- (void)setPageTo:(NSUInteger)page;
 
 - (void)fetchFirstPage;
 - (void)fetchNextPage;

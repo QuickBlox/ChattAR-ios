@@ -108,12 +108,12 @@
 }
 
 
-// touch action
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    if([target respondsToSelector:action]){
-        [target performSelector:action withObject:self];
-    }
-}
+//// touch action
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+//    if([target respondsToSelector:action]){
+//        [target performSelector:action withObject:self];
+//    }
+//}
 
 
 - (NSString *)description{

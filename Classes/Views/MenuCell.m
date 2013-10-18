@@ -7,6 +7,7 @@
 //
 
 #import "MenuCell.h"
+#import "Utilites.h"
 
 @implementation MenuCell
 

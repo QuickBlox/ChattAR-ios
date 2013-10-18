@@ -251,7 +251,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Chat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="KbX-ze-Lzv">
-                                                    <rect key="frame" x="72" y="14" width="134" height="35"/>
+                                                    <rect key="frame" x="71" y="14" width="134" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -301,7 +301,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ar_mnu.png" id="Q5A-Ge-v3S">
-                                                    <rect key="frame" x="20" y="10" width="33" height="43"/>
+                                                    <rect key="frame" x="20" y="12" width="30" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -321,8 +321,8 @@
                                                     <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="settings_mnu.png" id="Mui-mY-6ag">
-                                                    <rect key="frame" x="20" y="10" width="33" height="43"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="about_mnu.png" id="Mui-mY-6ag">
+                                                    <rect key="frame" x="20" y="19" width="30" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
@@ -787,6 +787,7 @@
         <image name="01_share.png" width="20" height="22"/>
         <image name="05_sendtn.png" width="68" height="29"/>
         <image name="Default-568h.png" width="640" height="1136"/>
+        <image name="about_mnu.png" width="23" height="23"/>
         <image name="ar_mnu.png" width="31" height="17"/>
         <image name="chat_mnu.png" width="31" height="27"/>
         <image name="create_room.png" width="29" height="26"/>
@@ -796,7 +797,6 @@
         <image name="logout_mnu.png" width="27" height="21"/>
         <image name="map_mnu.png" width="30" height="26"/>
         <image name="mrquick_mnu.png" width="236" height="45"/>
-        <image name="settings_mnu.png" width="23" height="24"/>
         <image name="shadow_main.png" width="14" height="505"/>
         <image name="trendings_icon.png" width="30" height="26"/>
         <image name="trendings_uicon.png" width="12" height="11"/>
@@ -807,7 +807,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="GXn-8Q-nrq"/>
         <segue reference="08e-u6-zeQ"/>
-        <segue reference="i69-BF-qyq"/>
     </inferredMetricsTieBreakers>
 </document>

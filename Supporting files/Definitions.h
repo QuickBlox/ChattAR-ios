@@ -12,6 +12,8 @@
 #define IS_HEIGHT_GTE_568 [[UIScreen mainScreen ] bounds].size.height >= 568.0f
 #define IS_IOS_6 [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0f
 
+#define kNotificationDidLogin @"kNotificationDidLogin"
+
 
 // QBCO Request keys:
 #define  kLimit      @"limit"
@@ -50,12 +52,10 @@
 
 #define FB @"https://graph.facebook.com"
 
-
 // Facebook Macro
 #define FBAccessTokenKey       @"FBAccessTokenKey"
 #define GetFBAccessToken       [[[FBStorage shared] fbUserToken] objectForKey:FBAccessTokenKey]
 #define kFacebookKey           @"facebook"
-
 
 #define kMe					@"me"
 #define kResponse			@"response"
@@ -80,8 +80,6 @@
 #define kId                 @"id"
 #define kPlace              @"place"
 #define kPhoto              @"photo"
-#define kCountry            @"country"
-#define kCity               @"city"
 #define kLatitude           @"latitude"
 #define kLongitude          @"longitude"
 #define kDate               @"date"
@@ -95,31 +93,9 @@
 #define kPaging             @"paging"
 #define kNext               @"next"
 
-
 #define kGET                @"GET"
 
 #define APP_ID              @"464189473609303"
-
-// QB Chat
-#define nameIdentifier @"@name="
-#define dateIdentifier @"@date="
-#define photoIdentifier @"@photo="
-#define messageIdentifier @"@msg="
-#define fbidIdentifier @"@fbid="
-#define qbidIdentifier @"@qbid="
-#define quoteDelimiter @"|"
-
-
-// online-offline statuses
-#define kOnOffStatus		@"on/off"
-#define kOnline				[NSNumber numberWithInt:1]
-#define kOffline			[NSNumber numberWithInt:0]
-
-//Friends
-#define fbAPIMethodNameFriendsGet @"friends"
-
-#define maxRequestsInBatch 50
-#define fmaxRequestsInBatch 50.f
 
 // QuickBlox ChatRoom Class
 #define kChatRoom   @"Chatroom"

@@ -241,7 +241,6 @@
 		69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A4779F17C50AF800591A28 /* FacebookSDK.framework */; };
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
 		69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */; };
-		69B96E2417E869E700C94DB7 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69B96E2317E869E700C94DB7 /* Quickblox.framework */; };
 		69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */; };
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
@@ -260,6 +259,9 @@
 		69ECC0C617E1AD9F00187CF8 /* 01_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0BC17E1AD9F00187CF8 /* 01_share@2x.png */; };
 		69ECC0C717E1AD9F00187CF8 /* green_chat_bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECC0BD17E1AD9F00187CF8 /* green_chat_bubble@2x.png */; };
 		69F20FE41811376300452C55 /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F20FE31811376300452C55 /* TrendingCell.m */; };
+		69F20FE71811672000452C55 /* about_mnu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE51811672000452C55 /* about_mnu@2x.png */; };
+		69F20FE81811672000452C55 /* about_mnu.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE61811672000452C55 /* about_mnu.png */; };
+		69F20FEA181181CA00452C55 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F20FE9181181CA00452C55 /* Quickblox.framework */; };
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
@@ -667,7 +669,6 @@
 		69A477A517C513C100591A28 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		69A51AB217EC82EC0089B06D /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
 		69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotedChatRoomCell.m; sourceTree = "<group>"; };
-		69B96E2317E869E700C94DB7 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
 		69B96E2917E89EED00C94DB7 /* ChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomCell.h; sourceTree = "<group>"; };
 		69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomCell.m; sourceTree = "<group>"; };
 		69B96E2B17E89EED00C94DB7 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
@@ -694,6 +695,9 @@
 		69ECC0BD17E1AD9F00187CF8 /* green_chat_bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green_chat_bubble@2x.png"; sourceTree = "<group>"; };
 		69F20FE21811376300452C55 /* TrendingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingCell.h; sourceTree = "<group>"; };
 		69F20FE31811376300452C55 /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
+		69F20FE51811672000452C55 /* about_mnu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_mnu@2x.png"; sourceTree = "<group>"; };
+		69F20FE61811672000452C55 /* about_mnu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_mnu.png; sourceTree = "<group>"; };
+		69F20FE9181181CA00452C55 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
 		7B8C3FDE15D8D55800E42A41 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -705,9 +709,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69F20FEA181181CA00452C55 /* Quickblox.framework in Frameworks */,
+				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */,
 				691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */,
-				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */,
 				6911FB3F17D6255800FEADB4 /* QuartzCore.framework in Frameworks */,
 				6911FB3D17D6248D00FEADB4 /* CoreVideo.framework in Frameworks */,
@@ -730,7 +735,6 @@
 				7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */,
 				7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */,
 				693C7EDF17CCDCF300D7F0A9 /* libidn.a in Frameworks */,
-				69B96E2417E869E700C94DB7 /* Quickblox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1680,6 +1684,8 @@
 		69A4026917D740F900E7BE1F /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				69F20FE51811672000452C55 /* about_mnu@2x.png */,
+				69F20FE61811672000452C55 /* about_mnu.png */,
 				69A4026A17D740F900E7BE1F /* ar_mnu.png */,
 				69A4026B17D740F900E7BE1F /* ar_mnu@2x.png */,
 				69A4026C17D740F900E7BE1F /* chat_mnu.png */,
@@ -1850,9 +1856,9 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69F20FE9181181CA00452C55 /* Quickblox.framework */,
 				690A708A1806A5A100F3C584 /* CoreMotion.framework */,
 				691A1B3417FDB94000C2A87D /* MapKit.framework */,
-				69B96E2317E869E700C94DB7 /* Quickblox.framework */,
 				6911FB4217D62AE400FEADB4 /* Accelerate.framework */,
 				6911FB3817D6244200FEADB4 /* AddressBookUI.framework */,
 				6911FB3A17D6247E00FEADB4 /* CoreMedia.framework */,
@@ -1934,6 +1940,7 @@
 			files = (
 				69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */,
 				69357E9117CCBAEE00EB3CDF /* ChattARStatic-Info.plist in Resources */,
+				69F20FE81811672000452C55 /* about_mnu.png in Resources */,
 				69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */,
 				693B5B20180405FB000F5374 /* menu_btn_gr@2x.png in Resources */,
 				6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */,
@@ -1964,6 +1971,7 @@
 				69A4029B17D740F900E7BE1F /* messages_mnu@2x.png in Resources */,
 				69A4029C17D740F900E7BE1F /* mrquick_mnu.png in Resources */,
 				691A1B3A17FDD9A100C2A87D /* 03_pin.png in Resources */,
+				69F20FE71811672000452C55 /* about_mnu@2x.png in Resources */,
 				69A4029D17D740F900E7BE1F /* mrquick_mnu@2x.png in Resources */,
 				69A4029E17D740F900E7BE1F /* qb_mnu_grey.png in Resources */,
 				69A4029F17D740F900E7BE1F /* qb_mnu_grey@2x.png in Resources */,
@@ -2251,7 +2259,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External\"",
+					"\\\"$(SRCROOT)/External\\\"",
+					"/Users/nightstep/TASKS/ChattAR-ios/External",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
@@ -2284,7 +2293,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External\"",
+					"\\\"$(SRCROOT)/External\\\"",
+					"/Users/nightstep/TASKS/ChattAR-ios/External",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";

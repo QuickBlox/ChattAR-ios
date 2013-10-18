@@ -186,9 +186,10 @@
     [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
-    //NSLog(@"%@",[[FBStorage shared].currentFBUser objectForKey:kId]);
-    //dismiss splash
+
     [self dismissModalViewControllerAnimated:YES];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
 }
 
 @end

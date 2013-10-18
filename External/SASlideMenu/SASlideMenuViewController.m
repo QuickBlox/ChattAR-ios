@@ -5,7 +5,7 @@
 //  Created by Stefano Antonelli on 1/17/13.
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
-
+#import "Utilites.h"
 #import "SASlideMenuViewController.h"
 #import "SASlideMenuRootViewController.h"
 @interface SASlideMenuViewController ()<SASlideMenuDataSource,SASlideMenuDelegate>
@@ -38,6 +38,11 @@
         [self setup];
     }
     return self;
+}
+
+- (NSIndexPath *)selectedIndexPath
+{
+    return [NSIndexPath indexPathForRow:2 inSection:0];
 }
 
 - (void)loadContentAtIndexPath:(NSIndexPath*)indexPath {
@@ -94,6 +99,11 @@
 
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![[Utilites shared] isUserLoggedIn]) {
+        return [NSIndexPath indexPathForRow:2 inSection:0];
+    }
+    
+    
     if((indexPath.row == 1) || (indexPath.row == 0)){
         return nil;
     }

@@ -41,14 +41,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _trendings = [[NSArray alloc] init];
-    _locals = [[NSMutableArray alloc] init];
+    
+    _trendings = [[NSArray alloc] initWithArray:[[ChatRoomsService shared] allTrendingRooms]];
+    _locals = [[NSMutableArray alloc] initWithArray:[[ChatRoomsService shared] allLocalRooms]];
     
     _trendingTableView.tag = kTrendingTableViewTag;
     _locationTableView.tag = kLocalTableViewTag;
     
+    
+    if(_trendings.count > 0){
+        self.trendingDataSource.chatRooms = _trendings;
+    }
+    if(_locals.count > 0){
+        self.locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
+        self.locationDataSource.distances = [self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]];
+    }
+    
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
+    
+    
     
     self.trendingTableView.delegate = self;
     self.locationTableView.delegate = self;
@@ -57,6 +69,11 @@
     self.trendingPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
     self.trendingPaginator.tag = kTrendingPaginatorTag;
     self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
+    if(_trendings.count > 0){
+        [self.trendingPaginator setPageTo:[_trendings count]/10+1];
+        self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [_trendings count]];
+        [self.trendingFooterLabel setNeedsDisplay];
+    }
     
     // if iPhone 5
     self.scrollView.pagingEnabled = YES;
@@ -70,10 +87,20 @@
         [self performSegueWithIdentifier:@"Splash" sender:self];
         [[Utilites shared] setUserLogIn];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
+    [self.trendingTableView reloadData];
+    [self.locationTableView reloadData];
+}
+
+- (void)loadRooms{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
+    
     if ([_trendings count] == 0) {
         [self.trendingPaginator fetchFirstPage];
     }
@@ -83,16 +110,6 @@
         _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
         _locationDataSource.distances = [self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]];
     }
-    
-    [self.trendingTableView reloadData];
-    [self.locationTableView reloadData];
-}
-
-- (void)viewDidUnload
-{
-    [self setScrollView:nil];
-    [self setLocationTableView:nil];
-    [super viewDidUnload];
 }
 
 -(void)loadLocalRooms{
@@ -351,7 +368,9 @@
     }];
     NSMutableArray *neibRooms = [NSMutableArray array];
     for (int i=0; i<30; i++) {
-        [neibRooms addObject:[sortedRooms objectAtIndex:i]];
+        if ([sortedRooms objectAtIndex:i] != [sortedRooms lastObject]) {
+            [neibRooms addObject:[sortedRooms objectAtIndex:i]];
+        } else break;
     }
     return neibRooms;
 }

@@ -196,6 +196,7 @@
 
 // if chat room is created or user is joined
 -(void)chatRoomDidEnter:(QBChatRoom *)room{
+    [room addUsers:@[@34]];
     NSLog(@"Chat Room is opened");
     //get room
     self.currentRoom = room;

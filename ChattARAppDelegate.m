@@ -18,9 +18,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     // Set QuickBlox credentials
-    [QBSettings setApplicationID:4228];
-    [QBSettings setAuthorizationKey:@"fSdLsATEPQeGPKQ"];
-    [QBSettings setAuthorizationSecret:@"4WkkdWLuLHktFP-"];
+    [QBSettings setApplicationID:771];
+    [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
+    [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
     [QBSettings setRestAPIVersion:@"0.1.1"];
     
     

@@ -184,22 +184,10 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *lastTouch = [touches anyObject];
     
-    for(int i=[self.view.subviews count]-1; i>=0; i--)
-	{
-        ARMarkerView *marker = [self.view.subviews objectAtIndex:i];
-        if(![marker isKindOfClass:ARMarkerView.class])
-		{
-            //continue;
-            break;
-        }
-        
-		CGPoint point = [lastTouch locationInView:marker];
-        
-        if(point.x > 0 && point.y > 0)
-		{
-            [marker.target performSelector:marker.action withObject:marker];
-            break;
-        }
+    if([lastTouch.view isKindOfClass:ARMarkerView.class]){
+        ARMarkerView *marker = (ARMarkerView *)lastTouch.view;
+        [marker.target performSelector:marker.action withObject:marker];
+        return;
     }
 }
 
@@ -300,6 +288,7 @@
     // create AR coordinate
     ARCoordinate *coordinateForUser = [ARGeoCoordinate coordinateWithLocation:location
                                                                 locationTitle:[roomAnnotation.fields objectForKey:kName]];
+    [location release];
     
 	[self addCoordinate:coordinateForUser augmentedView:markerView animated:NO];
 }
@@ -310,7 +299,7 @@
  */
 - (UIView *)viewForAnnotation:(QBCOCustomObject *)roomAnnotation{
     ARMarkerView *marker = [[ARMarkerView alloc] initWithGeoPoint:roomAnnotation];
-    marker.target = delegate;
+    marker.target = self;
     marker.action = @selector(touchOnMarker:);
     return marker;
 }
@@ -318,8 +307,10 @@
 
 #pragma mark - Marker Action
 
-- (void)touchOnMarker:(UIView *)marker{
-    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Title" message:@"Message:" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+- (void)touchOnMarker:(ARMarkerView *)marker{
+    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Title" message:marker.currentRoom.fields[kName]
+                                                  delegate:nil
+                                         cancelButtonTitle:@"Okay" otherButtonTitles: nil];
     [alert show];
     [alert release];
 }
