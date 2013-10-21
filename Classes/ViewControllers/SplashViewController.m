@@ -34,16 +34,21 @@
     NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_checkins", @"user_location", @"friends_checkins",
                             @"friends_location", @"friends_status", @"read_mailbox",@"photo_upload",@"read_stream",
                             @"publish_stream", @"user_photos", @"xmpp_login", @"user_about_me", nil];
-    
-    if (![[FBService shared].session isOpen]) {
-        [FBService shared].session = [[FBSession alloc] initWithPermissions:permissions];
-        [FBSession setActiveSession:[FBService shared].session];
-    }
+    if (![Reachability internetConnected]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No internet connection" message:@"Check your internet connection and try again" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
+        loginButton.hidden = YES;
+        [alert show];
+    } else {
+        if (![[FBService shared].session isOpen]) {
+            [FBService shared].session = [[FBSession alloc] initWithPermissions:permissions];
+            [FBSession setActiveSession:[FBService shared].session];
+        }
 
-    //checkFBSession
-    if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
-        [self.activityIndicatior startAnimating];
-        [self checkFBSession];
+        //checkFBSession
+        if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
+            [self.activityIndicatior startAnimating];
+            [self checkFBSession];
+        }
     }
 }
 

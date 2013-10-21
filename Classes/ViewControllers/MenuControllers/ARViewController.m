@@ -7,6 +7,7 @@
 //
 
 #import "ARViewController.h"
+#import "ChatRoomViewController.h"
 #import "ARCoordinate.h"
 #import "ARGeoCoordinate.h"
 #import "ARMarkerView.h"
@@ -146,12 +147,11 @@
 
 - (void) viewDidLoad{
     [super viewDidLoad];
-	
 	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
 	[self.view bringSubviewToFront:distanceSlider];
     [self.view bringSubviewToFront:distanceLabel];
-	
+	self.centerLocation = [[LocationService shared] myLocation];
 	[displayView setBackgroundColor:[UIColor clearColor]];
     [self displayAR];
 }
@@ -304,15 +304,34 @@
     return marker;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ARToChat"]){
+        // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
+    }
+}
+
+#pragma mark -
+#pragma mark UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            [self performSegueWithIdentifier:@"ARToChat" sender:_chatRoom];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 #pragma mark - Marker Action
 
 - (void)touchOnMarker:(ARMarkerView *)marker{
-    UIAlertView *alert =[[UIAlertView alloc] initWithTitle:@"Title" message:marker.currentRoom.fields[kName]
-                                                  delegate:nil
-                                         cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-    [alert show];
-    [alert release];
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:marker.userName.text delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
+    _chatRoom = [marker currentRoom];
+    [action showInView:self.view];
 }
 /*
  Return view for exist user annotation

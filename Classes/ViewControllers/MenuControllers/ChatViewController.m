@@ -54,7 +54,7 @@
     }
     if(_locals.count > 0){
         self.locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
-        self.locationDataSource.distances = [self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]];
+        self.locationDataSource.distances = [[ChatRoomsService shared] distances];
     }
     
     self.trendingTableView.dataSource = self.trendingDataSource;
@@ -69,10 +69,14 @@
     self.trendingPaginator = [[ChatRoomsPaginator alloc] initWithPageSize:10 delegate:self];
     self.trendingPaginator.tag = kTrendingPaginatorTag;
     self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
-    if(_trendings.count > 0){
-        [self.trendingPaginator setPageTo:[_trendings count]/10+1];
-        self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [_trendings count]];
-        [self.trendingFooterLabel setNeedsDisplay];
+    if(_trendings.count > 0 ){
+        if (![[ChatRoomsService shared] endOfList]) {
+            [self.trendingPaginator setPageTo:[_trendings count]/10];
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [_trendings count]];
+            [self.trendingFooterLabel setNeedsDisplay];
+        } else {
+            self.trendingTableView.tableFooterView = nil;
+        }
     }
     
     // if iPhone 5
@@ -129,6 +133,7 @@
             [[ChatRoomsService shared] setAllLocalRooms:_locals];
             _locationDataSource.chatRooms = _locals;
             _locationDataSource.distances = [self arrayOfDistances:_locals];
+            [[ChatRoomsService shared] setDistances:[self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]]];
             [self.locationTableView reloadData];
         }
     }
@@ -200,9 +205,8 @@
 - (void)paginator:(id)paginator didReceiveResults:(NSArray *)results
 {
     if(results.count != 10){
-        if ([paginator tag] == kTrendingPaginatorTag) {
-            self.trendingTableView.tableFooterView  = nil;
-        }
+        self.trendingTableView.tableFooterView  = nil;
+        [[ChatRoomsService shared] setEndOfList:YES];
         //return;
     }
     // handle new results
@@ -308,33 +312,21 @@
 
                 NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
                 NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-                NSArray *names = [self getNamesOfRooms:[[ChatRoomsService shared] allTrendingRooms]];
-#warning Change rooms!!!
-                BOOL flag = NO;
-                for (NSString *name in names) {
-                    if ([alertText isEqual:name]) {
-                        flag = YES;
-                        break;
-                    }
-                }
+
+                QBCOCustomObject *object = [QBCOCustomObject customObject];
+                object.className = kChatRoom;
+                [object.fields setObject:myLatitude forKey:kLatitude];
+                [object.fields setObject:myLongitude forKey:kLongitude];
+                [object.fields setObject:alertText forKey:kName];
+                [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
+                [QBCustomObjects createObject:object delegate:self];
+                [_locals insertObject:object atIndex:0];
+                _locals = [self sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
+                [[ChatRoomsService shared] setAllLocalRooms:_locals];
+                [[ChatRoomsService shared].distances insertObject:[NSNumber numberWithInt:[self distanceFromNewRoom:object]] atIndex:0];
                 
-                if (flag == YES) {
-                    UIAlertView *newAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Room has already exists" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
-                    [newAlert show];
-                } else {
-                    QBCOCustomObject *object = [QBCOCustomObject customObject];
-                    object.className = kChatRoom;
-                    [object.fields setObject:myLatitude forKey:kLatitude];
-                    [object.fields setObject:myLongitude forKey:kLongitude];
-                    [object.fields setObject:alertText forKey:kName];
-                    [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
-                    [QBCustomObjects createObject:object delegate:self];
-                    [_locals insertObject:object atIndex:0];
-                    _locals = [self sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
-                    [[ChatRoomsService shared] setAllLocalRooms:_locals];
-                    
-                    [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
-                }
+                [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
+                
             }
             break;
             
@@ -376,7 +368,7 @@
 }
 
 // distances for local rooms
--(NSArray *)arrayOfDistances:(NSArray *)objects{
+-(NSMutableArray *)arrayOfDistances:(NSArray *)objects{
     NSMutableArray *chatRoomDistances = [NSMutableArray array];
     for (QBCOCustomObject *object in objects) {
         CLLocation *room = [[CLLocation alloc] initWithLatitude:[[[object fields] objectForKey:kLatitude] doubleValue] longitude:[[[object fields] objectForKey:kLongitude] doubleValue]];
@@ -384,6 +376,12 @@
         [chatRoomDistances addObject:[NSNumber numberWithInt:distance]];
     }
     return chatRoomDistances;
+}
+
+-(NSInteger)distanceFromNewRoom:(QBCOCustomObject *)room{
+    CLLocation *newRoom = [[CLLocation alloc] initWithLatitude:[[[room fields] objectForKey:kLatitude] doubleValue] longitude:[[[room fields] objectForKey:kLongitude] doubleValue]];
+    NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:newRoom];
+    return distance;
 }
 
 @end

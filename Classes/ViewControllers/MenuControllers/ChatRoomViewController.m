@@ -187,7 +187,7 @@
     // Join room
     [QBChat instance].delegate = self;
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
-    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:NO];
+    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:YES];
 }
 
 

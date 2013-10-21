@@ -13,7 +13,7 @@
 
 @class ARCoordinate;
 
-@interface ARViewController : UIViewController <UIAccelerometerDelegate, CLLocationManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface ARViewController : UIViewController <UIAccelerometerDelegate, CLLocationManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UIActionSheetDelegate> {
 @private
 	NSMutableArray		*coordinates;
     
@@ -44,6 +44,8 @@
 @property (nonatomic, retain) CLLocation              *centerLocation;
 @property (nonatomic, retain) UIImageView             *displayView;
 @property (nonatomic, assign) UIDeviceOrientation	  currentOrientation;
+
+@property (nonatomic, retain) QBCOCustomObject        *chatRoom;
 
 @property (nonatomic, assign) id delegate;
 
