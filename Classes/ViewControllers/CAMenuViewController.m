@@ -37,17 +37,17 @@
     [super viewDidLoad];
     [self configureQButton];
     // still supprots
-    if (![Utilites deviceSupportsAR]) {
-        double delayInSeconds = 3.0;
+        double delayInSeconds = 4;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-            _isArNotAvailable = YES;
-            [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            if (![Utilites deviceSupportsAR]) {
+                NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+                _isArNotAvailable = YES;
+                [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            }
+            [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
         });
-    }
 }
-
 
 -(void)configureQButton{
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
@@ -77,8 +77,6 @@
 }
 
 
-
-
 #pragma mark -
 #pragma mark SASlideMenuDataSource
 
@@ -88,25 +86,6 @@
 }
 
 - (NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
-//    if ([Utilites deviceSupportsAR]) {
-//        if (indexPath.row == 2) {
-//            return kChatSegueIdentifier;
-//        }else if (indexPath.row == 3){
-//            return kMapSegueIdentifier;
-//        }else if (indexPath.row == 4){
-//            return kARSegueIdentifier;
-//        } else if (indexPath.row == 5) {
-//            return kAboutSegueIdentifier;
-//        } else return @"";
-//    } else {
-//        if (indexPath.row == 2) {
-//            return kChatSegueIdentifier;
-//        }else if (indexPath.row == 3){
-//            return kMapSegueIdentifier;
-//        }else if (indexPath.row == 4){
-//            return kAboutSegueIdentifier;
-//        }  else return @"";
-//    }
     NSString *segue = [NSString string];
     switch ([indexPath row]) {
         case 2:
@@ -217,5 +196,14 @@
     [[FBStorage shared] clearFBAccess];
     [[FBStorage shared] clearFBUser];
 }
+
+
+//#pragma mark -
+//#pragma mark NSNotificationCenter
+//
+//-(void)setBlueSelectionOfRow{
+//    [[NSNotificationCenter defaultCenter]  removeObserver:self];
+//    [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+//}
 
 @end

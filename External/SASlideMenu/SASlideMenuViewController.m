@@ -40,10 +40,7 @@
     return self;
 }
 
-- (NSIndexPath *)selectedIndexPath
-{
-    return [NSIndexPath indexPathForRow:2 inSection:0];
-}
+
 
 - (void)loadContentAtIndexPath:(NSIndexPath*)indexPath {
     if ([self.slideMenuDataSource respondsToSelector:@selector(segueIdForIndexPath:)]) {

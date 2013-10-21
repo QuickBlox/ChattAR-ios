@@ -28,7 +28,7 @@
     [leftMenu didMoveToParentViewController:rootViewController];
     if ([rootViewController.leftMenu.slideMenuDataSource respondsToSelector:@selector(selectedIndexPath)]) {
         NSIndexPath* selectedIndexPath = [rootViewController.leftMenu.slideMenuDataSource selectedIndexPath];
-        [leftMenu.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+        [leftMenu.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
         NSString* initialSegueId = [rootViewController.leftMenu.slideMenuDataSource segueIdForIndexPath:selectedIndexPath];
         if (![initialSegueId isEqualToString:@""]) {
             [leftMenu performSegueWithIdentifier:initialSegueId sender:leftMenu];
