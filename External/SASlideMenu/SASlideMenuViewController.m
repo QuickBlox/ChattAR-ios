@@ -105,7 +105,6 @@
         return nil;
     }
     [self loadContentAtIndexPath:indexPath];
-    NSLog(@"Row selected: %i", indexPath.row);
     return indexPath;
 }
 

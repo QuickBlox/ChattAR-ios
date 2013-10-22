@@ -9,6 +9,7 @@
 #import "SASlideMenuLeftMenuSegue.h"
 #import "SASlideMenuRootViewController.h"
 #import "SASlideMenuViewController.h"
+#import "MenuCell.h"
 
 @implementation SASlideMenuLeftMenuSegue
 

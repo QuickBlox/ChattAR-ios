@@ -36,17 +36,18 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self configureQButton];
-    // still supprots
-        double delayInSeconds = 4;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            if (![Utilites deviceSupportsAR]) {
-                NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-                _isArNotAvailable = YES;
-                [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-            }
-            [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-        });
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:NO];
+    
+    if (![Utilites deviceSupportsAR]) {
+        NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+        _isArNotAvailable = YES;
+        [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    }
+    [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 -(void)configureQButton{
