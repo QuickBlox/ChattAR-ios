@@ -325,6 +325,10 @@
                 [[ChatRoomsService shared] setAllLocalRooms:_locals];
                 [[ChatRoomsService shared].distances insertObject:[NSNumber numberWithInt:[self distanceFromNewRoom:object]] atIndex:0];
                 
+                // put to datasource
+                _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
+                _locationDataSource.distances = [[ChatRoomsService shared] distances];
+                
                 [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
                 
             }
