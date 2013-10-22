@@ -308,7 +308,6 @@
 #pragma mark Sharing
 
 - (IBAction)share:(id)sender {
-
     UIActivityViewController *shareKit = [[UIActivityViewController alloc] initWithActivityItems:@[@"I use ChattAR 2.0"] applicationActivities:nil];
     [self presentViewController:shareKit animated:YES completion:nil];
 }

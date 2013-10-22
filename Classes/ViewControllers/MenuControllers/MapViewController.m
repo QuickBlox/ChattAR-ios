@@ -79,16 +79,6 @@
 
 
 #pragma mark -
-#pragma mark SASlideMenuDataSource
-
--(void) configureMenuButton:(UIButton *)menuButton{
-    menuButton.frame = CGRectMake(0, 0, 40, 29);
-    [menuButton setImage:[UIImage imageNamed:@"menu_btn_b.png"] forState:UIControlStateNormal];
-    [menuButton setBackgroundColor:[UIColor clearColor]];
-}
-
-
-#pragma mark -
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

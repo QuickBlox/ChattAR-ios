@@ -14,7 +14,6 @@
     [super layoutSubviews];
     [self setBackgroundColor:[UIColor colorWithWhite:0.13 alpha:1.0]];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
 }
 
 

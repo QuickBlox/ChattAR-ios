@@ -24,7 +24,6 @@
     return YES;
 }
 
-
 #pragma mark - 
 #pragma mark ViewController Lifecycle
 
@@ -38,10 +37,14 @@
     [self configureQButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:NO];
-    
+    NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
+    [self.firstNameField setText:firstLastName];
     if (![Utilites deviceSupportsAR]) {
         NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
         _isArNotAvailable = YES;
@@ -49,6 +52,8 @@
     }
     [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
+
+#pragma mark - QuickBlox Button
 
 -(void)configureQButton{
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
@@ -59,13 +64,13 @@
     [self.menuTable addSubview:qbButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
-    [self.firstNameField setText:firstLastName];
-    [super viewWillAppear:NO];
-    //[self.menuTable reloadData];
+// action
+- (void)gotoQBSite{
+    NSString* urlString = @"http://quickblox.com";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 
+#pragma mark - TableView DataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger rows;
@@ -145,10 +150,6 @@
 - (void)prepareForSwitchToContentViewController:(UINavigationController *)content{
 }
 
-- (void)gotoQBSite{
-    NSString* urlString = @"http://quickblox.com";
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-}
 
 #pragma mark -
 #pragma mark SASlideMenuDelegate

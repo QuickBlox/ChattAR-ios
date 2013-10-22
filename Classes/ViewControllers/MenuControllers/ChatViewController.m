@@ -232,23 +232,17 @@
 #pragma mark Data Sources
 
 
-- (TrendingChatRoomsDataSource *)trendingDataSource
-{
-    if (!_trendingDataSource)
-    {
+- (TrendingChatRoomsDataSource *)trendingDataSource{
+    if (!_trendingDataSource){
         _trendingDataSource = [TrendingChatRoomsDataSource new];
     }
-    
     return _trendingDataSource;
 }
 
-- (LocalChatRoomsDataSource *)locationDataSource
-{
-    if (!_locationDataSource)
-    {
+- (LocalChatRoomsDataSource *)locationDataSource{
+    if (!_locationDataSource){
         _locationDataSource = [LocalChatRoomsDataSource new];
     }
-    
     return _locationDataSource;
 }
 
@@ -308,8 +302,6 @@
         case 1:
             if (![[[alertView textFieldAtIndex:0] text] isEqual:@""]) {
                 NSString *alertText = [[alertView textFieldAtIndex:0] text];
-//                [FBService shared].roomName = alertText;
-
                 NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
                 NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
 
