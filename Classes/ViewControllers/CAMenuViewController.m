@@ -198,13 +198,4 @@
     [[FBStorage shared] clearFBUser];
 }
 
-
-//#pragma mark -
-//#pragma mark NSNotificationCenter
-//
-//-(void)setBlueSelectionOfRow{
-//    [[NSNotificationCenter defaultCenter]  removeObserver:self];
-//    [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-//}
-
 @end

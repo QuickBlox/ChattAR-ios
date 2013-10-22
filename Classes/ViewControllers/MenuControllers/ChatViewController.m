@@ -366,7 +366,10 @@
     for (int i=0; i<30; i++) {
         if ([sortedRooms objectAtIndex:i] != [sortedRooms lastObject]) {
             [neibRooms addObject:[sortedRooms objectAtIndex:i]];
-        } else break;
+        } else {
+            [neibRooms addObject:[sortedRooms objectAtIndex:i]];
+            break;
+        }
     }
     return neibRooms;
 }
