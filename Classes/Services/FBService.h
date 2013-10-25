@@ -14,6 +14,7 @@
 	NSTimer		*presenceTimer;
 }
 @property (strong, nonatomic) FBSession *session;
+@property (assign, nonatomic) BOOL fbChatRoomDidEnter;
 
 + (FBService *)shared;
 

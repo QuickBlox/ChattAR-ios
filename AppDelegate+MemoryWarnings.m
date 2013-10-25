@@ -52,7 +52,7 @@ static int printMemoryInfo(){
 // show memory Warning at start app
 - (void) showStartMemoryAlert {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Attention","Title of alert")
-                                                    message:NSLocalizedString(@"Videu may crash  \n if you don't completely close \n other unused apps.", "Low memory alert")
+                                                    message:NSLocalizedString(@"ChattAR may crash  \n if you don't completely close \n other unused apps.", "Low memory alert")
                                                    delegate:nil
                                           cancelButtonTitle:NSLocalizedString(@"Go on working", "Button text")
                                           otherButtonTitles:nil];

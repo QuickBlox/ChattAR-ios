@@ -8,16 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#define maxPopularFriends 40
-
-@interface FBStorage : NSObject{
-}
+@interface FBStorage : NSObject
 
 // FB access
 @property (nonatomic, retain) NSString				*accessToken;
 @property (nonatomic, retain) NSMutableDictionary	*currentFBUser;
 @property (nonatomic, retain) NSString				*currentFBUserId;
-
 
 + (FBStorage *) shared;
 

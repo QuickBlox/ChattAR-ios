@@ -298,7 +298,7 @@
  Return view for new user annotation
  */
 - (UIView *)viewForAnnotation:(QBCOCustomObject *)roomAnnotation{
-    ARMarkerView *marker = [[ARMarkerView alloc] initWithGeoPoint:roomAnnotation];
+    ARMarkerView *marker = [[[ARMarkerView alloc] initWithGeoPoint:roomAnnotation] autorelease];
     marker.target = self;
     marker.action = @selector(touchOnMarker:);
     return marker;

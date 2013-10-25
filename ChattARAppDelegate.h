@@ -10,7 +10,7 @@
 
 
 
-@interface ChattARAppDelegate : UIResponder <UIApplicationDelegate>
+@interface ChattARAppDelegate : UIResponder <UIApplicationDelegate, QBChatDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

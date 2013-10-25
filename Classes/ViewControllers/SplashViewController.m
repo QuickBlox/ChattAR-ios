@@ -11,6 +11,7 @@
 #import "FBService.h"
 #import "Reachability.h"
 #import "LocationService.h"
+#import "QBService.h"
 
 @implementation SplashViewController
 @synthesize backgroundImage, loginButton;
@@ -173,7 +174,7 @@
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
-        
+        [[QBService defaultService] setCurrentQBUser:currentUser];
         // Login to QB Chat
         [QBChat instance].delegate = self;
         [[QBChat instance] loginWithUser:currentUser];
@@ -193,7 +194,6 @@
     [[LocationService shared] startUpdateLocation];
 
     [self dismissModalViewControllerAnimated:YES];
-
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
 }
 

@@ -16,6 +16,7 @@
 static FBService *service = nil;
 
 @implementation FBService
+@synthesize fbChatRoomDidEnter;
 
 #pragma mark -
 #pragma mark Singletone
@@ -35,6 +36,7 @@ static FBService *service = nil;
     if (self) {
 		xmppStream = [[XMPPStream alloc] initWithFacebookAppId:APP_ID];
 		[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        fbChatRoomDidEnter = NO;
     }
     return self;
 }
@@ -113,7 +115,6 @@ static FBService *service = nil;
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     NSLog(@"Facebook XMPP authenticated");
-    
     presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self 
                                                     selector:@selector(sendPresence) 
                                                     userInfo:nil repeats:YES];
@@ -130,7 +131,6 @@ static FBService *service = nil;
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
     presenceTimer = nil;
-    
     NSLog(@"XMPP disconnected");
     
     // reconnect if disconnected

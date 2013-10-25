@@ -12,6 +12,7 @@
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
+#import "QBService.h"
 #import "LocationService.h"
 #import <CoreLocation/CoreLocation.h>
 
@@ -44,9 +45,24 @@
 {
     [super viewDidLoad];
     self.title = @"Default";
+    [self setPin];
     self.chatHistory = [[NSMutableArray alloc] init];
     self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     [self configureInputTextViewLayer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHelloy) name:@"activatechat" object:nil];
+}
+-(void)sayHelloy{
+    NSLog(@"Helloy!!!");
+}
+
+-(void)setPin{
+    if (!self.indicatorView) {
+        self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.indicatorView.frame = CGRectMake(self.chatRoomTable.frame.size.width/2 - 10, self.chatRoomTable.frame.size.height/2 -10, 20 , 20);
+        [self.indicatorView hidesWhenStopped];
+        [self.chatRoomTable addSubview:self.indicatorView];
+    }
+    [self.indicatorView startAnimating];
 }
 
 - (void)configureInputTextViewLayer{
@@ -146,6 +162,7 @@
     }
 }
 
+
 #pragma mark -
 #pragma mark UIActionSheetDelegate
 
@@ -194,27 +211,46 @@
 #pragma mark -
 #pragma mark QBChatDelegate
 
+-(void)chatDidLogin{
+    // if room entered
+    if ([[FBService shared] fbChatRoomDidEnter] == YES) {
+        [self creatingOrJoiningRoom];
+    }
+}
+
 // if chat room is created or user is joined
 -(void)chatRoomDidEnter:(QBChatRoom *)room{
     [room addUsers:@[@34]];
     NSLog(@"Chat Room is opened");
+    [[FBService shared] setFbChatRoomDidEnter:YES];
+    [[QBService defaultService] setCurrentChatRoom:room];
     //get room
     self.currentRoom = room;
     
-    // Update chat room rank
-    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
-    NSUInteger intRank = [rank intValue];
-    intRank+=1;
-    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
-    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
+//    // Update chat room rank
+//    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
+//    NSUInteger intRank = [rank intValue];
+//    intRank+=1;
+//    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+//    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
+    [self.indicatorView stopAnimating];
 }
 
 - (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error{
     NSLog(@"Error:%@", error);
 }
+
 // back button
 - (IBAction)backToRooms:(id)sender {
+    [[FBService shared] setFbChatRoomDidEnter:NO];
+    [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
+    //_currentRoom = nil;
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)chatRoomDidLeave:(NSString *)roomName{
+    NSLog(@"Did  Leave worked");
+    [QBService defaultService].currentChatRoom = nil;
 }
 
 // action message button

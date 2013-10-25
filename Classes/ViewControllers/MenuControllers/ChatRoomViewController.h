@@ -13,8 +13,8 @@
 @interface ChatRoomViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, SASlideMenuDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *chatRoomTable;
-
 @property (strong, nonatomic) QBCOCustomObject *currentChatRoom;
+@property (strong, nonatomic) UIActivityIndicatorView *indicatorView;
 
 typedef struct {
     CGFloat latitude;
