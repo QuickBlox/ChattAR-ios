@@ -154,7 +154,7 @@
     if ([paginator.results count] != 0)
     {
         if (paginator.tag == kTrendingPaginatorTag) {
-            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [paginator.results count]];
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [[[ChatRoomsService shared] allTrendingRooms] count]];
             [self.trendingFooterLabel setNeedsDisplay];
         }
     }

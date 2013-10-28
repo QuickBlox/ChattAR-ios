@@ -13,6 +13,16 @@
 
 @implementation ChattARAppDelegate
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -40,8 +50,8 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     if ([FBService shared].fbChatRoomDidEnter == YES) {
-        [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
         [QBService defaultService].currentChatRoom = nil;
+        [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
     }
     [[QBChat instance] logout];
 }

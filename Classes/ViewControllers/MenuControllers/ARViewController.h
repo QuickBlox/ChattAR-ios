@@ -39,7 +39,6 @@
 @property (retain) NSMutableArray *coordinateViews;
 
 @property (nonatomic, retain) UIAccelerometer         *accelerometerManager;
-@property (nonatomic, retain) CLLocationManager       *locationManager;
 @property (nonatomic, retain) ARCoordinate            *centerCoordinate;
 @property (nonatomic, retain) CLLocation              *centerLocation;
 @property (nonatomic, retain) UIImageView             *displayView;

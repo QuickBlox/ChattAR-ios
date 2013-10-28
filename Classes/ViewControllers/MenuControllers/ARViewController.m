@@ -33,7 +33,7 @@
 
 @implementation ARViewController
 
-@synthesize locationManager, accelerometerManager, displayView, centerCoordinate, scaleViewsBasedOnDistance, isFirstUpdateLocation,transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
+@synthesize accelerometerManager, displayView, centerCoordinate, scaleViewsBasedOnDistance, isFirstUpdateLocation,transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
 @synthesize latestHeading, viewAngle, coordinateViews;
 @synthesize captureSession;
 @synthesize delegate, distanceSlider, distanceLabel;
@@ -174,7 +174,6 @@
     
     [sliderNumbers release];
 	
-	self.locationManager = nil;
 	self.coordinateViews = nil;
 	
     [super dealloc];
