@@ -275,7 +275,7 @@ static FBService *instance = nil;
         [body setStringValue:textMessage];
         
         NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        //[message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
         [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
         [message addChild:body];
         [xmppStream sendElement:message];
