@@ -181,6 +181,9 @@
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C43217CDD579003C6893 /* SettingsViewController.m */; };
+		69601BDA181FBB8700E842C8 /* DialogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69601BD9181FBB8700E842C8 /* DialogsViewController.m */; };
+		69601BDD181FF19500E842C8 /* DialogsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69601BDC181FF19500E842C8 /* DialogsCell.m */; };
+		69601BE01820070800E842C8 /* DetailDialogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69601BDF1820070800E842C8 /* DetailDialogsViewController.m */; };
 		696B59F617E99EF900D60537 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F417E99EF900D60537 /* Icon.png */; };
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
@@ -574,6 +577,12 @@
 		6954C42917CDD53E003C6893 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		6954C43117CDD579003C6893 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6954C43217CDD579003C6893 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		69601BD8181FBB8700E842C8 /* DialogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogsViewController.h; sourceTree = "<group>"; };
+		69601BD9181FBB8700E842C8 /* DialogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogsViewController.m; sourceTree = "<group>"; };
+		69601BDB181FF19500E842C8 /* DialogsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogsCell.h; sourceTree = "<group>"; };
+		69601BDC181FF19500E842C8 /* DialogsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogsCell.m; sourceTree = "<group>"; };
+		69601BDE1820070800E842C8 /* DetailDialogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailDialogsViewController.h; sourceTree = "<group>"; };
+		69601BDF1820070800E842C8 /* DetailDialogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailDialogsViewController.m; sourceTree = "<group>"; };
 		696B59F417E99EF900D60537 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		696B59F517E99EF900D60537 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6981247617DDFF2C00974C6A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -1502,6 +1511,10 @@
 				6954C42617CDD502003C6893 /* ChatViewController.m */,
 				6954C42817CDD53E003C6893 /* MapViewController.h */,
 				6954C42917CDD53E003C6893 /* MapViewController.m */,
+				69601BD8181FBB8700E842C8 /* DialogsViewController.h */,
+				69601BD9181FBB8700E842C8 /* DialogsViewController.m */,
+				69601BDE1820070800E842C8 /* DetailDialogsViewController.h */,
+				69601BDF1820070800E842C8 /* DetailDialogsViewController.m */,
 				6954C43117CDD579003C6893 /* SettingsViewController.h */,
 				6954C43217CDD579003C6893 /* SettingsViewController.m */,
 				69E8ECD217E0B4E900D614AA /* ChatRoomViewController.h */,
@@ -1667,6 +1680,8 @@
 				690A70931806E0AD00F3C584 /* ARMarkerView.m */,
 				69F20FE21811376300452C55 /* TrendingCell.h */,
 				69F20FE31811376300452C55 /* TrendingCell.m */,
+				69601BDB181FF19500E842C8 /* DialogsCell.h */,
+				69601BDC181FF19500E842C8 /* DialogsCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1990,12 +2005,14 @@
 				693C7EA417CCDCF300D7F0A9 /* XMPPvCardTempTel.m in Sources */,
 				693C7EA517CCDCF300D7F0A9 /* NSXMLElement+XEP_0059.m in Sources */,
 				693C7EA617CCDCF300D7F0A9 /* XMPPResultSet.m in Sources */,
+				69601BE01820070800E842C8 /* DetailDialogsViewController.m in Sources */,
 				693C7EA717CCDCF300D7F0A9 /* XMPPIQ+XEP_0060.m in Sources */,
 				693C7EA817CCDCF300D7F0A9 /* XMPPPubSub.m in Sources */,
 				6947462F1805469100928ED4 /* CAnotation.m in Sources */,
 				693C7EA917CCDCF300D7F0A9 /* TURNSocket.m in Sources */,
 				693C7EAA17CCDCF300D7F0A9 /* XMPPIQ+XEP_0066.m in Sources */,
 				693C7EAB17CCDCF300D7F0A9 /* XMPPMessage+XEP_0066.m in Sources */,
+				69601BDD181FF19500E842C8 /* DialogsCell.m in Sources */,
 				693C7EAC17CCDCF300D7F0A9 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				693C7EAD17CCDCF300D7F0A9 /* XMPPDateTimeProfiles.m in Sources */,
 				693C7EAE17CCDCF300D7F0A9 /* XMPPMessage+XEP_0085.m in Sources */,
@@ -2019,6 +2036,7 @@
 				693C7EBF17CCDCF300D7F0A9 /* XMPPMessageDeliveryReceipts.m in Sources */,
 				6988F6B2181A62E000E1B30A /* QBService.m in Sources */,
 				693C7EC017CCDCF300D7F0A9 /* XMPPAutoPing.m in Sources */,
+				69601BDA181FBB8700E842C8 /* DialogsViewController.m in Sources */,
 				693C7EC117CCDCF300D7F0A9 /* XMPPPing.m in Sources */,
 				693C7EC217CCDCF300D7F0A9 /* XMPPAutoTime.m in Sources */,
 				693C7EC317CCDCF300D7F0A9 /* XMPPTime.m in Sources */,

@@ -43,10 +43,11 @@
 #define kRank               @"rank"
 
 // Segue Identifiers
-#define kChatSegueIdentifier   @"Chat"
-#define kMapSegueIdentifier    @"Map"
-#define kARSegueIdentifier     @"AR"
-#define kAboutSegueIdentifier  @"About"
+#define kChatSegueIdentifier        @"Chat"
+#define kMapSegueIdentifier         @"Map"
+#define kARSegueIdentifier          @"AR"
+#define kAboutSegueIdentifier       @"About"
+#define kDialogsSegueIdentifier     @"Dialogs"
 
 #define padding           20.0
 
@@ -110,6 +111,6 @@
 #define minARMarkerAlpha 0.6f
 #define alphaStep() (1-minARMarkerAlpha)/countOfScaledChunks
 
-typedef void(^FBResultBlock)(id);
+typedef void(^FBResultBlock)(id result);
 
 #endif

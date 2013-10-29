@@ -22,7 +22,9 @@
 #pragma mark Me
 
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
+- (void) userFriendsUsingBlock:(FBResultBlock)resultBlock;
 - (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock;
+- (NSArray *) gettingFriendsPhotosFromDictionaries:(NSArray *)dictionaries withAccessToken:(NSString *)accessToken;
 
 #pragma mark -
 #pragma mark Messages & Chat

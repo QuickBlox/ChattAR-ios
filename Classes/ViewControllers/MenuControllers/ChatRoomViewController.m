@@ -47,12 +47,7 @@
     self.title = @"Default";
     [self setPin];
     self.chatHistory = [[NSMutableArray alloc] init];
-    self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     [self configureInputTextViewLayer];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHelloy) name:@"activatechat" object:nil];
-}
--(void)sayHelloy{
-    NSLog(@"Helloy!!!");
 }
 
 -(void)setPin{
@@ -227,12 +222,12 @@
     //get room
     self.currentRoom = room;
     
-//    // Update chat room rank
-//    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
-//    NSUInteger intRank = [rank intValue];
-//    intRank+=1;
-//    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
-//    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
+    // Update chat room rank
+    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
+    NSUInteger intRank = [rank intValue];
+    intRank+=1;
+    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
     [self.indicatorView stopAnimating];
 }
 
@@ -244,7 +239,6 @@
 - (IBAction)backToRooms:(id)sender {
     [[FBService shared] setFbChatRoomDidEnter:NO];
     [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
-    //_currentRoom = nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

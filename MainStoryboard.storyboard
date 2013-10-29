@@ -85,7 +85,7 @@
                         <barButtonItem key="leftBarButtonItem" width="30" style="plain" id="HnT-Rx-gFE">
                             <inset key="imageInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zp5-ar-Rov">
-                                <rect key="frame" x="5" y="11" width="13" height="21"/>
+                                <rect key="frame" x="16" y="11" width="13" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" image="01_back.png">
@@ -99,7 +99,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="FQc-QS-hpP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mze-kH-TDO">
-                                <rect key="frame" x="295" y="11" width="20" height="21"/>
+                                <rect key="frame" x="284" y="11" width="20" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="01_share.png">
@@ -125,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2g-Wd-Tl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="940" y="-582"/>
+            <point key="canvasLocation" x="858" y="-234"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="iug-PX-dnV">
@@ -307,8 +307,29 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="sS8-6J-wuI" customClass="MenuCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="ny1-gp-XWm" customClass="MenuCell">
                                         <rect key="frame" x="0.0" y="302" width="320" height="65"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ny1-gp-XWm" id="TDn-7N-yOu">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Dialogs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ANV-7r-L8D">
+                                                    <rect key="frame" x="71" y="14" width="134" height="35"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" red="0.87839673910000005" green="0.87839673910000005" blue="0.87839673910000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="messages_mnu.png" id="bAA-f0-NgG">
+                                                    <rect key="frame" x="20" y="19" width="27" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="65" id="sS8-6J-wuI" customClass="MenuCell">
+                                        <rect key="frame" x="0.0" y="367" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sS8-6J-wuI" id="ZvA-V7-AWy">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
@@ -344,6 +365,7 @@
                         <segue destination="FgT-Db-JXl" kind="custom" identifier="Map" customClass="SASlideMenuContentSegue" id="jgz-po-BPx"/>
                         <segue destination="79Z-YM-vAE" kind="custom" identifier="AR" customClass="SASlideMenuContentSegue" id="0IC-8a-lf6"/>
                         <segue destination="hhr-D8-IaV" kind="custom" identifier="About" customClass="SASlideMenuContentSegue" id="TAn-dJ-yQX"/>
+                        <segue destination="xPb-4k-flU" kind="custom" identifier="Dialogs" customClass="SASlideMenuContentSegue" id="gBB-6j-DoK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L1Z-u4-a1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,6 +658,144 @@
             </objects>
             <point key="canvasLocation" x="284" y="414"/>
         </scene>
+        <!--Dialogs View Controller - Dialogs-->
+        <scene sceneID="pPM-Jo-I4D">
+            <objects>
+                <tableViewController id="i4w-bu-Tww" customClass="DialogsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="a2j-kx-MGN">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DialogsCell" id="Nq4-h1-hbi" customClass="DialogsCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nq4-h1-hbi" id="tDg-5E-Q1i">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="zza-yf-Ykm" customClass="AsyncImageView">
+                                            <rect key="frame" x="5" y="0.0" width="43" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Pope" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AId-Xh-ctc">
+                                            <rect key="frame" x="56" y="9" width="244" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="asyncView" destination="zza-yf-Ykm" id="i25-fZ-P4v"/>
+                                    <outlet property="name" destination="AId-Xh-ctc" id="v9T-ru-7Am"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Dialogs" id="lJj-gr-Y8s"/>
+                    <connections>
+                        <segue destination="mwh-Ap-G2c" kind="custom" identifier="DialogSegue" id="YmU-iS-597"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tGI-b2-5gX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="290" y="1173"/>
+        </scene>
+        <!--Detail Dialogs View Controller-->
+        <scene sceneID="qSz-9W-hAz">
+            <objects>
+                <viewController id="mwh-Ap-G2c" customClass="DetailDialogsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vne-tP-WVL">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ha1-Js-jPc">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="mwh-Ap-G2c" id="KE9-vx-UNG"/>
+                                    <outlet property="delegate" destination="mwh-Ap-G2c" id="gie-Xt-Yyr"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" id="lxg-mX-Ufm">
+                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Xmh-Eq-eLE">
+                                        <rect key="frame" x="10" y="7" width="225" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textEditDone:" destination="mwh-Ap-G2c" eventType="editingDidEndOnExit" id="4bX-8F-OhC"/>
+                                            <outlet property="delegate" destination="mwh-Ap-G2c" id="trK-cQ-DwX"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VSK-ZH-OKR">
+                                        <rect key="frame" x="243" y="7" width="68" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="05_sendtn.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendMessage:" destination="mwh-Ap-G2c" eventType="touchUpInside" id="eFR-2D-atd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bgP-7p-kdW">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="kCc-BH-nWE">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="htZ-z1-6CM">
+                                <rect key="frame" x="16" y="11" width="12" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="01_back.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="mwh-Ap-G2c" eventType="touchUpInside" id="azt-s8-5Lc"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="inputMessageField" destination="Xmh-Eq-eLE" id="0J6-TV-HSe"/>
+                        <outlet property="inputTextView" destination="lxg-mX-Ufm" id="cwy-Ro-Rse"/>
+                        <outlet property="tableView" destination="ha1-Js-jPc" id="qAn-qP-BkO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="haI-Jd-J2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="806" y="1173"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="33s-Ul-ehf">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="xPb-4k-flU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ksN-kS-Ir7">
+                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.053049572959999999" green="0.38089965869999998" blue="0.57593834919999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="i4w-bu-Tww" kind="relationship" relationship="rootViewController" id="dBH-z9-oic"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SGd-bm-xTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-180" y="1173"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="nwr-U9-G4l">
             <objects>
@@ -654,7 +814,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpi-ed-BqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-180" y="1096"/>
+            <point key="canvasLocation" x="-174" y="1984"/>
         </scene>
         <!--Settings View Controller - About-->
         <scene sceneID="Bwq-c6-cFV">
@@ -780,7 +940,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l4E-JA-uFL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="284" y="1096"/>
+            <point key="canvasLocation" x="290" y="1984"/>
         </scene>
     </scenes>
     <resources>
@@ -797,6 +957,7 @@
         <image name="loginButton.png" width="196" height="29"/>
         <image name="logout_mnu.png" width="27" height="21"/>
         <image name="map_mnu.png" width="30" height="26"/>
+        <image name="messages_mnu.png" width="27" height="21"/>
         <image name="mrquick_mnu.png" width="235" height="64"/>
         <image name="shadow_main.png" width="14" height="505"/>
         <image name="trendings_icon.png" width="30" height="26"/>
@@ -809,7 +970,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="HFt-fQ-707"/>
         <segue reference="GXn-8Q-nrq"/>
-        <segue reference="K6Z-1q-k1N"/>
     </inferredMetricsTieBreakers>
 </document>

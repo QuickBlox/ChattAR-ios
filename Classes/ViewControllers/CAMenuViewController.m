@@ -59,7 +59,11 @@
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
     UIButton *qbButton = [[UIButton alloc] init];
     qbButton.backgroundColor = [UIColor colorWithPatternImage:img];
-    qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height + 30), img.size.width, img.size.height);
+    if (IS_HEIGHT_GTE_568) {
+        qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height+30), img.size.width, img.size.height);
+    } else {
+        qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height+5), img.size.width, img.size.height);
+    }
     [qbButton addTarget:self action:@selector(gotoQBSite) forControlEvents:UIControlEventTouchUpInside];
     [self.menuTable addSubview:qbButton];
 }
@@ -75,9 +79,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger rows;
     if (_isArNotAvailable) {
-        rows = 5;
-    }else {
         rows = 6;
+    }else {
+        rows = 7;
     }
     return rows;
 }
@@ -104,10 +108,17 @@
             if (!_isArNotAvailable) {
                 segue = kARSegueIdentifier;
             } else {
-            segue = kAboutSegueIdentifier;
+            segue = kDialogsSegueIdentifier;
             }
             break;
         case 5:
+            if (!_isArNotAvailable) {
+                segue = kDialogsSegueIdentifier;
+            } else {
+                segue = kAboutSegueIdentifier;
+            }
+            break;
+        case 6:
             segue = kAboutSegueIdentifier;
             break;
             

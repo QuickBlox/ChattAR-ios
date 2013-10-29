@@ -11,9 +11,11 @@
 @interface FBStorage : NSObject
 
 // FB access
-@property (nonatomic, retain) NSString				*accessToken;
-@property (nonatomic, retain) NSMutableDictionary	*currentFBUser;
-@property (nonatomic, retain) NSString				*currentFBUserId;
+@property (nonatomic, strong) NSString				*accessToken;
+@property (nonatomic, strong) NSMutableDictionary	*currentFBUser;
+@property (nonatomic, strong) NSString				*currentFBUserId;
+@property (nonatomic, strong) NSArray               *friends;
+@property (nonatomic, strong) NSArray               *friendsAvatarsURLs;
 
 + (FBStorage *) shared;
 
@@ -24,7 +26,7 @@
 - (void) saveFBToken:(NSString *)token;
 - (void)clearFBAccess;
 - (NSDictionary *) fbUserToken;
--(void)clearFBUser;
+- (void)clearFBUser;
 
 
 

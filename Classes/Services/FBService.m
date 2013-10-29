@@ -55,6 +55,17 @@ static FBService *service = nil;
 
 
 #pragma mark -
+#pragma mark Friends
+
+- (void) userFriendsUsingBlock:(FBResultBlock)resultBlock{
+    FBRequest *friendsRequest = [FBRequest requestForMyFriends];
+    [friendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        resultBlock(result);
+    }];
+}
+
+
+#pragma mark -
 #pragma mark User with ID
 
 - (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock{
@@ -64,6 +75,14 @@ static FBService *service = nil;
     }];
 }
 
+- (NSArray *) gettingFriendsPhotosFromDictionaries:(NSArray *)dictionaries withAccessToken:(NSString *)accessToken {
+    NSMutableArray *photos = [[NSMutableArray alloc] init];
+    for (NSMutableDictionary *dict in dictionaries) {
+        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[dict objectForKey:kId],accessToken];
+        [photos addObject:urlString];
+    }
+    return photos;
+}
 
 #pragma mark -
 #pragma mark Messages

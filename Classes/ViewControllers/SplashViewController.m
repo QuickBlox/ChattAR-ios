@@ -102,14 +102,7 @@
                 // create QB session
                 [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
                 
-                [[FBService shared] userProfileWithResultBlock:^(id result) {
-                    
-                    //save FB User
-                    FBGraphObject *user = (FBGraphObject *)result;
-                    [FBStorage shared].currentFBUser = [user mutableCopy];
-                    
-                    NSLog(@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName],[[FBStorage shared].currentFBUser objectForKey:kLastName]);
-                }];
+                [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
             }
         }]; 
     }
@@ -121,14 +114,7 @@
         [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
         
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            [[FBService shared] userProfileWithResultBlock:^(id result) {
-                
-                //save FB User
-                FBGraphObject *user = (FBGraphObject *)result;
-                [FBStorage shared].currentFBUser = [user mutableCopy];
-                
-                NSLog(@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName],[[FBStorage shared].currentFBUser objectForKey:kLastName]);
-            }];
+            [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
         }];
         
         // login to FB XMPP Chat
@@ -138,6 +124,23 @@
         
     }
     
+}
+
+- (void) gettingAllDataAboutMeAndMyFriendsFromFacebook {
+    
+    [[FBService shared] userProfileWithResultBlock:^(id result) {
+        
+        FBGraphObject *user = (FBGraphObject *)result;
+        [FBStorage shared].currentFBUser = [user mutableCopy];
+    }];
+    
+    // getting my friends:
+    [[FBService shared] userFriendsUsingBlock:^(id result) {
+
+        NSMutableArray *myFriends = [(FBGraphObject *)result objectForKey:kData];
+        [[FBStorage shared] setFriends:myFriends];
+        [FBStorage shared].friendsAvatarsURLs = [[FBService shared] gettingFriendsPhotosFromDictionaries:myFriends withAccessToken:[[FBStorage shared] accessToken]];
+    }];
 }
 
 // LogIn to XMPP
@@ -188,13 +191,13 @@
 -(void)chatDidLogin{
     NSLog(@"Chat login success");
     [self.activityIndicatior stopAnimating];
-    
     [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
-
     [self dismissModalViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
+    
+    //NSLog(@"%@", [[[[FBStorage shared]friends] objectAtIndex:1] allKeys]);
 }
 
 @end
