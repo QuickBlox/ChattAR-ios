@@ -26,6 +26,7 @@
 {
     [super viewDidLoad];
     self.friends = [[FBStorage shared] friends];
+    self.searchContent = [self.friends mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,7 +63,7 @@
     NSUInteger rows = 0;
     switch (section) {
         case 0:
-            rows = [[FBStorage shared].friends count];
+            rows = [self.searchContent count];
             break;
         case 1:
             rows = 0;
@@ -95,15 +96,10 @@
 }
 
 - (DialogsCell *)configureDialogsCell:(DialogsCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-    AsyncImageView *loadedImageView = [[AsyncImageView alloc] init];
-    [loadedImageView setImageURL:[NSURL URLWithString:[[FBStorage shared].friendsAvatarsURLs objectAtIndex:indexPath.row]]];
-    NSString *name = [NSString stringWithFormat:@"%@", [[[FBStorage shared].friends objectAtIndex:indexPath.row] objectForKey:kFirstName]];
-    NSString *lastName = [NSString stringWithFormat:@"%@", [[[FBStorage shared].friends objectAtIndex:indexPath.row] objectForKey:kLastName]];
     
-    if (cell.asyncView == nil) {
-        cell.asyncView = [[AsyncImageView alloc] init];
-    }
-    [cell.asyncView setImageURL:[NSURL URLWithString:[[FBStorage shared].friendsAvatarsURLs objectAtIndex:indexPath.row]]];
+    NSString *name = [NSString stringWithFormat:@"%@", [[self.searchContent objectAtIndex:indexPath.row] objectForKey:kFirstName]];
+    NSString *lastName = [NSString stringWithFormat:@"%@", [[self.searchContent objectAtIndex:indexPath.row] objectForKey:kLastName]];
+    [cell.asyncView setImageURL:[NSURL URLWithString:[[self.searchContent objectAtIndex:indexPath.row] objectForKey:kPhoto]]];
     cell.name.text = [NSString stringWithFormat:@"%@ %@", name, lastName];
     cell.detailTextLabel.text = @"Friends Group";
     
@@ -115,12 +111,59 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    self.friend = [self.friends objectAtIndex:indexPath.row];
+    [self.searchBar resignFirstResponder];
+    self.searchBar.showsCancelButton = NO;
+    self.friend = [self.searchContent objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"DialogSegue" sender:self.friend];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
+}
+
+
+#pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (BOOL)searchingString:(NSString *)source inString:(NSString *)searchString {
+    BOOL answer;
+    NSRange range = [source rangeOfString:searchString options:NSCaseInsensitiveSearch];
+    if (range.location == NSNotFound) {
+        answer = NO;
+    } else {
+        answer = YES;
+    }
+    return answer;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.searchContent = [self.friends mutableCopy];
+    if ([searchText isEqualToString:@""]) {
+        [self.tableView reloadData];
+    } else {
+    NSMutableArray *deleted = [[NSMutableArray alloc] init];
+    for (NSDictionary *user in self.searchContent) {
+        if (![self searchingString:[user objectForKey:kName] inString:searchText]) {
+            [deleted addObject:user];
+        }
+    }
+    [self.searchContent removeObjectsInArray:deleted];
+    [self.tableView reloadData];
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    //search button
 }
 
 @end

@@ -138,8 +138,11 @@
     [[FBService shared] userFriendsUsingBlock:^(id result) {
 
         NSMutableArray *myFriends = [(FBGraphObject *)result objectForKey:kData];
+        for (NSMutableDictionary *frend in myFriends) {
+            NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[frend objectForKey:kId],[FBStorage shared].accessToken];
+            [frend setValue:urlString forKey:kPhoto];
+        }
         [[FBStorage shared] setFriends:myFriends];
-        [FBStorage shared].friendsAvatarsURLs = [[FBService shared] gettingFriendsPhotosFromDictionaries:myFriends withAccessToken:[[FBStorage shared] accessToken]];
     }];
 }
 

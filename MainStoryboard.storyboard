@@ -666,9 +666,24 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="2eP-sE-6SR">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" id="xPy-nM-iu3">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="i4w-bu-Tww" id="bC4-fQ-IXa"/>
+                                    </connections>
+                                </searchBar>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DialogsCell" id="Nq4-h1-hbi" customClass="DialogsCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nq4-h1-hbi" id="tDg-5E-Q1i">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -696,10 +711,20 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Dialogs" id="lJj-gr-Y8s"/>
                     <connections>
+                        <outlet property="searchBar" destination="xPy-nM-iu3" id="OGX-2D-hhI"/>
+                        <outlet property="searchDisplayController" destination="sjp-DI-vUi" id="3Is-P2-RsX"/>
                         <segue destination="mwh-Ap-G2c" kind="custom" identifier="DialogSegue" id="YmU-iS-597"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tGI-b2-5gX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="sjp-DI-vUi">
+                    <connections>
+                        <outlet property="delegate" destination="i4w-bu-Tww" id="jG3-9M-qd5"/>
+                        <outlet property="searchContentsController" destination="i4w-bu-Tww" id="bvc-Qi-16P"/>
+                        <outlet property="searchResultsDataSource" destination="i4w-bu-Tww" id="TLV-Aa-Xtw"/>
+                        <outlet property="searchResultsDelegate" destination="i4w-bu-Tww" id="DUX-27-xoJ"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="290" y="1173"/>
         </scene>
@@ -773,7 +798,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="haI-Jd-J2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="806" y="1173"/>
+            <point key="canvasLocation" x="803" y="1173"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="33s-Ul-ehf">
