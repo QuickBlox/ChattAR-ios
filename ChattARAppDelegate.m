@@ -63,8 +63,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    if ([[QBService defaultService] currentQBUser] != nil) {
-        [[QBChat instance] loginWithUser:[[QBService defaultService] currentQBUser]];
+    if ([[QBService defaultService] me] != nil) {
+        [[QBChat instance] loginWithUser:[[QBService defaultService] me]];
         //[[NSNotificationCenter defaultCenter] postNotificationName:@"activatechat" object:nil];
     }
 }

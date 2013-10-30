@@ -177,7 +177,7 @@
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
-        [[QBService defaultService] setCurrentQBUser:currentUser];
+        [[QBService defaultService] setMe:currentUser];
         // Login to QB Chat
         [QBChat instance].delegate = self;
         [[QBChat instance] loginWithUser:currentUser];

@@ -47,6 +47,7 @@
     self.title = @"Default";
     [self setPin];
     self.chatHistory = [[NSMutableArray alloc] init];
+    [QBChat instance].delegate = self;
     [self configureInputTextViewLayer];
 }
 
@@ -197,7 +198,6 @@
 
 -(void)creatingOrJoiningRoom{
     // Join room
-    [QBChat instance].delegate = self;
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:YES];
 }

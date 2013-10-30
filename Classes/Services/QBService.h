@@ -10,9 +10,11 @@
 
 @interface QBService : NSObject <QBChatDelegate>
 
-@property (nonatomic, assign) BOOL          *userIsJoinedChatRoom;
-@property (nonatomic, retain) QBUUser       *currentQBUser;
-@property (nonatomic, strong) QBChatRoom    *currentChatRoom;
+@property (nonatomic, assign) BOOL              *userIsJoinedChatRoom;
+@property (nonatomic, strong) QBUUser           *me;
+@property (nonatomic, strong) QBUUser           *qbFriend;
+@property (nonatomic, strong) QBChatRoom        *currentChatRoom;
+@property (nonatomic, strong) NSMutableArray    *dialogMessages;
 
 +(instancetype)defaultService;
 
