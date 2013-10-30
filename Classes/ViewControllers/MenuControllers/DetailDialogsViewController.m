@@ -22,11 +22,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([[QBService defaultService] dialogMessages] == nil) {
-        self.chatHistory = [[NSMutableArray alloc] init];
-    } else {
-        self.chatHistory = [[QBService defaultService] dialogMessages];
-    }
+  
+    self.chatHistory = [[NSMutableArray alloc]init];
 	// Do any additional setup after loading the view.
     self.title = [NSString stringWithFormat:@"%@ %@", [self.myFriend objectForKey:kFirstName], [self.myFriend objectForKey:kLastName]];
     [self configureInputTextViewLayer];
@@ -83,7 +80,6 @@
         message.text = jsonString;
         [[QBChat instance] sendMessage:message];
         [self.chatHistory addObject:message];
-        [[QBService defaultService] setDialogMessages:self.chatHistory];
         self.inputMessageField.text = @"";
         [self.inputMessageField resignFirstResponder];
         [self reloadTableView];
@@ -97,7 +93,6 @@
 
 - (void)chatDidReceiveMessage:(QBChatMessage *)message{
     [self.chatHistory addObject:message];
-    [[QBService defaultService] setDialogMessages:self.chatHistory];
     [self reloadTableView];
 }
 
