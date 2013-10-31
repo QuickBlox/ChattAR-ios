@@ -42,6 +42,8 @@
 		69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */; };
 		69357E9317CCBAEE00EB3CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69357E9017CCBAEE00EB3CDF /* main.m */; };
 		6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */; };
+		69384E8F1822A38700BA4BED /* FBServiceResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 69384E8D1822A38700BA4BED /* FBServiceResult.m */; };
+		69384E931822AE1400BA4BED /* NSObject+performer.m in Sources */ = {isa = PBXBuildFile; fileRef = 69384E921822AE1400BA4BED /* NSObject+performer.m */; };
 		693B5B1D180405FB000F5374 /* menu_btn_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B19180405FB000F5374 /* menu_btn_b.png */; };
 		693B5B1E180405FB000F5374 /* menu_btn_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */; };
 		693B5B1F180405FB000F5374 /* menu_btn_gr.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1B180405FB000F5374 /* menu_btn_gr.png */; };
@@ -300,6 +302,11 @@
 		69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		69357E9017CCBAEE00EB3CDF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		69384E8C1822A38700BA4BED /* FBServiceResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBServiceResult.h; sourceTree = "<group>"; };
+		69384E8D1822A38700BA4BED /* FBServiceResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBServiceResult.m; sourceTree = "<group>"; };
+		69384E8E1822A38700BA4BED /* FBServiceResultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBServiceResultDelegate.h; sourceTree = "<group>"; };
+		69384E911822AE1400BA4BED /* NSObject+performer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+performer.h"; sourceTree = "<group>"; };
+		69384E921822AE1400BA4BED /* NSObject+performer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+performer.m"; sourceTree = "<group>"; };
 		693B5B19180405FB000F5374 /* menu_btn_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_b.png; sourceTree = "<group>"; };
 		693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_btn_b@2x.png"; sourceTree = "<group>"; };
 		693B5B1B180405FB000F5374 /* menu_btn_gr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_gr.png; sourceTree = "<group>"; };
@@ -757,6 +764,15 @@
 				69A4026117D7374E00E7BE1F /* Definitions.h */,
 			);
 			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		69384E901822AE1400BA4BED /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				69384E911822AE1400BA4BED /* NSObject+performer.h */,
+				69384E921822AE1400BA4BED /* NSObject+performer.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		693C7D0017CCDCF200D7F0A9 /* External */ = {
@@ -1480,6 +1496,7 @@
 		693C7F0217CCFDB400D7F0A9 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				69384E901822AE1400BA4BED /* Categories */,
 				6947463C1805A71600928ED4 /* Services */,
 				694746221805469100928ED4 /* Models */,
 				69B96E2517E89EED00C94DB7 /* Views */,
@@ -1556,6 +1573,9 @@
 				6947463E1805A71600928ED4 /* ChatRoomsService.m */,
 				6947463F1805A71600928ED4 /* FBService.h */,
 				694746401805A71600928ED4 /* FBService.m */,
+				69384E8C1822A38700BA4BED /* FBServiceResult.h */,
+				69384E8D1822A38700BA4BED /* FBServiceResult.m */,
+				69384E8E1822A38700BA4BED /* FBServiceResultDelegate.h */,
 				694746411805A71600928ED4 /* FBStorage.h */,
 				694746421805A71600928ED4 /* FBStorage.m */,
 				694746431805A71600928ED4 /* LocationService.h */,
@@ -1942,6 +1962,7 @@
 				693C7E5E17CCDCF300D7F0A9 /* SASlideMenuPushSegue.m in Sources */,
 				693C7E5F17CCDCF300D7F0A9 /* SASlideMenuRightMenuSegue.m in Sources */,
 				693C7E6017CCDCF300D7F0A9 /* SASlideMenuRightMenuViewController.m in Sources */,
+				69384E8F1822A38700BA4BED /* FBServiceResult.m in Sources */,
 				693C7E6117CCDCF300D7F0A9 /* SASlideMenuRootViewController.m in Sources */,
 				693C7E6217CCDCF300D7F0A9 /* SASlideMenuViewController.m in Sources */,
 				693C7E6417CCDCF300D7F0A9 /* XMPPAnonymousAuthentication.m in Sources */,
@@ -2081,6 +2102,7 @@
 				69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */,
 				690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
+				69384E931822AE1400BA4BED /* NSObject+performer.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
 				694746461805A71600928ED4 /* FBService.m in Sources */,

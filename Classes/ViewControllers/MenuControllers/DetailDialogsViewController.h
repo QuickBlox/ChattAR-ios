@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBServiceResultDelegate.h"
 
-@interface DetailDialogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate>
+@interface DetailDialogsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate, FBServiceResultDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;

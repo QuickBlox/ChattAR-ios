@@ -8,6 +8,7 @@
 
 #import "DetailDialogsViewController.h"
 #import "ChatRoomCell.h"
+#import "FBService.h"
 #import "FBStorage.h"
 #import "QBService.h"
 #import "LocationService.h"
@@ -29,6 +30,11 @@
     [self configureInputTextViewLayer];
     [QBChat instance].delegate = self;
     [QBUsers userWithFacebookID:[self.myFriend objectForKey:kId] delegate:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:NO];
+    [[FBService shared] inboxMessagesWithDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,6 +66,9 @@
     } else {
         QBChatMessage *message = [QBChatMessage message];
         message.recipientID = [QBService defaultService].qbFriend.ID;
+        
+        //send message to facebook:
+        [[FBService shared] sendMessageToFacebook:self.inputMessageField.text withFriendFacebookID:[self.myFriend objectForKey:kId]];
         
         NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
         NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
@@ -193,4 +202,30 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+
+#pragma mark -
+#pragma mark FBServiceResultDelegate
+
+-(void)completedWithFBResult:(FBServiceResult *)result{
+    
+    // get inbox messages
+    if (result.queryType == FBQueriesTypesGetInboxMessages){
+        
+        
+        NSArray *resultData = [result.body objectForKey:kData];
+        //NSDictionary *resultError = [result.body objectForKey:kError];
+  
+        
+        // each inbox message
+		for(NSDictionary *inboxConversation in resultData)
+		{
+             NSLog(@"%@",[inboxConversation allKeys]);
+            
+        }
+    }
+}
+
+
+
 @end

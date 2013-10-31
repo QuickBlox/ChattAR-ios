@@ -25,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.friends = [[FBStorage shared] friends];
+    self.friends = [self sortingUsers:[[FBStorage shared] friends]];
     self.searchContent = [self.friends mutableCopy];
 }
 
@@ -75,7 +75,6 @@
     return rows;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *DialogsCellIdentifier = @"DialogsCell";
@@ -91,7 +90,6 @@
         default:
             break;
     }
-    // Configure the cell...
     return cell;
 }
 
@@ -105,6 +103,7 @@
     
     return cell;
 }
+
 
 #pragma mark -
 #pragma mark Table View Delegate
@@ -164,6 +163,15 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     //search button
+}
+
+
+#pragma mark -
+#pragma mark Sort
+
+-(NSArray *)sortingUsers:(NSArray *)users{
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:kLastName ascending:YES];
+   return [users sortedArrayUsingDescriptors:@[descriptor]];
 }
 
 @end

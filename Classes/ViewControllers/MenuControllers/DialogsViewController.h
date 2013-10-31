@@ -11,7 +11,7 @@
 @interface DialogsViewController : UITableViewController <UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSMutableArray *friends;
+@property (nonatomic, strong) NSArray *friends;
 @property (nonatomic, strong) NSMutableArray *searchContent;
 
 @end

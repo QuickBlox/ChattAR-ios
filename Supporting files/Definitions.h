@@ -113,4 +113,18 @@
 
 typedef void(^FBResultBlock)(id result);
 
+typedef enum {
+    // Me
+    FBQueriesTypesUserProfile,
+    //
+    // Friends
+    FBQueriesTypesFriendsGet,
+	FBQueriesTypesFriendsGetCheckins,
+	FBQueriesTypesUsersProfiles,
+    //
+    FBQueriesTypesWall,
+    FBQueriesTypesGetInboxMessages,
+    
+} FBQueriesTypes;
+
 #endif

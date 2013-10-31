@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
+#import "FBServiceResult.h"
+#import "FBServiceResultDelegate.h"
 @class XMPPStream;
 
 @interface FBService : NSObject
@@ -31,6 +33,7 @@
 
 - (void) logInChat;
 - (void) logOutChat;
-
+- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID;
+- (void) inboxMessagesWithDelegate:(NSObject <FBServiceResultDelegate>*)delegate;
 
 @end

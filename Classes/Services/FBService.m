@@ -10,6 +10,7 @@
 #import "DDTTYLogger.h"
 #import "XMPPStream.h"
 #import "FBStorage.h"
+#import "NSObject+performer.h"
 
 
 
@@ -75,14 +76,6 @@ static FBService *service = nil;
     }];
 }
 
-- (NSArray *) gettingFriendsPhotosFromDictionaries:(NSArray *)dictionaries withAccessToken:(NSString *)accessToken {
-    NSMutableArray *photos = [[NSMutableArray alloc] init];
-    for (NSMutableDictionary *dict in dictionaries) {
-        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[dict objectForKey:kId],accessToken];
-        [photos addObject:urlString];
-    }
-    return photos;
-}
 
 #pragma mark -
 #pragma mark Messages
@@ -96,6 +89,25 @@ static FBService *service = nil;
 -(void) logOutChat{
     [xmppStream disconnect];
 }
+
+- (void) sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
+    if([textMessage length] > 0) {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:textMessage];
+        
+        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+        //        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
+        [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
+        [message addChild:body];
+        [xmppStream sendElement:message];
+    }
+}
+
+- (void) inboxMessagesWithDelegate:(NSObject <FBServiceResultDelegate>*)delegate {
+    NSString *urlString = [NSString stringWithFormat:@"%@/me/inbox?access_token=%@",FB, [FBStorage shared].accessToken];
+    [self performRequestAsyncWithUrl:urlString request:nil type:FBQueriesTypesGetInboxMessages delegate:delegate];
+}
+
 
 
 #pragma mark -
@@ -155,6 +167,78 @@ static FBService *service = nil;
     // reconnect if disconnected
     if([Reachability internetConnected]){
         [self logInChat];
+    }
+}
+
+
+#pragma mark -
+#pragma mark Core
+
+- (void) performRequestAsyncWithUrl:(NSString *)urlString request: (NSURLRequest*)request
+                               type: (FBQueriesTypes)queryType
+                           delegate:(NSObject <FBServiceResultDelegate>*)delegate{
+    
+    [self  performRequestAsyncWithUrl:urlString request:request type:queryType delegate:delegate context:nil];
+}
+
+- (void) performRequestAsyncWithUrl:(NSString *)urlString request: (NSURLRequest*)request
+                               type:(FBQueriesTypes) queryType
+                           delegate:(NSObject <FBServiceResultDelegate>*)delegate
+                            context:(id) context
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    if([urlString length]){
+        NSURL *url;
+		url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        request = [NSURLRequest requestWithURL:url];
+    }
+    
+    //NSLog(@"performRequestAsyncWithUrl=%@", [[request URL] absoluteString]);
+    
+    NSArray *params = [NSArray arrayWithObjects:request, [NSNumber numberWithInt:queryType], delegate, context, nil];
+    [self performSelectorInBackground:@selector(actionInBackground:) withObject:params];
+}
+
+- (void)actionInBackground:(NSArray *)params{
+    @autoreleasepool {
+        
+        NSURLResponse *response = nil;
+        NSError *error = nil;
+        
+        NSURLRequest *request = [params objectAtIndex:0];
+        FBQueriesTypes queryType = (FBQueriesTypes)[[params objectAtIndex:1] intValue];
+        NSObject <FBServiceResultDelegate>* delegate = [params objectAtIndex:2];
+        id context = nil;
+        if([params count] == 4){
+            context = [params objectAtIndex:3];
+        }
+
+        // perform request
+        NSData *resultData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
+        // alloc result
+        FBServiceResult *result = [[FBServiceResult alloc] init];
+        
+        // set body
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultData options:NSJSONReadingMutableContainers error:nil];
+        
+        result.body = jsonDict;
+
+		// set context
+		result.context = (NSString*)context;
+        
+        // set query type
+        [result setQueryType:queryType];
+        
+        // return result to delegate
+        if(context){
+            [delegate performSelectorOnMainThread:@selector(completedWithFBResult:context:) withObject:result withObject:context waitUntilDone:YES];
+        }else{
+            [delegate performSelectorOnMainThread:@selector(completedWithFBResult:) withObject:result waitUntilDone:YES];
+        }
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }
 }
 
