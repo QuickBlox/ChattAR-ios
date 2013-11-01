@@ -117,7 +117,7 @@
         if (cell == nil){
             cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
         }
-        [(ChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
+        [(ChatRoomCell *)cell handleParametersForCellWithQBMessage:qbMessage andIndexPath:indexPath];
     } else {
         cell = (QuotedChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:quotedRoomCellIdentifier];
         if (cell == nil) {
@@ -136,7 +136,7 @@
     NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     NSString *currentMessage = [dictionary objectForKey:kMessage];
     if ([dictionary objectForKey:kQuote] == nil) {
-       cellHeight = [ChatRoomCell configureHeightForCellWithDictionary:currentMessage];
+       cellHeight = [ChatRoomCell configureHeightForCellWithMessage:currentMessage];
     } else {
         cellHeight = [QuotedChatRoomCell configureHeightForCellWithDictionary:currentMessage];
     }

@@ -9,6 +9,7 @@
 #import "ChatRoomCell.h"
 #import "LocationService.h"
 #import "Utilites.h"
+#import "FBStorage.h"
 
 @implementation ChatRoomCell
 
@@ -54,7 +55,8 @@
     return self;
 }
 
-- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath{
+// HANDLE CELL FOR QB MESSAGE:
+- (void)handleParametersForCellWithQBMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath{
     // Buble
     if ([indexPath row] % 2 == 0) {
         self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
@@ -99,7 +101,46 @@
     [self.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
 }
 
-+ (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg {
+// HANDLE CELL FOR FB MESSAGE
+- (void)handleParametersForCellWithFBMessage:(NSDictionary *)message andIndexPath:(NSIndexPath *)indexPath {
+    // Buble
+    if ([indexPath row] % 2 == 0) {
+        self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    } else {
+        self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    }
+    self.colorBuble.image = self.bubleImage;
+    
+    // user message
+    NSString *userMessage = [message objectForKey:kMessage];
+    //getting Avatar from url
+    NSString *friendID = [[message objectForKey:kFrom] objectForKey:kId];
+    NSString *urlString = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", friendID, [FBStorage shared].accessToken];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    // post message date
+    NSString *date = [message objectForKey:kCreatedTime];
+    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+	NSDate *timeStamp = [[Utilites shared].dateFormatter dateFromString:date];
+    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
+    NSString *time = [[Utilites shared].dateFormatter stringFromDate:timeStamp];
+    
+    // putting data to fields
+    [self.userPhoto setImageURL:url];
+    self.message.text = userMessage;
+    self.userName.text = [[message objectForKey:kFrom] objectForKey:kName];
+    self.postMessageDate.text = time;
+    
+    
+    //changing hight
+    CGSize textSize = { 225.0, 10000.0 };
+    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [self.message setFrame:CGRectMake(75, 43, 225, size.height)];
+    [self.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
+}
+
++ (CGFloat)configureHeightForCellWithMessage:(NSString *)msg {
     CGSize textSize = { 225.0, 10000.0 };
     //changing hight
     CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];

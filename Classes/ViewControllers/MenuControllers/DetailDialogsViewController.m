@@ -12,6 +12,7 @@
 #import "FBStorage.h"
 #import "QBService.h"
 #import "LocationService.h"
+#import "Utilites.h"
 
 @interface DetailDialogsViewController ()
 
@@ -28,8 +29,8 @@
 	// Do any additional setup after loading the view.
     self.title = [NSString stringWithFormat:@"%@ %@", [self.myFriend objectForKey:kFirstName], [self.myFriend objectForKey:kLastName]];
     [self configureInputTextViewLayer];
-    [QBChat instance].delegate = self;
-    [QBUsers userWithFacebookID:[self.myFriend objectForKey:kId] delegate:self];
+    //[QBChat instance].delegate = self;
+    //[QBUsers userWithFacebookID:[self.myFriend objectForKey:kId] delegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -43,7 +44,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)configureInputTextViewLayer{
+- (void)configureInputTextViewLayer {
     self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.inputTextView.layer.shadowRadius = 7.0f;
     self.inputTextView.layer.masksToBounds = NO;
@@ -64,64 +65,59 @@
     if ([self.inputMessageField.text isEqualToString: @""]) {
         NSLog(@"Empty message");
     } else {
-        QBChatMessage *message = [QBChatMessage message];
-        message.recipientID = [QBService defaultService].qbFriend.ID;
-        
         //send message to facebook:
         [[FBService shared] sendMessageToFacebook:self.inputMessageField.text withFriendFacebookID:[self.myFriend objectForKey:kId]];
         
-        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
-        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-        NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName], [[FBStorage shared].currentFBUser objectForKey:kLastName]];
-        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].currentFBUser objectForKey:kId], [FBStorage shared].accessToken];
+        NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
+        // put message to dictionary:
+        [facebookMessage setValue:self.inputMessageField.text forKey:kMessage];
         
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:myLatitude forKey:kLatitude];
-        [dict setValue:myLongitude forKey:kLongitude];
-        [dict setValue:urlString forKey:kUserPhotoUrl];
-        [dict setValue:userName forKey:kUserName];
-        [dict setValue:self.inputMessageField.text forKey:kMessage];
-        // formatting to JSON:
-        NSError *error = nil;
-        NSData* nsdata = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
+        NSDate *date = [NSDate date];
+        [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
+        [facebookMessage setValue:createdTime forKey:kCreatedTime];
+        // back to default format mode
+        [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
         
-        NSString* jsonString =[[NSString alloc] initWithData:nsdata encoding:NSUTF8StringEncoding];
-        message.text = jsonString;
-        [[QBChat instance] sendMessage:message];
-        [self.chatHistory addObject:message];
+        NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
+        [from setValue:[[FBStorage shared].currentFBUser objectForKey:kId] forKey:kId];
+        [from setValue:[[FBStorage shared].currentFBUser objectForKey:kName] forKey:kName];
+        [facebookMessage setValue:from forKey:kFrom];
+        
+        //message.text = jsonString;
+        [self.chatHistory addObject:facebookMessage];
         self.inputMessageField.text = @"";
         [self.inputMessageField resignFirstResponder];
         [self reloadTableView];
     }
 }
 
-
 #pragma mark -
 #pragma mark QBChatDelegate
 
 
-- (void)chatDidReceiveMessage:(QBChatMessage *)message{
+- (void)chatDidReceiveMessage:(QBChatMessage *)message {
     [self.chatHistory addObject:message];
     [self reloadTableView];
 }
 
--(void)reloadTableView {
+- (void)reloadTableView {
     [self.tableView reloadData];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 
-#pragma mark -
-#pragma mark QBActionStatusDelegate
-
--(void)completedWithResult:(Result *)result{
-    if (result.success) {
-        if ([result isKindOfClass:[QBUUserResult class]]) {
-            QBUUserResult *userResult = (QBUUserResult *)result;
-            [QBService defaultService].qbFriend = userResult.user;
-        }
-    }
-}
+//#pragma mark -
+//#pragma mark QBActionStatusDelegate
+//
+//- (void)completedWithResult:(Result *)result {
+//    if (result.success) {
+//        if ([result isKindOfClass:[QBUUserResult class]]) {
+//            QBUUserResult *userResult = (QBUUserResult *)result;
+//            [QBService defaultService].qbFriend = userResult.user;
+//        }
+//    }
+//}
 
 
 #pragma mark -
@@ -170,36 +166,32 @@
 #pragma mark -
 #pragma mark Table View Data Source
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.chatHistory count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return (self.chatHistory == nil) ? 1 :[self.chatHistory count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *roomCellIdentifier = @"RoomCellIdentifier";
-    QBChatMessage *qbMessage = [_chatHistory objectAtIndex:[indexPath row]];
+    NSDictionary *message = [_chatHistory objectAtIndex:indexPath.row];
        UITableViewCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
         if (cell == nil){
             cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
         }
-        [(ChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
+        [(ChatRoomCell *)cell handleParametersForCellWithFBMessage:message andIndexPath:indexPath];
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *chatString = [[_chatHistory objectAtIndex:indexPath.row] text];
-    NSData *data = [chatString dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    NSString *currentMessage = [dictionary objectForKey:kMessage];
-
-    return [ChatRoomCell configureHeightForCellWithDictionary:currentMessage];
+    NSString *chatString = [[_chatHistory objectAtIndex:indexPath.row] objectForKey:kMessage];
+    return [ChatRoomCell configureHeightForCellWithMessage:chatString];
 }
 
 
 #pragma mark -
 #pragma mark UITableViewDelegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -207,25 +199,28 @@
 #pragma mark -
 #pragma mark FBServiceResultDelegate
 
--(void)completedWithFBResult:(FBServiceResult *)result{
+- (void)completedWithFBResult:(FBServiceResult *)result {
     
     // get inbox messages
     if (result.queryType == FBQueriesTypesGetInboxMessages){
         
-        
         NSArray *resultData = [result.body objectForKey:kData];
         //NSDictionary *resultError = [result.body objectForKey:kError];
   
-        
         // each inbox message
 		for(NSDictionary *inboxConversation in resultData)
 		{
-             NSLog(@"%@",[inboxConversation allKeys]);
-            
+            NSArray *dialogTo = [[inboxConversation objectForKey:kTo] objectForKey:kData];
+            for (NSDictionary *user in dialogTo) {
+                if ([[user objectForKey:kId] isEqual:[self.myFriend objectForKey:kId]]) {
+                    NSMutableArray *conversation = [[inboxConversation objectForKey:kComments] objectForKey:kData];
+                    [[FBStorage shared] setHistoryConversation:conversation];
+                    self.chatHistory = conversation;
+                    [self reloadTableView];
+                }
+            }
         }
     }
 }
-
-
 
 @end
