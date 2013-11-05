@@ -11,11 +11,13 @@
 #import "DialogsCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
+#import "FBChatService.h"
 #import "AsyncImageView.h"
 
 @interface DialogsViewController ()
 
 @property (nonatomic, strong) NSMutableDictionary *friend;
+@property (nonatomic, strong) NSMutableDictionary *conversation;
 
 @end
 
@@ -27,13 +29,16 @@
     [super viewDidLoad];
     self.friends = [self sortingUsers:[[FBStorage shared] friends]];
     self.searchContent = [self.friends mutableCopy];
+    if ([[FBChatService defaultService].allFriendsHistoryConversation count] == 0) {
+        [[FBService shared] inboxMessagesWithDelegate:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - Table view data source
 
@@ -108,16 +113,50 @@
 #pragma mark -
 #pragma mark Table View Delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.searchBar resignFirstResponder];
     self.searchBar.showsCancelButton = NO;
     self.friend = [self.searchContent objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"DialogSegue" sender:self.friend];
+    // conversation with friend:
+    [self findFBConversationWithFriend:self.friend];
+    
+    [self performSegueWithIdentifier:@"DialogSegue" sender:nil];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((DetailDialogsViewController *)segue.destinationViewController).myFriend = self.friend;
+    ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.conversation;
+}
+
+- (void)findFBConversationWithFriend:(NSMutableDictionary *)friend {
+    NSArray *users = [[FBChatService defaultService].allFriendsHistoryConversation allValues];
+    for (NSMutableDictionary *user in users) {
+        NSArray *to = [[user objectForKey:kTo] objectForKey:kData];
+        for (NSDictionary *t in to) {
+            if ([[t objectForKey:kId] isEqual:[friend objectForKey:kId]]) {
+                self.conversation = user;
+                return;
+            }
+        }
+    }
+    // if not return, create new conversation:
+    NSMutableDictionary *newConversation = [[NSMutableDictionary alloc]init];
+    // adding commnets to this conversation:
+    NSMutableDictionary *comments = [[NSMutableDictionary alloc] init];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [comments setObject:array forKey:kData];
+    [newConversation setObject:comments forKey:kComments];
+    
+    // adding kTo:
+    NSMutableDictionary *kto = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:[friend objectForKey:kId] forKey:kId];
+    [dict setValue:[friend objectForKey:kName] forKey:kName];
+    
+    [kto setValue:[NSMutableArray arrayWithObject:dict] forKey:kData];
+    [newConversation setObject:kto forKey:kTo];
+    self.conversation = newConversation;
 }
 
 
@@ -172,6 +211,28 @@
 -(NSArray *)sortingUsers:(NSArray *)users{
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:kLastName ascending:YES];
    return [users sortedArrayUsingDescriptors:@[descriptor]];
+}
+
+
+#pragma mark -
+#pragma mark FBServiceResultDelegate
+
+- (void)completedWithFBResult:(FBServiceResult *)result {
+    
+    // get inbox messages
+    if (result.queryType == FBQueriesTypesGetInboxMessages){
+        NSMutableArray *resultData = [result.body objectForKey:kData];
+        NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
+        for (NSMutableDictionary *dict in resultData) {
+            NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
+            for (NSMutableDictionary *element in array) {
+                if ([element objectForKey:kId] != [[FBStorage shared].currentFBUser objectForKey:kId]) {
+                    [history setObject:dict forKey:[element objectForKey:kId]];
+                }
+            }
+        }
+        [FBChatService defaultService].allFriendsHistoryConversation = history;
+    }
 }
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBServiceResultDelegate.h"
 
-@interface DialogsViewController : UITableViewController <UISearchBarDelegate>
+@interface DialogsViewController : UITableViewController <UISearchBarDelegate, FBServiceResultDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSArray *friends;

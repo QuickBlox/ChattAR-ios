@@ -10,6 +10,7 @@
 #import "ChatRoomCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
+#import "FBChatService.h"
 #import "QBService.h"
 #import "LocationService.h"
 #import "Utilites.h"
@@ -19,23 +20,22 @@
 @end
 
 @implementation DetailDialogsViewController
-@synthesize quote;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
-    self.chatHistory = [[NSMutableArray alloc]init];
+    if (self.conversation == nil) {
+        self.conversation = [[NSMutableDictionary alloc]init];
+    }
 	// Do any additional setup after loading the view.
-    self.title = [NSString stringWithFormat:@"%@ %@", [self.myFriend objectForKey:kFirstName], [self.myFriend objectForKey:kLastName]];
+    self.title = [self.myFriend objectForKey:kName];
     [self configureInputTextViewLayer];
-    //[QBChat instance].delegate = self;
-    //[QBUsers userWithFacebookID:[self.myFriend objectForKey:kId] delegate:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:kNotificationMessageReceived object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:NO];
-    [[FBService shared] inboxMessagesWithDelegate:self];
+    [self reloadTableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +58,7 @@
 #pragma mark Actions
 
 - (IBAction)back:(id)sender {
+    [[FBChatService defaultService].allFriendsHistoryConversation setObject:self.conversation forKey:kComments];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -84,40 +85,29 @@
         [from setValue:[[FBStorage shared].currentFBUser objectForKey:kName] forKey:kName];
         [facebookMessage setValue:from forKey:kFrom];
         
-        //message.text = jsonString;
-        [self.chatHistory addObject:facebookMessage];
+        
+        [[[self.conversation objectForKey:kComments] objectForKey:kData] addObject:facebookMessage];
         self.inputMessageField.text = @"";
         [self.inputMessageField resignFirstResponder];
+        
+        if (([[self.conversation objectForKey:kComments] objectForKey:kData] == nil) || [[[self.conversation objectForKey:kComments] objectForKey:kData] count] == 0) {
+            [[FBService shared] sendMessageToFacebook:self.inputMessageField.text withFriendFacebookID:[self.myFriend objectForKey:kId]];
+        }
+        
         [self reloadTableView];
     }
 }
 
-#pragma mark -
-#pragma mark QBChatDelegate
-
-
-- (void)chatDidReceiveMessage:(QBChatMessage *)message {
-    [self.chatHistory addObject:message];
+- (void)receiveMessage {
     [self reloadTableView];
 }
 
 - (void)reloadTableView {
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([[[self.conversation objectForKey:kComments] objectForKey:kData] count] != 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[[self.conversation objectForKey:kComments] objectForKey:kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
-
-
-//#pragma mark -
-//#pragma mark QBActionStatusDelegate
-//
-//- (void)completedWithResult:(Result *)result {
-//    if (result.success) {
-//        if ([result isKindOfClass:[QBUUserResult class]]) {
-//            QBUUserResult *userResult = (QBUUserResult *)result;
-//            [QBService defaultService].qbFriend = userResult.user;
-//        }
-//    }
-//}
 
 
 #pragma mark -
@@ -147,6 +137,7 @@
     }];
 }
 
+
 #pragma mark -
 #pragma mark UITextField
 
@@ -166,13 +157,14 @@
 #pragma mark -
 #pragma mark Table View Data Source
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (self.chatHistory == nil) ? 1 :[self.chatHistory count];
+    return ([[[self.conversation objectForKey:kComments] objectForKey:kData] count]== 0) ? 0 :[[[self.conversation objectForKey:kComments] objectForKey:kData] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *roomCellIdentifier = @"RoomCellIdentifier";
-    NSDictionary *message = [_chatHistory objectAtIndex:indexPath.row];
+    NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
        UITableViewCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
         if (cell == nil){
             cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
@@ -182,8 +174,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSString *chatString = [[_chatHistory objectAtIndex:indexPath.row] objectForKey:kMessage];
+    NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
+    NSString *chatString = [message objectForKey:kMessage];
     return [ChatRoomCell configureHeightForCellWithMessage:chatString];
 }
 
@@ -193,34 +185,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-
-#pragma mark -
-#pragma mark FBServiceResultDelegate
-
-- (void)completedWithFBResult:(FBServiceResult *)result {
-    
-    // get inbox messages
-    if (result.queryType == FBQueriesTypesGetInboxMessages){
-        
-        NSArray *resultData = [result.body objectForKey:kData];
-        //NSDictionary *resultError = [result.body objectForKey:kError];
-  
-        // each inbox message
-		for(NSDictionary *inboxConversation in resultData)
-		{
-            NSArray *dialogTo = [[inboxConversation objectForKey:kTo] objectForKey:kData];
-            for (NSDictionary *user in dialogTo) {
-                if ([[user objectForKey:kId] isEqual:[self.myFriend objectForKey:kId]]) {
-                    NSMutableArray *conversation = [[inboxConversation objectForKey:kComments] objectForKey:kData];
-                    [[FBStorage shared] setHistoryConversation:conversation];
-                    self.chatHistory = conversation;
-                    [self reloadTableView];
-                }
-            }
-        }
-    }
 }
 
 @end

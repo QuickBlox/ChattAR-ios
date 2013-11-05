@@ -14,8 +14,7 @@
 @property (nonatomic, strong) NSString				*accessToken;
 @property (nonatomic, strong) NSMutableDictionary	*currentFBUser;
 @property (nonatomic, strong) NSString				*currentFBUserId;
-@property (nonatomic, strong) NSArray               *friends;
-@property (nonatomic, strong) NSMutableArray        *historyConversation;
+@property (nonatomic, strong) NSMutableArray        *friends;
 
 + (FBStorage *) shared;
 

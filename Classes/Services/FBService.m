@@ -10,6 +10,8 @@
 #import "DDTTYLogger.h"
 #import "XMPPStream.h"
 #import "FBStorage.h"
+#import "FBChatService.h"
+#import "Utilites.h"
 #import "NSObject+performer.h"
 
 
@@ -170,6 +172,57 @@ static FBService *service = nil;
     }
 }
 
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+	[self backgroundMessageReceived:message];
+}
+
+- (void) backgroundMessageReceived:(XMPPMessage *)textMessage
+{
+	NSString *body = [[textMessage elementForName:kBody] stringValue];
+    if (body == nil) {
+        return;
+    }
+    
+    NSMutableString *fromID = [[textMessage attributeStringValueForName:kFrom] mutableCopy];
+    [fromID replaceCharactersInRange:NSMakeRange(0, 1) withString:@""]; // remove -
+    [fromID replaceOccurrencesOfString:@"@chat.facebook.com" withString:@""
+                               options:0 range:NSMakeRange(0, [fromID length])]; // remove @chat.facebook.com
+    NSArray *friends = [FBStorage shared].friends;
+    NSDictionary *friend = [[NSDictionary alloc] init];
+    // find opponent:
+    for (NSDictionary *myFriend in friends) {
+        if ([[myFriend objectForKey:kId] isEqual:fromID]) {
+            friend = myFriend;
+            break;
+        }
+    }
+    if(friend == nil){
+        return;
+    } else {
+        // creating message:
+        NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
+        // user info:
+        NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
+        [from setValue:[friend objectForKey:kId] forKey:kId];
+        [from setValue:[friend objectForKey:kName] forKey:kName];
+        
+        [message setValue:from forKey:kFrom];
+        [message setValue:body forKey:kMessage];
+        
+        NSDate *date = [NSDate date];
+        [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+        NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
+        [message setValue:createdTime forKey:kCreatedTime];
+        // back to default format mode
+        [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
+        [[[[[FBChatService defaultService].allFriendsHistoryConversation objectForKey:fromID] objectForKey:kComments] objectForKey:kData
+          ] addObject:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessageReceived object:nil];
+    }
+    
+    
+}
 
 #pragma mark -
 #pragma mark Core
