@@ -16,7 +16,7 @@
 + (instancetype)shared;
 - (NSString *)distanceFormatter:(CLLocationDistance)distance;
 - (void)checkAndPutStatusBarColor;
-+(BOOL)deviceSupportsAR;
++ (BOOL)deviceSupportsAR;
 
 // Splash appearence options:
 - (BOOL)isUserLoggedIn;

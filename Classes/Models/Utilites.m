@@ -59,7 +59,7 @@
 #pragma mark -
 #pragma mark Supporting AR
 
-+(BOOL)deviceSupportsAR{
++ (BOOL)deviceSupportsAR {
 	BOOL support;
 	//Detect camera and compas
 	if((![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) || (![CLLocationManager headingAvailable])){
@@ -70,11 +70,11 @@
 	return support;
 }
 
-- (BOOL)isUserLoggedIn{
+- (BOOL)isUserLoggedIn {
     return self.userLoggedIn;
 }
 
-- (void)setUserLogIn{
+- (void)setUserLogIn {
     self.userLoggedIn = YES;
 }
 

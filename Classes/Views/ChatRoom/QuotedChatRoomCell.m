@@ -92,7 +92,7 @@
     return self;
 }
 
-- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath{
+- (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath {
 
     NSData *data = [message.text dataUsingEncoding:NSUTF8StringEncoding];
     // parsing JSON to dictionary

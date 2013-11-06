@@ -10,7 +10,7 @@
 
 @implementation ProfileCell
 
--(void) layoutSubviews{
+- (void)layoutSubviews {
     [super layoutSubviews];
     [self setBackgroundColor:[UIColor colorWithWhite:0.22 alpha:1.0]];
     self.selectionStyle = UITableViewCellSelectionStyleNone;

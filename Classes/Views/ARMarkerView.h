@@ -9,8 +9,8 @@
 #import "CAnotation.h"
 #import "AsyncImageView.h"
 
-@interface ARMarkerView : UIView{
-}
+@interface ARMarkerView : UIView
+
 @property (nonatomic, strong) AsyncImageView *userPhotoView;
 @property (nonatomic, strong) UILabel *userName;
 @property (nonatomic, strong) UILabel *userStatus;

@@ -42,7 +42,7 @@
 #pragma mark - 
 #pragma mark Init & dealloc 
 
-- (id)initialize{
+- (id)initialize {
     self = [super init];
     if(!self){
         return nil;
@@ -88,7 +88,7 @@
     return self;
 }
 
-- (void)loadView{
+- (void)loadView {
     // add canvas
 	displayView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen]  bounds]];
     [self initialize];
@@ -134,7 +134,7 @@
     }
 }
 
--(void)distanceDidChanged:(UISlider *)slider
+- (void)distanceDidChanged:(UISlider *)slider
 {
     NSUInteger index = slider.value;
     [slider setValue:index animated:NO];
@@ -145,7 +145,7 @@
     distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
 }
 
-- (void) viewDidLoad{
+- (void) viewDidLoad {
     [super viewDidLoad];
 	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
@@ -156,12 +156,12 @@
     [self displayAR];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
     [self refreshWithNewRooms:[[ChatRoomsService shared] allLocalRooms]];
 }
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [super viewDidUnload];
 }
 
@@ -180,7 +180,7 @@
 }
 
 // touch on marker
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *lastTouch = [touches anyObject];
     
     if([lastTouch.view isKindOfClass:ARMarkerView.class]){
@@ -191,7 +191,7 @@
 }
 
 // This is needed to start showing the Camera of the Augemented Reality Toolkit.
-- (void)displayAR{
+- (void)displayAR {
 	
     [self initCapture];
     
@@ -215,8 +215,6 @@
 }
 
 - (void)startListening {
-	
-	// start our heading readings and our accelerometer readings.
     
     [[LocationService shared].myLocationManager setDelegate:self];
     
@@ -230,7 +228,7 @@
 		self.centerCoordinate = [ARCoordinate coordinateWithRadialDistance:1.0 inclination:0 azimuth:0];
 }
 
-- (void)refreshWithNewRooms:(NSArray *)newRooms{
+- (void)refreshWithNewRooms:(NSArray *)newRooms {
 	// remove old
 	for (UIView* view in displayView.subviews){
 		if (view == distanceLabel || view == distanceSlider){
@@ -247,7 +245,7 @@
     [self addPoints:newRooms ];
 }
 
-- (void)clear{
+- (void)clear {
     [self.coordinates removeAllObjects];
 	[coordinateViews removeAllObjects];
 }
@@ -255,7 +253,7 @@
 /*
  Add users' annotations to AR environment
  */
-- (void)addPoints:(NSArray *)newRooms{
+- (void)addPoints:(NSArray *)newRooms {
     // add new
     if([newRooms count] > 0){
         for(QBCOCustomObject *room in newRooms){
@@ -273,8 +271,7 @@
 /*
  Add user's annotation to AR environment
  */
-- (void)addPoint:(QBCOCustomObject *)roomAnnotation{
-    
+- (void)addPoint:(QBCOCustomObject *)roomAnnotation {
     
     // add marker
     // get view for annotation
@@ -296,14 +293,14 @@
 /*
  Return view for new user annotation
  */
-- (UIView *)viewForAnnotation:(QBCOCustomObject *)roomAnnotation{
+- (UIView *)viewForAnnotation:(QBCOCustomObject *)roomAnnotation {
     ARMarkerView *marker = [[[ARMarkerView alloc] initWithGeoPoint:roomAnnotation] autorelease];
     marker.target = self;
     marker.action = @selector(touchOnMarker:);
     return marker;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ARToChat"]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
@@ -313,7 +310,7 @@
 #pragma mark -
 #pragma mark UIActionSheetDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
             [self performSegueWithIdentifier:@"ARToChat" sender:_chatRoom];
@@ -327,7 +324,7 @@
 
 #pragma mark - Marker Action
 
-- (void)touchOnMarker:(ARMarkerView *)marker{
+- (void)touchOnMarker:(ARMarkerView *)marker {
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:marker.userName.text delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
     _chatRoom = [marker currentRoom];
     [action showInView:self.view];
@@ -579,9 +576,6 @@
 			
             // mraker location
 			CGPoint locCenter = [self pointInView:self.displayView withView:viewToDraw forCoordinate:item];
-            
-//            CATransform3D transform = CATransform3DIdentity;
-            
 			CGFloat scaleFactor = 1.0;
 			
 			float width	 = viewToDraw.bounds.size.width  * scaleFactor;
@@ -591,27 +585,6 @@
 			viewToDraw.frame = CGRectMake(locCenter.x - width / 2.0, locCenter.y - (height / 2.0) + offset, width, height);
             
 			totalDisplayed++;
-			
-//            // rotate view based on perspective
-//			if ([self rotateViewsBasedOnPerspective]) {
-//				transform.m34 = 1.0 / 300.0;
-//				
-//				double itemAzimuth		= item.azimuth;
-//				double centerAzimuth	= self.centerCoordinate.azimuth;
-//				
-//				if (itemAzimuth - centerAzimuth > M_PI) 
-//					centerAzimuth += 2 * M_PI;
-//				
-//				if (itemAzimuth - centerAzimuth < -M_PI) 
-//					itemAzimuth  += 2 * M_PI;
-//				
-//				double angleDifference	= itemAzimuth - centerAzimuth;
-//				transform				= CATransform3DRotate(transform, self.maximumRotationAngle * angleDifference / 0.3696f , 0, 1, 0);
-//			}
-//			
-//            
-//            // allow transform
-//			viewToDraw.layer.transform = transform;
             
 			//if we don't have a superview, set it up.
 			if (!([viewToDraw superview])) {
@@ -690,7 +663,7 @@
 #pragma mark -
 #pragma mark Capture
 
-- (IBAction) initCapture {
+- (IBAction)initCapture {
     
 	/*We setup the input*/
 	AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput 

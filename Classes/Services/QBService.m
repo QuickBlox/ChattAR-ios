@@ -10,7 +10,7 @@
 
 @implementation QBService
 
-+(instancetype)defaultService{
++ (instancetype)defaultService {
     static QBService *defaultQBService = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -19,7 +19,7 @@
     return defaultQBService;
 }
 
--(id)init{
+- (id)init {
     self = [super init];
     if (self) {
         self.userIsJoinedChatRoom = NO;

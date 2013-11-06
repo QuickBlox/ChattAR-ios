@@ -12,8 +12,10 @@
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
+#import "FBChatService.h"
 #import "QBService.h"
 #import "LocationService.h"
+#import "DetailDialogsViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 
@@ -27,9 +29,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
+@property (strong, nonatomic) NSMutableDictionary *dialogTo;
 @property CGFloat cellSize;
 
--(IBAction)textEditDone:(id)sender;
+- (IBAction)textEditDone:(id)sender;
 - (IBAction)backToRooms:(id)sender;
 - (IBAction)sendMessageButton:(id)sender;
 
@@ -38,6 +41,7 @@
 @implementation ChatRoomViewController
 @synthesize cellPath;
 @synthesize quote;
+
 
 #pragma mark LifeCycle
 
@@ -49,9 +53,15 @@
     self.chatHistory = [[NSMutableArray alloc] init];
     [QBChat instance].delegate = self;
     [self configureInputTextViewLayer];
+    
+    NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
+    self.title = roomName;
+    
+    [self creatingOrJoiningRoom];
 }
 
--(void)setPin{
+- (void)setPin
+{
     if (!self.indicatorView) {
         self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         self.indicatorView.frame = CGRectMake(self.chatRoomTable.frame.size.width/2 - 10, self.chatRoomTable.frame.size.height/2 -10, 20 , 20);
@@ -61,7 +71,8 @@
     [self.indicatorView startAnimating];
 }
 
-- (void)configureInputTextViewLayer{
+- (void)configureInputTextViewLayer
+{
     self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.inputTextView.layer.shadowRadius = 7.0f;
     self.inputTextView.layer.masksToBounds = NO;
@@ -70,37 +81,23 @@
     self.inputTextView.layer.borderWidth = 0.1f;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setChatRoomTable:nil];
-    [self setBackButton:nil];
-    [self setInputTextView:nil];
-    [self setInputMessageField:nil];
-    [super viewDidUnload];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
-    self.title = roomName;
-    [self creatingOrJoiningRoom];
-    [_chatRoomTable reloadData];
     [super viewWillAppear:animated];
+    [_chatRoomTable reloadData];
 }
 
 
 #pragma mark -
 #pragma mark Table View Data Source
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return [_chatHistory count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell;
     static NSString *roomCellIdentifier = @"RoomCellIdentifier";
     static NSString *quotedRoomCellIdentifier = @"quotedRoomCellIdentifier";
@@ -128,8 +125,8 @@
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     CGFloat cellHeight;
     NSString *chatString = [[_chatHistory objectAtIndex:indexPath.row] text];
     NSData *data = [chatString dataUsingEncoding:NSUTF8StringEncoding];
@@ -147,13 +144,14 @@
 #pragma mark -
 #pragma mark Table View Delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [self.chatRoomTable deselectRowAtIndexPath:indexPath animated:YES];
     QBChatMessage *chatMsg = [_chatHistory objectAtIndex:[indexPath row]];
     if (![chatMsg.senderNick isEqual:[[FBStorage shared].currentFBUser objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", nil];
     [actionSheet showInView:self.view];
     }
 }
@@ -162,11 +160,12 @@
 #pragma mark -
 #pragma mark UIActionSheetDelegate
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     NSLog(@"Button whith number %i was clicked", buttonIndex);
     switch (buttonIndex) {
         case 0:
-            // do something
+        {
             NSLog(@"REPLY");
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
             
@@ -190,14 +189,24 @@
             
             [self.inputMessageField becomeFirstResponder];
             break;
+        }
+        case 1:
+        {
+            QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
+            NSMutableDictionary *currentFriend = [self findFriendWithMessage:msg];
+            self.dialogTo = [FBChatService findFBConversationWithFriend:currentFriend];
+            [self performSegueWithIdentifier:@"ChatToDialog" sender:currentFriend];
+            break;
+        }
     }
 }
+
 
 #pragma mark -
 #pragma mark ChatRoom
 
--(void)creatingOrJoiningRoom{
-    // Join room
+- (void)creatingOrJoiningRoom
+{
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:YES];
 }
@@ -206,18 +215,20 @@
 #pragma mark -
 #pragma mark QBChatDelegate
 
--(void)chatDidLogin{
+- (void)chatDidLogin
+{
     // if room entered
-    if ([[FBService shared] fbChatRoomDidEnter] == YES) {
+    if ([[FBService shared] isInChatRoom]) {
         [self creatingOrJoiningRoom];
     }
 }
 
 // if chat room is created or user is joined
--(void)chatRoomDidEnter:(QBChatRoom *)room{
+- (void)chatRoomDidEnter:(QBChatRoom *)room
+{
     [room addUsers:@[@34]];
     NSLog(@"Chat Room is opened");
-    [[FBService shared] setFbChatRoomDidEnter:YES];
+    [[FBService shared] setIsInChatRoom:YES];
     [[QBService defaultService] setCurrentChatRoom:room];
     //get room
     self.currentRoom = room;
@@ -231,24 +242,28 @@
     [self.indicatorView stopAnimating];
 }
 
-- (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error{
+- (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error
+{
     NSLog(@"Error:%@", error);
 }
 
 // back button
-- (IBAction)backToRooms:(id)sender {
-    [[FBService shared] setFbChatRoomDidEnter:NO];
+- (IBAction)backToRooms:(id)sender
+{
+    [[FBService shared] setIsInChatRoom:NO];
     [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)chatRoomDidLeave:(NSString *)roomName{
+- (void)chatRoomDidLeave:(NSString *)roomName
+{
     NSLog(@"Did  Leave worked");
     [QBService defaultService].currentChatRoom = nil;
 }
 
 // action message button
-- (IBAction)sendMessageButton:(id)sender {
+- (IBAction)sendMessageButton:(id)sender
+{
     if ([self.inputMessageField.text isEqual:@""]) {
         //don't send
     } else {
@@ -282,19 +297,22 @@
 }
 
 //  receiving messages
--(void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName{
-    QBDLogEx(@"message %@", message);
-    
+- (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName
+{
+    //QBDLogEx(@"message %@", message);
     self.userMessage = message;
     [self.chatHistory addObject:message];
     [self.chatRoomTable reloadData];
     [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
 }
+
+
 #pragma mark -
 #pragma mark Show/Hide Keyboard
 
--(void)showKeyboard{
+- (void)showKeyboard
+{
     CGRect tableViewFrame = self.chatRoomTable.frame;
     CGRect inputPanelFrame = _inputTextView.frame;
     tableViewFrame.origin.y -= 215;
@@ -306,7 +324,8 @@
     }];
 }
 
--(void)hideKeyboard{
+- (void)hideKeyboard
+{
     CGRect tableViewFrame = self.chatRoomTable.frame;
     CGRect inputPanelFrame = _inputTextView.frame;
     tableViewFrame.origin.y += 215;
@@ -318,18 +337,22 @@
     }];    
 }
 
+
 #pragma mark -
 #pragma mark UITextField
 
--(IBAction)textEditDone:(id)sender{
+- (IBAction)textEditDone:(id)sender
+{
     [sender resignFirstResponder];
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
     [self showKeyboard];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
     [self hideKeyboard];
 }
 
@@ -337,9 +360,33 @@
 #pragma mark -
 #pragma mark Sharing
 
-- (IBAction)share:(id)sender {
+- (IBAction)share:(id)sender
+{
     UIActivityViewController *shareKit = [[UIActivityViewController alloc] initWithActivityItems:@[@"I use ChattAR 2.0"] applicationActivities:nil];
     [self presentViewController:shareKit animated:YES completion:nil];
+}
+
+
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
+    ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
+}
+
+- (NSMutableDictionary *)findFriendWithMessage:(QBChatMessage *)message
+{
+    NSMutableArray *facebookFriends = [FBStorage shared].friends;
+    NSMutableDictionary *currentFriend = [[NSMutableDictionary alloc] init];
+    for (NSMutableDictionary *friend in facebookFriends) {
+        if ([[message senderNick] isEqual:[friend objectForKey:kId]]) {
+            currentFriend = friend;
+            break;
+        }
+    }
+    return currentFriend;
 }
 
 @end

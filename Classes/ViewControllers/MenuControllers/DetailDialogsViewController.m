@@ -15,7 +15,15 @@
 #import "LocationService.h"
 #import "Utilites.h"
 
-@interface DetailDialogsViewController ()
+@interface DetailDialogsViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate>
+
+@property (nonatomic, assign) NSNumber *friendPosition;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *inputTextView;
+@property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
+
+- (IBAction)back:(id)sender;
+- (IBAction)sendMessage:(id)sender;
 
 @end
 
@@ -24,27 +32,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (self.conversation == nil) {
-        self.conversation = [[NSMutableDictionary alloc]init];
-    }
-	// Do any additional setup after loading the view.
+    
     self.title = [self.myFriend objectForKey:kName];
+    
+    if (self.conversation == nil) {
+        self.conversation = [[NSMutableDictionary alloc] init];
+    }
+    
     [self configureInputTextViewLayer];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:kNotificationMessageReceived object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:NO];
     [self reloadTableView];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)configureInputTextViewLayer
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)configureInputTextViewLayer {
     self.inputTextView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.inputTextView.layer.shadowRadius = 7.0f;
     self.inputTextView.layer.masksToBounds = NO;
@@ -59,43 +66,39 @@
 
 - (IBAction)back:(id)sender {
     [[FBChatService defaultService].allFriendsHistoryConversation setObject:self.conversation forKey:kComments];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)sendMessage:(id)sender {
-    if ([self.inputMessageField.text isEqualToString: @""]) {
+    if ([self.inputMessageField.text length] == 0) {
+        return;
         NSLog(@"Empty message");
-    } else {
-        //send message to facebook:
-        [[FBService shared] sendMessageToFacebook:self.inputMessageField.text withFriendFacebookID:[self.myFriend objectForKey:kId]];
-        
-        NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
-        // put message to dictionary:
-        [facebookMessage setValue:self.inputMessageField.text forKey:kMessage];
-        
-        NSDate *date = [NSDate date];
-        [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-        NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
-        [facebookMessage setValue:createdTime forKey:kCreatedTime];
-        // back to default format mode
-        [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
-        
-        NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
-        [from setValue:[[FBStorage shared].currentFBUser objectForKey:kId] forKey:kId];
-        [from setValue:[[FBStorage shared].currentFBUser objectForKey:kName] forKey:kName];
-        [facebookMessage setValue:from forKey:kFrom];
-        
-        
-        [[[self.conversation objectForKey:kComments] objectForKey:kData] addObject:facebookMessage];
-        self.inputMessageField.text = @"";
-        [self.inputMessageField resignFirstResponder];
-        
-        if (([[self.conversation objectForKey:kComments] objectForKey:kData] == nil) || [[[self.conversation objectForKey:kComments] objectForKey:kData] count] == 0) {
-            [[FBService shared] sendMessageToFacebook:self.inputMessageField.text withFriendFacebookID:[self.myFriend objectForKey:kId]];
-        }
-        
-        [self reloadTableView];
     }
+    
+    // send message to facebook:
+    [[FBService shared] sendMessage:self.inputMessageField.text toFacebookWithFriendID:[self.myFriend objectForKey:kId]];
+    
+    // create message object
+    NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
+    [facebookMessage setValue:self.inputMessageField.text forKey:kMessage];
+    NSDate *date = [NSDate date];
+    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+    NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
+    [facebookMessage setValue:createdTime forKey:kCreatedTime];
+    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
+    NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
+    [from setValue:[[FBStorage shared].currentFBUser objectForKey:kId] forKey:kId];
+    [from setValue:[[FBStorage shared].currentFBUser objectForKey:kName] forKey:kName];
+    [facebookMessage setValue:from forKey:kFrom];
+    
+    // save message to history
+    [[[self.conversation objectForKey:kComments] objectForKey:kData] addObject:facebookMessage];
+    
+    self.inputMessageField.text = @"";
+    [self.inputMessageField resignFirstResponder];
+    
+    [self reloadTableView];
 }
 
 - (void)receiveMessage {
@@ -113,7 +116,7 @@
 #pragma mark -
 #pragma mark Show/Hide Keyboard
 
--(void)showKeyboard{
+- (void)showKeyboard {
     CGRect tableViewFrame = self.tableView.frame;
     CGRect inputPanelFrame = _inputTextView.frame;
     tableViewFrame.origin.y -= 215;
@@ -125,7 +128,7 @@
     }];
 }
 
--(void)hideKeyboard{
+- (void)hideKeyboard {
     CGRect tableViewFrame = self.tableView.frame;
     CGRect inputPanelFrame = _inputTextView.frame;
     tableViewFrame.origin.y += 215;
@@ -141,15 +144,15 @@
 #pragma mark -
 #pragma mark UITextField
 
--(IBAction)textEditDone:(id)sender{
+- (IBAction)textEditDone:(id)sender {
     [sender resignFirstResponder];
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField{
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self showKeyboard];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
+-(void)textFieldDidEndEditing:(UITextField *)textField {
     [self hideKeyboard];
 }
 
@@ -159,24 +162,28 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return ([[[self.conversation objectForKey:kComments] objectForKey:kData] count]== 0) ? 0 :[[[self.conversation objectForKey:kComments] objectForKey:kData] count];
+    NSArray *data = [[self.conversation objectForKey:kComments] objectForKey:kData];
+    return [data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *roomCellIdentifier = @"RoomCellIdentifier";
+    
     NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
-       UITableViewCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
-        if (cell == nil){
-            cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
-        }
-        [(ChatRoomCell *)cell handleParametersForCellWithFBMessage:message andIndexPath:indexPath];
+    
+    ChatRoomCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
+    if (cell == nil){
+        cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
+    }
+    [cell handleParametersForCellWithFBMessage:message andIndexPath:indexPath];
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
-    NSString *chatString = [message objectForKey:kMessage];
-    return [ChatRoomCell configureHeightForCellWithMessage:chatString];
+    NSString *messageText = [message objectForKey:kMessage];
+    return [ChatRoomCell configureHeightForCellWithMessage:messageText];
 }
 
 

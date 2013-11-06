@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSMutableDictionary *allFriendsHistoryConversation;
 
 + (instancetype)defaultService;
++ (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend;
 
 @end

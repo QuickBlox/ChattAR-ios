@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
 
-@interface QuotedChatRoomCell : UITableViewCell {
-}
+@interface QuotedChatRoomCell : UITableViewCell
 
 @property (nonatomic, strong) AsyncImageView *qUserPhoto;
 @property (nonatomic, strong) UIImageView *qColorBuble;

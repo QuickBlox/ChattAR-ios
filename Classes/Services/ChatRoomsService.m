@@ -10,7 +10,7 @@
 
 @implementation ChatRoomsService
 
-+ (instancetype)shared{
++ (instancetype)shared {
     static ChatRoomsService *sharedChatRoomsService = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -21,7 +21,7 @@
 
 #pragma mark - Sort
 
--(NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms{
+- (NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms {
     NSArray *sortedRooms = [rooms sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CLLocation *room1 = [[CLLocation alloc] initWithLatitude:[[[obj1 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj1 fields] objectForKey:kLongitude] doubleValue]];
         CLLocation *room2 = [[CLLocation alloc] initWithLatitude:[[[obj2 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj2 fields] objectForKey:kLongitude] doubleValue]];

@@ -27,7 +27,7 @@
 #pragma marak -
 #pragma mark QBActionStatusDelegate
 
--(void)completedWithResult:(Result *)result{
+- (void)completedWithResult:(Result *)result {
     if ([result success]) {
         if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
             // todo:

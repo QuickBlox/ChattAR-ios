@@ -13,7 +13,7 @@
 
 @implementation ChatRoomCell
 
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.userPhoto = [[AsyncImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
@@ -56,7 +56,7 @@
 }
 
 // HANDLE CELL FOR QB MESSAGE:
-- (void)handleParametersForCellWithQBMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath{
+- (void)handleParametersForCellWithQBMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath {
     // Buble
     if ([indexPath row] % 2 == 0) {
         self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
@@ -130,7 +130,6 @@
     self.message.text = userMessage;
     self.userName.text = [[message objectForKey:kFrom] objectForKey:kName];
     self.postMessageDate.text = time;
-    
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };

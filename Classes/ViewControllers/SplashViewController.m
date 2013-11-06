@@ -12,6 +12,8 @@
 #import "Reachability.h"
 #import "LocationService.h"
 #import "QBService.h"
+#import "FBChatService.h"
+
 
 @implementation SplashViewController
 @synthesize backgroundImage, loginButton;
@@ -53,10 +55,13 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
 }
-- (void)viewDidUnload {
+
+- (void)viewDidUnload
+{
     [self setBackgroundImage:nil];
     [self setLoginButton:nil];
     [self setActivityIndicatior:nil];
@@ -67,7 +72,8 @@
 #pragma mark
 #pragma mark Actions
 
--(IBAction)logIn:(id)sender{
+- (IBAction)logIn:(id)sender
+{
     
     [self checkFBSession];
 }
@@ -77,7 +83,8 @@
 #pragma mark Auth methods
 
 // checking FBSession state:
--(void)checkFBSession{
+- (void)checkFBSession
+{
     
     if ([FBSession activeSession].state == FBSessionStateCreated) {
         
@@ -103,6 +110,21 @@
                 [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
                 
                 [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
+                
+                // Get FB Chat history
+                [[FBService shared] inboxMessagesWithBlock:^(id result) {
+                    NSMutableArray *resultData = [result objectForKey:kData];
+                    NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
+                    for (NSMutableDictionary *dict in resultData) {
+                        NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
+                        for (NSMutableDictionary *element in array) {
+                            if ([element objectForKey:kId] != [[FBStorage shared].currentFBUser objectForKey:kId]) {
+                                [history setObject:dict forKey:[element objectForKey:kId]];
+                            }
+                        }
+                    }
+                    [FBChatService defaultService].allFriendsHistoryConversation = history;
+                }];
             }
         }]; 
     }
@@ -115,6 +137,21 @@
         
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
+            
+            // Get FB Chat history
+            [[FBService shared] inboxMessagesWithBlock:^(id result) {
+                NSMutableArray *resultData = [result objectForKey:kData];
+                NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
+                for (NSMutableDictionary *dict in resultData) {
+                    NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
+                    for (NSMutableDictionary *element in array) {
+                        if ([element objectForKey:kId] != [[FBStorage shared].currentFBUser objectForKey:kId]) {
+                            [history setObject:dict forKey:[element objectForKey:kId]];
+                        }
+                    }
+                }
+                [FBChatService defaultService].allFriendsHistoryConversation = history;
+            }];
         }];
         
         // login to FB XMPP Chat
@@ -126,7 +163,8 @@
     
 }
 
-- (void) gettingAllDataAboutMeAndMyFriendsFromFacebook {
+- (void)gettingAllDataAboutMeAndMyFriendsFromFacebook
+{
     
     [[FBService shared] userProfileWithResultBlock:^(id result) {
         
@@ -147,12 +185,14 @@
 }
 
 // LogIn to XMPP
--(void)loginToFacebookChat{
+- (void)loginToFacebookChat
+{
     [[FBService shared] logInChat];
 }
 
 // QBSession
--(void)createQBSessionWithSocialProvider:(NSString *)provider andAccessToken:(NSString *)accessToken{
+- (void)createQBSessionWithSocialProvider:(NSString *)provider andAccessToken:(NSString *)accessToken
+{
     QBASessionCreationRequest *extendedRequest = [QBASessionCreationRequest request];
     extendedRequest.socialProvider = provider;
     extendedRequest.socialProviderAccessToken = accessToken;
@@ -165,7 +205,8 @@
 #pragma mark UI updates
 
 // Show or hide login button
--(void)hideLoginButton:(BOOL)isHidden{
+- (void)hideLoginButton:(BOOL)isHidden
+{
     self.loginButton.hidden = isHidden;
 }
 
@@ -173,7 +214,8 @@
 #pragma mark 
 #pragma mark QBActionStatusDelegate
 
--(void)completedWithResult:(Result *)result{
+- (void)completedWithResult:(Result *)result
+{
     if (result.success && [result isKindOfClass:[QBAAuthSessionCreationResult class]]) {
         // session was created successful
         QBAAuthSessionCreationResult *res = (QBAAuthSessionCreationResult *)result;
@@ -191,7 +233,8 @@
 #pragma mark -
 #pragma mark QBChatDelegate
 
--(void)chatDidLogin{
+- (void)chatDidLogin
+{
     NSLog(@"Chat login success");
     [self.activityIndicatior stopAnimating];
     [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
@@ -199,8 +242,6 @@
     [[LocationService shared] startUpdateLocation];
     [self dismissModalViewControllerAnimated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
-    
-    //NSLog(@"%@", [[[[FBStorage shared]friends] objectAtIndex:1] allKeys]);
 }
 
 @end

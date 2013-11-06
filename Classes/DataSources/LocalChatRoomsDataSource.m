@@ -11,11 +11,11 @@
 
 @implementation LocalChatRoomsDataSource
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.chatRooms count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *localCellIdentifier = @"LocalCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:localCellIdentifier];
@@ -28,11 +28,11 @@
     return cell;
 }
 
-- (NSString *)distanceFormatter:(NSInteger)distance{
+- (NSString *)distanceFormatter:(NSInteger)distance {
     NSString *formatedDistance;
     if (distance <= 999) {
         formatedDistance = [NSString stringWithFormat:@"%d m", distance];
-    } else{
+    } else {
         distance = roundf(distance/1000);
         formatedDistance = [NSString stringWithFormat:@"%d km",distance];
     }

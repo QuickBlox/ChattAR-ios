@@ -18,10 +18,12 @@
 + (instancetype)shared;
 
 #pragma mark - Update location
+
 - (void)startUpdateLocation;
 - (void)stopUpdateLocation;
 
 #pragma mark - Requests
+
 - (CLLocationCoordinate2D)getMyCoorinates;
 
 @end

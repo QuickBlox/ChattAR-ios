@@ -24,24 +24,25 @@
     return YES;
 }
 
+
 #pragma mark - 
 #pragma mark ViewController Lifecycle
 
-- (void)viewDidUnload{
+- (void)viewDidUnload {
     [self setFirstNameField:nil];
     [super viewDidUnload];
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self configureQButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
     NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
     [self.firstNameField setText:firstLastName];
@@ -55,7 +56,7 @@
 
 #pragma mark - QuickBlox Button
 
--(void)configureQButton{
+- (void)configureQButton {
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
     UIButton *qbButton = [[UIButton alloc] init];
     qbButton.backgroundColor = [UIColor colorWithPatternImage:img];
@@ -69,14 +70,14 @@
 }
 
 // action
-- (void)gotoQBSite{
+- (void)gotoQBSite {
     NSString* urlString = @"http://quickblox.com";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 
 #pragma mark - TableView DataSource
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows;
     if (_isArNotAvailable) {
         rows = 6;
@@ -91,11 +92,11 @@
 #pragma mark SASlideMenuDataSource
 
 // This is the indexPath selected at start-up
-- (NSIndexPath*) selectedIndexPath{
+- (NSIndexPath*)selectedIndexPath {
     return [NSIndexPath indexPathForRow:2 inSection:0];
 }
 
-- (NSString*) segueIdForIndexPath:(NSIndexPath *)indexPath{
+- (NSString*)segueIdForIndexPath:(NSIndexPath *)indexPath {
     NSString *segue = [NSString string];
     switch ([indexPath row]) {
         case 2:
@@ -128,11 +129,11 @@
     return segue;
 }
 
-- (Boolean) allowContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath{
+- (Boolean)allowContentViewControllerCachingForIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
-- (Boolean) disablePanGestureForIndexPath:(NSIndexPath *)indexPath{
+- (Boolean)disablePanGestureForIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row ==0) {
         return YES;
     }
@@ -140,13 +141,13 @@
 }
 
 // This is used to configure the menu button. The beahviour of the button should not be modified
-- (void) configureMenuButton:(UIButton *)menuButton{
+- (void)configureMenuButton:(UIButton *)menuButton {
     menuButton.frame = CGRectMake(0, 0, 40, 29);
     [menuButton setImage:[UIImage imageNamed:@"mnubtn.png"] forState:UIControlStateNormal];
     [menuButton setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void) configureSlideLayer:(CALayer *)layer{
+- (void)configureSlideLayer:(CALayer *)layer {
     layer.shadowColor = [UIColor blackColor].CGColor;
     layer.shadowOpacity = 0.3;
     layer.shadowOffset = CGSizeMake(-15, 0);
@@ -155,10 +156,10 @@
     layer.shadowPath =[UIBezierPath bezierPathWithRect:layer.bounds].CGPath;
 }
 
-- (CGFloat) leftMenuVisibleWidth{
+- (CGFloat)leftMenuVisibleWidth {
     return 250;
 }
-- (void)prepareForSwitchToContentViewController:(UINavigationController *)content{
+- (void)prepareForSwitchToContentViewController:(UINavigationController *)content {
 }
 
 

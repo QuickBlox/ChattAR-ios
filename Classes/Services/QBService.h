@@ -16,6 +16,6 @@
 @property (nonatomic, strong) QBChatRoom        *currentChatRoom;
 @property (nonatomic, strong) NSMutableArray    *dialogMessages;
 
-+(instancetype)defaultService;
++ (instancetype)defaultService;
 
 @end

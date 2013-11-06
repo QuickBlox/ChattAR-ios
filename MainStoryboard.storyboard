@@ -121,6 +121,7 @@
                         <outlet property="chatRoomTable" destination="FSd-Vp-dNN" id="ymo-E2-UZi"/>
                         <outlet property="inputMessageField" destination="mNm-br-NIt" id="aHl-X1-L0Y"/>
                         <outlet property="inputTextView" destination="4e0-Cg-koI" id="qoa-AS-Trn"/>
+                        <segue destination="mwh-Ap-G2c" kind="custom" identifier="ChatToDialog" id="wsq-0v-N34"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2g-Wd-Tl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -170,7 +171,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3U-QH-eD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-512" y="-1726"/>
+            <point key="canvasLocation" x="-528" y="-1630"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="0pQ-K8-zlO">
@@ -995,7 +996,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="HFt-fQ-707"/>
         <segue reference="GXn-8Q-nrq"/>
+        <segue reference="HFt-fQ-707"/>
+        <segue reference="YmU-iS-597"/>
     </inferredMetricsTieBreakers>
 </document>

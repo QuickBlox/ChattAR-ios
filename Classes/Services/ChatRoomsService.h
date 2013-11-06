@@ -17,6 +17,6 @@
 
 + (instancetype)shared;
 
--(NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms;
+- (NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms;
 
 @end

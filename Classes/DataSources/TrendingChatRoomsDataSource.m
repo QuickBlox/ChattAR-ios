@@ -12,11 +12,11 @@
 
 @implementation TrendingChatRoomsDataSource
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.chatRooms count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *trendingCellIdentifier = @"TrendingCell";
     TrendingCell *cell = (TrendingCell *)[tableView dequeueReusableCellWithIdentifier:trendingCellIdentifier];

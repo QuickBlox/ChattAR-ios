@@ -23,14 +23,13 @@
 @implementation MapViewController
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.view.tag = kMapViewControllerTag;
     _mapView.mapType = MKMapTypeStandard;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     // getting local rooms:
     _chatRooms = [[ChatRoomsService shared] allLocalRooms];
     // setting local rooms at the map:
@@ -38,7 +37,7 @@
     [super viewWillAppear:NO];
 }
 
--(void)setAnnotationsToMap:(NSArray *)chatRooms {
+- (void)setAnnotationsToMap:(NSArray *)chatRooms {
     for (QBCOCustomObject *room in self.chatRooms) {
         CLLocationCoordinate2D coord;
         coord.latitude = [[room.fields valueForKey:kLatitude] floatValue];
@@ -55,7 +54,7 @@
 #pragma mark -
 #pragma mark MKMapViewDelegate
 
--(CAnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(CAnotation *)annotation {
+- (CAnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(CAnotation *)annotation {
     
     static NSString *annotationIdentifier = @"annotationIdentifier";
     CAnotationView *aView = (CAnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
@@ -70,7 +69,7 @@
     return aView;
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(CAnotationView *)view{
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(CAnotationView *)view {
     NSLog(@"Anotation selected.");
     UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:view.annotationTitle delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
     _chatRoom = view.chatRoom;
@@ -81,7 +80,7 @@
 #pragma mark -
 #pragma mark UIActionSheetDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
             [self performSegueWithIdentifier:@"MapToChat" sender:_chatRoom];
@@ -92,7 +91,7 @@
     }
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MapToChat"]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;

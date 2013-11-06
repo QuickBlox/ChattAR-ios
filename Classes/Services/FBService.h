@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-#import "FBServiceResult.h"
-#import "FBServiceResultDelegate.h"
 @class XMPPStream;
 
 @interface FBService : NSObject
@@ -16,9 +14,9 @@
 	NSTimer		*presenceTimer;
 }
 @property (strong, nonatomic) FBSession *session;
-@property (assign, nonatomic) BOOL fbChatRoomDidEnter;
+@property (assign, nonatomic) BOOL isInChatRoom;
 
-+ (FBService *)shared;
++ (instancetype)shared;
 
 #pragma mark -
 #pragma mark Me
@@ -32,7 +30,7 @@
 
 - (void) logInChat;
 - (void) logOutChat;
-- (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID;
-- (void) inboxMessagesWithDelegate:(NSObject <FBServiceResultDelegate>*)delegate;
+- (void) sendMessage:(NSString*)textMessage toFacebookWithFriendID:(NSString*)friendID;
+- (void) inboxMessagesWithBlock:(FBResultBlock)resultBlock;
 
 @end

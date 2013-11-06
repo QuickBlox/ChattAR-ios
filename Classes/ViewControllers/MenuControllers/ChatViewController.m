@@ -95,14 +95,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     [self.trendingTableView reloadData];
     [self.locationTableView reloadData];
 }
 
-- (void)loadRooms{
+- (void)loadRooms {
     [[NSNotificationCenter defaultCenter]  removeObserver:self];
     
     if ([_trendings count] == 0) {
@@ -116,7 +116,7 @@
     }
 }
 
--(void)loadLocalRooms{
+- (void)loadLocalRooms {
     [QBCustomObjects objectsWithClassName:kChatRoom delegate:self];
 }
 
@@ -124,7 +124,7 @@
 #pragma marak -
 #pragma mark QBActionStatusDelegate
 
--(void)completedWithResult:(Result *)result{
+- (void)completedWithResult:(Result *)result {
     if ([result success]) {
         if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
             // todo:
@@ -160,7 +160,7 @@
     }
 }
 
--(UIView *)creatingTrendingFooter {
+- (UIView *)creatingTrendingFooter {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _trendingTableView.frame.size.width, 44.0f)];
     footerView.backgroundColor = [UIColor clearColor];
     _trendingFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _trendingTableView.frame.size.width, 44.0f)];
@@ -232,21 +232,21 @@
 #pragma mark Data Sources
 
 
-- (TrendingChatRoomsDataSource *)trendingDataSource{
+- (TrendingChatRoomsDataSource *)trendingDataSource {
     if (!_trendingDataSource){
         _trendingDataSource = [TrendingChatRoomsDataSource new];
     }
     return _trendingDataSource;
 }
 
-- (LocalChatRoomsDataSource *)locationDataSource{
+- (LocalChatRoomsDataSource *)locationDataSource {
     if (!_locationDataSource){
         _locationDataSource = [LocalChatRoomsDataSource new];
     }
     return _locationDataSource;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"kSegueToChatRoomController"]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
@@ -258,7 +258,7 @@
 #pragma mark -
 #pragma mark Table View Delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
  
     // get current chat room
@@ -284,7 +284,7 @@
     [alert show];
 }
 
--(NSArray *)getNamesOfRooms:(NSArray *)rooms{
+- (NSArray *)getNamesOfRooms:(NSArray *)rooms {
     NSMutableArray *names = [[NSMutableArray alloc] init];
     for (int i=0; i<[rooms count]; i++) {
         QBCOCustomObject *object = [rooms objectAtIndex:i];
@@ -297,7 +297,7 @@
 #pragma mark - 
 #pragma mark UIAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 1:
             if (![[[alertView textFieldAtIndex:0] text] isEqual:@""]) {
@@ -331,13 +331,13 @@
     }
 }
 
-- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView{
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
     return YES;
 }
 
 
 // distances for local rooms
--(NSMutableArray *)arrayOfDistances:(NSArray *)objects{
+- (NSMutableArray *)arrayOfDistances:(NSArray *)objects {
     NSMutableArray *chatRoomDistances = [NSMutableArray array];
     for (QBCOCustomObject *object in objects) {
         CLLocation *room = [[CLLocation alloc] initWithLatitude:[[[object fields] objectForKey:kLatitude] doubleValue] longitude:[[[object fields] objectForKey:kLongitude] doubleValue]];
@@ -347,7 +347,7 @@
     return chatRoomDistances;
 }
 
--(NSInteger)distanceFromNewRoom:(QBCOCustomObject *)room{
+- (NSInteger)distanceFromNewRoom:(QBCOCustomObject *)room {
     CLLocation *newRoom = [[CLLocation alloc] initWithLatitude:[[[room fields] objectForKey:kLatitude] doubleValue] longitude:[[[room fields] objectForKey:kLongitude] doubleValue]];
     NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:newRoom];
     return distance;

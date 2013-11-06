@@ -14,6 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatior;
 
--(IBAction)logIn:(id)sender;
+- (IBAction)logIn:(id)sender;
 
 @end

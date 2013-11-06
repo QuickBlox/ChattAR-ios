@@ -16,15 +16,15 @@
 
 
 
-static FBService *service = nil;
+static id service = nil;
 
 @implementation FBService
-@synthesize fbChatRoomDidEnter;
+@synthesize isInChatRoom;
 
 #pragma mark -
 #pragma mark Singletone
 
-+ (FBService *)shared {
++ (instancetype)shared {
 	@synchronized (self) {
 		if (service == nil){
             service = [[self alloc] init];
@@ -34,12 +34,12 @@ static FBService *service = nil;
 	return service;
 }
 
-- (id)init{
+- (id)init {
     self = [super init];
     if (self) {
 		xmppStream = [[XMPPStream alloc] initWithFacebookAppId:APP_ID];
 		[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-        fbChatRoomDidEnter = NO;
+        isInChatRoom = NO;
     }
     return self;
 }
@@ -49,7 +49,7 @@ static FBService *service = nil;
 #pragma mark Me
 
 // Get profile
-- (void) userProfileWithResultBlock:(FBResultBlock)resultBlock{
+- (void)userProfileWithResultBlock:(FBResultBlock)resultBlock {
     FBRequest *meRequest = [FBRequest requestForMe];
     [meRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         resultBlock(result);
@@ -60,7 +60,7 @@ static FBService *service = nil;
 #pragma mark -
 #pragma mark Friends
 
-- (void) userFriendsUsingBlock:(FBResultBlock)resultBlock{
+- (void)userFriendsUsingBlock:(FBResultBlock)resultBlock {
     FBRequest *friendsRequest = [FBRequest requestForMyFriends];
     [friendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         resultBlock(result);
@@ -71,7 +71,7 @@ static FBService *service = nil;
 #pragma mark -
 #pragma mark User with ID
 
-- (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock{
+- (void)userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock {
     FBRequest *requestForID = [FBRequest requestForGraphPath:userID];
     [requestForID startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         resultBlock(result);
@@ -82,47 +82,55 @@ static FBService *service = nil;
 #pragma mark -
 #pragma mark Messages
 
--(void) logInChat
-{
+-(void)logInChat {
 	NSError *error = nil;
 	[xmppStream connectWithTimeout:30 error:&error];
 }
 
--(void) logOutChat{
+- (void)logOutChat {
     [xmppStream disconnect];
 }
 
-- (void) sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID {
-    if([textMessage length] > 0) {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:textMessage];
-        
-        NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
-        //        [message addAttributeWithName:@"xmlns" stringValue:@"http://www.facebook.com/xmpp/messages"];
-        [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
-        [message addChild:body];
-        [xmppStream sendElement:message];
+- (void) sendMessage:(NSString *)textMessage toFacebookWithFriendID:(NSString *)friendID{
+    if([textMessage length] == 0) {
+        return;
     }
+
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:textMessage];
+    
+    NSXMLElement *message = [NSXMLElement elementWithName:@"message"];
+    [message addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"-%@@chat.facebook.com",friendID]];
+    [message addChild:body];
+    [xmppStream sendElement:message];
 }
 
-- (void) inboxMessagesWithDelegate:(NSObject <FBServiceResultDelegate>*)delegate {
+- (void) inboxMessagesWithBlock:(FBResultBlock)resultBlock{
     NSString *urlString = [NSString stringWithFormat:@"%@/me/inbox?access_token=%@",FB, [FBStorage shared].accessToken];
-    [self performRequestAsyncWithUrl:urlString request:nil type:FBQueriesTypesGetInboxMessages delegate:delegate];
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURLResponse *response = nil;
+        NSData *resultData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultData options:NSJSONReadingMutableContainers error:nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            resultBlock(jsonDict);
+        });
+    });
 }
-
 
 
 #pragma mark -
 #pragma mark Chat API
 
--(void) sendPresence
-{
+- (void)sendPresence {
 	XMPPPresence *presence = [XMPPPresence presence];
 	[xmppStream sendElement:presence];
 }
 
-- (void)xmppStreamDidConnect:(XMPPStream *)sender
-{
+- (void)xmppStreamDidConnect:(XMPPStream *)sender {
     if (![xmppStream isSecure])
     {
         NSError *error = nil;
@@ -177,7 +185,7 @@ static FBService *service = nil;
 	[self backgroundMessageReceived:message];
 }
 
-- (void) backgroundMessageReceived:(XMPPMessage *)textMessage
+- (void)backgroundMessageReceived:(XMPPMessage *)textMessage
 {
 	NSString *body = [[textMessage elementForName:kBody] stringValue];
     if (body == nil) {
@@ -189,8 +197,9 @@ static FBService *service = nil;
     [fromID replaceOccurrencesOfString:@"@chat.facebook.com" withString:@""
                                options:0 range:NSMakeRange(0, [fromID length])]; // remove @chat.facebook.com
     NSArray *friends = [FBStorage shared].friends;
-    NSDictionary *friend = [[NSDictionary alloc] init];
+    
     // find opponent:
+    NSDictionary *friend = nil;
     for (NSDictionary *myFriend in friends) {
         if ([[myFriend objectForKey:kId] isEqual:fromID]) {
             friend = myFriend;
@@ -199,100 +208,29 @@ static FBService *service = nil;
     }
     if(friend == nil){
         return;
-    } else {
-        // creating message:
-        NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
-        // user info:
-        NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
-        [from setValue:[friend objectForKey:kId] forKey:kId];
-        [from setValue:[friend objectForKey:kName] forKey:kName];
-        
-        [message setValue:from forKey:kFrom];
-        [message setValue:body forKey:kMessage];
-        
-        NSDate *date = [NSDate date];
-        [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-        NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
-        [message setValue:createdTime forKey:kCreatedTime];
-        // back to default format mode
-        [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
-        [[[[[FBChatService defaultService].allFriendsHistoryConversation objectForKey:fromID] objectForKey:kComments] objectForKey:kData
-          ] addObject:message];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessageReceived object:nil];
     }
     
+    // create a message
+    NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
+    [from setValue:[friend objectForKey:kId] forKey:kId];
+    [from setValue:[friend objectForKey:kName] forKey:kName];
+    [message setValue:from forKey:kFrom];
+    [message setValue:body forKey:kMessage];
     
-}
-
-#pragma mark -
-#pragma mark Core
-
-- (void) performRequestAsyncWithUrl:(NSString *)urlString request: (NSURLRequest*)request
-                               type: (FBQueriesTypes)queryType
-                           delegate:(NSObject <FBServiceResultDelegate>*)delegate{
+    // sate datetime
+    NSDate *date = [NSDate date];
+    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+    NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
+    [message setValue:createdTime forKey:kCreatedTime];
+    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
     
-    [self  performRequestAsyncWithUrl:urlString request:request type:queryType delegate:delegate context:nil];
-}
-
-- (void) performRequestAsyncWithUrl:(NSString *)urlString request: (NSURLRequest*)request
-                               type:(FBQueriesTypes) queryType
-                           delegate:(NSObject <FBServiceResultDelegate>*)delegate
-                            context:(id) context
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    // save message to history
+    [[[[[FBChatService defaultService].allFriendsHistoryConversation objectForKey:fromID]
+            objectForKey:kComments] objectForKey:kData] addObject:message];
     
-    if([urlString length]){
-        NSURL *url;
-		url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        request = [NSURLRequest requestWithURL:url];
-    }
-    
-    //NSLog(@"performRequestAsyncWithUrl=%@", [[request URL] absoluteString]);
-    
-    NSArray *params = [NSArray arrayWithObjects:request, [NSNumber numberWithInt:queryType], delegate, context, nil];
-    [self performSelectorInBackground:@selector(actionInBackground:) withObject:params];
-}
-
-- (void)actionInBackground:(NSArray *)params{
-    @autoreleasepool {
-        
-        NSURLResponse *response = nil;
-        NSError *error = nil;
-        
-        NSURLRequest *request = [params objectAtIndex:0];
-        FBQueriesTypes queryType = (FBQueriesTypes)[[params objectAtIndex:1] intValue];
-        NSObject <FBServiceResultDelegate>* delegate = [params objectAtIndex:2];
-        id context = nil;
-        if([params count] == 4){
-            context = [params objectAtIndex:3];
-        }
-
-        // perform request
-        NSData *resultData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        
-        // alloc result
-        FBServiceResult *result = [[FBServiceResult alloc] init];
-        
-        // set body
-        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:resultData options:NSJSONReadingMutableContainers error:nil];
-        
-        result.body = jsonDict;
-
-		// set context
-		result.context = (NSString*)context;
-        
-        // set query type
-        [result setQueryType:queryType];
-        
-        // return result to delegate
-        if(context){
-            [delegate performSelectorOnMainThread:@selector(completedWithFBResult:context:) withObject:result withObject:context waitUntilDone:YES];
-        }else{
-            [delegate performSelectorOnMainThread:@selector(completedWithFBResult:) withObject:result waitUntilDone:YES];
-        }
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }
+    // post notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessageReceived object:nil];
 }
 
 @end

@@ -33,7 +33,7 @@ static FBStorage *instance = nil;
 #pragma mark -
 #pragma mark FB access
 
-- (void)saveFBToken:(NSString *)token{
+- (void)saveFBToken:(NSString *)token {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:token forKey:FBAccessTokenKey];
 	[defaults synchronize];
@@ -41,7 +41,7 @@ static FBStorage *instance = nil;
     accessToken = token;
 }
 
-- (void)clearFBAccess{
+- (void)clearFBAccess {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:FBAccessTokenKey];
 	[defaults synchronize];
@@ -62,7 +62,7 @@ static FBStorage *instance = nil;
     return nil;
 }
 
--(void)clearFBUser{
+- (void)clearFBUser {
     currentFBUser = nil;
 }
 

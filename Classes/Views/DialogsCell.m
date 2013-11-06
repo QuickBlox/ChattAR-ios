@@ -10,20 +10,14 @@
 
 @implementation DialogsCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
++ (void)configureDialogsCell:(DialogsCell *)cell forIndexPath:(NSIndexPath *)indexPath forFriend:(NSDictionary *)aFriend
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    NSString *name = [NSString stringWithFormat:@"%@", [aFriend objectForKey:kFirstName]];
+    NSString *lastName = [NSString stringWithFormat:@"%@", [aFriend objectForKey:kLastName]];
+    [cell.asyncView setImageURL:[NSURL URLWithString:[aFriend objectForKey:kPhoto]]];
+    cell.name.text = [NSString stringWithFormat:@"%@ %@", name, lastName];
+    cell.detailTextLabel.text = @"Friends Group";
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end

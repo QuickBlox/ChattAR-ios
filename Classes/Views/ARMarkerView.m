@@ -19,7 +19,7 @@
 @synthesize userStatus, userPhotoView, userName;
 @synthesize distance;
 
-- (id)initWithGeoPoint:(QBCOCustomObject *)room{
+- (id)initWithGeoPoint:(QBCOCustomObject *)room {
     	
 	CGRect theFrame = CGRectMake(0, 0, markerWidth, markerHeight);
 	
@@ -71,7 +71,7 @@
     return self;
 }
 
-- (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation{
+- (CLLocationDistance) updateDistance:(CLLocation *)newOriginLocation {
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:[[_currentRoom.fields objectForKey:kLatitude] doubleValue] longitude:[[_currentRoom.fields objectForKey:kLongitude] doubleValue]];
     //NSLog(@"Loc: %f %f", newOriginLocation.coordinate.latitude, newOriginLocation.coordinate.longitude);
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];
@@ -94,7 +94,7 @@
     return _distance;
 }
 
-- (double)distanceFrom:(CLLocationCoordinate2D)locationA to:(CLLocationCoordinate2D)locationB{
+- (double)distanceFrom:(CLLocationCoordinate2D)locationA to:(CLLocationCoordinate2D)locationB {
     double R = 6368500.0; // in meters
     
     double lat1 = locationA.latitude*M_PI/180.0;
@@ -116,7 +116,7 @@
 //}
 
 
-- (NSString *)description{
+- (NSString *)description {
     return [NSString stringWithFormat:@"distance=%d", distance];
 }
 

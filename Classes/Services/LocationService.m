@@ -10,7 +10,7 @@
 
 @implementation LocationService
 
-+(instancetype)shared{
++ (instancetype)shared {
     static LocationService *defaultData = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -19,7 +19,7 @@
     return defaultData;
 }
 
--(id)init{
+- (id)init {
     self = [super init];
     if (self) {
         self.myLocationManager = [[CLLocationManager alloc] init];
@@ -34,19 +34,19 @@
 
 #pragma mark - Update location
 
--(void)startUpdateLocation {
+- (void)startUpdateLocation {
     [self.myLocationManager startUpdatingLocation];
     [self.myLocationManager startUpdatingHeading];
 }
 
--(void)stopUpdateLocation {
+- (void)stopUpdateLocation {
     [self.myLocationManager stopUpdatingLocation];
     [self.myLocationManager stopUpdatingHeading];
 }
 
 
 #pragma mark - Requests
--(CLLocationCoordinate2D)getMyCoorinates {
+- (CLLocationCoordinate2D)getMyCoorinates {
     return _myLocation.coordinate;
 }
 
@@ -54,12 +54,11 @@
 #pragma mark -
 #pragma mark CoreLocationDelegate
 
-- (void) locationManager:(CLLocationManager *)manager
-        didFailWithError:(NSError *)error{
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"Error: %@", error);
 }
 
--(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     _myLocation = [locations lastObject];
 }
 

@@ -12,13 +12,12 @@
 @implementation MenuCell
 
 
--(void) layoutSubviews{
+- (void) layoutSubviews {
     [super layoutSubviews];
     [self setBackgroundColor:[UIColor colorWithWhite:0.35 alpha:1.0]];
 }    
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // set selection style: blue
     UIView *bgColorView = [[UIView alloc] init];
