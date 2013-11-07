@@ -7,13 +7,14 @@
 //
 
 #import "DetailDialogsViewController.h"
+#import "ProfileViewController.h"
 #import "ChatRoomCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
 #import "FBChatService.h"
 #import "QBService.h"
-#import "LocationService.h"
 #import "Utilites.h"
+#import "AsyncImageView.h"
 
 @interface DetailDialogsViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate>
 
@@ -41,6 +42,9 @@
     
     [self configureInputTextViewLayer];
     
+    UIBarButtonItem *profile = [[UIBarButtonItem alloc] initWithCustomView:[self configureProfileButton]];
+    self.navigationItem.rightBarButtonItem = profile;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:kNotificationMessageReceived object:nil];
 }
 
@@ -60,6 +64,21 @@
     self.inputTextView.layer.borderWidth = 0.1f;
 }
 
+- (UIButton *)configureProfileButton
+{
+    UIButton *profileButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 28.0, 28.0)];
+    [profileButton setImage:self.friendImage forState:UIControlStateNormal];
+    [profileButton addTarget:self action:@selector(viewProfilePage) forControlEvents:UIControlEventTouchUpInside];
+    return profileButton;
+}
+
+
+#pragma mark -
+#pragma mark Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((ProfileViewController *)segue.destinationViewController).myFriend = self.myFriend;
+}
 
 #pragma mark -
 #pragma mark Actions
@@ -103,6 +122,10 @@
 
 - (void)receiveMessage {
     [self reloadTableView];
+}
+
+- (void)viewProfilePage {
+    [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
 }
 
 - (void)reloadTableView {

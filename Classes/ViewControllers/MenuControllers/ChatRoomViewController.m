@@ -16,6 +16,7 @@
 #import "QBService.h"
 #import "LocationService.h"
 #import "DetailDialogsViewController.h"
+#import "ProfileViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 
@@ -151,7 +152,7 @@
     if (![chatMsg.senderNick isEqual:[[FBStorage shared].currentFBUser objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", @"View Profile", nil];
     [actionSheet showInView:self.view];
     }
 }
@@ -195,7 +196,14 @@
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
             NSMutableDictionary *currentFriend = [self findFriendWithMessage:msg];
             self.dialogTo = [FBChatService findFBConversationWithFriend:currentFriend];
-            [self performSegueWithIdentifier:@"ChatToDialog" sender:currentFriend];
+            [self performSegueWithIdentifier:kChatToDialogSegueIdentifier sender:currentFriend];
+            break;
+        }
+        case 2:
+        {
+            QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
+            NSMutableDictionary *currentFriend = [self findFriendWithMessage:msg];
+                [self performSegueWithIdentifier:kChatToProfileSegieIdentifier sender:currentFriend];
             break;
         }
     }
@@ -234,10 +242,10 @@
     self.currentRoom = room;
     
     // Update chat room rank
-    NSNumber *rank = [_currentChatRoom.fields objectForKey:@"rank"];
+    NSNumber *rank = [_currentChatRoom.fields objectForKey:kRank];
     NSUInteger intRank = [rank intValue];
     intRank+=1;
-    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:@"rank"];
+    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:kRank];
     [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
     [self.indicatorView stopAnimating];
 }
@@ -372,8 +380,20 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
-    ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
+    if ([segue.identifier isEqualToString:kChatToProfileSegieIdentifier]) {
+        ((ProfileViewController *)segue.destinationViewController).myFriend = sender;
+        return;
+    }
+    if ([segue.identifier isEqualToString:kChatToDialogSegueIdentifier]) {
+        NSString *imageURL = [sender objectForKey:kPhoto];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
+        UIImage *image = [UIImage imageWithData:imageData];
+        
+        ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
+        ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
+        ((DetailDialogsViewController *)segue.destinationViewController).friendImage = image;
+    }
+
 }
 
 - (NSMutableDictionary *)findFriendWithMessage:(QBChatMessage *)message

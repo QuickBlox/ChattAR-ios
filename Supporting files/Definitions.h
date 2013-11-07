@@ -44,11 +44,19 @@
 #define kRank               @"rank"
 
 // Segue Identifiers
-#define kChatSegueIdentifier        @"Chat"
-#define kMapSegueIdentifier         @"Map"
-#define kARSegueIdentifier          @"AR"
-#define kAboutSegueIdentifier       @"About"
-#define kDialogsSegueIdentifier     @"Dialogs"
+#define kChatSegueIdentifier                @"Chat"
+#define kMapSegueIdentifier                 @"Map"
+#define kARSegueIdentifier                  @"AR"
+#define kAboutSegueIdentifier               @"About"
+#define kDialogsSegueIdentifier             @"Dialogs"
+#define kChatToDialogSegueIdentifier        @"ChatToDialog"
+#define kChatToProfileSegieIdentifier       @"ChatToProfile"
+#define kDetailDialogSegueIdentifier        @"DetailDialogSegue"
+#define kARToChatSegueIdentifier            @"ARToChat"
+#define kMapToChatRoomSegueIdentifier       @"MapToChatRoom"
+#define kChatToChatRoomSegueIdentifier      @"ChatToChatRoomSegue"
+#define kDialogToProfileSegueIdentifier     @"DialogToProfile"
+
 
 #define padding           20.0
 

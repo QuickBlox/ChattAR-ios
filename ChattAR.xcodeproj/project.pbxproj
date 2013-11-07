@@ -26,6 +26,7 @@
 		6911FB3D17D6248D00FEADB4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB3C17D6248C00FEADB4 /* CoreVideo.framework */; };
 		6911FB3F17D6255800FEADB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB3E17D6255800FEADB4 /* QuartzCore.framework */; };
 		6911FB4317D62AE500FEADB4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB4217D62AE400FEADB4 /* Accelerate.framework */; };
+		69165AE3182A91D300486DA8 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69165AE2182A91D300486DA8 /* ProfileViewController.m */; };
 		6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */; };
 		6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */; };
 		691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691A1B3417FDB94000C2A87D /* MapKit.framework */; };
@@ -283,6 +284,8 @@
 		6911FB3C17D6248C00FEADB4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		6911FB3E17D6255800FEADB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6911FB4217D62AE400FEADB4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		69165AE1182A91D300486DA8 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		69165AE2182A91D300486DA8 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		6918A06A17F33D18002B440E /* 05_reply_arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow-1.png"; sourceTree = "<group>"; };
 		6918A06B17F33D18002B440E /* 05_reply_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "05_reply_arrow@2x.png"; sourceTree = "<group>"; };
 		691A1B3417FDB94000C2A87D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -1535,6 +1538,8 @@
 				6954C43217CDD579003C6893 /* SettingsViewController.m */,
 				69E8ECD217E0B4E900D614AA /* ChatRoomViewController.h */,
 				69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */,
+				69165AE1182A91D300486DA8 /* ProfileViewController.h */,
+				69165AE2182A91D300486DA8 /* ProfileViewController.m */,
 			);
 			path = MenuControllers;
 			sourceTree = "<group>";
@@ -2097,6 +2102,7 @@
 				69E8ECD017E0AB0300D614AA /* TrendingChatRoomsDataSource.m in Sources */,
 				69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */,
 				69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */,
+				69165AE3182A91D300486DA8 /* ProfileViewController.m in Sources */,
 				690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */,
 				69B470EB1827F6730017F6C2 /* FBChatService.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,

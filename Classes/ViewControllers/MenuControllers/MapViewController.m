@@ -83,7 +83,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [self performSegueWithIdentifier:@"MapToChat" sender:_chatRoom];
+            [self performSegueWithIdentifier:@"MapToChatRoom" sender:_chatRoom];
             break;
             
         default:
@@ -92,7 +92,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"MapToChat"]){
+    if ([segue.identifier isEqualToString:@"MapToChatRoom"]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }

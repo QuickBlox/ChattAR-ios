@@ -301,7 +301,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ARToChat"]){
+    if ([segue.identifier isEqualToString:kARToChatSegueIdentifier]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
@@ -313,7 +313,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:
-            [self performSegueWithIdentifier:@"ARToChat" sender:_chatRoom];
+            [self performSegueWithIdentifier:kARToChatSegueIdentifier sender:_chatRoom];
             break;
             
         default:

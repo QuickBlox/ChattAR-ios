@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *conversation;
 @property (nonatomic, strong) NSMutableDictionary *myFriend;
+@property (nonatomic, strong) UIImage *friendImage;
 
 @end

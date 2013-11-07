@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) NSArray *friends;
 @property (nonatomic, strong) NSMutableArray *searchContent;
+@property (nonatomic, strong) UIImage *friendImage;
 
 @end
 
@@ -101,12 +102,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *imageURL = [[self.searchContent objectAtIndex:indexPath.row] objectForKey:kPhoto];
+    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
+    UIImage *image = [UIImage imageWithData:imageData];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self.searchBar resignFirstResponder];
     self.searchBar.showsCancelButton = NO;
     
-    [self performSegueWithIdentifier:@"DialogSegue" sender:indexPath];
+    self.friendImage = image;
+    [self performSegueWithIdentifier:kDetailDialogSegueIdentifier sender:indexPath];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -116,6 +121,7 @@
     
     ((DetailDialogsViewController *)segue.destinationViewController).myFriend = friend;
     ((DetailDialogsViewController *)segue.destinationViewController).conversation = conversation;
+    ((DetailDialogsViewController *)segue.destinationViewController).friendImage = self.friendImage;
 }
 
 

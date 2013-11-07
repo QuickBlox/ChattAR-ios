@@ -247,7 +247,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"kSegueToChatRoomController"]){
+    if ([segue.identifier isEqualToString:kChatToChatRoomSegueIdentifier]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
         //[segue.sourceViewController pushViewController:segue.destinationViewController animated:YES];
@@ -271,7 +271,7 @@
     }
     
     // Open CHat Controller
-    [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:currentRoom];
+    [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:currentRoom];
 }
 
 
@@ -321,7 +321,7 @@
                 _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
                 _locationDataSource.distances = [[ChatRoomsService shared] distances];
                 
-                [self performSegueWithIdentifier:@"kSegueToChatRoomController" sender:object];
+                [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:object];
                 
             }
             break;
