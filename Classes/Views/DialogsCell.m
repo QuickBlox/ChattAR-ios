@@ -12,11 +12,8 @@
 
 + (void)configureDialogsCell:(DialogsCell *)cell forIndexPath:(NSIndexPath *)indexPath forFriend:(NSDictionary *)aFriend
 {
-    NSString *name = [NSString stringWithFormat:@"%@", [aFriend objectForKey:kFirstName]];
-    NSString *lastName = [NSString stringWithFormat:@"%@", [aFriend objectForKey:kLastName]];
     [cell.asyncView setImageURL:[NSURL URLWithString:[aFriend objectForKey:kPhoto]]];
-    cell.name.text = [NSString stringWithFormat:@"%@ %@", name, lastName];
-    cell.detailTextLabel.text = @"Friends Group";
+    cell.name.text = [aFriend objectForKey:kFirstName];
 }
 
 

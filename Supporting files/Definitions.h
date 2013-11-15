@@ -22,8 +22,9 @@
 #define  kSortDesc   @"sort_desc"
 
 
-#define kGetFBFirstName     [[FBStorage shared].currentFBUser objectForKey:kFirstName]
-#define kGetFBLastName      [[FBStorage shared].currentFBUser objectForKey:kLastName]
+// NOTIFICATIONS:
+#define CAChatDidReceiveOrSendMessageNotification           @"CAChatDidReceiveOrSendMessageNotification"
+#define CAChatRoomDidReceiveOrSendMessageNotification       @"CAChatRoomDidReceiveOrSendMessageNotification"
 
 
 // Table Tags:
@@ -39,9 +40,11 @@
 // TableViewCell definitions:
 #define kUserName           @"username"
 #define kQuote              @"quote"
-#define kUserPhotoUrl       @"user_photo_url"
 #define kDateTime           @"datetime"
 #define kRank               @"rank"
+
+#define kFacebookID         @"facebookID"
+#define kQuickbloxID        @"quickbloxID"
 
 // Segue Identifiers
 #define kChatSegueIdentifier                @"Chat"

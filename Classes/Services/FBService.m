@@ -209,7 +209,6 @@ static id service = nil;
     if(friend == nil){
         return;
     }
-    
     // create a message
     NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *from = [[NSMutableDictionary alloc] init];

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6900CC9018367D3F00B41C34 /* QBStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6900CC8F18367D3F00B41C34 /* QBStorage.m */; };
 		690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690A708A1806A5A100F3C584 /* CoreMotion.framework */; };
 		690A70901806B8AE00F3C584 /* ARCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708D1806B8AE00F3C584 /* ARCoordinate.m */; };
 		690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */; };
@@ -39,7 +40,6 @@
 		69357E7517CCB01600EB3CDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7417CCB01600EB3CDF /* libz.dylib */; };
 		69357E7917CCB6F100EB3CDF /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7817CCB6F000EB3CDF /* libxml2.2.dylib */; };
 		69357E8B17CCBAA400EB3CDF /* ChattARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69357E8A17CCBAA400EB3CDF /* ChattARAppDelegate.m */; };
-		69357E9117CCBAEE00EB3CDF /* ChattARStatic-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69357E8D17CCBAEE00EB3CDF /* ChattARStatic-Info.plist */; };
 		69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */; };
 		69357E9317CCBAEE00EB3CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69357E9017CCBAEE00EB3CDF /* main.m */; };
 		6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */; };
@@ -233,11 +233,13 @@
 		69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A4779F17C50AF800591A28 /* FacebookSDK.framework */; };
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
 		69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */; };
+		69AE64DD18327D3A005A1AE4 /* FacebookDialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AE64DC18327D3A005A1AE4 /* FacebookDialogsDataSource.m */; };
 		69B470EB1827F6730017F6C2 /* FBChatService.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B470EA1827F6730017F6C2 /* FBChatService.m */; };
 		69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */; };
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
+		69D5B57C1831345C001EA4FE /* QuickBloxDialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B57B1831345C001EA4FE /* QuickBloxDialogsDataSource.m */; };
 		69E8ECCF17E0AB0300D614AA /* LocalChatRoomsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */; };
 		69E8ECD017E0AB0300D614AA /* TrendingChatRoomsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCE17E0AB0300D614AA /* TrendingChatRoomsDataSource.m */; };
 		69E8ECD417E0B4E900D614AA /* ChatRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECD317E0B4E900D614AA /* ChatRoomViewController.m */; };
@@ -261,6 +263,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6900CC8E18367D3F00B41C34 /* QBStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBStorage.h; sourceTree = "<group>"; };
+		6900CC8F18367D3F00B41C34 /* QBStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBStorage.m; sourceTree = "<group>"; };
 		690A708A1806A5A100F3C584 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		690A708C1806B8AE00F3C584 /* ARCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCoordinate.h; sourceTree = "<group>"; };
 		690A708D1806B8AE00F3C584 /* ARCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCoordinate.m; sourceTree = "<group>"; };
@@ -644,6 +648,8 @@
 		69A477A517C513C100591A28 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		69A51AB217EC82EC0089B06D /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
 		69A51AB317EC82EC0089B06D /* QuotedChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotedChatRoomCell.m; sourceTree = "<group>"; };
+		69AE64DB18327D3A005A1AE4 /* FacebookDialogsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookDialogsDataSource.h; sourceTree = "<group>"; };
+		69AE64DC18327D3A005A1AE4 /* FacebookDialogsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookDialogsDataSource.m; sourceTree = "<group>"; };
 		69B470E91827F6730017F6C2 /* FBChatService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBChatService.h; sourceTree = "<group>"; };
 		69B470EA1827F6730017F6C2 /* FBChatService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBChatService.m; sourceTree = "<group>"; };
 		69B96E2917E89EED00C94DB7 /* ChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomCell.h; sourceTree = "<group>"; };
@@ -654,6 +660,8 @@
 		69B96E2E17E89EED00C94DB7 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
 		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
 		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
+		69D5B57A1831345C001EA4FE /* QuickBloxDialogsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickBloxDialogsDataSource.h; sourceTree = "<group>"; };
+		69D5B57B1831345C001EA4FE /* QuickBloxDialogsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickBloxDialogsDataSource.m; sourceTree = "<group>"; };
 		69E8ECCB17E0AB0300D614AA /* LocalChatRoomsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalChatRoomsDataSource.h; sourceTree = "<group>"; };
 		69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalChatRoomsDataSource.m; sourceTree = "<group>"; };
 		69E8ECCD17E0AB0300D614AA /* TrendingChatRoomsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingChatRoomsDataSource.h; sourceTree = "<group>"; };
@@ -1585,6 +1593,8 @@
 				694746441805A71600928ED4 /* LocationService.m */,
 				6988F6B0181A62E000E1B30A /* QBService.h */,
 				6988F6B1181A62E000E1B30A /* QBService.m */,
+				6900CC8E18367D3F00B41C34 /* QBStorage.h */,
+				6900CC8F18367D3F00B41C34 /* QBStorage.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1736,6 +1746,10 @@
 				69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */,
 				69E8ECCD17E0AB0300D614AA /* TrendingChatRoomsDataSource.h */,
 				69E8ECCE17E0AB0300D614AA /* TrendingChatRoomsDataSource.m */,
+				69D5B57A1831345C001EA4FE /* QuickBloxDialogsDataSource.h */,
+				69D5B57B1831345C001EA4FE /* QuickBloxDialogsDataSource.m */,
+				69AE64DB18327D3A005A1AE4 /* FacebookDialogsDataSource.h */,
+				69AE64DC18327D3A005A1AE4 /* FacebookDialogsDataSource.m */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1849,7 +1863,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SASlideMenu;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Stefano Antonelli";
 			};
 			buildConfigurationList = 7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "ChattAR" */;
@@ -1876,7 +1890,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */,
-				69357E9117CCBAEE00EB3CDF /* ChattARStatic-Info.plist in Resources */,
 				69F20FE81811672000452C55 /* about_mnu.png in Resources */,
 				69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */,
 				693B5B20180405FB000F5374 /* menu_btn_gr@2x.png in Resources */,
@@ -1960,8 +1973,10 @@
 				69357E8B17CCBAA400EB3CDF /* ChattARAppDelegate.m in Sources */,
 				69357E9317CCBAEE00EB3CDF /* main.m in Sources */,
 				693C7E5B17CCDCF300D7F0A9 /* SASlideMenuContentSegue.m in Sources */,
+				69D5B57C1831345C001EA4FE /* QuickBloxDialogsDataSource.m in Sources */,
 				693C7E5C17CCDCF300D7F0A9 /* SASlideMenuLeftMenuSegue.m in Sources */,
 				693C7E5D17CCDCF300D7F0A9 /* SASlideMenuNavigationController.m in Sources */,
+				6900CC9018367D3F00B41C34 /* QBStorage.m in Sources */,
 				693C7E5E17CCDCF300D7F0A9 /* SASlideMenuPushSegue.m in Sources */,
 				693C7E5F17CCDCF300D7F0A9 /* SASlideMenuRightMenuSegue.m in Sources */,
 				693C7E6017CCDCF300D7F0A9 /* SASlideMenuRightMenuViewController.m in Sources */,
@@ -2013,6 +2028,7 @@
 				693C7E9817CCDCF300D7F0A9 /* XMPPvCard.xcdatamodeld in Sources */,
 				690A70941806E0AD00F3C584 /* ARMarkerView.m in Sources */,
 				693C7E9917CCDCF300D7F0A9 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
+				69AE64DD18327D3A005A1AE4 /* FacebookDialogsDataSource.m in Sources */,
 				693C7E9A17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorage.m in Sources */,
 				693C7E9B17CCDCF300D7F0A9 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				693C7E9C17CCDCF300D7F0A9 /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
@@ -2120,10 +2136,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2139,12 +2156,16 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/inckude/libxml2;
 				"HEADER_SEARCH_PATHS[arch=*]" = /usr/include/libxml2.2;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PROVISIONING_PROFILE = "CB996A42-B064-4159-A23B-438B4E53D0AE";
 				SDKROOT = iphoneos;
@@ -2155,10 +2176,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2167,8 +2189,11 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/inckude/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;

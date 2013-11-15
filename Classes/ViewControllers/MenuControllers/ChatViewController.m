@@ -60,8 +60,6 @@
     self.trendingTableView.dataSource = self.trendingDataSource;
     self.locationTableView.dataSource = self.locationDataSource;
     
-    
-    
     self.trendingTableView.delegate = self;
     self.locationTableView.delegate = self;
     

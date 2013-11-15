@@ -15,4 +15,6 @@
 + (instancetype)defaultService;
 + (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend;
 
+- (void)sendMessage:(NSString *)messageText toUserWithID:(NSString *)userID;
+
 @end

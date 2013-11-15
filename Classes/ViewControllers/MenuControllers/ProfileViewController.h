@@ -10,6 +10,6 @@
 
 @interface ProfileViewController : UIViewController
 
-@property (nonatomic, strong) NSMutableDictionary *myFriend;
+@property (nonatomic, strong) NSMutableDictionary *currentUser;
 
 @end

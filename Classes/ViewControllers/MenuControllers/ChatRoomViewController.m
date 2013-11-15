@@ -14,10 +14,12 @@
 #import "FBService.h"
 #import "FBChatService.h"
 #import "QBService.h"
-#import "LocationService.h"
+#import "QBStorage.h"
+//#import "LocationService.h"
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
 #import <CoreLocation/CoreLocation.h>
+
 
 
 @interface ChatRoomViewController ()
@@ -25,7 +27,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 @property (strong, nonatomic) NSMutableDictionary *quote;
 @property (strong, nonatomic) QBChatRoom *currentRoom;
-@property (strong, nonatomic) QBChatMessage *userMessage;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
 @property (strong, nonatomic) NSMutableArray *chatHistory;
@@ -52,12 +53,9 @@
     self.title = @"Default";
     [self setPin];
     self.chatHistory = [[NSMutableArray alloc] init];
-    [QBChat instance].delegate = self;
     [self configureInputTextViewLayer];
-    
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     self.title = roomName;
-    
     [self creatingOrJoiningRoom];
 }
 
@@ -85,6 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [QBChat instance].delegate = self;
     [_chatRoomTable reloadData];
 }
 
@@ -149,7 +148,9 @@
 {
     [self.chatRoomTable deselectRowAtIndexPath:indexPath animated:YES];
     QBChatMessage *chatMsg = [_chatHistory objectAtIndex:[indexPath row]];
-    if (![chatMsg.senderNick isEqual:[[FBStorage shared].currentFBUser objectForKey:kId]]) {
+    NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:chatMsg.text];
+    NSString *userID = [messageData objectForKey:kId];
+    if (![userID isEqual:[[FBStorage shared].me objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", @"View Profile", nil];
@@ -163,7 +164,6 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Button whith number %i was clicked", buttonIndex);
     switch (buttonIndex) {
         case 0:
         {
@@ -173,17 +173,15 @@
             NSString *string = msg.text;
             cellPath = nil;
             // JSON parsing
-            NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *jsonDict = [[QBService defaultService] unarchiveMessageData:string];
             
             //saving user...
             if (quote == nil) {
                 quote = [[NSMutableDictionary alloc] init];
             }
-        
             NSString *time = [[Utilites shared].dateFormatter stringFromDate:msg.datetime];
             
-            [quote setValue:[jsonDict objectForKey:kUserPhotoUrl] forKey:kUserPhotoUrl];
+            [quote setValue:[jsonDict objectForKey:kPhoto] forKey:kPhoto];
             [quote setValue:[jsonDict objectForKey:kUserName] forKey:kUserName];
             [quote setValue:[jsonDict objectForKey:kMessage] forKey:kMessage];
             [quote setValue:time forKey:kDateTime];
@@ -193,30 +191,56 @@
         }
         case 1:
         {
+            // Dialogs View Controller:
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
-            NSMutableDictionary *currentFriend = [self findFriendWithMessage:msg];
-            self.dialogTo = [FBChatService findFBConversationWithFriend:currentFriend];
-            [self performSegueWithIdentifier:kChatToDialogSegueIdentifier sender:currentFriend];
+            NSMutableDictionary *currentUser = [self userWithMessage:msg];
+            if ([[FBStorage shared] isFacebookFriend:currentUser]) {
+                NSMutableDictionary *dialog = [FBChatService findFBConversationWithFriend:currentUser];
+                self.dialogTo = dialog;
+            } else {
+                // finding QB conversation:
+                NSMutableDictionary *dialog = [[QBService defaultService] findConversationToUserWithMessage:msg];
+                    self.dialogTo = dialog;
+            }
+            [self performSegueWithIdentifier:kChatToDialogSegueIdentifier sender:currentUser];
             break;
         }
         case 2:
         {
+            // Profile View Controller:
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
-            NSMutableDictionary *currentFriend = [self findFriendWithMessage:msg];
-                [self performSegueWithIdentifier:kChatToProfileSegieIdentifier sender:currentFriend];
+            NSMutableDictionary *currentFriend = [self userWithMessage:msg];
+            [self performSegueWithIdentifier:kChatToProfileSegieIdentifier sender:currentFriend];
             break;
         }
     }
 }
 
+- (NSMutableDictionary *)userWithMessage:(QBChatMessage *)message {
+    NSMutableDictionary *currentFriend = [[FBStorage shared] findUserWithMessage:message];
+    if (currentFriend == nil) {
+        //creating FBUser(No Friend):
+        NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:message.text];
+        currentFriend = [[NSMutableDictionary alloc] init];
+        [currentFriend setObject:[messageData objectForKey:kUserName] forKey:kName];
+        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].me objectForKey:kId], [FBStorage shared].accessToken];
+        [currentFriend setObject:urlString forKey:kPhoto];
+        [currentFriend setObject:[messageData objectForKey:kId] forKey:kId];
+        [currentFriend setObject:[messageData objectForKey:kQuickbloxID] forKey:kQuickbloxID];
+        // caching created user:
+        [[FBStorage shared].otherUsers addObject:currentFriend];
+    }
+    return currentFriend;
+}
 
 #pragma mark -
 #pragma mark ChatRoom
 
 - (void)creatingOrJoiningRoom
 {
+    NSString *facebookID = [[FBStorage shared].me objectForKey:kId];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
-    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:[[FBStorage shared].currentFBUser objectForKey:kId] membersOnly:NO persistent:YES];
+    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:facebookID membersOnly:NO persistent:YES];
 }
 
 
@@ -237,7 +261,7 @@
     [room addUsers:@[@34]];
     NSLog(@"Chat Room is opened");
     [[FBService shared] setIsInChatRoom:YES];
-    [[QBService defaultService] setCurrentChatRoom:room];
+    [[QBStorage shared] setCurrentChatRoom:room];
     //get room
     self.currentRoom = room;
     
@@ -259,14 +283,8 @@
 - (IBAction)backToRooms:(id)sender
 {
     [[FBService shared] setIsInChatRoom:NO];
-    [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
+    [[QBChat instance] leaveRoom:[[QBStorage shared] currentChatRoom]];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)chatRoomDidLeave:(NSString *)roomName
-{
-    NSLog(@"Did  Leave worked");
-    [QBService defaultService].currentChatRoom = nil;
 }
 
 // action message button
@@ -274,45 +292,19 @@
 {
     if ([self.inputMessageField.text isEqual:@""]) {
         //don't send
-    } else {
-        NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
-        NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-        NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[FBStorage shared].currentFBUser objectForKey:kFirstName], [[FBStorage shared].currentFBUser objectForKey:kLastName]];
-        
-        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].currentFBUser objectForKey:kId], [FBStorage shared].accessToken];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:myLatitude forKey:kLatitude];
-        [dict setValue:myLongitude forKey:kLongitude];
-        [dict setValue:urlString forKey:kUserPhotoUrl];
-        [dict setValue:userName forKey:kUserName];
-        if (quote != nil) {
-            [dict setValue:quote forKey:kQuote];
-            quote = nil;
-        }
-        [dict setValue:self.inputMessageField.text forKey:kMessage];
-        // formatting to JSON:
-        NSError *error = nil;
-        NSData* nsdata = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-        
-        NSString* jsonString =[[NSString alloc] initWithData:nsdata encoding:NSUTF8StringEncoding];
-        
-        [[QBChat instance] sendMessage:jsonString toRoom:self.currentRoom];
-        self.inputMessageField.text = @"";
+        [self.inputMessageField resignFirstResponder];
+        return;
     }
+        [[QBService defaultService] sendmessage:self.inputMessageField.text toChatRoom:self.currentRoom quote:quote];
+        self.inputMessageField.text = @"";
     [self.chatRoomTable reloadData];
     [self.inputMessageField resignFirstResponder];
 }
 
-//  receiving messages
-- (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName
-{
-    //QBDLogEx(@"message %@", message);
-    self.userMessage = message;
-    [self.chatHistory addObject:message];
+
+- (void)resetTableView {
     [self.chatRoomTable reloadData];
     [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    
 }
 
 
@@ -381,32 +373,16 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kChatToProfileSegieIdentifier]) {
-        ((ProfileViewController *)segue.destinationViewController).myFriend = sender;
+        ((ProfileViewController *)segue.destinationViewController).currentUser = sender;
         return;
     }
-    if ([segue.identifier isEqualToString:kChatToDialogSegueIdentifier]) {
-        NSString *imageURL = [sender objectForKey:kPhoto];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
-        UIImage *image = [UIImage imageWithData:imageData];
-        
-        ((DetailDialogsViewController *)segue.destinationViewController).myFriend = sender;
+        ((DetailDialogsViewController *)segue.destinationViewController).currentUser = sender;
         ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
-        ((DetailDialogsViewController *)segue.destinationViewController).friendImage = image;
+    if ([[FBStorage shared] isFacebookFriend:sender]) {
+        ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = YES;
+        return;
     }
-
-}
-
-- (NSMutableDictionary *)findFriendWithMessage:(QBChatMessage *)message
-{
-    NSMutableArray *facebookFriends = [FBStorage shared].friends;
-    NSMutableDictionary *currentFriend = [[NSMutableDictionary alloc] init];
-    for (NSMutableDictionary *friend in facebookFriends) {
-        if ([[message senderNick] isEqual:[friend objectForKey:kId]]) {
-            currentFriend = friend;
-            break;
-        }
-    }
-    return currentFriend;
+        ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = NO;
 }
 
 @end

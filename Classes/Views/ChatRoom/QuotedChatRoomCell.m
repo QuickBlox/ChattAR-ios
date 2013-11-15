@@ -102,7 +102,7 @@
     
     //QUOTE:
     //getting Avatar from url
-    NSString *urlString = [quoted objectForKey:kUserPhotoUrl];
+    NSString *urlString = [quoted objectForKey:kPhoto];
     NSURL *url = [NSURL URLWithString:urlString];
     [self.qUserPhoto setImageURL:url];
     // getting data from dictionary
@@ -118,7 +118,7 @@
         self.rColorBuble.image = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     }
     // getting avatar url
-    NSString *uStr = [quoteDict objectForKey:kUserPhotoUrl];
+    NSString *uStr = [quoteDict objectForKey:kPhoto];
     NSURL *urlImg = [NSURL URLWithString:uStr];
     
     // date formatter

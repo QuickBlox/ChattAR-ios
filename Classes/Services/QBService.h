@@ -10,12 +10,29 @@
 
 @interface QBService : NSObject <QBChatDelegate>
 
-@property (nonatomic, assign) BOOL              *userIsJoinedChatRoom;
-@property (nonatomic, strong) QBUUser           *me;
-@property (nonatomic, strong) QBUUser           *qbFriend;
-@property (nonatomic, strong) QBChatRoom        *currentChatRoom;
-@property (nonatomic, strong) NSMutableArray    *dialogMessages;
+@property (nonatomic, assign) BOOL *userIsJoinedChatRoom;
 
 + (instancetype)defaultService;
+
+
+#pragma mark -
+#pragma  mark Messages
+
+- (void)sendMessage:(NSString *)message toUser:(NSUInteger)userID option:(id)option;
+- (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote;
+
+
+#pragma mark -
+#pragma mark Operations
+
+- (NSMutableDictionary *)findConversationToUserWithMessage:(QBChatMessage *)message;
+- (NSMutableDictionary *)findConversationWithFriend:(NSMutableDictionary *)aFriend;
+
+
+#pragma mark -
+#pragma mark Archiving (JSON Parsing)
+
+- (NSString *)archiveMessageData:(NSMutableDictionary *)messageData;
+- (NSMutableDictionary *)unarchiveMessageData:(NSString *)messageData;
 
 @end

@@ -8,11 +8,14 @@
 
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
+#import "QuickBloxDialogsDataSource.h"
+#import "FacebookDialogsDataSource.h"
 #import "ChatRoomCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
 #import "FBChatService.h"
 #import "QBService.h"
+#import "QBStorage.h"
 #import "Utilites.h"
 #import "AsyncImageView.h"
 
@@ -22,6 +25,10 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
+
+// Data Sources:
+@property (nonatomic, strong) FacebookDialogsDataSource *facebookDataSource;
+@property (nonatomic, strong) QuickBloxDialogsDataSource *quickBloxDataSource;
 
 - (IBAction)back:(id)sender;
 - (IBAction)sendMessage:(id)sender;
@@ -33,19 +40,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title = [self.myFriend objectForKey:kName];
-    
-    if (self.conversation == nil) {
-        self.conversation = [[NSMutableDictionary alloc] init];
-    }
-    
+    [QBChat instance].delegate = [QBService defaultService];
     [self configureInputTextViewLayer];
     
-    UIBarButtonItem *profile = [[UIBarButtonItem alloc] initWithCustomView:[self configureProfileButton]];
-    self.navigationItem.rightBarButtonItem = profile;
+    self.title = [self.currentUser objectForKey:kName];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:kNotificationMessageReceived object:nil];
+    NSString *avatarURL = [self.currentUser objectForKey:kPhoto];
+    AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+    [imgView setImageURL:[NSURL URLWithString:avatarURL]];
+    
+    UIBarButtonItem *profile = [[UIBarButtonItem alloc] initWithTitle:@"lol" style:UIBarButtonItemStylePlain target:self action:@selector(viewProfilePage)];
+    //profile.customView = imgView;
+    
+    self.navigationItem.rightBarButtonItem = profile;
+    [self chooseKindOfChat];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,12 +72,30 @@
     self.inputTextView.layer.borderWidth = 0.1f;
 }
 
-- (UIButton *)configureProfileButton
-{
-    UIButton *profileButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0, 0.0, 28.0, 28.0)];
-    [profileButton setImage:self.friendImage forState:UIControlStateNormal];
-    [profileButton addTarget:self action:@selector(viewProfilePage) forControlEvents:UIControlEventTouchUpInside];
-    return profileButton;
+// activating chat:
+
+- (void)chooseKindOfChat {
+    if (_isFacebookChat) {
+        [self activateFacebookChat];
+    } else {
+    [self activateQuickBloxChat];
+    }
+    // observing notificatins:
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
+}
+
+- (void)activateFacebookChat {
+    _facebookDataSource = [[FacebookDialogsDataSource alloc] init];
+    _facebookDataSource.conversation = _conversation;
+    _tableView.dataSource = _facebookDataSource;
+    [_tableView reloadData];
+}
+
+- (void)activateQuickBloxChat {
+    _quickBloxDataSource = [[QuickBloxDialogsDataSource alloc] init];
+    _quickBloxDataSource.conversation = _conversation;
+    _tableView.dataSource = _quickBloxDataSource;
+    [_tableView reloadData];
 }
 
 
@@ -77,42 +103,28 @@
 #pragma mark Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ((ProfileViewController *)segue.destinationViewController).myFriend = self.myFriend;
+    ((ProfileViewController *)segue.destinationViewController).currentUser = self.currentUser;
 }
+
 
 #pragma mark -
 #pragma mark Actions
 
 - (IBAction)back:(id)sender {
-    [[FBChatService defaultService].allFriendsHistoryConversation setObject:self.conversation forKey:kComments];
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)sendMessage:(id)sender {
     if ([self.inputMessageField.text length] == 0) {
         return;
-        NSLog(@"Empty message");
     }
-    
-    // send message to facebook:
-    [[FBService shared] sendMessage:self.inputMessageField.text toFacebookWithFriendID:[self.myFriend objectForKey:kId]];
-    
-    // create message object
-    NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
-    [facebookMessage setValue:self.inputMessageField.text forKey:kMessage];
-    NSDate *date = [NSDate date];
-    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
-    NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
-    [facebookMessage setValue:createdTime forKey:kCreatedTime];
-    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
-    NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
-    [from setValue:[[FBStorage shared].currentFBUser objectForKey:kId] forKey:kId];
-    [from setValue:[[FBStorage shared].currentFBUser objectForKey:kName] forKey:kName];
-    [facebookMessage setValue:from forKey:kFrom];
-    
-    // save message to history
-    [[[self.conversation objectForKey:kComments] objectForKey:kData] addObject:facebookMessage];
+    NSString *friendID = [_currentUser objectForKey:kId];
+    if (_isFacebookChat) {
+        [[FBChatService defaultService] sendMessage:_inputMessageField.text toUserWithID:friendID];
+    } else {
+        NSUInteger userID = [[_currentUser objectForKey:kQuickbloxID] integerValue];
+        [[QBService defaultService] sendMessage:_inputMessageField.text toUser:userID option:friendID];
+    }
     
     self.inputMessageField.text = @"";
     [self.inputMessageField resignFirstResponder];
@@ -121,13 +133,24 @@
 }
 
 - (void)receiveMessage {
+    if (_isFacebookChat) {
+        NSMutableDictionary *dict = [[FBChatService defaultService].allFriendsHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
+        _conversation = dict;
+        _facebookDataSource.conversation = dict;
+        [self reloadTableView];
+        return;
+    }
+    NSLog(@"%@", [[QBStorage shared].allQuickBloxHistoryConversation allKeys]);
+    NSMutableDictionary *dict = [[QBStorage shared].allQuickBloxHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
+    _conversation = dict;
+    _quickBloxDataSource.conversation = dict;
     [self reloadTableView];
 }
 
 - (void)viewProfilePage {
     [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
 }
-
+//FB
 - (void)reloadTableView {
     [self.tableView reloadData];
     if ([[[self.conversation objectForKey:kComments] objectForKey:kData] count] != 0) {
@@ -183,29 +206,28 @@
 #pragma mark -
 #pragma mark Table View Data Source
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *data = [[self.conversation objectForKey:kComments] objectForKey:kData];
-    return [data count];
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *roomCellIdentifier = @"RoomCellIdentifier";
-    
-    NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
-    
-    ChatRoomCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
-    if (cell == nil){
-        cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
+    static NSString *cellIdentifier = @"NewCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    [cell handleParametersForCellWithFBMessage:message andIndexPath:indexPath];
-    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
-    NSString *messageText = [message objectForKey:kMessage];
+    if (_isFacebookChat) {
+        NSMutableDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
+        NSString *messageText = [message objectForKey:kMessage];
+        return [ChatRoomCell configureHeightForCellWithMessage:messageText];
+    }
+    QBChatMessage *message = [[self.conversation objectForKey:kMessage] objectAtIndex:indexPath.row];
+    NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:message.text];
+    NSString *messageText = [messageData objectForKey:kMessage];
     return [ChatRoomCell configureHeightForCellWithMessage:messageText];
 }
 

@@ -11,14 +11,15 @@
 #import "DialogsCell.h"
 #import "FBStorage.h"
 #import "FBChatService.h"
+#import "QBService.h"
 
 @interface DialogsViewController () <UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSArray *friends;
+@property (nonatomic, strong) NSArray *otherUsers;
 @property (nonatomic, strong) NSMutableArray *searchContent;
-@property (nonatomic, strong) UIImage *friendImage;
 
 @end
 
@@ -27,12 +28,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];	
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     self.friends = [self sortingUsers:[[FBStorage shared] friends]];
     self.searchContent = [self.friends mutableCopy];
 }
 
-
+- (void)fillTableView {
+    self.otherUsers = [FBStorage shared].otherUsers;
+    [self.tableView reloadData];
+}
 #pragma mark -
 #pragma mark Table view data source
 
@@ -66,7 +70,7 @@
             rows = [self.searchContent count];
             break;
         case 1:
-            rows = 0;
+            rows = [self.otherUsers count];
             break;
             
         default:
@@ -87,7 +91,10 @@
         }
             break;
             
-        case 1:
+        case 1:{
+            NSDictionary *user = [self.otherUsers objectAtIndex:indexPath.row];
+            [DialogsCell configureDialogsCell:cell forIndexPath:indexPath forFriend:user];
+        }
             break;
             
         default:
@@ -102,26 +109,41 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *imageURL = [[self.searchContent objectAtIndex:indexPath.row] objectForKey:kPhoto];
-    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
-    UIImage *image = [UIImage imageWithData:imageData];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [self.searchBar resignFirstResponder];
     self.searchBar.showsCancelButton = NO;
     
-    self.friendImage = image;
     [self performSegueWithIdentifier:kDetailDialogSegueIdentifier sender:indexPath];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSMutableDictionary *user;
+    NSMutableDictionary *conversation;
+    NSIndexPath *indexPath = (NSIndexPath *)sender;
+    switch (indexPath.section) {
+        case 0:
+        {
+            user = [self.searchContent objectAtIndex:indexPath.row];
+            conversation = [FBChatService findFBConversationWithFriend:user];
+            ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = YES;
+        }
+            break;
+        case 1:
+        {
+            user = [self.otherUsers objectAtIndex:indexPath.row];
+            conversation = [[QBService defaultService] findConversationWithFriend:user];
+            ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = NO;
+        }
+            break;
+            
+        default:
+            break;
+    }
     
-    NSMutableDictionary *friend = [self.searchContent objectAtIndex:((NSIndexPath *)sender).row];
-    NSMutableDictionary *conversation = [FBChatService findFBConversationWithFriend:friend];
-    
-    ((DetailDialogsViewController *)segue.destinationViewController).myFriend = friend;
+    ((DetailDialogsViewController *)segue.destinationViewController).currentUser = user;
     ((DetailDialogsViewController *)segue.destinationViewController).conversation = conversation;
-    ((DetailDialogsViewController *)segue.destinationViewController).friendImage = self.friendImage;
 }
 
 

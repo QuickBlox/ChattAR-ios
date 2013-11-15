@@ -7,16 +7,15 @@
 //
 
 #import "FBStorage.h"
-
+#import "QBService.h"
 
 @implementation FBStorage
 
 static FBStorage *instance = nil;
 
 @synthesize accessToken;
-
-@synthesize currentFBUser;
-@synthesize currentFBUserId;
+@synthesize friends;
+@synthesize me;
 
 
 + (FBStorage *)shared {
@@ -62,19 +61,40 @@ static FBStorage *instance = nil;
     return nil;
 }
 
-- (void)clearFBUser {
-    currentFBUser = nil;
-}
 
 #pragma mark -
-#pragma mark Application's documents directory
+#pragma mark Some Options
 
-/**
- Returns the path to the application's documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+- (NSMutableDictionary *)findUserWithMessage:(QBChatMessage *)message
+{
+    NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:message.text];
+    NSString *senderID = [messageData objectForKey:kId];
+    // at first, searching in FBCache(as friend):
+    NSMutableArray *facebookFriends = self.friends;
+    NSMutableDictionary *currentUser;
+    for (NSMutableDictionary *friend in facebookFriends) {
+        if ([senderID isEqual:[friend objectForKey:kId]]) {
+            currentUser = friend;
+            return currentUser;
+        }
+    }
+    // then search in QBCache:
+    for (NSMutableDictionary *user in self.otherUsers) {
+        if ([senderID isEqual:[user objectForKey:kId]]) {
+            currentUser = user;
+            break;
+        }
+    }
+    return currentUser;
 }
 
+- (BOOL)isFacebookFriend:(NSMutableDictionary *)user {
+    for (NSMutableDictionary *friend in self.friends) {
+        if ([[user objectForKey:kId] isEqualToString:[friend objectForKey:kId]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

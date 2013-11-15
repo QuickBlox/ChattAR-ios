@@ -10,6 +10,7 @@
 #import "AppDelegate+MemoryWarnings.h"
 #import "FBService.h"
 #import "QBService.h"
+#import "QBStorage.h"
 
 @implementation ChattARAppDelegate
 
@@ -50,8 +51,8 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     if ([FBService shared].isInChatRoom == YES) {
-        [[QBChat instance] leaveRoom:[[QBService defaultService] currentChatRoom]];
-        [QBService defaultService].currentChatRoom = nil;
+        [[QBChat instance] leaveRoom:[[QBStorage shared] currentChatRoom]];
+        [QBStorage shared].currentChatRoom = nil;
     }
     [[QBChat instance] logout];
 }
@@ -63,8 +64,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    if ([[QBService defaultService] me] != nil) {
-        [[QBChat instance] loginWithUser:[[QBService defaultService] me]];
+    if ([[QBStorage shared] me] != nil) {
+        [[QBChat instance] loginWithUser:[[QBStorage shared] me]];
         //[[NSNotificationCenter defaultCenter] postNotificationName:@"activatechat" object:nil];
     }
 }

@@ -44,7 +44,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
-    NSString *firstLastName = [NSString stringWithFormat:@"%@ %@", kGetFBFirstName,kGetFBLastName];
+    NSString *firstLastName = [[FBStorage shared].me objectForKey:kName];
     [self.firstNameField setText:firstLastName];
     if (![Utilites deviceSupportsAR]) {
         NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];

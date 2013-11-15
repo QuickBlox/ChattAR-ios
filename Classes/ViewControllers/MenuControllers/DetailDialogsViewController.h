@@ -10,8 +10,8 @@
 
 @interface DetailDialogsViewController : UIViewController
 
+@property (nonatomic, assign) BOOL isFacebookChat;
 @property (nonatomic, strong) NSMutableDictionary *conversation;
-@property (nonatomic, strong) NSMutableDictionary *myFriend;
-@property (nonatomic, strong) UIImage *friendImage;
+@property (nonatomic, strong) NSMutableDictionary *currentUser;
 
 @end

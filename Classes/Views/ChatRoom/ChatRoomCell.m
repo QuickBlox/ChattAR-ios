@@ -72,7 +72,7 @@
     NSMutableDictionary *tempDict = [NSJSONSerialization JSONObjectWithData:dictData options:NSJSONReadingAllowFragments error:nil];
     
     //getting Avatar from url
-    NSString *urlString = [tempDict objectForKey:kUserPhotoUrl];
+    NSString *urlString = [tempDict objectForKey:kPhoto];
     NSURL *url = [NSURL URLWithString:urlString];
     
     //getting location of a message sender
@@ -82,7 +82,6 @@
     CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
     
     // post message date
-    
     NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
     
     // putting data to fields

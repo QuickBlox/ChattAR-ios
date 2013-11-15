@@ -12,6 +12,7 @@
 #import "Reachability.h"
 #import "LocationService.h"
 #import "QBService.h"
+#import "QBStorage.h"
 #import "FBChatService.h"
 
 
@@ -118,7 +119,7 @@
                     for (NSMutableDictionary *dict in resultData) {
                         NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
                         for (NSMutableDictionary *element in array) {
-                            if ([element objectForKey:kId] != [[FBStorage shared].currentFBUser objectForKey:kId]) {
+                            if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
                                 [history setObject:dict forKey:[element objectForKey:kId]];
                             }
                         }
@@ -145,7 +146,7 @@
                 for (NSMutableDictionary *dict in resultData) {
                     NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
                     for (NSMutableDictionary *element in array) {
-                        if ([element objectForKey:kId] != [[FBStorage shared].currentFBUser objectForKey:kId]) {
+                        if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
                             [history setObject:dict forKey:[element objectForKey:kId]];
                         }
                     }
@@ -169,7 +170,7 @@
     [[FBService shared] userProfileWithResultBlock:^(id result) {
         
         FBGraphObject *user = (FBGraphObject *)result;
-        [FBStorage shared].currentFBUser = [user mutableCopy];
+        [FBStorage shared].me = [user mutableCopy];
     }];
     
     // getting my friends:
@@ -222,7 +223,7 @@
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
-        [[QBService defaultService] setMe:currentUser];
+        [[QBStorage shared] setMe:currentUser];
         // Login to QB Chat
         [QBChat instance].delegate = self;
         [[QBChat instance] loginWithUser:currentUser];

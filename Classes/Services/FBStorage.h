@@ -12,9 +12,9 @@
 
 // FB access
 @property (nonatomic, strong) NSString				*accessToken;
-@property (nonatomic, strong) NSMutableDictionary	*currentFBUser;
-@property (nonatomic, strong) NSString				*currentFBUserId;
+@property (nonatomic, strong) NSMutableDictionary	*me;
 @property (nonatomic, strong) NSMutableArray        *friends;
+@property (nonatomic, strong) NSMutableArray        *otherUsers;
 
 + (FBStorage *) shared;
 
@@ -28,6 +28,11 @@
 - (void)clearFBUser;
 
 
+#pragma mark -
+#pragma mark Some Options
+
+- (BOOL)isFacebookFriend:(NSMutableDictionary *)user;
+- (NSMutableDictionary *)findUserWithMessage:(QBChatMessage *)message;
 
 
 @end
