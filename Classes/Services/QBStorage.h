@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBStorage : NSObject
+@interface QBStorage : NSObject <NSCoding, NSCopying>
 
 @property (nonatomic, strong) NSMutableArray *chatHistory;
 @property (nonatomic, strong) NSMutableDictionary *allQuickBloxHistoryConversation;
@@ -16,5 +16,12 @@
 @property (nonatomic, strong) QBUUser *me;
 
 + (instancetype)shared;
+
+
+#pragma mark -
+#pragma mark Chache
+
+- (void)saveHistory;
+- (void)loadHistory;
 
 @end

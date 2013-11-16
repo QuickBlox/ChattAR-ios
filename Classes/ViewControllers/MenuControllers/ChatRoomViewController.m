@@ -12,7 +12,6 @@
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
-#import "FBChatService.h"
 #import "QBService.h"
 #import "QBStorage.h"
 //#import "LocationService.h"
@@ -50,9 +49,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Default";
-    [self setPin];
-    self.chatHistory = [[NSMutableArray alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
+    //[self setPin];
     [self configureInputTextViewLayer];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     self.title = roomName;
@@ -83,7 +82,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [QBChat instance].delegate = self;
     [_chatRoomTable reloadData];
 }
 
@@ -195,7 +193,7 @@
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
             NSMutableDictionary *currentUser = [self userWithMessage:msg];
             if ([[FBStorage shared] isFacebookFriend:currentUser]) {
-                NSMutableDictionary *dialog = [FBChatService findFBConversationWithFriend:currentUser];
+                NSMutableDictionary *dialog = [FBService findFBConversationWithFriend:currentUser];
                 self.dialogTo = dialog;
             } else {
                 // finding QB conversation:
@@ -240,44 +238,12 @@
 {
     NSString *facebookID = [[FBStorage shared].me objectForKey:kId];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
-    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:facebookID membersOnly:NO persistent:YES];
+    [[QBService defaultService] chatCreateOrJoinRoomWithName:roomName andNickName:facebookID];
 }
 
 
 #pragma mark -
-#pragma mark QBChatDelegate
-
-- (void)chatDidLogin
-{
-    // if room entered
-    if ([[FBService shared] isInChatRoom]) {
-        [self creatingOrJoiningRoom];
-    }
-}
-
-// if chat room is created or user is joined
-- (void)chatRoomDidEnter:(QBChatRoom *)room
-{
-    [room addUsers:@[@34]];
-    NSLog(@"Chat Room is opened");
-    [[FBService shared] setIsInChatRoom:YES];
-    [[QBStorage shared] setCurrentChatRoom:room];
-    //get room
-    self.currentRoom = room;
-    
-    // Update chat room rank
-    NSNumber *rank = [_currentChatRoom.fields objectForKey:kRank];
-    NSUInteger intRank = [rank intValue];
-    intRank+=1;
-    [_currentChatRoom.fields setValue:[NSNumber numberWithInt:intRank] forKey:kRank];
-    [QBCustomObjects updateObject:_currentChatRoom delegate:nil];
-    [self.indicatorView stopAnimating];
-}
-
-- (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error
-{
-    NSLog(@"Error:%@", error);
-}
+#pragma mark Actions
 
 // back button
 - (IBAction)backToRooms:(id)sender
@@ -302,11 +268,25 @@
 }
 
 
+#pragma mark -
+#pragma mark Notifications
+
 - (void)resetTableView {
     [self.chatRoomTable reloadData];
     [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
+- (void)joinedRoom {
+    self.currentRoom = [QBStorage shared].currentChatRoom;
+}
+
+- (void)messageReceived {
+    self.chatHistory = [QBStorage shared].chatHistory;
+    if (self.chatHistory == nil) {
+        self.chatHistory = [[NSMutableArray alloc] init];
+    }
+    [self resetTableView];
+}
 
 #pragma mark -
 #pragma mark Show/Hide Keyboard

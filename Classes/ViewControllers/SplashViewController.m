@@ -13,7 +13,6 @@
 #import "LocationService.h"
 #import "QBService.h"
 #import "QBStorage.h"
-#import "FBChatService.h"
 
 
 @implementation SplashViewController
@@ -26,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatDidLogin) name:kNotificationDidLogin object:nil];
     // if iPhone 5
     if(IS_HEIGHT_GTE_568){
         [backgroundImage setImage:[UIImage imageNamed:@"Default-568h@2x.png"]];
@@ -124,7 +123,7 @@
                             }
                         }
                     }
-                    [FBChatService defaultService].allFriendsHistoryConversation = history;
+                    [FBStorage shared].allFriendsHistoryConversation = history;
                 }];
             }
         }]; 
@@ -151,7 +150,7 @@
                         }
                     }
                 }
-                [FBChatService defaultService].allFriendsHistoryConversation = history;
+                [FBStorage shared].allFriendsHistoryConversation = history;
             }];
         }];
         
@@ -225,24 +224,18 @@
         currentUser.password = res.session.token;
         [[QBStorage shared] setMe:currentUser];
         // Login to QB Chat
-        [QBChat instance].delegate = self;
-        [[QBChat instance] loginWithUser:currentUser];
+        [[QBService defaultService] loginWithUser:currentUser];
     }
 }
 
 
 #pragma mark -
-#pragma mark QBChatDelegate
+#pragma mark Auth Notification
 
 - (void)chatDidLogin
 {
-    NSLog(@"Chat login success");
     [self.activityIndicatior stopAnimating];
-    [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
-    //start getting location:
-    [[LocationService shared] startUpdateLocation];
     [self dismissModalViewControllerAnimated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
 }
 
 @end

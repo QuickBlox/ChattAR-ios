@@ -10,23 +10,37 @@
 
 @interface FBService : NSObject
 {
+    NSTimer     *presenceTimer;
 	XMPPStream	*xmppStream;
-	NSTimer		*presenceTimer;
 }
+@property (nonatomic, strong) NSTimer *presenceTimer;
 @property (strong, nonatomic) FBSession *session;
 @property (assign, nonatomic) BOOL isInChatRoom;
 
 + (instancetype)shared;
 
 #pragma mark -
-#pragma mark Me
+#pragma mark Facebook Requests
 
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
 - (void) userFriendsUsingBlock:(FBResultBlock)resultBlock;
 - (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock;
 
+
 #pragma mark -
-#pragma mark Messages & Chat
+#pragma mark Messages
+
+- (void)sendMessage:(NSString *)messageText toUserWithID:(NSString *)userID;
+
+
+#pragma mark -
+#pragma mark Options
+
++ (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend;
+
+
+#pragma mark -
+#pragma mark XMPP Chat
 
 - (void) logInChat;
 - (void) logOutChat;

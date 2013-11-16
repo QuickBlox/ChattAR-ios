@@ -13,7 +13,6 @@
 #import "ChatRoomCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
-#import "FBChatService.h"
 #import "QBService.h"
 #import "QBStorage.h"
 #import "Utilites.h"
@@ -42,7 +41,7 @@
     [super viewDidLoad];
     [QBChat instance].delegate = [QBService defaultService];
     [self configureInputTextViewLayer];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     self.title = [self.currentUser objectForKey:kName];
     
     NSString *avatarURL = [self.currentUser objectForKey:kPhoto];
@@ -80,8 +79,6 @@
     } else {
     [self activateQuickBloxChat];
     }
-    // observing notificatins:
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 - (void)activateFacebookChat {
@@ -120,7 +117,7 @@
     }
     NSString *friendID = [_currentUser objectForKey:kId];
     if (_isFacebookChat) {
-        [[FBChatService defaultService] sendMessage:_inputMessageField.text toUserWithID:friendID];
+        [[FBService shared] sendMessage:_inputMessageField.text toUserWithID:friendID];
     } else {
         NSUInteger userID = [[_currentUser objectForKey:kQuickbloxID] integerValue];
         [[QBService defaultService] sendMessage:_inputMessageField.text toUser:userID option:friendID];
@@ -134,13 +131,12 @@
 
 - (void)receiveMessage {
     if (_isFacebookChat) {
-        NSMutableDictionary *dict = [[FBChatService defaultService].allFriendsHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
+        NSMutableDictionary *dict = [[FBStorage shared].allFriendsHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
         _conversation = dict;
         _facebookDataSource.conversation = dict;
         [self reloadTableView];
         return;
     }
-    NSLog(@"%@", [[QBStorage shared].allQuickBloxHistoryConversation allKeys]);
     NSMutableDictionary *dict = [[QBStorage shared].allQuickBloxHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
     _conversation = dict;
     _quickBloxDataSource.conversation = dict;

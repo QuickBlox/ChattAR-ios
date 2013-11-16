@@ -9,8 +9,8 @@
 #import "DialogsViewController.h"
 #import "DetailDialogsViewController.h"
 #import "DialogsCell.h"
+#import "FBService.h"
 #import "FBStorage.h"
-#import "FBChatService.h"
 #import "QBService.h"
 
 @interface DialogsViewController () <UISearchBarDelegate>
@@ -126,7 +126,7 @@
         case 0:
         {
             user = [self.searchContent objectAtIndex:indexPath.row];
-            conversation = [FBChatService findFBConversationWithFriend:user];
+            conversation = [FBService findFBConversationWithFriend:user];
             ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = YES;
         }
             break;

@@ -25,7 +25,7 @@
 // NOTIFICATIONS:
 #define CAChatDidReceiveOrSendMessageNotification           @"CAChatDidReceiveOrSendMessageNotification"
 #define CAChatRoomDidReceiveOrSendMessageNotification       @"CAChatRoomDidReceiveOrSendMessageNotification"
-
+#define CAChatRoomDidEnterNotification @"CAChatRoomDidEnterNotification"
 
 // Table Tags:
 #define  kTrendingTableViewTag      1011
@@ -45,6 +45,9 @@
 
 #define kFacebookID         @"facebookID"
 #define kQuickbloxID        @"quickbloxID"
+
+#define kRecepientID        @"recicpentID"
+#define kSenderID           @"senderID"
 
 // Segue Identifiers
 #define kChatSegueIdentifier                @"Chat"
@@ -122,6 +125,8 @@
 
 #define minARMarkerAlpha 0.6f
 #define alphaStep() (1-minARMarkerAlpha)/countOfScaledChunks
+
+#define kFilename @"data"
 
 typedef void(^FBResultBlock)(id result);
 

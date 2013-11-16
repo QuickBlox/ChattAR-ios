@@ -15,8 +15,9 @@
 @property (nonatomic, strong) NSMutableDictionary	*me;
 @property (nonatomic, strong) NSMutableArray        *friends;
 @property (nonatomic, strong) NSMutableArray        *otherUsers;
+@property (nonatomic, strong) NSMutableDictionary   *allFriendsHistoryConversation;
 
-+ (FBStorage *) shared;
++ (instancetype)shared;
 
 
 #pragma mark -

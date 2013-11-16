@@ -23,7 +23,14 @@
 
 
 #pragma mark -
+#pragma mark LogIn & LogOut
+
+- (void)loginWithUser:(QBUUser *)user;
+
+#pragma mark -
 #pragma mark Operations
+
+- (void)chatCreateOrJoinRoomWithName:(NSString *)roomName andNickName:(NSString *)nickname;
 
 - (NSMutableDictionary *)findConversationToUserWithMessage:(QBChatMessage *)message;
 - (NSMutableDictionary *)findConversationWithFriend:(NSMutableDictionary *)aFriend;

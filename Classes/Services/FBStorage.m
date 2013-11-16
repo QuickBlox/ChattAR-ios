@@ -11,23 +11,26 @@
 
 @implementation FBStorage
 
-static FBStorage *instance = nil;
-
 @synthesize accessToken;
 @synthesize friends;
 @synthesize me;
 
 
-+ (FBStorage *)shared {
-	@synchronized (self) {
-		if (instance == nil){ 
-            instance = [[self alloc] init];
-        }
-	}
-	
-	return instance;
++ (instancetype)shared {
+    static FBStorage *defaultFBStorageInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultFBStorageInstance = [[self alloc] init];
+    });
+    return defaultFBStorageInstance;
 }
 
+- (id)init {
+    if (self = [super init]) {
+        self.allFriendsHistoryConversation = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
 
 #pragma mark -
 #pragma mark FB access

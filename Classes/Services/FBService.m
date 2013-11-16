@@ -10,28 +10,26 @@
 #import "DDTTYLogger.h"
 #import "XMPPStream.h"
 #import "FBStorage.h"
-#import "FBChatService.h"
 #import "Utilites.h"
 #import "NSObject+performer.h"
 
 
 
-static id service = nil;
 
 @implementation FBService
 @synthesize isInChatRoom;
+
 
 #pragma mark -
 #pragma mark Singletone
 
 + (instancetype)shared {
-	@synchronized (self) {
-		if (service == nil){
-            service = [[self alloc] init];
-        }
-	}
-	
-	return service;
+    static FBService *defaultFBChatService = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultFBChatService = [[self alloc] init];
+    });
+    return defaultFBChatService;
 }
 
 - (id)init {
@@ -46,9 +44,8 @@ static id service = nil;
 
 
 #pragma mark -
-#pragma mark Me
+#pragma mark Facebook Requests
 
-// Get profile
 - (void)userProfileWithResultBlock:(FBResultBlock)resultBlock {
     FBRequest *meRequest = [FBRequest requestForMe];
     [meRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -56,20 +53,12 @@ static id service = nil;
     }];
 }
 
-
-#pragma mark -
-#pragma mark Friends
-
 - (void)userFriendsUsingBlock:(FBResultBlock)resultBlock {
     FBRequest *friendsRequest = [FBRequest requestForMyFriends];
     [friendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         resultBlock(result);
     }];
 }
-
-
-#pragma mark -
-#pragma mark User with ID
 
 - (void)userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock {
     FBRequest *requestForID = [FBRequest requestForGraphPath:userID];
@@ -81,6 +70,74 @@ static id service = nil;
 
 #pragma mark -
 #pragma mark Messages
+
+- (void)sendMessage:(NSString *)messageText toUserWithID:(NSString *)userID {
+    // send message to facebook:
+    [[FBService shared] sendMessage:messageText toFacebookWithFriendID:userID];
+    
+    // create message object
+    NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
+    [facebookMessage setValue:messageText forKey:kMessage];
+    NSDate *date = [NSDate date];
+    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+    NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
+    [facebookMessage setValue:createdTime forKey:kCreatedTime];
+    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
+    NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
+    [from setValue:[[FBStorage shared].me objectForKey:kId] forKey:kId];
+    [from setValue:[[FBStorage shared].me objectForKey:kName] forKey:kName];
+    [facebookMessage setValue:from forKey:kFrom];
+    
+    // save message to history
+    NSMutableDictionary *conversation = [[FBStorage shared].allFriendsHistoryConversation objectForKey:userID];
+    NSMutableArray *data = [[conversation objectForKey:kComments] objectForKey:kData];
+    if (data ==nil) {
+        data = [[NSMutableArray alloc] initWithObjects:@[facebookMessage], nil];
+        NSMutableDictionary *comments = [[NSMutableDictionary alloc] initWithObjects:@[data] forKeys:@[kData]];
+        [conversation setObject:comments forKey:kComments];
+    }
+    [data addObject:facebookMessage];
+    [[FBStorage shared].allFriendsHistoryConversation setObject:conversation forKey:userID];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
+}
+
+
+#pragma mark -
+#pragma mark Options
+
++ (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend {
+    
+    NSArray *users = [[FBStorage shared].allFriendsHistoryConversation allValues];
+    for (NSMutableDictionary *user in users) {
+        NSArray *to = [[user objectForKey:kTo] objectForKey:kData];
+        for (NSDictionary *t in to) {
+            if ([[t objectForKey:kId] isEqual:[aFriend objectForKey:kId]]) {
+                return user;
+            }
+        }
+    }
+    // if not return, create new conversation:
+    NSMutableDictionary *newConversation = [[NSMutableDictionary alloc]init];
+    // adding commnets to this conversation:
+    NSMutableDictionary *comments = [[NSMutableDictionary alloc] init];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [comments setObject:array forKey:kData];
+    [newConversation setObject:comments forKey:kComments];
+    
+    // adding kTo:
+    NSMutableDictionary *kto = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    [dict setValue:[aFriend objectForKey:kId] forKey:kId];
+    [dict setValue:[aFriend objectForKey:kName] forKey:kName];
+    
+    [kto setValue:[NSMutableArray arrayWithObject:dict] forKey:kData];
+    [newConversation setObject:kto forKey:kTo];
+    return newConversation;
+}
+
+
+#pragma mark -
+#pragma mark XMPP Chat
 
 -(void)logInChat {
 	NSError *error = nil;
@@ -156,7 +213,7 @@ static id service = nil;
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     NSLog(@"Facebook XMPP authenticated");
-    presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self 
+    presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
                                                     selector:@selector(sendPresence) 
                                                     userInfo:nil repeats:YES];
 }
@@ -225,7 +282,7 @@ static id service = nil;
     [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
     
     // save message to history
-    [[[[[FBChatService defaultService].allFriendsHistoryConversation objectForKey:fromID]
+    [[[[[FBStorage shared].allFriendsHistoryConversation objectForKey:fromID]
             objectForKey:kComments] objectForKey:kData] addObject:message];
     
     // post notification

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
+#import "FBService.h"
 #import "QBService.h"
 #import "FBStorage.h"
 #import "QBStorage.h"
@@ -29,6 +30,14 @@
         self.userIsJoinedChatRoom = NO;
     }
     return self;
+}
+
+
+#pragma mark -
+#pragma mark LogIn & Log Out
+
+- (void)loginWithUser:(QBUUser *)user {
+    [[QBChat instance] loginWithUser:user];
 }
 
 
@@ -59,7 +68,6 @@
     
     [[QBChat instance] sendMessage:msg];
     [self cachingMessage:msg forUserID:option];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 - (void)cachingMessage:(QBChatMessage *)message forUserID:(NSString *)userID {
@@ -67,11 +75,12 @@
     if (temporary != nil) {
         NSMutableArray *messages = [temporary objectForKey:kMessage];
         [messages addObject:message];
-        return;
-    }
+    } else {
     NSMutableArray *messages = [[NSMutableArray alloc] initWithObjects:message, nil];
     temporary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:messages,kMessage, nil];
     [[QBStorage shared].allQuickBloxHistoryConversation setObject:temporary forKey:userID];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 
@@ -103,6 +112,10 @@
 
 #pragma mark -
 #pragma mark Operations
+
+- (void)chatCreateOrJoinRoomWithName:(NSString *)roomName andNickName:(NSString *)nickname {
+    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:nickname membersOnly:NO persistent:YES];
+}
 
 - (NSMutableDictionary *)findConversationToUserWithMessage:(QBChatMessage *)message {
     NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:message.text];
@@ -148,16 +161,38 @@
 #pragma mark -
 #pragma mark QBChatDelegate
 
+- (void)chatDidLogin {
+    NSLog(@"Chat login success");
+    [FBService shared].presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
+    //start getting location:
+    [[LocationService shared] startUpdateLocation];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
+}
+
+
 - (void)chatDidReceiveMessage:(QBChatMessage *)message {
     NSMutableDictionary *messageData = [self unarchiveMessageData:message.text];
     NSString *facebookID = [messageData objectForKey:kId];
     [self cachingMessage:message forUserID:facebookID];
-    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 - (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName {
     [[QBStorage shared].chatHistory addObject:message];
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
+}
+
+- (void)chatRoomDidEnter:(QBChatRoom *)room
+{
+    [room addUsers:@[@34]];
+    NSLog(@"Chat Room is opened");
+    [[FBService shared] setIsInChatRoom:YES];
+    [[QBStorage shared] setCurrentChatRoom:room];
+    //get room
+    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:room];
+}
+
+- (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error {
+    NSLog(@"Error:%@", error);
 }
 
 - (void)chatRoomDidLeave:(NSString *)roomName {
