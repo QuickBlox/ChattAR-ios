@@ -219,6 +219,12 @@
     if (result.success && [result isKindOfClass:[QBAAuthSessionCreationResult class]]) {
         // session was created successful
         QBAAuthSessionCreationResult *res = (QBAAuthSessionCreationResult *)result;
+        
+        [[QBStorage shared] loadHistory];
+        NSArray *userIDs = [[QBStorage shared].allQuickBloxHistoryConversation allKeys];
+        NSMutableArray *users = [[FBService shared] userProfilesWithIDs:userIDs];
+        [QBStorage shared].otherUsers = users;
+        
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;

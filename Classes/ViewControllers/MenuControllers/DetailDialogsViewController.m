@@ -48,9 +48,10 @@
     AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
     [imgView setImageURL:[NSURL URLWithString:avatarURL]];
     
-    UIBarButtonItem *profile = [[UIBarButtonItem alloc] initWithTitle:@"lol" style:UIBarButtonItemStylePlain target:self action:@selector(viewProfilePage)];
-    //profile.customView = imgView;
-    
+    UIGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewProfilePage)];
+    [imgView addGestureRecognizer:tapGestureRecognizer];
+    UIBarButtonItem *profile = [[UIBarButtonItem alloc] initWithCustomView:imgView];
+
     self.navigationItem.rightBarButtonItem = profile;
     [self chooseKindOfChat];
 }

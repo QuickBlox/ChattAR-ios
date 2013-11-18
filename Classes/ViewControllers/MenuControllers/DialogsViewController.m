@@ -12,6 +12,7 @@
 #import "FBService.h"
 #import "FBStorage.h"
 #import "QBService.h"
+#import "QBStorage.h"
 
 @interface DialogsViewController () <UISearchBarDelegate>
 
@@ -31,10 +32,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     self.friends = [self sortingUsers:[[FBStorage shared] friends]];
     self.searchContent = [self.friends mutableCopy];
+    self.otherUsers = [[QBStorage shared] otherUsers];
 }
 
 - (void)fillTableView {
-    self.otherUsers = [FBStorage shared].otherUsers;
+    self.otherUsers = [QBStorage shared].otherUsers;
     [self.tableView reloadData];
 }
 #pragma mark -

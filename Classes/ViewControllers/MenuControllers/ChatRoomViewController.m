@@ -14,7 +14,6 @@
 #import "FBService.h"
 #import "QBService.h"
 #import "QBStorage.h"
-//#import "LocationService.h"
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
 #import <CoreLocation/CoreLocation.h>
@@ -221,12 +220,12 @@
         NSMutableDictionary *messageData = [[QBService defaultService] unarchiveMessageData:message.text];
         currentFriend = [[NSMutableDictionary alloc] init];
         [currentFriend setObject:[messageData objectForKey:kUserName] forKey:kName];
-        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].me objectForKey:kId], [FBStorage shared].accessToken];
+        NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [messageData objectForKey:kId], [FBStorage shared].accessToken];
         [currentFriend setObject:urlString forKey:kPhoto];
         [currentFriend setObject:[messageData objectForKey:kId] forKey:kId];
         [currentFriend setObject:[messageData objectForKey:kQuickbloxID] forKey:kQuickbloxID];
         // caching created user:
-        [[FBStorage shared].otherUsers addObject:currentFriend];
+        [[QBStorage shared].otherUsers addObject:currentFriend];
     }
     return currentFriend;
 }

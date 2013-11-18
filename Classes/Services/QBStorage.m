@@ -23,13 +23,14 @@
     if (self = [super init]) {
         self.chatHistory = [[NSMutableArray alloc] init];
         self.allQuickBloxHistoryConversation = [[NSMutableDictionary alloc] init];
+        self.otherUsers = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 
 #pragma mark -
-#pragma mark Chache
+#pragma mark Cache
 
 - (void)saveHistory {
     NSMutableDictionary *historyToCache = [self archiveData];
@@ -38,14 +39,18 @@
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [archiver encodeObject:historyToCache forKey:@"certificate"];
     [archiver finishEncoding];
-    [data writeToFile:[self dataFilePath] atomically:YES];
+    NSError *error = nil;
+    BOOL answer = [data writeToFile:[self dataFilePath] options:NSDataWritingAtomic error:&error];
 }
 
 - (void)loadHistory {
-    NSData *data = [[NSData alloc] initWithContentsOfFile:[self dataFilePath]];
+    NSMutableData *data = [[NSMutableData alloc] initWithContentsOfFile:[self dataFilePath]];
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
     NSMutableDictionary *cache = [unarchiver decodeObjectForKey:@"certificate"];
     [unarchiver finishDecoding];
+    // pack NSDictionary messages to QBChatMessages:
+    NSMutableDictionary *allConversations = [self unarchiveData:cache];
+    self.allQuickBloxHistoryConversation = allConversations;
 }
 
 - (NSMutableDictionary *)archiveData {
@@ -68,8 +73,23 @@
     return cachedHistory;
 }
 
-- (void)unarchiveData {
-    
+- (NSMutableDictionary *)unarchiveData:(NSMutableDictionary *)data {
+    NSArray *keys = [data allKeys];
+    NSMutableDictionary *cachedHistory = [[NSMutableDictionary alloc] init];
+    for (NSString *key in keys) {
+        // unpack messages:
+        NSMutableDictionary *messageDictionary = [data objectForKey:key];
+        NSMutableArray *arrayOfMessages = [messageDictionary objectForKey:kMessage];
+        // adding new array for saving converted messages:
+        NSMutableArray *convertedMessages = [[NSMutableArray alloc] init];
+        for (NSMutableDictionary *message in arrayOfMessages) {
+            QBChatMessage *msg = [self convertDictionaryToMessage:message];
+            [convertedMessages addObject:msg];
+        }
+        NSMutableDictionary *newData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:convertedMessages,kMessage, nil];
+        [cachedHistory setObject:newData forKey:key];
+    }
+    return cachedHistory;
 }
 
 // convertors:
@@ -102,7 +122,7 @@
 - (NSString *)dataFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths firstObject];
-    NSString *fullPath = [documentsDirectory stringByAppendingString:kFilename];
+    NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:kFilename];
     return fullPath;
 }
 

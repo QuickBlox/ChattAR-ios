@@ -8,6 +8,7 @@
 
 #import "FBStorage.h"
 #import "QBService.h"
+#import "QBStorage.h"
 
 @implementation FBStorage
 
@@ -82,7 +83,7 @@
         }
     }
     // then search in QBCache:
-    for (NSMutableDictionary *user in self.otherUsers) {
+    for (NSMutableDictionary *user in [QBStorage shared].otherUsers) {
         if ([senderID isEqual:[user objectForKey:kId]]) {
             currentUser = user;
             break;

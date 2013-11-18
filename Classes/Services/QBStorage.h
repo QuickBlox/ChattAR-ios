@@ -10,16 +10,17 @@
 
 @interface QBStorage : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic, strong) NSMutableArray *chatHistory;
-@property (nonatomic, strong) NSMutableDictionary *allQuickBloxHistoryConversation;
-@property (nonatomic, strong) QBChatRoom *currentChatRoom;
-@property (nonatomic, strong) QBUUser *me;
+@property (nonatomic, strong) NSMutableArray        *chatHistory;
+@property (nonatomic, strong) NSMutableDictionary   *allQuickBloxHistoryConversation;
+@property (nonatomic, strong) QBChatRoom            *currentChatRoom;
+@property (nonatomic, strong) QBUUser               *me;
+@property (nonatomic, strong) NSMutableArray        *otherUsers;
 
 + (instancetype)shared;
 
 
 #pragma mark -
-#pragma mark Chache
+#pragma mark Cache
 
 - (void)saveHistory;
 - (void)loadHistory;

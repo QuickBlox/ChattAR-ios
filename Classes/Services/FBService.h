@@ -25,6 +25,7 @@
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
 - (void) userFriendsUsingBlock:(FBResultBlock)resultBlock;
 - (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock;
+- (NSMutableArray *)userProfilesWithIDs:(NSArray *)userIDs;
 
 
 #pragma mark -

@@ -67,6 +67,20 @@
     }];
 }
 
+- (NSMutableArray *)userProfilesWithIDs:(NSArray *)userIDs {
+    NSMutableArray *users = [[NSMutableArray alloc] init];
+    for (NSString *userID in userIDs) {
+        [self userProfileWithID:userID withBlock:^(id result) {
+            NSMutableDictionary *user = (FBGraphObject *)result;
+            // add photo url:
+            NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
+            [user setObject:photoURL forKey:kPhoto];
+            [users addObject:user];
+        }];
+    }
+    return users;
+}
+
 
 #pragma mark -
 #pragma mark Messages
