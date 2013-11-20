@@ -11,10 +11,6 @@
 #import "XMPPStream.h"
 #import "FBStorage.h"
 #import "Utilites.h"
-#import "NSObject+performer.h"
-
-
-
 
 @implementation FBService
 @synthesize isInChatRoom;
@@ -24,12 +20,12 @@
 #pragma mark Singletone
 
 + (instancetype)shared {
-    static FBService *defaultFBChatService = nil;
+    static id instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        defaultFBChatService = [[self alloc] init];
+        instance = [[self alloc] init];
     });
-    return defaultFBChatService;
+    return instance;
 }
 
 - (id)init {
@@ -67,18 +63,23 @@
     }];
 }
 
-- (NSMutableArray *)userProfilesWithIDs:(NSArray *)userIDs {
-    NSMutableArray *users = [[NSMutableArray alloc] init];
-    for (NSString *userID in userIDs) {
-        [self userProfileWithID:userID withBlock:^(id result) {
-            NSMutableDictionary *user = (FBGraphObject *)result;
-            // add photo url:
-            NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
-            [user setObject:photoURL forKey:kPhoto];
-            [users addObject:user];
-        }];
+- (void)usersProfilesWithIDs:(NSArray *)userIDs resultBlock:(FBResultBlock)resultBlock {
+    NSString *path = @"?ids=";
+    if (userIDs == nil && [userIDs count] == 0) {
+        return;
     }
-    return users;
+    for (NSString *ID in userIDs) {
+        if ([ID isEqualToString:[userIDs lastObject]]) {
+            path = [path stringByAppendingString:ID];
+            break;
+        }
+        path = [path stringByAppendingString:ID];
+        path = [path stringByAppendingString:@","];
+    }
+    FBRequest *opponentsRequest = [FBRequest requestForGraphPath:path];
+    [opponentsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        resultBlock(result);
+    }];
 }
 
 
@@ -112,6 +113,7 @@
     }
     [data addObject:facebookMessage];
     [[FBStorage shared].allFriendsHistoryConversation setObject:conversation forKey:userID];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
@@ -130,6 +132,8 @@
             }
         }
     }
+    
+    
     // if not return, create new conversation:
     NSMutableDictionary *newConversation = [[NSMutableDictionary alloc]init];
     // adding commnets to this conversation:
@@ -146,6 +150,7 @@
     
     [kto setValue:[NSMutableArray arrayWithObject:dict] forKey:kData];
     [newConversation setObject:kto forKey:kTo];
+    
     return newConversation;
 }
 
@@ -202,23 +207,18 @@
 }
 
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
-    if (![xmppStream isSecure])
-    {
+    if (![xmppStream isSecure]){
         NSError *error = nil;
         BOOL result = [xmppStream secureConnection:&error];
         
-        if (result == NO)
-        {
+        if (result == NO){
             NSLog(@"XMPP STARTTLS failed");
         }
-    } 
-    else 
-    {
+    } else{
         NSError *error = nil;
-		BOOL result = [xmppStream authenticateWithFacebookAccessToken:GetFBAccessToken error:&error];
+		BOOL result = [xmppStream authenticateWithFacebookAccessToken:[FBStorage shared].accessToken error:&error];
 
-        if (result == NO)
-        {
+        if (result == NO){
             NSLog(@"XMPP authentication failed");
         }
     }

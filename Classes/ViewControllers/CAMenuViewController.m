@@ -174,6 +174,7 @@
 }
 -(void) slideMenuWillSlideToSide{
     NSLog(@"slideMenuWillSlideToSide");
+    [[[UIApplication sharedApplication].windows firstObject] endEditing:YES];
 }
 -(void) slideMenuDidSlideToSide{
     NSLog(@"slideMenuDidSlideToSide");
@@ -207,8 +208,8 @@
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];
     //clear  FBAccessToken and FBUser from DataManager
-    [[FBStorage shared] clearFBAccess];
-    [[FBStorage shared] clearFBUser];
+    [[FBStorage shared] setAccessToken:nil];
+    [[FBStorage shared] setMe:nil];
 }
 
 @end

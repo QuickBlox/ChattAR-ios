@@ -43,7 +43,6 @@
 		69357E9217CCBAEE00EB3CDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */; };
 		69357E9317CCBAEE00EB3CDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69357E9017CCBAEE00EB3CDF /* main.m */; };
 		6935830617CCBBD700EB3CDF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */; };
-		69384E931822AE1400BA4BED /* NSObject+performer.m in Sources */ = {isa = PBXBuildFile; fileRef = 69384E921822AE1400BA4BED /* NSObject+performer.m */; };
 		693B5B1D180405FB000F5374 /* menu_btn_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B19180405FB000F5374 /* menu_btn_b.png */; };
 		693B5B1E180405FB000F5374 /* menu_btn_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */; };
 		693B5B1F180405FB000F5374 /* menu_btn_gr.png in Resources */ = {isa = PBXBuildFile; fileRef = 693B5B1B180405FB000F5374 /* menu_btn_gr.png */; };
@@ -176,7 +175,7 @@
 		6947462F1805469100928ED4 /* CAnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746281805469100928ED4 /* CAnotation.m */; };
 		694746301805469100928ED4 /* ChatRoomsPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462A1805469100928ED4 /* ChatRoomsPaginator.m */; };
 		694746311805469100928ED4 /* Utilites.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947462C1805469100928ED4 /* Utilites.m */; };
-		694746451805A71600928ED4 /* ChatRoomsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463E1805A71600928ED4 /* ChatRoomsService.m */; };
+		694746451805A71600928ED4 /* ChatRoomStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6947463E1805A71600928ED4 /* ChatRoomStorage.m */; };
 		694746461805A71600928ED4 /* FBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746401805A71600928ED4 /* FBService.m */; };
 		694746471805A71600928ED4 /* FBStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746421805A71600928ED4 /* FBStorage.m */; };
 		694746481805A71600928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746441805A71600928ED4 /* LocationService.m */; };
@@ -256,6 +255,7 @@
 		69F20FE71811672000452C55 /* about_mnu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE51811672000452C55 /* about_mnu@2x.png */; };
 		69F20FE81811672000452C55 /* about_mnu.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE61811672000452C55 /* about_mnu.png */; };
 		69F20FEA181181CA00452C55 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F20FE9181181CA00452C55 /* Quickblox.framework */; };
+		69F2ED4D183BB6B5000497E8 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F2ED4C183BB6B5000497E8 /* Social.framework */; };
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
@@ -308,8 +308,6 @@
 		69357E8F17CCBAEE00EB3CDF /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		69357E9017CCBAEE00EB3CDF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6935830517CCBBD700EB3CDF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		69384E911822AE1400BA4BED /* NSObject+performer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+performer.h"; sourceTree = "<group>"; };
-		69384E921822AE1400BA4BED /* NSObject+performer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+performer.m"; sourceTree = "<group>"; };
 		693B5B19180405FB000F5374 /* menu_btn_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_b.png; sourceTree = "<group>"; };
 		693B5B1A180405FB000F5374 /* menu_btn_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_btn_b@2x.png"; sourceTree = "<group>"; };
 		693B5B1B180405FB000F5374 /* menu_btn_gr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_btn_gr.png; sourceTree = "<group>"; };
@@ -573,8 +571,8 @@
 		6947462A1805469100928ED4 /* ChatRoomsPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsPaginator.m; sourceTree = "<group>"; };
 		6947462B1805469100928ED4 /* Utilites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilites.h; sourceTree = "<group>"; };
 		6947462C1805469100928ED4 /* Utilites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilites.m; sourceTree = "<group>"; };
-		6947463D1805A71600928ED4 /* ChatRoomsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomsService.h; sourceTree = "<group>"; };
-		6947463E1805A71600928ED4 /* ChatRoomsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomsService.m; sourceTree = "<group>"; };
+		6947463D1805A71600928ED4 /* ChatRoomStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomStorage.h; sourceTree = "<group>"; };
+		6947463E1805A71600928ED4 /* ChatRoomStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomStorage.m; sourceTree = "<group>"; };
 		6947463F1805A71600928ED4 /* FBService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBService.h; sourceTree = "<group>"; };
 		694746401805A71600928ED4 /* FBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBService.m; sourceTree = "<group>"; };
 		694746411805A71600928ED4 /* FBStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBStorage.h; sourceTree = "<group>"; };
@@ -680,6 +678,7 @@
 		69F20FE51811672000452C55 /* about_mnu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_mnu@2x.png"; sourceTree = "<group>"; };
 		69F20FE61811672000452C55 /* about_mnu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_mnu.png; sourceTree = "<group>"; };
 		69F20FE9181181CA00452C55 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
+		69F2ED4C183BB6B5000497E8 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		7B8C3FDE15D8D55800E42A41 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -691,6 +690,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69F2ED4D183BB6B5000497E8 /* Social.framework in Frameworks */,
 				69F20FEA181181CA00452C55 /* Quickblox.framework in Frameworks */,
 				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */,
@@ -776,8 +776,6 @@
 		69384E901822AE1400BA4BED /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				69384E911822AE1400BA4BED /* NSObject+performer.h */,
-				69384E921822AE1400BA4BED /* NSObject+performer.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1580,8 +1578,8 @@
 			children = (
 				694746431805A71600928ED4 /* LocationService.h */,
 				694746441805A71600928ED4 /* LocationService.m */,
-				6947463D1805A71600928ED4 /* ChatRoomsService.h */,
-				6947463E1805A71600928ED4 /* ChatRoomsService.m */,
+				6947463D1805A71600928ED4 /* ChatRoomStorage.h */,
+				6947463E1805A71600928ED4 /* ChatRoomStorage.m */,
 				6947463F1805A71600928ED4 /* FBService.h */,
 				694746401805A71600928ED4 /* FBService.m */,
 				694746411805A71600928ED4 /* FBStorage.h */,
@@ -1802,6 +1800,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69F2ED4C183BB6B5000497E8 /* Social.framework */,
 				69F20FE9181181CA00452C55 /* Quickblox.framework */,
 				690A708A1806A5A100F3C584 /* CoreMotion.framework */,
 				691A1B3417FDB94000C2A87D /* MapKit.framework */,
@@ -2106,7 +2105,7 @@
 				694746211805463F00928ED4 /* AsyncImageView.m in Sources */,
 				6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */,
 				6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */,
-				694746451805A71600928ED4 /* ChatRoomsService.m in Sources */,
+				694746451805A71600928ED4 /* ChatRoomStorage.m in Sources */,
 				69A402B017D7431E00E7BE1F /* CAMenuViewController.m in Sources */,
 				69A402B417D7452E00E7BE1F /* SplashViewSegue.m in Sources */,
 				69E8ECCF17E0AB0300D614AA /* LocalChatRoomsDataSource.m in Sources */,
@@ -2116,7 +2115,6 @@
 				69165AE3182A91D300486DA8 /* ProfileViewController.m in Sources */,
 				690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
-				69384E931822AE1400BA4BED /* NSObject+performer.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
 				69A51AB417EC82EC0089B06D /* QuotedChatRoomCell.m in Sources */,
 				694746461805A71600928ED4 /* FBService.m in Sources */,

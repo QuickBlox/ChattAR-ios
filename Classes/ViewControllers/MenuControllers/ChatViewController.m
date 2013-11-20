@@ -11,15 +11,17 @@
 #import "LocalChatRoomsDataSource.h"
 #import "FBService.h"
 #import "FBStorage.h"
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 #import "LocationService.h"
 #import "Utilites.h"
 #import "ChatRoomViewController.h"
 
 
-@interface ChatViewController ()
+@interface ChatViewController () <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate, UIAlertViewDelegate, NMPaginatorDelegate, UIScrollViewDelegate, UISearchBarDelegate>
+
 @property (nonatomic, strong) IBOutlet UITableView *trendingTableView;
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic, strong) NSArray *trendings;
 @property (nonatomic, strong) NSMutableArray *locals;
@@ -41,9 +43,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchForResults) name:CAChatDidReceiveSearchResults object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
     
-    _trendings = [[NSArray alloc] initWithArray:[[ChatRoomsService shared] allTrendingRooms]];
-    _locals = [[NSMutableArray alloc] initWithArray:[[ChatRoomsService shared] allLocalRooms]];
+    _trendings = [[NSArray alloc] initWithArray:[[ChatRoomStorage shared] allTrendingRooms]];
+    _locals = [[NSMutableArray alloc] initWithArray:[[ChatRoomStorage shared] allLocalRooms]];
     
     _trendingTableView.tag = kTrendingTableViewTag;
     _locationTableView.tag = kLocalTableViewTag;
@@ -53,8 +57,8 @@
         self.trendingDataSource.chatRooms = _trendings;
     }
     if(_locals.count > 0){
-        self.locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
-        self.locationDataSource.distances = [[ChatRoomsService shared] distances];
+        self.locationDataSource.chatRooms = [[ChatRoomStorage shared] allLocalRooms];
+        self.locationDataSource.distances = [[ChatRoomStorage shared] distances];
     }
     
     self.trendingTableView.dataSource = self.trendingDataSource;
@@ -68,9 +72,9 @@
     self.trendingPaginator.tag = kTrendingPaginatorTag;
     self.trendingTableView.tableFooterView = [self creatingTrendingFooter];
     if(_trendings.count > 0 ){
-        if (![[ChatRoomsService shared] endOfList]) {
+        if (![[ChatRoomStorage shared] endOfList]) {
             [self.trendingPaginator setPageTo:[_trendings count]/10];
-            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [_trendings count]];
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"Load more..."];
             [self.trendingFooterLabel setNeedsDisplay];
         } else {
             self.trendingTableView.tableFooterView = nil;
@@ -89,8 +93,6 @@
         [self performSegueWithIdentifier:@"Splash" sender:self];
         [[Utilites shared] setUserLogIn];
     }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,26 +102,36 @@
     [self.locationTableView reloadData];
 }
 
-- (void)loadRooms {
-    [[NSNotificationCenter defaultCenter]  removeObserver:self];
-    
-    if ([_trendings count] == 0) {
-        [self.trendingPaginator fetchFirstPage];
-    }
-    if ([[ChatRoomsService shared] allLocalRooms] == nil) {
-        [self loadLocalRooms];
-    }else {
-        _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
-        _locationDataSource.distances = [self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]];
-    }
-}
-
 - (void)loadLocalRooms {
     [QBCustomObjects objectsWithClassName:kChatRoom delegate:self];
 }
 
 
-#pragma marak -
+#pragma mark -
+#pragma mark Notifications
+
+- (void)loadRooms {
+    [[NSNotificationCenter defaultCenter]  removeObserver:self name:kNotificationDidLogin object:nil];
+    
+    if ([_trendings count] == 0) {
+        [self.trendingPaginator fetchFirstPage];
+    }
+    if ([[ChatRoomStorage shared] allLocalRooms] == nil) {
+        [self loadLocalRooms];
+    }else {
+        _locationDataSource.chatRooms = [[ChatRoomStorage shared] allLocalRooms];
+        _locationDataSource.distances = [self arrayOfDistances:[[ChatRoomStorage shared] allLocalRooms]];
+    }
+}
+
+- (void)searchForResults {
+    self.trendings = [ChatRoomStorage shared].searchedRooms;
+    self.trendingDataSource.chatRooms = [ChatRoomStorage shared].searchedRooms;
+    [self.trendingTableView reloadData];
+    self.trendingFooterLabel.text = nil;
+}
+
+#pragma mark -
 #pragma mark QBActionStatusDelegate
 
 - (void)completedWithResult:(Result *)result {
@@ -127,11 +139,11 @@
         if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
             // todo:
             QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
-            _locals = [[ChatRoomsService shared] sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:pagedResult.objects];
-            [[ChatRoomsService shared] setAllLocalRooms:_locals];
+            _locals = [[ChatRoomStorage shared] sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:pagedResult.objects];
+            [[ChatRoomStorage shared] setAllLocalRooms:_locals];
             _locationDataSource.chatRooms = _locals;
             _locationDataSource.distances = [self arrayOfDistances:_locals];
-            [[ChatRoomsService shared] setDistances:[self arrayOfDistances:[[ChatRoomsService shared] allLocalRooms]]];
+            [[ChatRoomStorage shared] setDistances:[self arrayOfDistances:[[ChatRoomStorage shared] allLocalRooms]]];
             [self.locationTableView reloadData];
         }
     }
@@ -152,7 +164,7 @@
     if ([paginator.results count] != 0)
     {
         if (paginator.tag == kTrendingPaginatorTag) {
-            self.trendingFooterLabel.text = [NSString stringWithFormat:@"%d results out of all", [[[ChatRoomsService shared] allTrendingRooms] count]];
+            self.trendingFooterLabel.text = [NSString stringWithFormat:@"Load more..."];
             [self.trendingFooterLabel setNeedsDisplay];
         }
     }
@@ -204,13 +216,13 @@
 {
     if(results.count != 10){
         self.trendingTableView.tableFooterView  = nil;
-        [[ChatRoomsService shared] setEndOfList:YES];
+        [[ChatRoomStorage shared] setEndOfList:YES];
         //return;
     }
     // handle new results
         _trendings = [_trendings arrayByAddingObjectsFromArray:results];
         _trendingDataSource.chatRooms = _trendings;
-        [[ChatRoomsService shared] setAllTrendingRooms:_trendings];
+        [[ChatRoomStorage shared] setAllTrendingRooms:_trendings];
         [self.trendingActivityIndicator stopAnimating];
     
     [self updateTableViewFooterWithPaginator:paginator];
@@ -258,14 +270,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
- 
+    [self.searchBar resignFirstResponder];
+    [self.searchBar setShowsCancelButton:NO animated:NO];
     // get current chat room
     QBCOCustomObject *currentRoom;
     if (tableView.tag == kTrendingTableViewTag) {
        currentRoom =  [_trendings objectAtIndex:[indexPath row]];
     
     }else if (tableView.tag == kLocalTableViewTag) {
-       currentRoom = [[[ChatRoomsService shared] allLocalRooms] objectAtIndex:[indexPath row]];
+       currentRoom = [[[ChatRoomStorage shared] allLocalRooms] objectAtIndex:[indexPath row]];
     }
     
     // Open CHat Controller
@@ -311,13 +324,13 @@
                 [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
                 [QBCustomObjects createObject:object delegate:self];
                 [_locals insertObject:object atIndex:0];
-                _locals = [[ChatRoomsService shared] sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
-                [[ChatRoomsService shared] setAllLocalRooms:_locals];
-                [[ChatRoomsService shared].distances insertObject:[NSNumber numberWithInt:[self distanceFromNewRoom:object]] atIndex:0];
+                _locals = [[ChatRoomStorage shared] sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
+                [[ChatRoomStorage shared] setAllLocalRooms:_locals];
+                [[ChatRoomStorage shared].distances insertObject:[NSNumber numberWithInt:[self distanceFromNewRoom:object]] atIndex:0];
                 
                 // put to datasource
-                _locationDataSource.chatRooms = [[ChatRoomsService shared] allLocalRooms];
-                _locationDataSource.distances = [[ChatRoomsService shared] distances];
+                _locationDataSource.chatRooms = [[ChatRoomStorage shared] allLocalRooms];
+                _locationDataSource.distances = [[ChatRoomStorage shared] distances];
                 
                 [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:object];
                 
@@ -349,6 +362,42 @@
     CLLocation *newRoom = [[CLLocation alloc] initWithLatitude:[[[room fields] objectForKey:kLatitude] doubleValue] longitude:[[[room fields] objectForKey:kLongitude] doubleValue]];
     NSInteger distance = [[LocationService shared].myLocation distanceFromLocation:newRoom];
     return distance;
+}
+
+
+#pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    ChatRoomStorage *chatRoomService = [ChatRoomStorage shared];
+    // called when keyboard search button pressed
+    NSMutableDictionary *extendedRequest = [[NSMutableDictionary alloc] init];
+    [extendedRequest setObject:self.searchBar.text forKey:@"name[ctn]"];
+    [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extendedRequest delegate:chatRoomService];
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if ([searchText isEqualToString:@""]) {
+        self.trendings = [ChatRoomStorage shared].allTrendingRooms;
+        self.trendingDataSource.chatRooms = _trendings;
+        [self.trendingTableView reloadData];
+        self.trendingFooterLabel.text = [NSString stringWithFormat:@"Load more..."];
+    }
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    self.trendings = [ChatRoomStorage shared].allTrendingRooms;
+    self.trendingDataSource.chatRooms = _trendings;
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    self.trendingFooterLabel.text = @"Load more...";
+    [self.trendingTableView reloadData];
 }
 
 @end

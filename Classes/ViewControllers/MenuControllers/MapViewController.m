@@ -9,7 +9,7 @@
 #import "MapViewController.h"
 #import "FBService.h"
 #import "CAnotation.h"
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 #import "ChatRoomViewController.h"
 
 
@@ -31,7 +31,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     // getting local rooms:
-    _chatRooms = [[ChatRoomsService shared] allLocalRooms];
+    _chatRooms = [[ChatRoomStorage shared] allLocalRooms];
     // setting local rooms at the map:
     [self setAnnotationsToMap:_chatRooms];
     [super viewWillAppear:NO];

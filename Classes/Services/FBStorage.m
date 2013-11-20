@@ -16,7 +16,6 @@
 @synthesize friends;
 @synthesize me;
 
-
 + (instancetype)shared {
     static FBStorage *defaultFBStorageInstance = nil;
     static dispatch_once_t onceToken;
@@ -33,36 +32,21 @@
     return self;
 }
 
+
 #pragma mark -
 #pragma mark FB access
 
-- (void)saveFBToken:(NSString *)token {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:token forKey:FBAccessTokenKey];
-	[defaults synchronize];
-    
-    accessToken = token;
-}
-
-- (void)clearFBAccess {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:FBAccessTokenKey];
-	[defaults synchronize];
-
-    accessToken = nil;
-}
-
-- (NSDictionary *)fbUserToken
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	if ([defaults objectForKey:FBAccessTokenKey]){
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-		[dict setObject:[defaults objectForKey:FBAccessTokenKey] forKey:FBAccessTokenKey];        
-		return dict;
+- (void)setAccessToken:(NSString *)__accessToken{
+    accessToken = __accessToken;
+    if(accessToken == nil){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:FBAccessTokenKey];
+        [defaults synchronize];
+    }else{
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:accessToken forKey:FBAccessTokenKey];
+        [defaults synchronize];
     }
-    
-    return nil;
 }
 
 

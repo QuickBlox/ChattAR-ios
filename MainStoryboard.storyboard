@@ -38,11 +38,11 @@
             <objects>
                 <viewController id="Vch-rc-7Oy" customClass="ChatRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2GZ-eo-kOd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="458"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -51,7 +51,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="4e0-Cg-koI">
-                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="458" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
@@ -415,37 +415,49 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="10X-Ra-BBE">
-                                        <rect key="frame" x="-2" y="0.0" width="252" height="504"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <view key="tableHeaderView" contentMode="scaleToFill" id="lS8-uw-fkc">
-                                            <rect key="frame" x="0.0" y="0.0" width="252" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="88"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="trendings_icon.png" id="3X9-M6-Ugs">
-                                                    <rect key="frame" x="20" y="7" width="32" height="29"/>
+                                                    <rect key="frame" x="20" y="9" width="30" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Trending" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="J1d-Rj-LiM">
-                                                    <rect key="frame" x="70" y="7" width="105" height="29"/>
+                                                    <rect key="frame" x="65" y="9" width="105" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <searchBar contentMode="redraw" id="Eti-gy-kH0">
+                                                    <rect key="frame" x="0.0" y="44" width="250" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <scopeButtonTitles>
+                                                        <string>Title</string>
+                                                        <string>Title</string>
+                                                    </scopeButtonTitles>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="x2E-WD-CCp" id="iY9-92-CJr"/>
+                                                    </connections>
+                                                </searchBar>
                                             </subviews>
                                             <color key="backgroundColor" red="0.80753226902173914" green="0.0" blue="0.10408550034343622" alpha="1" colorSpace="calibratedRGB"/>
                                         </view>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrendingCell" id="FAv-sL-Nuq" customClass="TrendingCell">
-                                                <rect key="frame" x="0.0" y="66" width="252" height="44"/>
+                                                <rect key="frame" x="0.0" y="110" width="250" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FAv-sL-Nuq" id="GzR-nn-Fjs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="252" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trendings_uicon.png" id="28v-JI-lEn">
-                                                            <rect key="frame" x="10" y="15" width="13" height="13"/>
+                                                            <rect key="frame" x="10" y="15" width="11" height="13"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2587" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MYO-Je-wlW">
@@ -490,7 +502,7 @@
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Local" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cbn-S6-jIz">
-                                                    <rect key="frame" x="54" y="6" width="90" height="29"/>
+                                                    <rect key="frame" x="53" y="8" width="90" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -560,6 +572,7 @@
                     <connections>
                         <outlet property="locationTableView" destination="AMp-bx-rym" id="xYP-xx-TIN"/>
                         <outlet property="scrollView" destination="G8h-07-dLG" id="Np0-Cs-TLr"/>
+                        <outlet property="searchBar" destination="Eti-gy-kH0" id="Uit-rA-aOR"/>
                         <outlet property="trendingTableView" destination="10X-Ra-BBE" id="NYG-iK-REh"/>
                         <segue destination="Vch-rc-7Oy" kind="push" identifier="ChatToChatRoomSegue" id="08e-u6-zeQ"/>
                     </connections>
@@ -1059,9 +1072,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="GXn-8Q-nrq"/>
-        <segue reference="K6Z-1q-k1N"/>
+        <segue reference="08e-u6-zeQ"/>
         <segue reference="YmU-iS-597"/>
         <segue reference="gGZ-kD-fDC"/>
+        <segue reference="i69-BF-qyq"/>
     </inferredMetricsTieBreakers>
 </document>

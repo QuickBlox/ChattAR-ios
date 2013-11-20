@@ -6,17 +6,30 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 
-@implementation ChatRoomsService
+@interface ChatRoomStorage()
+
+@end
+
+
+@implementation ChatRoomStorage 
 
 + (instancetype)shared {
-    static ChatRoomsService *sharedChatRoomsService = nil;
+    static ChatRoomStorage *sharedChatRoomsService = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedChatRoomsService = [[self alloc] init];
     });
     return sharedChatRoomsService;
+}
+
+- (id)init {
+    if (self = [super init]) {
+        //  to do:
+        
+    }
+    return self;
 }
 
 #pragma mark - Sort
@@ -49,5 +62,20 @@
     return neibRooms;
 }
 
+
+#pragma mark -
+#pragma mark QBActionStatusDelegate
+
+- (void)completedWithResult:(Result *)result {
+    if ([result success]) {
+        if ([result isKindOfClass:[QBCOCustomObjectPagedResult class]]) {
+            QBCOCustomObjectPagedResult *pagedResult = (QBCOCustomObjectPagedResult *)result;
+            NSArray *searchedRooms = pagedResult.objects;
+            self.searchedRooms = searchedRooms;
+            [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveSearchResults object:nil];
+        }
+    }
+    
+}
 
 @end

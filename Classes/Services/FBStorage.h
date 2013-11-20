@@ -20,15 +20,6 @@
 
 
 #pragma mark -
-#pragma mark FB
-
-- (void) saveFBToken:(NSString *)token;
-- (void)clearFBAccess;
-- (NSDictionary *) fbUserToken;
-- (void)clearFBUser;
-
-
-#pragma mark -
 #pragma mark Some Options
 
 - (BOOL)isFacebookFriend:(NSMutableDictionary *)user;

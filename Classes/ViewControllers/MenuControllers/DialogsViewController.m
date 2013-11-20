@@ -17,10 +17,9 @@
 @interface DialogsViewController () <UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-
-@property (nonatomic, strong) NSArray *friends;
-@property (nonatomic, strong) NSArray *otherUsers;
-@property (nonatomic, strong) NSMutableArray *searchContent;
+@property (nonatomic, strong) NSArray *searchContent;
+@property (nonatomic, strong) NSMutableArray *friends;
+@property (nonatomic, strong) NSMutableArray *otherUsers;
 
 @end
 
@@ -30,9 +29,11 @@
 {
     [super viewDidLoad];	
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
-    self.friends = [self sortingUsers:[[FBStorage shared] friends]];
-    self.searchContent = [self.friends mutableCopy];
-    self.otherUsers = [[QBStorage shared] otherUsers];
+    
+    self.searchContent = [self sortingUsers:[[FBStorage shared] friends]];
+    self.friends = [self.searchContent mutableCopy];
+    NSArray *users = [[QBStorage shared] otherUsers];
+    self.otherUsers = [users mutableCopy];
 }
 
 - (void)fillTableView {
@@ -69,7 +70,7 @@
     NSUInteger rows = 0;
     switch (section) {
         case 0:
-            rows = [self.searchContent count];
+            rows = [self.friends count];
             break;
         case 1:
             rows = [self.otherUsers count];
@@ -88,7 +89,7 @@
     
     switch ([indexPath section]) {
         case 0:{
-            NSDictionary *friend = [self.searchContent objectAtIndex:indexPath.row];
+            NSDictionary *friend = [self.friends objectAtIndex:indexPath.row];
             [DialogsCell configureDialogsCell:cell forIndexPath:indexPath forFriend:friend];
         }
             break;
@@ -127,16 +128,16 @@
     switch (indexPath.section) {
         case 0:
         {
-            user = [self.searchContent objectAtIndex:indexPath.row];
+            user = [self.friends objectAtIndex:indexPath.row];
             conversation = [FBService findFBConversationWithFriend:user];
-            ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = YES;
+            ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = YES;
         }
             break;
         case 1:
         {
             user = [self.otherUsers objectAtIndex:indexPath.row];
             conversation = [[QBService defaultService] findConversationWithFriend:user];
-            ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = NO;
+            ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = NO;
         }
             break;
             
@@ -144,7 +145,7 @@
             break;
     }
     
-    ((DetailDialogsViewController *)segue.destinationViewController).currentUser = user;
+    ((DetailDialogsViewController *)segue.destinationViewController).opponent = user;
     ((DetailDialogsViewController *)segue.destinationViewController).conversation = conversation;
 }
 
@@ -157,6 +158,7 @@
     return YES;
 }
 
+// options:
 - (BOOL)searchingString:(NSString *)source inString:(NSString *)searchString {
     BOOL answer;
     NSRange range = [source rangeOfString:searchString options:NSCaseInsensitiveSearch];
@@ -168,19 +170,26 @@
     return answer;
 }
 
+- (NSMutableArray *)objectsToDeleteFromArray:(NSMutableArray *)array text:(NSString *)text {
+    NSMutableArray *deleted = [[NSMutableArray alloc] init];
+    for (NSDictionary *user in array) {
+        if (![self searchingString:[user objectForKey:kName] inString:text]) {
+            [deleted addObject:user];
+        }
+    }
+    return deleted;
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.searchContent = [self.friends mutableCopy];
-    
+    self.friends = [self.searchContent mutableCopy];
+    self.otherUsers = [[QBStorage shared].otherUsers mutableCopy];
     if ([searchText isEqualToString:@""]) {
         [self.tableView reloadData];
     } else {
-        NSMutableArray *deleted = [[NSMutableArray alloc] init];
-        for (NSDictionary *user in self.searchContent) {
-            if (![self searchingString:[user objectForKey:kName] inString:searchText]) {
-                [deleted addObject:user];
-            }
-        }
-        [self.searchContent removeObjectsInArray:deleted];
+        NSMutableArray *friendsToDelete = [self objectsToDeleteFromArray:self.friends text:searchText];
+        NSMutableArray *opponentsToDelete = [self objectsToDeleteFromArray:self.otherUsers text:searchText];
+        [self.friends removeObjectsInArray:friendsToDelete];
+        [self.otherUsers removeObjectsInArray:opponentsToDelete];
         [self.tableView reloadData];
     }
 }

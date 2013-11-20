@@ -15,12 +15,12 @@
 @implementation QBService
 
 + (instancetype)defaultService {
-    static QBService *defaultQBService = nil;
+    static id instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        defaultQBService = [[self alloc] init];
+        instance = [[self alloc] init];
     });
-    return defaultQBService;
+    return instance;
 }
 
 - (id)init {
@@ -38,6 +38,10 @@
 
 - (void)loginWithUser:(QBUUser *)user {
     [[QBChat instance] loginWithUser:user];
+}
+
+- (void)loginToChatFromBackground {
+    [self chatCreateOrJoinRoomWithName:[QBStorage shared].chatRoomName andNickName:[[FBStorage shared].me objectForKey:kId]];
 }
 
 
@@ -76,13 +80,13 @@
         NSMutableArray *messages = [temporary objectForKey:kMessage];
         [messages addObject:message];
     } else {
-    NSMutableArray *messages = [[NSMutableArray alloc] initWithObjects:message, nil];
-    temporary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:messages,kMessage, nil];
-    [[QBStorage shared].allQuickBloxHistoryConversation setObject:temporary forKey:userID];
+        NSMutableArray *messages = [[NSMutableArray alloc] initWithObjects:message, nil];
+        temporary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:messages,kMessage, nil];
+        [[QBStorage shared].allQuickBloxHistoryConversation setObject:temporary forKey:userID];
     }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
-
 
 - (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote {
     NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
@@ -166,9 +170,9 @@
     [FBService shared].presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
 }
-
 
 - (void)chatDidReceiveMessage:(QBChatMessage *)message {
     NSMutableDictionary *messageData = [self unarchiveMessageData:message.text];
@@ -184,9 +188,11 @@
 - (void)chatRoomDidEnter:(QBChatRoom *)room
 {
     [room addUsers:@[@34]];
+    [QBService defaultService].userIsJoinedChatRoom = YES;
     NSLog(@"Chat Room is opened");
     [[FBService shared] setIsInChatRoom:YES];
     [[QBStorage shared] setCurrentChatRoom:room];
+    
     //get room
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:room];
 }
@@ -198,4 +204,5 @@
 - (void)chatRoomDidLeave:(NSString *)roomName {
     NSLog(@"Did  Leave worked");
 }
+
 @end

@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ChatRoomsService : NSObject
+@interface ChatRoomStorage : NSObject <QBActionStatusDelegate>
 
 @property (nonatomic, strong) NSArray *allTrendingRooms;
 @property (nonatomic, strong) NSArray *allLocalRooms;
 @property (nonatomic, strong) NSMutableArray *distances;
+@property (nonatomic, strong) NSArray *searchedRooms;
 @property (nonatomic, assign) BOOL endOfList;
 
 + (instancetype)shared;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ChatRoomsPaginator.h"
 
-@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, QBActionStatusDelegate, QBChatDelegate, UIAlertViewDelegate, NMPaginatorDelegate, UIScrollViewDelegate>
+@interface ChatViewController : UIViewController 
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) ChatRoomsPaginator *trendingPaginator;

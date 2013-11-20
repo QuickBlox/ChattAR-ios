@@ -25,7 +25,8 @@
 // NOTIFICATIONS:
 #define CAChatDidReceiveOrSendMessageNotification           @"CAChatDidReceiveOrSendMessageNotification"
 #define CAChatRoomDidReceiveOrSendMessageNotification       @"CAChatRoomDidReceiveOrSendMessageNotification"
-#define CAChatRoomDidEnterNotification @"CAChatRoomDidEnterNotification"
+#define CAChatRoomDidEnterNotification                      @"CAChatRoomDidEnterNotification"
+#define CAChatDidReceiveSearchResults                       @"CAChatDidReceiveSearchResults"
 
 // Table Tags:
 #define  kTrendingTableViewTag      1011
@@ -70,7 +71,6 @@
 
 // Facebook Macro
 #define FBAccessTokenKey       @"FBAccessTokenKey"
-#define GetFBAccessToken       [[[FBStorage shared] fbUserToken] objectForKey:FBAccessTokenKey]
 #define kFacebookKey           @"facebook"
 
 #define kMe					@"me"

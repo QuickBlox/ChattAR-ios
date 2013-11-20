@@ -8,7 +8,7 @@
 #import "ChatViewController.h"
 #import "ChatRoomViewController.h"
 #import "ChatRoomCell.h"
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
@@ -17,6 +17,7 @@
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import <Social/Social.h>
 
 
 
@@ -230,6 +231,7 @@
     return currentFriend;
 }
 
+
 #pragma mark -
 #pragma mark ChatRoom
 
@@ -237,6 +239,9 @@
 {
     NSString *facebookID = [[FBStorage shared].me objectForKey:kId];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
+    // saving room name to cache:
+    [QBStorage shared].chatRoomName = roomName;
+    // login to room:
     [[QBService defaultService] chatCreateOrJoinRoomWithName:roomName andNickName:facebookID];
 }
 
@@ -248,7 +253,8 @@
 - (IBAction)backToRooms:(id)sender
 {
     [[FBService shared] setIsInChatRoom:NO];
-    [[QBChat instance] leaveRoom:[[QBStorage shared] currentChatRoom]];
+    [QBStorage shared].currentChatRoom = nil;
+    [[QBStorage shared].chatHistory removeAllObjects];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -277,6 +283,7 @@
 
 - (void)joinedRoom {
     self.currentRoom = [QBStorage shared].currentChatRoom;
+    [self.chatRoomTable reloadData];
 }
 
 - (void)messageReceived {
@@ -292,28 +299,18 @@
 
 - (void)showKeyboard
 {
-    CGRect tableViewFrame = self.chatRoomTable.frame;
-    CGRect inputPanelFrame = _inputTextView.frame;
-    tableViewFrame.origin.y -= 215;
-    inputPanelFrame.origin.y -= 215;
-    //animation
-    [UIView animateWithDuration:0.25f animations:^{
-        [self.chatRoomTable setFrame:tableViewFrame];
-        [_inputTextView setFrame:inputPanelFrame];
+    [UIView animateWithDuration:0.275 animations:^{
+        self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
+        self.chatRoomTable.transform = CGAffineTransformMakeTranslation(0, -215);
     }];
 }
 
 - (void)hideKeyboard
 {
-    CGRect tableViewFrame = self.chatRoomTable.frame;
-    CGRect inputPanelFrame = _inputTextView.frame;
-    tableViewFrame.origin.y += 215;
-    inputPanelFrame.origin.y += 215;
-    //animation
-    [UIView animateWithDuration:0.25f animations:^{
-        [self.chatRoomTable setFrame:tableViewFrame];
-        [_inputTextView setFrame:inputPanelFrame];
-    }];    
+    [UIView animateWithDuration:0.275 animations:^{
+        self.inputTextView.transform = CGAffineTransformIdentity;
+        self.chatRoomTable.transform = CGAffineTransformIdentity;;
+    }];
 }
 
 
@@ -341,8 +338,38 @@
 
 - (IBAction)share:(id)sender
 {
-    UIActivityViewController *shareKit = [[UIActivityViewController alloc] initWithActivityItems:@[@"I use ChattAR 2.0"] applicationActivities:nil];
-    [self presentViewController:shareKit animated:YES completion:nil];
+    NSString *initialText = [NSString stringWithFormat:@"Hi! I found cool room named %@! Join us! #Chattar", [_currentChatRoom.fields objectForKey:kName]];
+    
+    SLComposeViewController *composeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    [composeController setInitialText:initialText];
+    [self presentViewController:composeController animated:YES completion:nil];
+    [composeController setCompletionHandler:^(SLComposeViewControllerResult result) {
+        
+        switch (result) {
+            case SLComposeViewControllerResultCancelled:
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancelled"
+                                                          message:@"Something was wrong. Please, try again."
+                                                          delegate:nil
+                                                      cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+                break;
+            case SLComposeViewControllerResultDone:
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done!"
+                                                                message:@"Message successfuly posted."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+                break;
+                
+            default:
+                break;
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];;
 }
 
 
@@ -355,13 +382,13 @@
         ((ProfileViewController *)segue.destinationViewController).currentUser = sender;
         return;
     }
-        ((DetailDialogsViewController *)segue.destinationViewController).currentUser = sender;
+        ((DetailDialogsViewController *)segue.destinationViewController).opponent = sender;
         ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
     if ([[FBStorage shared] isFacebookFriend:sender]) {
-        ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = YES;
+        ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = YES;
         return;
     }
-        ((DetailDialogsViewController *)segue.destinationViewController).isFacebookChat = NO;
+        ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = NO;
 }
 
 @end

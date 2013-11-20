@@ -39,12 +39,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [QBChat instance].delegate = [QBService defaultService];
     [self configureInputTextViewLayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
-    self.title = [self.currentUser objectForKey:kName];
+    self.title = [self.opponent objectForKey:kName];
     
-    NSString *avatarURL = [self.currentUser objectForKey:kPhoto];
+    NSString *avatarURL = [self.opponent objectForKey:kPhoto];
     AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
     [imgView setImageURL:[NSURL URLWithString:avatarURL]];
     
@@ -75,10 +74,10 @@
 // activating chat:
 
 - (void)chooseKindOfChat {
-    if (_isFacebookChat) {
+    if (_isChatWithFacebookFriend) {
         [self activateFacebookChat];
     } else {
-    [self activateQuickBloxChat];
+        [self activateQuickBloxChat];
     }
 }
 
@@ -101,7 +100,7 @@
 #pragma mark Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ((ProfileViewController *)segue.destinationViewController).currentUser = self.currentUser;
+    ((ProfileViewController *)segue.destinationViewController).currentUser = self.opponent;
 }
 
 
@@ -116,11 +115,11 @@
     if ([self.inputMessageField.text length] == 0) {
         return;
     }
-    NSString *friendID = [_currentUser objectForKey:kId];
-    if (_isFacebookChat) {
+    NSString *friendID = [_opponent objectForKey:kId];
+    if (_isChatWithFacebookFriend) {
         [[FBService shared] sendMessage:_inputMessageField.text toUserWithID:friendID];
     } else {
-        NSUInteger userID = [[_currentUser objectForKey:kQuickbloxID] integerValue];
+        NSUInteger userID = [[_opponent objectForKey:kQuickbloxID] integerValue];
         [[QBService defaultService] sendMessage:_inputMessageField.text toUser:userID option:friendID];
     }
     
@@ -131,14 +130,14 @@
 }
 
 - (void)receiveMessage {
-    if (_isFacebookChat) {
-        NSMutableDictionary *dict = [[FBStorage shared].allFriendsHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
+    if (_isChatWithFacebookFriend) {
+        NSMutableDictionary *dict = [[FBStorage shared].allFriendsHistoryConversation objectForKey:[_opponent objectForKey:kId]];
         _conversation = dict;
         _facebookDataSource.conversation = dict;
         [self reloadTableView];
         return;
     }
-    NSMutableDictionary *dict = [[QBStorage shared].allQuickBloxHistoryConversation objectForKey:[_currentUser objectForKey:kId]];
+    NSMutableDictionary *dict = [[QBStorage shared].allQuickBloxHistoryConversation objectForKey:[_opponent objectForKey:kId]];
     _conversation = dict;
     _quickBloxDataSource.conversation = dict;
     [self reloadTableView];
@@ -150,8 +149,14 @@
 //FB
 - (void)reloadTableView {
     [self.tableView reloadData];
-    if ([[[self.conversation objectForKey:kComments] objectForKey:kData] count] != 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[[self.conversation objectForKey:kComments] objectForKey:kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (self.isChatWithFacebookFriend) {
+        if ([[[self.conversation objectForKey:kComments] objectForKey:kData] count] != 0) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[[self.conversation objectForKey:kComments] objectForKey:kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+    } else {
+        if ([self.conversation objectForKey:kMessage] != 0) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[self.conversation objectForKey:kMessage] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
 }
 
@@ -160,26 +165,16 @@
 #pragma mark Show/Hide Keyboard
 
 - (void)showKeyboard {
-    CGRect tableViewFrame = self.tableView.frame;
-    CGRect inputPanelFrame = _inputTextView.frame;
-    tableViewFrame.origin.y -= 215;
-    inputPanelFrame.origin.y -= 215;
-    //animation
-    [UIView animateWithDuration:0.25f animations:^{
-        [self.tableView setFrame:tableViewFrame];
-        [_inputTextView setFrame:inputPanelFrame];
+    [UIView animateWithDuration:0.275 animations:^{
+        self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
+        self.tableView.transform = CGAffineTransformMakeTranslation(0, -215);
     }];
 }
 
 - (void)hideKeyboard {
-    CGRect tableViewFrame = self.tableView.frame;
-    CGRect inputPanelFrame = _inputTextView.frame;
-    tableViewFrame.origin.y += 215;
-    inputPanelFrame.origin.y += 215;
-    //animation
-    [UIView animateWithDuration:0.25f animations:^{
-        [self.tableView setFrame:tableViewFrame];
-        [_inputTextView setFrame:inputPanelFrame];
+    [UIView animateWithDuration:0.275 animations:^{
+        self.inputTextView.transform = CGAffineTransformIdentity;
+        self.tableView.transform = CGAffineTransformIdentity;
     }];
 }
 
@@ -217,7 +212,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_isFacebookChat) {
+    if (_isChatWithFacebookFriend) {
         NSMutableDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
         NSString *messageText = [message objectForKey:kMessage];
         return [ChatRoomCell configureHeightForCellWithMessage:messageText];

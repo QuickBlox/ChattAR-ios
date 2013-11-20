@@ -12,7 +12,7 @@
 #import "ARGeoCoordinate.h"
 #import "ARMarkerView.h"
 #import "LocationService.h"
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 
 #define kFilteringFactor 0.05
 #define degreesToRadian(x) (M_PI * (x) / 180.0)
@@ -158,7 +158,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
-    [self refreshWithNewRooms:[[ChatRoomsService shared] allLocalRooms]];
+    [self refreshWithNewRooms:[[ChatRoomStorage shared] allLocalRooms]];
 }
 
 - (void)viewDidUnload {

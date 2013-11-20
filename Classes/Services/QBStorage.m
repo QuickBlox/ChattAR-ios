@@ -11,12 +11,12 @@
 @implementation QBStorage
 
 + (instancetype)shared {
-    static QBStorage *defaultQBStorage = nil;
+    static id instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        defaultQBStorage = [[self alloc] init];
+        instance = [[self alloc] init];
     });
-    return defaultQBStorage;
+    return instance;
 }
 
 - (id)init {
@@ -40,7 +40,8 @@
     [archiver encodeObject:historyToCache forKey:@"certificate"];
     [archiver finishEncoding];
     NSError *error = nil;
-    BOOL answer = [data writeToFile:[self dataFilePath] options:NSDataWritingAtomic error:&error];
+    
+    [data writeToFile:[self dataFilePath] options:NSDataWritingAtomic error:&error];
 }
 
 - (void)loadHistory {

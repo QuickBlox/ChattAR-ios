@@ -19,13 +19,14 @@
 
 + (instancetype)shared;
 
+
 #pragma mark -
 #pragma mark Facebook Requests
 
 - (void) userProfileWithResultBlock:(FBResultBlock)resultBlock;
 - (void) userFriendsUsingBlock:(FBResultBlock)resultBlock;
 - (void) userProfileWithID:(NSString *)userID withBlock:(FBResultBlock)resultBlock;
-- (NSMutableArray *)userProfilesWithIDs:(NSArray *)userIDs;
+- (void)usersProfilesWithIDs:(NSArray *)userIDs resultBlock:(FBResultBlock)resultBlock;
 
 
 #pragma mark -

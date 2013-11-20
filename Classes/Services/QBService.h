@@ -10,7 +10,7 @@
 
 @interface QBService : NSObject <QBChatDelegate>
 
-@property (nonatomic, assign) BOOL *userIsJoinedChatRoom;
+@property (nonatomic, assign) BOOL userIsJoinedChatRoom;
 
 + (instancetype)defaultService;
 
@@ -26,6 +26,7 @@
 #pragma mark LogIn & LogOut
 
 - (void)loginWithUser:(QBUUser *)user;
+- (void)loginToChatFromBackground;
 
 #pragma mark -
 #pragma mark Operations

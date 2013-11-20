@@ -7,7 +7,7 @@
 //
 
 #import "ARMarkerView.h"
-#import "ChatRoomsService.h"
+#import "ChatRoomStorage.h"
 
 #define markerWidth 114
 #define markerHeight 40

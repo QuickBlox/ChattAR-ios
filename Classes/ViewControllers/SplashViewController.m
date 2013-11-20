@@ -100,14 +100,14 @@
                 [self.activityIndicatior startAnimating];
                 
                 // save FB Token
-                [[FBStorage shared] saveFBToken:[FBService shared].session.accessTokenData.accessToken];
+                [[FBStorage shared] setAccessToken:[FBService shared].session.accessTokenData.accessToken];
                 [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
                 
                 // login to FB XMPP Chat
                 [self loginToFacebookChat];
                 
                 // create QB session
-                [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
+                [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
                 
                 [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
                 
@@ -157,7 +157,7 @@
         // login to FB XMPP Chat
         [self loginToFacebookChat];
         // create QB session
-        [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:GetFBAccessToken];
+        [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
         
     }
     
@@ -222,8 +222,16 @@
         
         [[QBStorage shared] loadHistory];
         NSArray *userIDs = [[QBStorage shared].allQuickBloxHistoryConversation allKeys];
-        NSMutableArray *users = [[FBService shared] userProfilesWithIDs:userIDs];
-        [QBStorage shared].otherUsers = users;
+        [[FBService shared] usersProfilesWithIDs:userIDs resultBlock:^(id result) {
+            NSMutableDictionary *searchResult = (FBGraphObject *)result;
+            NSMutableArray *users = [NSMutableArray arrayWithArray:[searchResult allValues]];
+            // adding photos:
+            for (NSMutableDictionary *user in users) {
+                NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
+                [user setObject:photoURL forKey:kPhoto];
+            }
+            [QBStorage shared].otherUsers = users;
+        }];
         
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
