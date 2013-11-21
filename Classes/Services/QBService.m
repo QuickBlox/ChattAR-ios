@@ -171,6 +171,11 @@
     //start getting location:
     [[LocationService shared] startUpdateLocation];
     
+    if ([QBService defaultService].userIsJoinedChatRoom) {
+        [[QBService defaultService] loginToChatFromBackground];
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];
 }
 
@@ -190,19 +195,19 @@
     [room addUsers:@[@34]];
     [QBService defaultService].userIsJoinedChatRoom = YES;
     NSLog(@"Chat Room is opened");
-    [[FBService shared] setIsInChatRoom:YES];
     [[QBStorage shared] setCurrentChatRoom:room];
-    
     //get room
-    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:room];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:nil];
 }
 
 - (void)chatRoomDidNotEnter:(NSString *)roomName error:(NSError *)error {
     NSLog(@"Error:%@", error);
 }
 
+
 - (void)chatRoomDidLeave:(NSString *)roomName {
     NSLog(@"Did  Leave worked");
+    //[[QBStorage shared] setCurrentChatRoom:nil];
 }
 
 @end

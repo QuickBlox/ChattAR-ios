@@ -93,6 +93,17 @@
         [self performSegueWithIdentifier:@"Splash" sender:self];
         [[Utilites shared] setUserLogIn];
     }
+    [self configureSearchIndicatorView];
+}
+
+- (void)configureSearchIndicatorView
+{
+    if (!self.searchIndicatorView) {
+        self.searchIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.searchIndicatorView.frame = CGRectMake(self.view.frame.size.width/2 - 10, self.view.frame.size.height/2 -10, 20 , 20);
+        [self.searchIndicatorView hidesWhenStopped];
+        [self.view addSubview:self.searchIndicatorView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,6 +140,7 @@
     self.trendingDataSource.chatRooms = [ChatRoomStorage shared].searchedRooms;
     [self.trendingTableView reloadData];
     self.trendingFooterLabel.text = nil;
+    [self.searchIndicatorView stopAnimating];
 }
 
 #pragma mark -
@@ -375,6 +387,7 @@
     [extendedRequest setObject:self.searchBar.text forKey:@"name[ctn]"];
     [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extendedRequest delegate:chatRoomService];
     [searchBar resignFirstResponder];
+    [self.searchIndicatorView startAnimating];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

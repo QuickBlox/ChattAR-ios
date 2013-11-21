@@ -12,10 +12,6 @@
 		690A70901806B8AE00F3C584 /* ARCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708D1806B8AE00F3C584 /* ARCoordinate.m */; };
 		690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */; };
 		690A70941806E0AD00F3C584 /* ARMarkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A70931806E0AD00F3C584 /* ARMarkerView.m */; };
-		690A709D18070B6900F3C584 /* Marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709918070B6900F3C584 /* Marker.png */; };
-		690A709E18070B6900F3C584 /* Marker2.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709A18070B6900F3C584 /* Marker2.png */; };
-		690A709F18070B6900F3C584 /* Marker2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709B18070B6900F3C584 /* Marker2@2x.png */; };
-		690A70A018070B6900F3C584 /* Marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 690A709C18070B6900F3C584 /* Marker@2x.png */; };
 		6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6911FB1817D5E3B000FEADB4 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */; };
 		6911FB2117D61DF800FEADB4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6911FB2017D61DF800FEADB4 /* AudioToolbox.framework */; };
@@ -236,6 +232,10 @@
 		69B96E3017E89EED00C94DB7 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2A17E89EED00C94DB7 /* ChatRoomCell.m */; };
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
 		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
+		69C93A4C183E621C00BFE9AE /* pinicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C93A4B183E621C00BFE9AE /* pinicon@2x.png */; };
+		69C93A4E183E622900BFE9AE /* pinicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C93A4D183E622900BFE9AE /* pinicon.png */; };
+		69C93A50183E623000BFE9AE /* pincallout.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C93A4F183E623000BFE9AE /* pincallout.png */; };
+		69C93A52183E623700BFE9AE /* pincallout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C93A51183E623700BFE9AE /* pincallout@2x.png */; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
 		69D5B57C1831345C001EA4FE /* QuickBloxDialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B57B1831345C001EA4FE /* QuickBloxDialogsDataSource.m */; };
 		69E8ECCF17E0AB0300D614AA /* LocalChatRoomsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E8ECCC17E0AB0300D614AA /* LocalChatRoomsDataSource.m */; };
@@ -271,10 +271,6 @@
 		690A708F1806B8AE00F3C584 /* ARGeoCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARGeoCoordinate.m; sourceTree = "<group>"; };
 		690A70921806E0AD00F3C584 /* ARMarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerView.h; sourceTree = "<group>"; };
 		690A70931806E0AD00F3C584 /* ARMarkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerView.m; sourceTree = "<group>"; };
-		690A709918070B6900F3C584 /* Marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker.png; sourceTree = "<group>"; };
-		690A709A18070B6900F3C584 /* Marker2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Marker2.png; sourceTree = "<group>"; };
-		690A709B18070B6900F3C584 /* Marker2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker2@2x.png"; sourceTree = "<group>"; };
-		690A709C18070B6900F3C584 /* Marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker@2x.png"; sourceTree = "<group>"; };
 		6911FB1717D5E3B000FEADB4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		6911FB1817D5E3B000FEADB4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		6911FB1A17D61CCD00FEADB4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -653,6 +649,10 @@
 		69B96E2C17E89EED00C94DB7 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 		69B96E2D17E89EED00C94DB7 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
 		69B96E2E17E89EED00C94DB7 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
+		69C93A4B183E621C00BFE9AE /* pinicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinicon@2x.png"; sourceTree = "<group>"; };
+		69C93A4D183E622900BFE9AE /* pinicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinicon.png; sourceTree = "<group>"; };
+		69C93A4F183E623000BFE9AE /* pincallout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pincallout.png; sourceTree = "<group>"; };
+		69C93A51183E623700BFE9AE /* pincallout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pincallout@2x.png"; sourceTree = "<group>"; };
 		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
 		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
 		69D5B57A1831345C001EA4FE /* QuickBloxDialogsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickBloxDialogsDataSource.h; sourceTree = "<group>"; };
@@ -726,10 +726,10 @@
 		690A709818070B6900F3C584 /* AR */ = {
 			isa = PBXGroup;
 			children = (
-				690A709918070B6900F3C584 /* Marker.png */,
-				690A709A18070B6900F3C584 /* Marker2.png */,
-				690A709B18070B6900F3C584 /* Marker2@2x.png */,
-				690A709C18070B6900F3C584 /* Marker@2x.png */,
+				69C93A51183E623700BFE9AE /* pincallout@2x.png */,
+				69C93A4F183E623000BFE9AE /* pincallout.png */,
+				69C93A4D183E622900BFE9AE /* pinicon.png */,
+				69C93A4B183E621C00BFE9AE /* pinicon@2x.png */,
 			);
 			path = AR;
 			sourceTree = "<group>";
@@ -1891,6 +1891,7 @@
 				693C7ECA17CCDCF300D7F0A9 /* README.markdown in Resources */,
 				693C7ED917CCDCF300D7F0A9 /* README.txt in Resources */,
 				693C7EDE17CCDCF300D7F0A9 /* build-libidn.sh in Resources */,
+				69C93A4E183E622900BFE9AE /* pinicon.png in Resources */,
 				693B5B1E180405FB000F5374 /* menu_btn_b@2x.png in Resources */,
 				69A4028B17D740F900E7BE1F /* local_icon.png in Resources */,
 				693B5B1F180405FB000F5374 /* menu_btn_gr.png in Resources */,
@@ -1909,7 +1910,6 @@
 				69A4029617D740F900E7BE1F /* logout_mnu.png in Resources */,
 				69A4029717D740F900E7BE1F /* logout_mnu@2x.png in Resources */,
 				69A4029817D740F900E7BE1F /* map_mnu.png in Resources */,
-				690A709D18070B6900F3C584 /* Marker.png in Resources */,
 				69A4029917D740F900E7BE1F /* map_mnu@2x.png in Resources */,
 				69A4029A17D740F900E7BE1F /* messages_mnu.png in Resources */,
 				69A4029B17D740F900E7BE1F /* messages_mnu@2x.png in Resources */,
@@ -1922,9 +1922,9 @@
 				69A402A017D740F900E7BE1F /* settings_mnu.png in Resources */,
 				69A402A117D740F900E7BE1F /* settings_mnu@2x.png in Resources */,
 				69A402A217D740F900E7BE1F /* create_room.png in Resources */,
+				69C93A52183E623700BFE9AE /* pincallout@2x.png in Resources */,
 				69A402A317D740F900E7BE1F /* create_room@2x.png in Resources */,
 				69A402A417D740F900E7BE1F /* mnubtn.png in Resources */,
-				690A70A018070B6900F3C584 /* Marker@2x.png in Resources */,
 				69A402A517D740F900E7BE1F /* mnubtn@2x.png in Resources */,
 				69A402A617D740F900E7BE1F /* shadow_main.png in Resources */,
 				69A402A717D740F900E7BE1F /* shadow_main@2x.png in Resources */,
@@ -1943,14 +1943,14 @@
 				69ECC0C117E1AD9F00187CF8 /* 01_blue_chat_bubble@2x.png in Resources */,
 				691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */,
 				69ECC0C217E1AD9F00187CF8 /* 01_green_chat_bubble.png in Resources */,
-				690A709E18070B6900F3C584 /* Marker2.png in Resources */,
 				69ECC0C317E1AD9F00187CF8 /* 01_grey_chat_bubble.png in Resources */,
+				69C93A4C183E621C00BFE9AE /* pinicon@2x.png in Resources */,
 				69ECC0C417E1AD9F00187CF8 /* 01_grey_chat_bubble@2x.png in Resources */,
 				69ECC0C517E1AD9F00187CF8 /* 01_share.png in Resources */,
 				69ECC0C617E1AD9F00187CF8 /* 01_share@2x.png in Resources */,
 				69ECC0C717E1AD9F00187CF8 /* green_chat_bubble@2x.png in Resources */,
 				696B59F617E99EF900D60537 /* Icon.png in Resources */,
-				690A709F18070B6900F3C584 /* Marker2@2x.png in Resources */,
+				69C93A50183E623000BFE9AE /* pincallout.png in Resources */,
 				696B59F717E99EF900D60537 /* Icon@2x.png in Resources */,
 				6918A06C17F33D18002B440E /* 05_reply_arrow-1.png in Resources */,
 				6918A06D17F33D18002B440E /* 05_reply_arrow@2x.png in Resources */,

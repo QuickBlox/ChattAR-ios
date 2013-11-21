@@ -15,7 +15,6 @@
 }
 @property (nonatomic, strong) NSTimer *presenceTimer;
 @property (strong, nonatomic) FBSession *session;
-@property (assign, nonatomic) BOOL isInChatRoom;
 
 + (instancetype)shared;
 

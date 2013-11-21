@@ -51,14 +51,14 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
-    //[self setPin];
+    [self setSpinner];
     [self configureInputTextViewLayer];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     self.title = roomName;
     [self creatingOrJoiningRoom];
 }
 
-- (void)setPin
+- (void)setSpinner
 {
     if (!self.indicatorView) {
         self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -252,8 +252,8 @@
 // back button
 - (IBAction)backToRooms:(id)sender
 {
-    [[FBService shared] setIsInChatRoom:NO];
     [QBStorage shared].currentChatRoom = nil;
+    [QBService defaultService].userIsJoinedChatRoom = NO;
     [[QBStorage shared].chatHistory removeAllObjects];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -284,13 +284,11 @@
 - (void)joinedRoom {
     self.currentRoom = [QBStorage shared].currentChatRoom;
     [self.chatRoomTable reloadData];
+    [self.indicatorView stopAnimating];
 }
 
 - (void)messageReceived {
     self.chatHistory = [QBStorage shared].chatHistory;
-    if (self.chatHistory == nil) {
-        self.chatHistory = [[NSMutableArray alloc] init];
-    }
     [self resetTableView];
 }
 

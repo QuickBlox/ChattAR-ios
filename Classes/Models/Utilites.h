@@ -11,6 +11,7 @@
 @interface Utilites : NSObject
 
 @property (nonatomic, assign) BOOL userLoggedIn;
+@property (assign, nonatomic) BOOL isArNotAvailable;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 + (instancetype)shared;

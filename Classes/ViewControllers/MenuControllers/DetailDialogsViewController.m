@@ -154,7 +154,7 @@
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[[self.conversation objectForKey:kComments] objectForKey:kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     } else {
-        if ([self.conversation objectForKey:kMessage] != 0) {
+        if ([[self.conversation objectForKey:kMessage] count]!= 0) {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[[self.conversation objectForKey:kMessage] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     }

@@ -25,6 +25,7 @@
         [self.dateFormatter setDateFormat:@"HH:mm"];
         [self.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
         self.userLoggedIn = NO;
+        self.isArNotAvailable = NO;
     }
     return self;
 }

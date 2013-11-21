@@ -9,7 +9,7 @@
 #import "ARMarkerView.h"
 #import "ChatRoomStorage.h"
 
-#define markerWidth 114
+#define markerWidth 160
 #define markerHeight 40
 
 @implementation ARMarkerView
@@ -33,16 +33,21 @@
         
         // bg view for user name & status & photo
         //
-        UIImageView *container = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight)];
-		[container.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-		[container.layer setBorderWidth:1.0];
-        [container setImage:[UIImage imageNamed:@"Marker2.png"]];
-        container.layer.cornerRadius = 2;
+        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight)];
         container.clipsToBounds = YES;
-        [container setBackgroundColor:[UIColor clearColor]];
+        [container setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:container];
         [container release];
         
+        UIImageView *arrow = [[UIImageView alloc] initWithFrame:CGRectMake(148, 13, 8, 14)];
+        arrow.image = [UIImage imageNamed:@"pincallout@2x.png"];
+        [container addSubview:arrow];
+        [arrow release];
+        
+        UIImageView *locationImage = [[UIImageView alloc] initWithFrame:CGRectMake(47, 23, 6, 9)];
+        locationImage.image = [UIImage imageNamed:@"pinicon@2x.png"];
+        [container addSubview:locationImage];
+        [arrow release];
         
         // add Room Picture
 		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 40, 40)];
@@ -51,19 +56,19 @@
         [userPhotoView release];
         
         // add userName
-        userName = [[UILabel alloc] initWithFrame:CGRectMake(42, 0, container.frame.size.width-43, container.frame.size.height/2)];
+        userName = [[UILabel alloc] initWithFrame:CGRectMake(47, 5, container.frame.size.width-43, container.frame.size.height/2 - 5)];
         [userName setBackgroundColor:[UIColor clearColor]];
         [userName setText:[room.fields objectForKey:kName]];
-        [userName setFont:[UIFont boldSystemFontOfSize:11]];
-        [userName setTextColor:[UIColor whiteColor]];
+        [userName setFont:[UIFont boldSystemFontOfSize:14]];
+        [userName setTextColor:[UIColor blackColor]];
         [container addSubview:userName];
         [userName release];
         
         // add userStatus
-        userStatus = [[UILabel alloc] initWithFrame:CGRectMake(42, 20, container.frame.size.width-43, container.frame.size.height/2)];
-        [userStatus setFont:[UIFont systemFontOfSize:11]];
+        userStatus = [[UILabel alloc] initWithFrame:CGRectMake(56, 20, container.frame.size.width-43, container.frame.size.height/2 -5)];
+        [userStatus setFont:[UIFont systemFontOfSize:12]];
         [userStatus setBackgroundColor:[UIColor clearColor]];
-        [userStatus setTextColor:[UIColor whiteColor]];
+        [userStatus setTextColor:[UIColor darkGrayColor]];
         [container addSubview:userStatus];
         [userStatus release];
 	}

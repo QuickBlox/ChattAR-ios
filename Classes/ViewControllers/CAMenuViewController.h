@@ -13,8 +13,6 @@
 
 @interface CAMenuViewController :SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate, UIAlertViewDelegate, QBActionStatusDelegate, QBChatDelegate>
 
-
-@property (assign, nonatomic) BOOL isArNotAvailable;
 @property (strong, nonatomic) IBOutlet UILabel *firstNameField;
 @property (strong, nonatomic) IBOutlet UITableView *menuTable;
 

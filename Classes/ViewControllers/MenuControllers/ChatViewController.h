@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) ChatRoomsPaginator *trendingPaginator;
+@property (strong, nonatomic) UIActivityIndicatorView *searchIndicatorView;
 
 - (IBAction)createChatRoom:(id)sender;
 

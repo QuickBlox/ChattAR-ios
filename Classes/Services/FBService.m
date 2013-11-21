@@ -13,7 +13,6 @@
 #import "Utilites.h"
 
 @implementation FBService
-@synthesize isInChatRoom;
 
 
 #pragma mark -
@@ -33,7 +32,6 @@
     if (self) {
 		xmppStream = [[XMPPStream alloc] initWithFacebookAppId:APP_ID];
 		[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-        isInChatRoom = NO;
     }
     return self;
 }

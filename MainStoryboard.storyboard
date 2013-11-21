@@ -227,7 +227,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="l1M-mX-E6Y">
-                                                    <rect key="frame" x="212" y="8" width="26" height="26"/>
+                                                    <rect key="frame" x="204" y="8" width="26" height="26"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" image="logout_mnu.png">
@@ -1072,9 +1072,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="i69-BF-qyq"/>
         <segue reference="08e-u6-zeQ"/>
         <segue reference="YmU-iS-597"/>
         <segue reference="gGZ-kD-fDC"/>
-        <segue reference="i69-BF-qyq"/>
     </inferredMetricsTieBreakers>
 </document>

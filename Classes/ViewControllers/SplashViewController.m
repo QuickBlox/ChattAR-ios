@@ -74,7 +74,6 @@
 
 - (IBAction)logIn:(id)sender
 {
-    
     [self checkFBSession];
 }
 
@@ -94,38 +93,42 @@
                 [FBService shared].session = [[FBSession alloc] init];
                 [FBSession setActiveSession:[FBService shared].session];
                 NSLog(@"Error!");
-                
-            } else {
-                [self hideLoginButton:YES];
-                [self.activityIndicatior startAnimating];
-                
-                // save FB Token
-                [[FBStorage shared] setAccessToken:[FBService shared].session.accessTokenData.accessToken];
-                [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
-                
-                // login to FB XMPP Chat
-                [self loginToFacebookChat];
-                
-                // create QB session
-                [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
-                
-                [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
-                
-                // Get FB Chat history
-                [[FBService shared] inboxMessagesWithBlock:^(id result) {
-                    NSMutableArray *resultData = [result objectForKey:kData];
-                    NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
-                    for (NSMutableDictionary *dict in resultData) {
-                        NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
-                        for (NSMutableDictionary *element in array) {
-                            if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
-                                [history setObject:dict forKey:[element objectForKey:kId]];
-                            }
+                return;
+            }
+            if (status == FBSessionStateClosed) {
+                // do nothing
+                return;
+            }
+            [self hideLoginButton:YES];
+            [self.activityIndicatior startAnimating];
+            
+            // save FB Token
+            [[FBStorage shared] setAccessToken:[FBService shared].session.accessTokenData.accessToken];
+            [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
+            
+            // login to FB XMPP Chat
+            [self loginToFacebookChat];
+            
+            // create QB session
+            [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
+            
+            [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
+            
+            // Get FB Chat history
+            [[FBService shared] inboxMessagesWithBlock:^(id result) {
+                NSMutableArray *resultData = [result objectForKey:kData];
+                NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
+                for (NSMutableDictionary *dict in resultData) {
+                    NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
+                    for (NSMutableDictionary *element in array) {
+                        if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
+                            [history setObject:dict forKey:[element objectForKey:kId]];
                         }
                     }
-                    [FBStorage shared].allFriendsHistoryConversation = history;
-                }];
-            }
+                }
+                [FBStorage shared].allFriendsHistoryConversation = history;
+            }];
+            
         }]; 
     }
 

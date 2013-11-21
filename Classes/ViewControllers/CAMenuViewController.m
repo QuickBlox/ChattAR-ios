@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureQButton];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -46,15 +47,28 @@
     [super viewDidAppear:NO];
     NSString *firstLastName = [[FBStorage shared].me objectForKey:kName];
     [self.firstNameField setText:firstLastName];
-    if (![Utilites deviceSupportsAR]) {
-        NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-        _isArNotAvailable = YES;
-        [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    if (![Utilites shared].isArNotAvailable) {
+        [self checkForARModuleAvailable];
     }
+
     [self.menuTable selectRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
-#pragma mark - QuickBlox Button
+
+#pragma mark - 
+#pragma mark Options
+
+- (void)checkForARModuleAvailable {
+    if (![Utilites deviceSupportsAR]) {
+        NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+        [Utilites shared].isArNotAvailable = YES;
+        [self.menuTable deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+
+#pragma mark -
+#pragma mark QuickBlox Button
 
 - (void)configureQButton {
     UIImage *img = [UIImage imageNamed:@"qb_mnu_grey.png"];
@@ -79,7 +93,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows;
-    if (_isArNotAvailable) {
+    if ([Utilites shared].isArNotAvailable) {
         rows = 6;
     }else {
         rows = 7;
@@ -106,14 +120,14 @@
             segue = kMapSegueIdentifier;
             break;
         case 4:
-            if (!_isArNotAvailable) {
+            if (![Utilites shared].isArNotAvailable) {
                 segue = kARSegueIdentifier;
             } else {
             segue = kDialogsSegueIdentifier;
             }
             break;
         case 5:
-            if (!_isArNotAvailable) {
+            if (![Utilites shared].isArNotAvailable) {
                 segue = kDialogsSegueIdentifier;
             } else {
                 segue = kAboutSegueIdentifier;
@@ -207,7 +221,6 @@
 
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];
-    //clear  FBAccessToken and FBUser from DataManager
     [[FBStorage shared] setAccessToken:nil];
     [[FBStorage shared] setMe:nil];
 }
