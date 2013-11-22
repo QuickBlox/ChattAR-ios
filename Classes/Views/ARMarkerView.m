@@ -33,7 +33,7 @@
         
         // bg view for user name & status & photo
         //
-        UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight)];
+        UIImageView *container = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, markerWidth, markerHeight)];
         container.clipsToBounds = YES;
         [container setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:container];

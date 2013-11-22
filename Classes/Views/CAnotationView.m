@@ -19,4 +19,22 @@
     return self;
 }
 
+- (void)handleAnnotationView {
+    self.canShowCallout = YES;
+    
+    UIButton *accessoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [accessoryButton setAdjustsImageWhenHighlighted:NO];
+    [accessoryButton setImage:[UIImage imageNamed:@"pincallout.png"] forState:UIControlStateNormal];
+    accessoryButton.tag = kAnnotationButtonTag;
+    self.rightCalloutAccessoryView = accessoryButton;
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pinicon.png"]];
+    imgView.frame = CGRectMake(0, 0, 12, 18);
+    self.leftCalloutAccessoryView = imgView;
+    
+    self.centerOffset = CGPointZero;
+    self.image = [UIImage imageNamed:@"03_pin.png"];
+    self.avatar.image = [UIImage imageNamed:@"room.jpg"];
+}
+
 @end

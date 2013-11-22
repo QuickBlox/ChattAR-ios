@@ -12,8 +12,8 @@
 @interface CAnotation : NSObject <MKAnnotation> 
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *description;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, strong) QBCOCustomObject *room;
 
 - (id)initWithCoordinates:(CLLocationCoordinate2D)coordinates;

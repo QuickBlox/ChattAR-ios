@@ -66,6 +66,7 @@
 
 
 #define padding           20.0
+#define kAnnotationButtonTag 1542
 
 #define FB @"https://graph.facebook.com"
 

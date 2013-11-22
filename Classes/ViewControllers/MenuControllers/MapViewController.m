@@ -10,6 +10,7 @@
 #import "FBService.h"
 #import "CAnotation.h"
 #import "ChatRoomStorage.h"
+#import "LocationService.h"
 #import "ChatRoomViewController.h"
 
 
@@ -17,6 +18,7 @@
 
 @property (nonatomic, strong) NSArray *chatRooms;
 @property (nonatomic, strong) QBCOCustomObject *chatRoom;
+@property (nonatomic, copy) NSString *roomName;
 
 @end
 
@@ -43,8 +45,10 @@
         coord.latitude = [[room.fields valueForKey:kLatitude] floatValue];
         coord.longitude = [[room.fields valueForKey:kLongitude] floatValue];
         CAnotation *pin = [[CAnotation alloc] initWithCoordinates:coord];
-        pin.name = [room.fields valueForKey:kName];
-        pin.description = [NSString stringWithFormat:@"%li visites", (long)[[room.fields valueForKey:kRank] integerValue]];
+        pin.title = [room.fields valueForKey:kName];
+        CLLocation *roomLocation = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
+        double_t distance = [[LocationService shared].myLocation distanceFromLocation:roomLocation];
+        pin.subtitle = [[Utilites shared] distanceFormatter:distance];
         pin.room = room;
         [_mapView addAnnotation:pin];
     }
@@ -60,20 +64,26 @@
     CAnotationView *aView = (CAnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
     if (aView == nil) {
         aView = [[CAnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        [aView handleAnnotationView];
+        UIButton *button = (UIButton *)[aView.rightCalloutAccessoryView viewWithTag:kAnnotationButtonTag];
+        [button addTarget:self action:@selector(showActionSheet) forControlEvents:UIControlEventTouchUpInside];
     }
-    aView.centerOffset = CGPointZero;
-    aView.image = [UIImage imageNamed:@"03_pin.png"];
-    aView.avatar.image = [UIImage imageNamed:@"room.jpg"];
-    aView.annotationTitle = annotation.name;
+    
+    aView.roomName = annotation.title;
     aView.chatRoom = annotation.room;
+    
     return aView;
+}
+
+- (void)showActionSheet {
+    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:self.roomName delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
+    [action showInView:self.view];
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(CAnotationView *)view {
     NSLog(@"Anotation selected.");
-    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:view.annotationTitle delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
-    _chatRoom = view.chatRoom;
-    [action showInView:self.view];
+    self.chatRoom = view.chatRoom;
+    self.roomName = view.roomName;
 }
 
 

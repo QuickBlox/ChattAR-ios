@@ -336,7 +336,7 @@
 
 - (IBAction)share:(id)sender
 {
-    NSString *initialText = [NSString stringWithFormat:@"Hi! I found cool room named %@! Join us! #Chattar", [_currentChatRoom.fields objectForKey:kName]];
+    NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
     
     SLComposeViewController *composeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
     [composeController setInitialText:initialText];

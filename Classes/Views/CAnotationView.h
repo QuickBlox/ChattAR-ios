@@ -11,7 +11,9 @@
 @interface CAnotationView : MKAnnotationView
 
 @property (nonatomic, strong) UIImageView *avatar;
-@property (nonatomic, strong) NSString *annotationTitle;
+@property (nonatomic, copy) NSString *roomName;
 @property (nonatomic, strong) QBCOCustomObject *chatRoom;
+
+- (void)handleAnnotationView;
 
 @end
