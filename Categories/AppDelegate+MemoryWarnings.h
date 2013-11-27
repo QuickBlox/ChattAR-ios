@@ -1,8 +1,8 @@
 //
 //  AppDelegate+MemoryWarnings.h
-//  CallCenter
+//  ChattAR
 //
-//  Created by Igor Khomenko on 8/22/13.
+//  Created by Igor Alefirenko on 29/10/2013.
 //  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 

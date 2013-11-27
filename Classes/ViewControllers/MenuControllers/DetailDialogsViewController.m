@@ -8,8 +8,8 @@
 
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
-#import "QuickBloxDialogsDataSource.h"
-#import "FacebookDialogsDataSource.h"
+#import "NonFriendDialogDataSource.h"
+#import "FriendDialogDataSource.h"
 #import "ChatRoomCell.h"
 #import "FBService.h"
 #import "FBStorage.h"
@@ -26,8 +26,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
 
 // Data Sources:
-@property (nonatomic, strong) FacebookDialogsDataSource *facebookDataSource;
-@property (nonatomic, strong) QuickBloxDialogsDataSource *quickBloxDataSource;
+@property (nonatomic, strong) FriendDialogDataSource *facebookDataSource;
+@property (nonatomic, strong) NonFriendDialogDataSource *quickBloxDataSource;
 
 - (IBAction)back:(id)sender;
 - (IBAction)sendMessage:(id)sender;
@@ -82,14 +82,14 @@
 }
 
 - (void)activateFacebookChat {
-    _facebookDataSource = [[FacebookDialogsDataSource alloc] init];
+    _facebookDataSource = [[FriendDialogDataSource alloc] init];
     _facebookDataSource.conversation = _conversation;
     _tableView.dataSource = _facebookDataSource;
     [_tableView reloadData];
 }
 
 - (void)activateQuickBloxChat {
-    _quickBloxDataSource = [[QuickBloxDialogsDataSource alloc] init];
+    _quickBloxDataSource = [[NonFriendDialogDataSource alloc] init];
     _quickBloxDataSource.conversation = _conversation;
     _tableView.dataSource = _quickBloxDataSource;
     [_tableView reloadData];
@@ -115,6 +115,9 @@
     if ([self.inputMessageField.text length] == 0) {
         return;
     }
+    // sending push notification:
+    NSString *pushMessage = [NSString stringWithFormat:@"%@: %@", [FBStorage shared].me[kName], self.inputMessageField.text];
+    [[QBService defaultService] sendPushNotificationWithMessage:pushMessage toUser:_opponent];
     NSString *friendID = [_opponent objectForKey:kId];
     if (_isChatWithFacebookFriend) {
         [[FBService shared] sendMessage:_inputMessageField.text toUserWithID:friendID];

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "QuickBloxDialogsDataSource.h"
+#import "NonFriendDialogDataSource.h"
 #import "ChatRoomCell.h"
 
-@implementation QuickBloxDialogsDataSource
+@implementation NonFriendDialogDataSource
 
 
 #pragma mark -
@@ -21,7 +21,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"QuickBloxCellIdentifier";
+    static NSString *cellIdentifier = @"NonFriendCellIdentifier";
     
     QBChatMessage *message = [[self.conversation objectForKey:kMessage] objectAtIndex:indexPath.row];
     ChatRoomCell *cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];

@@ -12,6 +12,7 @@
 #import "QBStorage.h"
 #import "LocationService.h"
 
+
 @implementation QBService
 
 + (instancetype)defaultService {
@@ -32,6 +33,13 @@
     return self;
 }
 
+
+#pragma mark -
+#pragma mark Requests
+
+- (void)usersWithFacebookIDs:(NSArray *)facebookIDs  {
+    [QBUsers usersWithFacebookIDs:facebookIDs delegate:self];
+}
 
 #pragma mark -
 #pragma mark LogIn & Log Out
@@ -111,6 +119,20 @@
     NSString* jsonString = [[QBService defaultService] archiveMessageData:dict];
     
     [[QBChat instance] sendMessage:jsonString toRoom:room];
+}
+
+- (void)sendPushNotificationWithMessage:(NSString *)message toUser:(NSMutableDictionary *)user {
+    NSString *userID = [user objectForKey:kQuickbloxID];
+    if (userID != nil) {
+        NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *aps = [[NSMutableDictionary alloc] init];
+        aps[QBMPushMessageSoundKey] = @"default";
+        aps[QBMPushMessageBadgeKey] = [@(1) stringValue];
+        aps[QBMPushMessageAlertKey] = message;
+        payload[QBMPushMessageApsKey] = aps;
+        QBMPushMessage *pushMessage = [[QBMPushMessage alloc] initWithPayload:payload];
+        [QBMessages TSendPush:pushMessage toUsers:userID delegate:nil];
+    }
 }
 
 

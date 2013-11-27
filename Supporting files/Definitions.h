@@ -110,8 +110,6 @@
 #define kPaging             @"paging"
 #define kNext               @"next"
 
-#define kGET                @"GET"
-
 #define APP_ID              @"464189473609303"
 
 // QuickBlox ChatRoom Class
@@ -129,20 +127,6 @@
 
 #define kFilename @"data"
 
-typedef void(^FBResultBlock)(id result);
-
-typedef enum {
-    // Me
-    FBQueriesTypesUserProfile,
-    //
-    // Friends
-    FBQueriesTypesFriendsGet,
-	FBQueriesTypesFriendsGetCheckins,
-	FBQueriesTypesUsersProfiles,
-    //
-    FBQueriesTypesWall,
-    FBQueriesTypesGetInboxMessages,
-    
-} FBQueriesTypes;
+typedef void (^FBResultBlock) (id);
 
 #endif

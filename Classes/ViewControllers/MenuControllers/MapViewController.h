@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "SASlideMenuDataSource.h"
-#import "CAnotationView.h"
+#import "MapAnnotationView.h"
 
 @interface MapViewController : UIViewController <QBActionStatusDelegate, MKMapViewDelegate, SASlideMenuDataSource, UIActionSheetDelegate>
 

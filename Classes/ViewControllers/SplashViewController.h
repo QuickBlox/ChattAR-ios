@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : UIViewController <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+@interface SplashViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;

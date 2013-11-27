@@ -27,7 +27,8 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];	
+    [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     
     self.searchContent = [self sortingUsers:[[FBStorage shared] friends]];
@@ -40,6 +41,8 @@
     self.otherUsers = [QBStorage shared].otherUsers;
     [self.tableView reloadData];
 }
+
+
 #pragma mark -
 #pragma mark Table view data source
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-#import "CAnotation.h"
+#import "MapAnnotation.h"
 #import "AsyncImageView.h"
 
 @interface ARMarkerView : UIView

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FacebookDialogsDataSource : NSObject <UITableViewDataSource>
+@interface FriendDialogDataSource : NSObject <UITableViewDataSource>
 
 @property (nonatomic, strong) NSMutableDictionary *conversation;
 

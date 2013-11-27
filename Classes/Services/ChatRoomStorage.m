@@ -8,7 +8,7 @@
 
 #import "ChatRoomStorage.h"
 
-@interface ChatRoomStorage()
+@interface ChatRoomStorage() <QBActionStatusDelegate>
 
 @end
 
@@ -16,20 +16,12 @@
 @implementation ChatRoomStorage 
 
 + (instancetype)shared {
-    static ChatRoomStorage *sharedChatRoomsService = nil;
+    static id sharedChatRoomsService = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedChatRoomsService = [[self alloc] init];
     });
     return sharedChatRoomsService;
-}
-
-- (id)init {
-    if (self = [super init]) {
-        //  to do:
-        
-    }
-    return self;
 }
 
 #pragma mark - Sort

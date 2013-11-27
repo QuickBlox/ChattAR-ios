@@ -8,10 +8,9 @@
 
 #import <MapKit/MapKit.h>
 
-@interface CAnotationView : MKAnnotationView
+@interface MapAnnotationView : MKAnnotationView
 
 @property (nonatomic, strong) UIImageView *avatar;
-@property (nonatomic, copy) NSString *roomName;
 @property (nonatomic, strong) QBCOCustomObject *chatRoom;
 
 - (void)handleAnnotationView;

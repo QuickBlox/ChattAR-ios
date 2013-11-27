@@ -112,15 +112,6 @@
                 cos(lon2 - lon1)) * R;
 }
 
-
-//// touch action
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-//    if([target respondsToSelector:action]){
-//        [target performSelector:action withObject:self];
-//    }
-//}
-
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"distance=%d", distance];
 }

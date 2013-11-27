@@ -15,9 +15,12 @@
 #import "QBStorage.h"
 
 
+@interface SplashViewController () <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+
+@end
+
 @implementation SplashViewController
 @synthesize backgroundImage, loginButton;
-
 
 #pragma mark
 #pragma mark ViewController lifecycle
@@ -26,6 +29,7 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatDidLogin) name:kNotificationDidLogin object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(usersRequestFinished:) name:CAQuickbloxUsersDidReceiveNotification object:nil];
     // if iPhone 5
     if(IS_HEIGHT_GTE_568){
         [backgroundImage setImage:[UIImage imageNamed:@"Default-568h@2x.png"]];
@@ -33,7 +37,7 @@
         [backgroundImage setImage:[UIImage imageNamed:@"Default@2x.png"]];
     }
     
-    // if session isn't open
+    // if session isn't open   
     NSArray *permissions = [[NSArray alloc] initWithObjects:@"user_checkins", @"user_location", @"friends_checkins",
                             @"friends_location", @"friends_status", @"read_mailbox",@"photo_upload",@"read_stream",
                             @"publish_stream", @"user_photos", @"xmpp_login", @"user_about_me", nil];
@@ -55,20 +59,6 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidUnload
-{
-    [self setBackgroundImage:nil];
-    [self setLoginButton:nil];
-    [self setActivityIndicatior:nil];
-    [super viewDidUnload];
-}
-
-
 #pragma mark
 #pragma mark Actions
 
@@ -84,6 +74,8 @@
 // checking FBSession state:
 - (void)checkFBSession
 {
+    // load history with users:
+    [[QBStorage shared] loadHistory];
     
     if ([FBSession activeSession].state == FBSessionStateCreated) {
         
@@ -103,16 +95,15 @@
             [self.activityIndicatior startAnimating];
             
             // save FB Token
-            [[FBStorage shared] setAccessToken:[FBService shared].session.accessTokenData.accessToken];
-            [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
+            NSString *accessToken = [FBService shared].session.accessTokenData.accessToken;
+            [[FBStorage shared] setAccessToken:accessToken];
+            [FBStorage shared].accessToken = accessToken;
             
             // login to FB XMPP Chat
             [self loginToFacebookChat];
             
             // create QB session
             [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
-            
-            [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
             
             // Get FB Chat history
             [[FBService shared] inboxMessagesWithBlock:^(id result) {
@@ -139,8 +130,6 @@
         [FBStorage shared].accessToken = [FBService shared].session.accessTokenData.accessToken;
         
         [[FBService shared].session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            [self gettingAllDataAboutMeAndMyFriendsFromFacebook];
-            
             // Get FB Chat history
             [[FBService shared] inboxMessagesWithBlock:^(id result) {
                 NSMutableArray *resultData = [result objectForKey:kData];
@@ -159,32 +148,11 @@
         
         // login to FB XMPP Chat
         [self loginToFacebookChat];
+    
         // create QB session
         [self createQBSessionWithSocialProvider:kFacebookKey andAccessToken:[FBStorage shared].accessToken];
         
     }
-    
-}
-
-- (void)gettingAllDataAboutMeAndMyFriendsFromFacebook
-{
-    
-    [[FBService shared] userProfileWithResultBlock:^(id result) {
-        
-        FBGraphObject *user = (FBGraphObject *)result;
-        [FBStorage shared].me = [user mutableCopy];
-    }];
-    
-    // getting my friends:
-    [[FBService shared] userFriendsUsingBlock:^(id result) {
-
-        NSMutableArray *myFriends = [(FBGraphObject *)result objectForKey:kData];
-        for (NSMutableDictionary *frend in myFriends) {
-            NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[frend objectForKey:kId],[FBStorage shared].accessToken];
-            [frend setValue:urlString forKey:kPhoto];
-        }
-        [[FBStorage shared] setFriends:myFriends];
-    }];
 }
 
 // LogIn to XMPP
@@ -222,37 +190,120 @@
     if (result.success && [result isKindOfClass:[QBAAuthSessionCreationResult class]]) {
         // session was created successful
         QBAAuthSessionCreationResult *res = (QBAAuthSessionCreationResult *)result;
-        
-        [[QBStorage shared] loadHistory];
+        // subscribe user to push notifications:
+        [QBMessages TRegisterSubscriptionWithDelegate:self];
+        [self loadAndHandleDataAboutMeAndMyFriends];
         NSArray *userIDs = [[QBStorage shared].allQuickBloxHistoryConversation allKeys];
-        [[FBService shared] usersProfilesWithIDs:userIDs resultBlock:^(id result) {
-            NSMutableDictionary *searchResult = (FBGraphObject *)result;
-            NSMutableArray *users = [NSMutableArray arrayWithArray:[searchResult allValues]];
-            // adding photos:
-            for (NSMutableDictionary *user in users) {
-                NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
-                [user setObject:photoURL forKey:kPhoto];
-            }
-            [QBStorage shared].otherUsers = users;
-        }];
+        [self loadAndHandleOtherFacebookUsers:userIDs];
         
         QBUUser *currentUser = [QBUUser user];
         currentUser.ID = res.session.userID;
         currentUser.password = res.session.token;
+        [FBStorage shared].me[kQuickbloxID] =  [@(currentUser.ID) stringValue];
         [[QBStorage shared] setMe:currentUser];
         // Login to QB Chat
         [[QBService defaultService] loginWithUser:currentUser];
+    }
+    
+    if (result.success && [result isKindOfClass:QBMRegisterSubscriptionTaskResult.class]) {
+        NSLog(@"Now you can receive and send Push Notification");
     }
 }
 
 
 #pragma mark -
-#pragma mark Auth Notification
+#pragma mark Notifications
 
 - (void)chatDidLogin
 {
     [self.activityIndicatior stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
+}
+
+
+#pragma mark -
+#pragma mark Loading and handling all Facebook users
+
+- (void)loadAndHandleDataAboutMeAndMyFriends
+{
+    // me:
+    [[FBService shared] userProfileWithResultBlock:^(id result) {
+        FBGraphObject *user = (FBGraphObject *)result;
+        [FBStorage shared].me = [user mutableCopy];
+    }];
+    
+    // getting my friends:
+    [[FBService shared] userFriendsUsingBlock:^(id result) {
+        // adding photo urls to facebook users:
+        NSMutableArray *myFriends = [(FBGraphObject *)result objectForKey:kData];
+        for (NSMutableDictionary *frend in myFriends) {
+            NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[frend objectForKey:kId],[FBStorage shared].accessToken];
+            [frend setValue:urlString forKey:kPhoto];
+        }
+        NSMutableArray *facebookUserIDs = [self gettingAllIDsOfFacebookUsers:myFriends];
+        // qb users will come here:
+        void (^block) (Result *) = ^(Result *result) {
+            if ([result isKindOfClass:[QBUUserPagedResult class]]) {
+                QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
+                NSArray *qbUsers = pagedResult.users;
+                // putting quickbloxIDs to facebook users:
+                [FBStorage shared].friends = [self putQuickbBloxIDsToFacebookUsers:[FBStorage shared].friends fromQuickbloxUsers:qbUsers];
+            }
+        };
+        // request for qb users:
+        [QBUsers usersWithFacebookIDs:facebookUserIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+        
+        
+        [[FBStorage shared] setFriends:myFriends];
+    }];
+}
+
+- (void)loadAndHandleOtherFacebookUsers:(NSArray *)userIDs {
+    [[FBService shared] usersProfilesWithIDs:userIDs resultBlock:^(id result) {
+        NSMutableDictionary *searchResult = (FBGraphObject *)result;
+        NSMutableArray *users = [NSMutableArray arrayWithArray:[searchResult allValues]];
+        // adding photos:
+        for (NSMutableDictionary *user in users) {
+            NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
+            [user setObject:photoURL forKey:kPhoto];
+        }
+        NSMutableArray *quickbloxIDs = [self gettingAllIDsOfFacebookUsers:users];
+        // qb users will come here:
+        void (^block) (Result *) = ^(Result *result) {
+            if ([result isKindOfClass:[QBUUserPagedResult class]]) {
+                QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
+                NSArray *qbUsers = pagedResult.users;
+                // putting quickbloxIDs to facebook users:
+                [QBStorage shared].otherUsers = [self putQuickbBloxIDsToFacebookUsers:[QBStorage shared].otherUsers fromQuickbloxUsers:qbUsers];
+            }
+        };
+        // request for qb users:
+        [QBUsers usersWithFacebookIDs:quickbloxIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+        
+        [QBStorage shared].otherUsers = users;
+    }];
+}
+
+- (NSMutableArray *)gettingAllIDsOfFacebookUsers:(NSMutableArray *)facebookUsers {
+    NSMutableArray *allUserIDs = [[NSMutableArray alloc] init];
+    for (NSMutableDictionary *user in facebookUsers) {
+        NSString *userID = user[kId];
+        [allUserIDs addObject:userID];
+    }
+    return allUserIDs;
+}
+
+- (NSMutableArray *)putQuickbBloxIDsToFacebookUsers:(NSMutableArray *)facebookUsers fromQuickbloxUsers:(NSArray *)quickbloxUsers {
+    for (NSMutableDictionary *facebookUser in facebookUsers) {
+        NSString *facebookUserID = facebookUser[kId];
+        for (QBUUser *quickbloxUser in quickbloxUsers) {
+            if ([quickbloxUser.facebookID isEqualToString:facebookUserID]) {
+                facebookUser[kQuickbloxID] = [@(quickbloxUser.ID) stringValue];
+                break;
+            }
+        }
+    }
+    return facebookUsers;
 }
 
 @end

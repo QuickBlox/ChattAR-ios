@@ -17,7 +17,7 @@
 @synthesize me;
 
 + (instancetype)shared {
-    static FBStorage *defaultFBStorageInstance = nil;
+    static id defaultFBStorageInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultFBStorageInstance = [[self alloc] init];

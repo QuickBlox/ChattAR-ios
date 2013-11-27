@@ -23,24 +23,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (IS_HEIGHT_GTE_568){}
-    else{
+    if (!IS_HEIGHT_GTE_568){
         _bottomButton.hidden = YES;
         _bottomLabel.hidden = YES;
     }
-	// Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:NO];
-    //[[Utilites action] checkAndPutStatusBarColor];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)gotoURL:(id)sender

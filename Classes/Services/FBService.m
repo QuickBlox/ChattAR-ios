@@ -14,7 +14,6 @@
 
 @implementation FBService
 
-
 #pragma mark -
 #pragma mark Singletone
 

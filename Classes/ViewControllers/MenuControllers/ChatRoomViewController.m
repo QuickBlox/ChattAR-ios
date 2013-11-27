@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property (strong, nonatomic) NSMutableDictionary *dialogTo;
+@property (strong, nonatomic) NSMutableDictionary *postParams;
 @property CGFloat cellSize;
 
 - (IBAction)textEditDone:(id)sender;
@@ -45,6 +46,7 @@
 
 
 #pragma mark LifeCycle
+
 
 - (void)viewDidLoad
 {
@@ -152,7 +154,7 @@
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", @"View Profile", nil];
-    [actionSheet showInView:self.view];
+        [actionSheet showInView:self.view];
     }
 }
 
@@ -332,46 +334,6 @@
 
 
 #pragma mark -
-#pragma mark Sharing
-
-- (IBAction)share:(id)sender
-{
-    NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
-    
-    SLComposeViewController *composeController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-    [composeController setInitialText:initialText];
-    [self presentViewController:composeController animated:YES completion:nil];
-    [composeController setCompletionHandler:^(SLComposeViewControllerResult result) {
-        
-        switch (result) {
-            case SLComposeViewControllerResultCancelled:
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancelled"
-                                                          message:@"Something was wrong. Please, try again."
-                                                          delegate:nil
-                                                      cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-            }
-                break;
-            case SLComposeViewControllerResultDone:
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Done!"
-                                                                message:@"Message successfuly posted."
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-            }
-                break;
-                
-            default:
-                break;
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];;
-}
-
-
-#pragma mark -
 #pragma mark Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -380,13 +342,81 @@
         ((ProfileViewController *)segue.destinationViewController).currentUser = sender;
         return;
     }
-        ((DetailDialogsViewController *)segue.destinationViewController).opponent = sender;
-        ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
+    ((DetailDialogsViewController *)segue.destinationViewController).opponent = sender;
+    ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
     if ([[FBStorage shared] isFacebookFriend:sender]) {
         ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = YES;
         return;
     }
-        ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = NO;
+    ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = NO;
+}
+
+
+#pragma mark -
+#pragma mark Sharing
+
+- (IBAction)share:(id)sender
+{
+    [self configureBannerForFacebookSharing];
+    NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
+    self.postParams[kMessage] = initialText;
+    
+    // Ask for publish_actions permissions in context
+    if ([FBSession.activeSession.permissions
+         indexOfObject:@"publish_actions"] == NSNotFound) {
+        // No permissions found in session, ask for it
+        [FBSession.activeSession
+         requestNewPublishPermissions:@[@"publish_actions"]
+         defaultAudience:FBSessionDefaultAudienceFriends
+         completionHandler:^(FBSession *session, NSError *error) {
+             if (!error) {
+                 // If permissions granted, publish the story
+                 [self publishMessageToFeed];
+             }
+         }];
+    } else {
+        // If permissions present, publish the story
+        [self publishMessageToFeed];
+    }
+
+    
+}
+
+
+#pragma mark -
+#pragma mark Some FB Options
+
+- (void)configureBannerForFacebookSharing {
+    self.postParams = [@{
+                         @"link" : @"https://itunes.apple.com/us/app/chattar-for-facebook/id543208565?mt=8",
+                         @"picture" : @"https://s3.amazonaws.com/qbprod/70680c6415024fb9a302db074c71869c00",
+                         @"name" : @"ChattAR",
+                         @"caption" : @"By QuickBlox",
+                         @"description" : @"Your Facebook app with extra location-based features. Stay in touch with your friends or meet new people locally."
+                         } mutableCopy];
+}
+
+- (void)publishMessageToFeed {
+    
+    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:self.postParams HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+         NSString *alertText;
+         if (error) {
+             alertText = [NSString stringWithFormat:
+                          @"error: domain = %@, code = %d",
+                          error.domain, error.code];
+         } else {
+             alertText = [NSString stringWithFormat:
+                          @"Posted successfull"];
+         }
+         // Show the result in an alert
+         [[[UIAlertView alloc] initWithTitle:@"Result"
+                                     message:alertText
+                                    delegate:self
+                           cancelButtonTitle:@"OK!"
+                           otherButtonTitles:nil]
+          show];
+     }];
+    self.postParams = nil;
 }
 
 @end

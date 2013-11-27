@@ -11,7 +11,7 @@
 #import "SASlideMenuDataSource.h"
 #import "MenuCell.h"
 
-@interface CAMenuViewController :SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate, UIAlertViewDelegate, QBActionStatusDelegate, QBChatDelegate>
+@interface MenuViewController : SASlideMenuViewController <SASlideMenuDataSource,SASlideMenuDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *firstNameField;
 @property (strong, nonatomic) IBOutlet UITableView *menuTable;

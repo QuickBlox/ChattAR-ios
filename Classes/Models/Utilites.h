@@ -15,11 +15,10 @@
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 + (instancetype)shared;
-- (NSString *)distanceFormatter:(CLLocationDistance)distance;
-- (void)checkAndPutStatusBarColor;
 + (BOOL)deviceSupportsAR;
 
-// Splash appearence options:
+- (NSString *)distanceFormatter:(CLLocationDistance)distance;
+- (void)checkAndPutStatusBarColor;
 - (BOOL)isUserLoggedIn;
 - (void)setUserLogIn;
 

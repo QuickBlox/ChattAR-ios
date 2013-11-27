@@ -44,7 +44,6 @@
 @property (nonatomic, retain) UIImageView             *displayView;
 @property (nonatomic, assign) UIDeviceOrientation	  currentOrientation;
 
-@property (nonatomic, retain) QBCOCustomObject        *chatRoom;
 
 @property (nonatomic, assign) id delegate;
 

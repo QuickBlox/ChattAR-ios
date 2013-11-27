@@ -33,26 +33,30 @@
 
 - (BOOL)isEqual:(id)other {
     
-	if (other == self)
+	if (other == self){
         return YES;
+    }
     
-	if (!other || ![other isKindOfClass:[self class]])
+	if (!other || ![other isKindOfClass:[self class]]){
         return NO;
+    }
     
 	return [self isEqualToCoordinate:other];
 }
 
 - (BOOL)isEqualToCoordinate:(ARCoordinate *)otherCoordinate {
 
-    if (self == otherCoordinate) 
+    if (self == otherCoordinate) {
 		return YES;
+    }
     
 	BOOL equal = [self radialDistance]	== [otherCoordinate radialDistance];
 	equal = equal && [self inclination] == [otherCoordinate inclination];
 	equal = equal && [self azimuth]		== [otherCoordinate azimuth];
 		
-	if (([self title] && [otherCoordinate title]) || ([self title] && ![otherCoordinate title]) || (![self title] && [otherCoordinate title])) 
+	if (([self title] && [otherCoordinate title]) || ([self title] && ![otherCoordinate title]) || (![self title] && [otherCoordinate title])) {
 		equal = equal && [[self title] isEqualToString:[otherCoordinate title]];
+    }
 	
 	return equal;
 }

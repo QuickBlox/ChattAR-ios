@@ -11,7 +11,7 @@
 @implementation Utilites
 
 + (instancetype)shared {
-    static Utilites *defaultKit = nil;
+    static id defaultKit = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultKit = [[self alloc] init];

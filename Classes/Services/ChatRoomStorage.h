@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ChatRoomStorage : NSObject <QBActionStatusDelegate>
+@interface ChatRoomStorage : NSObject 
 
 @property (nonatomic, strong) NSArray *allTrendingRooms;
 @property (nonatomic, strong) NSArray *allLocalRooms;

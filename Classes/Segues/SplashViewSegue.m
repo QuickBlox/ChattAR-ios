@@ -8,8 +8,6 @@
 
 #import "SplashViewSegue.h"
 
-
-
 @implementation SplashViewSegue
 
 -(void)perform{

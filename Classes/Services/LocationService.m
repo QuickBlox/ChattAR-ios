@@ -11,7 +11,7 @@
 @implementation LocationService
 
 + (instancetype)shared {
-    static LocationService *defaultData = nil;
+    static id defaultData = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         defaultData = [[self alloc] init];

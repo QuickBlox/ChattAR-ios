@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QBService : NSObject <QBChatDelegate>
+@interface QBService : NSObject <QBChatDelegate, QBActionStatusDelegate>
 
 @property (nonatomic, assign) BOOL userIsJoinedChatRoom;
 
@@ -16,10 +16,16 @@
 
 
 #pragma mark -
+#pragma mark Requests
+
+- (void)usersWithFacebookIDs:(NSArray *)facebookIDs;
+
+#pragma mark -
 #pragma  mark Messages
 
 - (void)sendMessage:(NSString *)message toUser:(NSUInteger)userID option:(id)option;
 - (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote;
+- (void)sendPushNotificationWithMessage:(NSString *)message toUser:(NSMutableDictionary *)user;
 
 
 #pragma mark -

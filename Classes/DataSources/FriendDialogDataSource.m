@@ -6,15 +6,14 @@
 //  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
 //
 
-#import "FacebookDialogsDataSource.h"
+#import "FriendDialogDataSource.h"
 #import "ChatRoomCell.h"
 
-@implementation FacebookDialogsDataSource
+@implementation FriendDialogDataSource
 
 
 #pragma mark -
 #pragma mark Table View Data Source
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSArray *data = [[self.conversation objectForKey:kComments] objectForKey:kData];
@@ -22,7 +21,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *roomCellIdentifier = @"RoomCellIdentifier";
+    static NSString *roomCellIdentifier = @"FriendCellIdentifier";
     
     NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
     
@@ -34,11 +33,5 @@
     
     return cell;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *message = [[[self.conversation objectForKey:kComments] objectForKey:kData] objectAtIndex:indexPath.row];
-//    NSString *messageText = [message objectForKey:kMessage];
-//    return [ChatRoomCell configureHeightForCellWithMessage:messageText];
-//}
 
 @end

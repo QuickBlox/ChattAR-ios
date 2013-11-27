@@ -1,9 +1,9 @@
 //
-//  SASlideMenuAppDelegate.m
-//  SASlideMenuStatic
+//  ChattARAppDelegate.m
+//  ChattAR
 //
-//  Created by Stefano Antonelli on 12/3/12.
-//  Copyright (c) 2012 Stefano Antonelli. All rights reserved.
+//  Created by Igor Alefirenko on 29/10/2013.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "ChattARAppDelegate.h"
@@ -13,11 +13,10 @@
 #import "QBService.h"
 #import "QBStorage.h"
 
-
 @implementation ChattARAppDelegate
 
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
     // attempt to extract a token from the url
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
@@ -30,14 +29,17 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    
     // Set QuickBlox credentials
     [QBSettings setApplicationID:771];
     [QBSettings setAuthorizationKey:@"hOYSNJ8zwYhUspn"];
     [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
-    [QBSettings setRestAPIVersion:@"0.1.1"];
-    
+#ifndef DEBUG
+    [QBSettings useProductionEnvironmentForPushNotifications:YES];
+#endif
     
     return YES;
 }

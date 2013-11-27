@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QuickBloxDialogsDataSource : NSObject <UITableViewDataSource>
+@interface NonFriendDialogDataSource : NSObject <UITableViewDataSource>
 
 @property (nonatomic, strong) NSMutableDictionary *conversation;
 

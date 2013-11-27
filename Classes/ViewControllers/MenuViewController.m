@@ -7,7 +7,7 @@
 //
 #import "SASlideMenuViewController.h"
 #import "SASlideMenuRootViewController.h"
-#import "CAMenuViewController.h"
+#import "MenuViewController.h"
 #import "SplashViewController.h"
 #import "SASlideMenuRootViewController.h"
 #import "FBService.h"
@@ -18,7 +18,7 @@
 #import "Utilites.h"
 
 
-@implementation CAMenuViewController
+@implementation MenuViewController
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     return YES;

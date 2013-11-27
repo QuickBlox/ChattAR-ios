@@ -307,27 +307,13 @@
     }
 }
 
+
 #pragma mark -
-#pragma mark UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self performSegueWithIdentifier:kARToChatSegueIdentifier sender:_chatRoom];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
-#pragma mark - Marker Action
+#pragma mark Marker Action
 
 - (void)touchOnMarker:(ARMarkerView *)marker {
-    UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:marker.userName.text delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Connect", nil];
-    _chatRoom = [marker currentRoom];
-    [action showInView:self.view];
+    QBCOCustomObject *room = [marker currentRoom];
+    [self performSegueWithIdentifier:kARToChatSegueIdentifier sender:room];
 }
 /*
  Return view for exist user annotation

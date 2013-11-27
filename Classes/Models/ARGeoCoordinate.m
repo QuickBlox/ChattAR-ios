@@ -41,16 +41,18 @@
 
 - (void)calibrateUsingOrigin:(CLLocation *)origin {
 	
-	if (![self geoLocation]) 
+	if (![self geoLocation]) {
 		return;
+    }
 	
 	double baseDistance = [origin distanceFromLocation:[self geoLocation]];
 	[self setRadialDistance: sqrt(pow([origin altitude] - [[self geoLocation] altitude], 2) + pow(baseDistance, 2))];
 	
 	float angle = sin(ABS([origin altitude] - [[self geoLocation] altitude]) / [self radialDistance]);
 	
-	if ([origin altitude] > [[self geoLocation] altitude]) 
+	if ([origin altitude] > [[self geoLocation] altitude]) {
 		angle = -angle;
+    }
 	
 	[self setInclination: angle];
 	[self setAzimuth: [self angleFromCoordinate:[origin coordinate] toCoordinate:[[self geoLocation] coordinate]]];
@@ -66,12 +68,13 @@
 	float latitudinalDifference		= second.latitude  - first.latitude;
 	float possibleAzimuth			= (M_PI * .5f) - atan(latitudinalDifference / longitudinalDifference);
 	
-	if (longitudinalDifference > 0) 
+	if (longitudinalDifference > 0) {
 		return possibleAzimuth;
-	else if (longitudinalDifference < 0) 
+    }else if (longitudinalDifference < 0){
 		return possibleAzimuth + M_PI;
-	else if (latitudinalDifference < 0) 
+	}else if (latitudinalDifference < 0){
 		return M_PI;
+    }
 	
 	return 0.0f;
 }
