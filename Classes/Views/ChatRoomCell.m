@@ -3,7 +3,7 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 11/09/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "ChatRoomCell.h"
@@ -76,17 +76,19 @@
     NSURL *url = [NSURL URLWithString:urlString];
     
     //getting location of a message sender
-    CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
-    CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
-    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-    CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
+    if (tempDict[kLatitude] != nil || tempDict[kLongitude] != nil) {
+        CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
+        CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
+        CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
+        self.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
+    }
     
     // post message date
     NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
     
     // putting data to fields
     [self.userPhoto setImageURL:url];
-    self.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
     self.message.text = [tempDict objectForKey:kMessage];
     self.userName.text = [tempDict objectForKey:kUserName];
     self.postMessageDate.text = time;

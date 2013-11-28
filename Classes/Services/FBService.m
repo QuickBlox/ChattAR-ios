@@ -1,6 +1,6 @@
 //
 //  FBService.m
-//  ChattAR for Facebook
+//  ChattAR
 //
 //  Created by QuickBlox developers on 07.05.12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
@@ -112,6 +112,41 @@
     [[FBStorage shared].allFriendsHistoryConversation setObject:conversation forKey:userID];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
+}
+
+
+#pragma mark -
+#pragma mark Post to Feed
+
+- (void)publishMessageToFeed:(NSString *)message {
+    
+    NSMutableDictionary *postParams = [@{
+                                         @"link" : @"https://itunes.apple.com/us/app/chattar-for-facebook/id543208565?mt=8",
+                                         @"picture" : @"https://s3.amazonaws.com/qbprod/70680c6415024fb9a302db074c71869c00",
+                                         @"name" : @"ChattAR",
+                                         @"caption" : @"By QuickBlox",
+                                         @"description" : @"Your Facebook app with extra location-based features. Stay in touch with your friends or meet new people locally."
+                                         } mutableCopy];
+    
+    postParams[kMessage] = message;
+    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:postParams HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSString *alertText;
+        if (error) {
+            alertText = [NSString stringWithFormat:
+                         @"error: domain = %@, code = %d",
+                         error.domain, error.code];
+        } else {
+            alertText = [NSString stringWithFormat:
+                         @"Posted successfull"];
+        }
+        // Show the result in an alert
+        [[[UIAlertView alloc] initWithTitle:@"Result"
+                                    message:alertText
+                                   delegate:self
+                          cancelButtonTitle:@"OK!"
+                          otherButtonTitles:nil]
+         show];
+    }];
 }
 
 

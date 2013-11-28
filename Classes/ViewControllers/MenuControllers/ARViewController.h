@@ -9,7 +9,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreMedia/CoreMedia.h>
 #import <CoreVideo/CoreVideo.h>
-//#import "UserAnnotation.h"
 
 @class ARCoordinate;
 

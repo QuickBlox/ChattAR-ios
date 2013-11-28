@@ -3,12 +3,11 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 11/09/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
-#import "ChatViewController.h"
+
 #import "ChatRoomViewController.h"
 #import "ChatRoomCell.h"
-#import "ChatRoomStorage.h"
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
@@ -16,13 +15,13 @@
 #import "QBStorage.h"
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
-#import <CoreLocation/CoreLocation.h>
-#import <Social/Social.h>
+#import "ChatRoomDataSource.h"
 
 
+@interface ChatRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, SASlideMenuDelegate>
 
-@interface ChatRoomViewController ()
-
+@property (strong, nonatomic) ChatRoomDataSource *chatRoomDataSource;
+@property (strong, nonatomic) UIActivityIndicatorView *indicatorView;
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 @property (strong, nonatomic) NSMutableDictionary *quote;
 @property (strong, nonatomic) QBChatRoom *currentRoom;
@@ -31,7 +30,7 @@
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property (strong, nonatomic) NSMutableDictionary *dialogTo;
-@property (strong, nonatomic) NSMutableDictionary *postParams;
+
 @property CGFloat cellSize;
 
 - (IBAction)textEditDone:(id)sender;
@@ -51,6 +50,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.chatRoomDataSource = [[ChatRoomDataSource alloc] init];
+    self.chatRoomTable.dataSource = self.chatRoomDataSource;
+    self.chatRoomDataSource.chatHistory = self.chatHistory;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
     [self setSpinner];
@@ -84,46 +87,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [_chatRoomTable reloadData];
 }
 
 
 #pragma mark -
 #pragma mark Table View Data Source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [_chatHistory count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell;
-    static NSString *roomCellIdentifier = @"RoomCellIdentifier";
-    static NSString *quotedRoomCellIdentifier = @"quotedRoomCellIdentifier";
-    
-    QBChatMessage *qbMessage = [_chatHistory objectAtIndex:[indexPath row]];
-    NSString *string = [NSString stringWithFormat:@"%@", qbMessage.text];
-    // JSON parsing
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    
-    // There are Two different cells: "Simple" and "Quoted"
-    if ([jsonDict objectForKey:kQuote] == nil) {
-        cell = (ChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:roomCellIdentifier];
-        if (cell == nil){
-            cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
-        }
-        [(ChatRoomCell *)cell handleParametersForCellWithQBMessage:qbMessage andIndexPath:indexPath];
-    } else {
-        cell = (QuotedChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:quotedRoomCellIdentifier];
-        if (cell == nil) {
-            cell = [[QuotedChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quotedRoomCellIdentifier];
-        }
-        [(QuotedChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
-    }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Identifier"];
     return cell;
 }
+
+#pragma mark -
+#pragma mark Table View Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -139,10 +119,6 @@
     }
     return cellHeight;
 }
-
-
-#pragma mark -
-#pragma mark Table View Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -280,7 +256,9 @@
 
 - (void)resetTableView {
     [self.chatRoomTable reloadData];
-    [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if ([_chatHistory count] > 2) {
+        [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 - (void)joinedRoom {
@@ -291,8 +269,10 @@
 
 - (void)messageReceived {
     self.chatHistory = [QBStorage shared].chatHistory;
+    self.chatRoomDataSource.chatHistory = self.chatHistory;
     [self resetTableView];
 }
+
 
 #pragma mark -
 #pragma mark Show/Hide Keyboard
@@ -357,9 +337,7 @@
 
 - (IBAction)share:(id)sender
 {
-    [self configureBannerForFacebookSharing];
     NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
-    self.postParams[kMessage] = initialText;
     
     // Ask for publish_actions permissions in context
     if ([FBSession.activeSession.permissions
@@ -371,52 +349,15 @@
          completionHandler:^(FBSession *session, NSError *error) {
              if (!error) {
                  // If permissions granted, publish the story
-                 [self publishMessageToFeed];
+                 [[FBService shared] publishMessageToFeed:initialText];
              }
          }];
     } else {
         // If permissions present, publish the story
-        [self publishMessageToFeed];
+        [[FBService shared] publishMessageToFeed:initialText];
     }
 
     
-}
-
-
-#pragma mark -
-#pragma mark Some FB Options
-
-- (void)configureBannerForFacebookSharing {
-    self.postParams = [@{
-                         @"link" : @"https://itunes.apple.com/us/app/chattar-for-facebook/id543208565?mt=8",
-                         @"picture" : @"https://s3.amazonaws.com/qbprod/70680c6415024fb9a302db074c71869c00",
-                         @"name" : @"ChattAR",
-                         @"caption" : @"By QuickBlox",
-                         @"description" : @"Your Facebook app with extra location-based features. Stay in touch with your friends or meet new people locally."
-                         } mutableCopy];
-}
-
-- (void)publishMessageToFeed {
-    
-    [FBRequestConnection startWithGraphPath:@"me/feed" parameters:self.postParams HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-         NSString *alertText;
-         if (error) {
-             alertText = [NSString stringWithFormat:
-                          @"error: domain = %@, code = %d",
-                          error.domain, error.code];
-         } else {
-             alertText = [NSString stringWithFormat:
-                          @"Posted successfull"];
-         }
-         // Show the result in an alert
-         [[[UIAlertView alloc] initWithTitle:@"Result"
-                                     message:alertText
-                                    delegate:self
-                           cancelButtonTitle:@"OK!"
-                           otherButtonTitles:nil]
-          show];
-     }];
-    self.postParams = nil;
 }
 
 @end

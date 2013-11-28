@@ -1,6 +1,6 @@
 //
 //  FBService.h
-//  ChattAR for Facebook
+//  ChattAR 
 //
 //  Created by QuickBlox developers on 07.05.12.
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
@@ -32,6 +32,12 @@
 #pragma mark Messages
 
 - (void)sendMessage:(NSString *)messageText toUserWithID:(NSString *)userID;
+
+
+#pragma mark -
+#pragma mark Post to Feed
+
+- (void)publishMessageToFeed:(NSString *)message;
 
 
 #pragma mark -

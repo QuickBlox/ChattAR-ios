@@ -1,9 +1,9 @@
 //
 //  ProfileCell.h
-//  SASlideMenu
+//  СhattAR
 //
 //  Created by Igor Alefirenko on 23/08/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

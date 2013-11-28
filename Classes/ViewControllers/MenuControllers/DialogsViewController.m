@@ -3,12 +3,12 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 29/10/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "DialogsViewController.h"
 #import "DetailDialogsViewController.h"
-#import "DialogsCell.h"
+#import "DialogsDataSource.h"
 #import "FBService.h"
 #import "FBStorage.h"
 #import "QBService.h"
@@ -17,25 +17,35 @@
 @interface DialogsViewController () <UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) NSArray *searchContent;
 @property (nonatomic, strong) NSMutableArray *friends;
 @property (nonatomic, strong) NSMutableArray *otherUsers;
+@property (nonatomic, strong) DialogsDataSource *dialogsDataSource;
 
 @end
 
 @implementation DialogsViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.dialogsDataSource = [[DialogsDataSource alloc] init];
+    self.tableView.dataSource = self.dialogsDataSource;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     
-    self.searchContent = [self sortingUsers:[[FBStorage shared] friends]];
-    self.friends = [self.searchContent mutableCopy];
-    NSArray *users = [[QBStorage shared] otherUsers];
-    self.otherUsers = [users mutableCopy];
+    NSArray *sortUsers = [self sortingUsers:[FBStorage shared].friends];
+    [FBStorage shared].friends = [NSMutableArray arrayWithArray:sortUsers];
+    self.friends = [FBStorage shared].friends;
+    self.otherUsers = [[QBStorage shared].otherUsers mutableCopy];
+    
+    self.dialogsDataSource.friends = self.friends;
+    self.dialogsDataSource.otherUsers = self.otherUsers;
+    [self.tableView reloadData];
 }
+
+
+#pragma mark -
+#pragma mark Notifications 
 
 - (void)fillTableView {
     self.otherUsers = [QBStorage shared].otherUsers;
@@ -46,69 +56,7 @@
 #pragma mark -
 #pragma mark Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *title = [[NSString alloc] init];
-    switch (section) {
-        case 0:
-            title = @"Friends";
-            break;
-        case 1:
-            title = @"Other";
-            break;
-            
-        default:
-            break;
-    }
-    return title;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSUInteger rows = 0;
-    switch (section) {
-        case 0:
-            rows = [self.friends count];
-            break;
-        case 1:
-            rows = [self.otherUsers count];
-            break;
-            
-        default:
-            break;
-    }
-    return rows;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *DialogsCellIdentifier = @"DialogsCell";
-    DialogsCell *cell = [tableView dequeueReusableCellWithIdentifier:DialogsCellIdentifier forIndexPath:indexPath];
-    
-    switch ([indexPath section]) {
-        case 0:{
-            NSDictionary *friend = [self.friends objectAtIndex:indexPath.row];
-            [DialogsCell configureDialogsCell:cell forIndexPath:indexPath forFriend:friend];
-        }
-            break;
-            
-        case 1:{
-            NSDictionary *user = [self.otherUsers objectAtIndex:indexPath.row];
-            [DialogsCell configureDialogsCell:cell forIndexPath:indexPath forFriend:user];
-        }
-            break;
-            
-        default:
-            break;
-    }
-    return cell;
-}
-
+/////////////lol/////////
 
 #pragma mark -
 #pragma mark Table View Delegate
@@ -184,8 +132,12 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.friends = [self.searchContent mutableCopy];
+    self.friends = [[FBStorage shared].friends mutableCopy];
+    if ([self.friends count] == 0) {
+    }
+    self.dialogsDataSource.friends = self.friends;
     self.otherUsers = [[QBStorage shared].otherUsers mutableCopy];
+    self.dialogsDataSource.otherUsers = self.otherUsers;
     if ([searchText isEqualToString:@""]) {
         [self.tableView reloadData];
     } else {

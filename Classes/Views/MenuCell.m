@@ -1,9 +1,9 @@
 //
-//  SASlideMenuCell.m
-//  SASlideMenu
+//  MenuCell.m
+//  СhattAR
 //
-//  Created by Stefano Antonelli on 8/6/12.
-//  Copyright (c) 2012 Stefano Antonelli. All rights reserved.
+//  Created by Igor Alefirenko on 23/08/2013.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "MenuCell.h"

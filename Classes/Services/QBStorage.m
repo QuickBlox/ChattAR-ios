@@ -3,7 +3,8 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 15/11/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
+//
 
 #import "QBStorage.h"
 #import "Utilites.h"

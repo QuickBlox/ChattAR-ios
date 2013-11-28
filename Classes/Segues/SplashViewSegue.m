@@ -1,9 +1,9 @@
 //
 //  SplashViewSegue.m
-//  SASlideMenu
+//  ChattAR
 //
 //  Created by Igor Alefirenko on 27/08/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "SplashViewSegue.h"

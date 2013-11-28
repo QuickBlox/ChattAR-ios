@@ -3,13 +3,14 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 28/08/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
 #import "SettingsViewController.h"
 #import "Utilites.h"
 
 @interface SettingsViewController ()
+
 @property (strong, nonatomic) IBOutlet UILabel *bottomLabel;
 @property (strong, nonatomic) IBOutlet UIButton *bottomButton;
 

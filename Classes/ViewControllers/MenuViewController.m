@@ -1,10 +1,11 @@
 //
-//  CAMenuViewController.m
+//  MenuViewController.m
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 04/09/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
+
 #import "SASlideMenuViewController.h"
 #import "SASlideMenuRootViewController.h"
 #import "MenuViewController.h"

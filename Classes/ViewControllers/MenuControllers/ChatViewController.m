@@ -3,8 +3,9 @@
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 28/08/2013.
-//  Copyright (c) 2013 Stefano Antonelli. All rights reserved.
+//  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
+
 #import "SASlideMenuRootViewController.h"
 #import "ChatViewController.h"
 #import "TrendingChatRoomsDataSource.h"
@@ -272,7 +273,6 @@
     if ([segue.identifier isEqualToString:kChatToChatRoomSegueIdentifier]){
         // passcurrent room to Chat Room controller
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
-        //[segue.sourceViewController pushViewController:segue.destinationViewController animated:YES];
     }
 }
 
@@ -295,6 +295,19 @@
     
     // Open CHat Controller
     [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:currentRoom];
+}
+
+
+#pragma mark -
+#pragma mark Table View Data Source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewIdentifier"];
+    return cell;
 }
 
 
