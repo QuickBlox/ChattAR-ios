@@ -315,9 +315,11 @@
 #pragma mark Actions
 
 - (IBAction)createChatRoom:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alert show];
+    
+    [self performSegueWithIdentifier:kCreateChatRoomIdentifier sender:nil];
 }
 
 - (NSArray *)getNamesOfRooms:(NSArray *)rooms {

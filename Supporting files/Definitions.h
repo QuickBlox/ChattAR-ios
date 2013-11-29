@@ -43,10 +43,8 @@
 #define kQuote              @"quote"
 #define kDateTime           @"datetime"
 #define kRank               @"rank"
-
 #define kFacebookID         @"facebookID"
 #define kQuickbloxID        @"quickbloxID"
-
 #define kRecepientID        @"recicpentID"
 #define kSenderID           @"senderID"
 
@@ -63,7 +61,8 @@
 #define kMapToChatRoomSegueIdentifier       @"MapToChatRoom"
 #define kChatToChatRoomSegueIdentifier      @"ChatToChatRoomSegue"
 #define kDialogToProfileSegueIdentifier     @"DialogToProfile"
-
+#define kCreateChatRoomIdentifier           @"CreateChatRoomIdentifier"
+#define kCreateRoomToChatRoomIdentifier     @"CreateRoomToChatRoom"
 
 #define padding           20.0
 #define kAnnotationButtonTag 1542
