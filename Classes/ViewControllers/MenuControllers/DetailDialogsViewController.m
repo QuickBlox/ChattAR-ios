@@ -112,18 +112,19 @@
 }
 
 - (IBAction)sendMessage:(id)sender {
-    if ([self.inputMessageField.text length] == 0) {
+    NSString *trimmedString = [self.inputMessageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([trimmedString length] == 0) {
         return;
     }
     // sending push notification:
-    NSString *pushMessage = [NSString stringWithFormat:@"%@: %@", [FBStorage shared].me[kName], self.inputMessageField.text];
+    NSString *pushMessage = [NSString stringWithFormat:@"%@: %@", [FBStorage shared].me[kName], trimmedString];
     [[QBService defaultService] sendPushNotificationWithMessage:pushMessage toUser:_opponent];
     NSString *friendID = [_opponent objectForKey:kId];
     if (_isChatWithFacebookFriend) {
-        [[FBService shared] sendMessage:_inputMessageField.text toUserWithID:friendID];
+        [[FBService shared] sendMessage:trimmedString toUserWithID:friendID];
     } else {
         NSUInteger userID = [[_opponent objectForKey:kQuickbloxID] integerValue];
-        [[QBService defaultService] sendMessage:_inputMessageField.text toUser:userID option:friendID];
+        [[QBService defaultService] sendMessage:trimmedString toUser:userID option:friendID];
     }
     
     self.inputMessageField.text = @"";

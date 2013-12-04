@@ -9,6 +9,9 @@
 #import "CreateRoomViewController.h"
 #import "UIImage+Cropper.h"
 #import "AsyncImageView.h"
+#import "ChatRoomStorage.h"
+#import "ChatRoomViewController.h"
+
 
 @interface CreateRoomViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, QBActionStatusDelegate>
 
@@ -28,6 +31,7 @@
 {
     [super viewDidLoad];
     self.creatingRoomButton.layer.cornerRadius = 5.0f;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToRoom:) name:CAChatRoomDidCreateNotification object:nil];
 
 }
 
@@ -56,9 +60,24 @@
 }
 
 - (IBAction)createRoom:(id)sender {
-    // create room:
-    NSData *image = UIImageJPEGRepresentation(self.roomImageView.image, 0.5);
-    [QBContent TUploadFile:image fileName:@"loool" contentType:@"image/jpg" isPublic:YES delegate:self];
+    // deleting spaces in begining and the end string:
+    NSString *trimmedString = [self.roomNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([trimmedString isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"You need to add room name for creating"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    NSData *imageData = UIImageJPEGRepresentation(self.roomImageView.image, 0.5);
+    [[ChatRoomStorage shared] createChatRoomWithName:trimmedString imageData:imageData];
+}
+
+- (void)switchToRoom:(NSNotification *)notification {
+    QBCOCustomObject *room = notification.object;
+    [self performSegueWithIdentifier:kCreateRoomToChatRoomIdentifier sender:room];
 }
 
 
@@ -67,32 +86,17 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        // to do:
-    }
-    switch (buttonIndex) {
-        case 0:
-        {
-            [self.roomNameField resignFirstResponder];
-            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        [self.roomNameField resignFirstResponder];
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = NO;
+        
+        if (buttonIndex == 0) {
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePickerController.delegate = self;
-            imagePickerController.allowsEditing = NO;
-            [self presentModalViewController:imagePickerController animated:YES];
-        }
-        break;
-        case 1:
-        {
-            [self.roomNameField resignFirstResponder];
-            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        } else if (buttonIndex == 1) {
             imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePickerController.delegate = self;
-            [self presentModalViewController:imagePickerController animated:YES];
-            
         }
-        break;
-            
-        default:
-            break;
+        [self presentModalViewController:imagePickerController animated:YES];
     }
 }
 
@@ -105,6 +109,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    // receiving image from delegate:
     UIImage *image = info[@"UIImagePickerControllerOriginalImage"];
     // crop image:
     UIImage *scaledImage =[image imageByScalingProportionallyToMinimumSize:CGSizeMake(200, 200)];
@@ -119,21 +124,12 @@
 }
 
 
-#pragma mark -
-#pragma mark QBActionStatusDelegate
 
--(void)completedWithResult:(Result*)result {
-    // Upload file result
-    if(result.success && [result isKindOfClass:[QBCFileUploadTaskResult class]]){
-        // File uploaded, do something
-        
-        QBCBlob *uploadedFile  = ((QBCFileUploadTaskResult *)result).uploadedBlob;
-        
-        // File public url. Will be null if isPublic:NO in query
-        NSString *fileUrl = [uploadedFile publicUrl];
-    }else{
-        NSLog(@"errors=%@", result.errors);
-    }
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
 }
 
 @end

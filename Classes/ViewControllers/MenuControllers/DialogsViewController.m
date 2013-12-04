@@ -16,6 +16,7 @@
 
 @interface DialogsViewController () <UISearchBarDelegate>
 
+@property (strong, nonatomic) IBOutlet UILabel *noResultsLabel;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSMutableArray *friends;
 @property (nonatomic, strong) NSMutableArray *otherUsers;
@@ -132,19 +133,23 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.noResultsLabel.hidden = YES;
     self.friends = [[FBStorage shared].friends mutableCopy];
-    if ([self.friends count] == 0) {
-    }
+
     self.dialogsDataSource.friends = self.friends;
     self.otherUsers = [[QBStorage shared].otherUsers mutableCopy];
     self.dialogsDataSource.otherUsers = self.otherUsers;
     if ([searchText isEqualToString:@""]) {
+        self.noResultsLabel.hidden = YES;
         [self.tableView reloadData];
     } else {
         NSMutableArray *friendsToDelete = [self objectsToDeleteFromArray:self.friends text:searchText];
         NSMutableArray *opponentsToDelete = [self objectsToDeleteFromArray:self.otherUsers text:searchText];
         [self.friends removeObjectsInArray:friendsToDelete];
         [self.otherUsers removeObjectsInArray:opponentsToDelete];
+        if ([self.friends count] == 0 && [self.otherUsers count] == 0) {
+            self.noResultsLabel.hidden = NO;
+        }
         [self.tableView reloadData];
     }
 }

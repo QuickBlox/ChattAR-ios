@@ -18,6 +18,17 @@
 
 + (instancetype)shared;
 
+
+#pragma mark -
+#pragma mark Create room
+
+- (void)createChatRoomWithName:(NSString *)name imageData:(NSData *)imageData;
+
+
+#pragma mark -
+#pragma mark Options
+
 - (NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms;
+- (void)increaseRankOfRoom:(QBCOCustomObject *)room;
 
 @end

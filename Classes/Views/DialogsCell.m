@@ -12,6 +12,7 @@
 
 + (void)configureDialogsCell:(DialogsCell *)cell forIndexPath:(NSIndexPath *)indexPath forFriend:(NSDictionary *)aFriend
 {
+    [cell.asyncView setImage:[UIImage imageNamed:@"human.png"]];
     [cell.asyncView setImageURL:[NSURL URLWithString:[aFriend objectForKey:kPhoto]]];
     cell.name.text = [aFriend objectForKey:kName];
 }

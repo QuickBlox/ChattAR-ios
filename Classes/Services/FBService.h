@@ -44,6 +44,14 @@
 #pragma mark Options
 
 + (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend;
+- (NSMutableArray *)gettingAllIDsOfFacebookUsers:(NSMutableArray *)facebookUsers;
+- (NSMutableArray *)putQuickbBloxIDsToFacebookUsers:(NSMutableArray *)facebookUsers fromQuickbloxUsers:(NSArray *)quickbloxUsers ;
+
+
+#pragma mark -
+#pragma mark Loading and handling Facebook users
+
+- (void)loadAndHandleDataAboutMeAndMyFriends;
 
 
 #pragma mark -

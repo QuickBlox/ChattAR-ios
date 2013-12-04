@@ -8,6 +8,7 @@
 
 #import "ChatRoomViewController.h"
 #import "ChatRoomCell.h"
+#import "ChatRoomStorage.h"
 #import "QuotedChatRoomCell.h"
 #import "FBStorage.h"
 #import "FBService.h"
@@ -233,18 +234,19 @@
     [QBStorage shared].currentChatRoom = nil;
     [QBService defaultService].userIsJoinedChatRoom = NO;
     [[QBStorage shared].chatHistory removeAllObjects];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 // action message button
 - (IBAction)sendMessageButton:(id)sender
 {
-    if ([self.inputMessageField.text isEqual:@""]) {
+    NSString *trimmedString = [self.inputMessageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([trimmedString isEqual:@""]) {
         //don't send
         [self.inputMessageField resignFirstResponder];
         return;
     }
-        [[QBService defaultService] sendmessage:self.inputMessageField.text toChatRoom:self.currentRoom quote:quote];
+        [[QBService defaultService] sendmessage:trimmedString toChatRoom:self.currentRoom quote:quote];
         self.inputMessageField.text = @"";
     [self.chatRoomTable reloadData];
     [self.inputMessageField resignFirstResponder];
@@ -263,6 +265,8 @@
 
 - (void)joinedRoom {
     self.currentRoom = [QBStorage shared].currentChatRoom;
+    [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
+
     [self.chatRoomTable reloadData];
     [self.indicatorView stopAnimating];
 }
@@ -356,8 +360,6 @@
         // If permissions present, publish the story
         [[FBService shared] publishMessageToFeed:initialText];
     }
-
-    
 }
 
 @end

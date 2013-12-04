@@ -22,4 +22,11 @@
 - (BOOL)isUserLoggedIn;
 - (void)setUserLogIn;
 
+
+#pragma mark -
+#pragma mark Escape symbols encoding
+
++(NSString*)urlencode:(NSString*)unencodedString;
++(NSString*)urldecode:(NSString*)encodedString;
+
 @end

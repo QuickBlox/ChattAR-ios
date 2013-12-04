@@ -10,7 +10,9 @@
 #import "QBService.h"
 #import "FBStorage.h"
 #import "QBStorage.h"
+#import "Utilites.h"
 #import "LocationService.h"
+#import "ChatRoomStorage.h"
 
 
 @implementation QBService
@@ -39,6 +41,43 @@
 
 - (void)usersWithFacebookIDs:(NSArray *)facebookIDs  {
     [QBUsers usersWithFacebookIDs:facebookIDs delegate:self];
+}
+
+
+#pragma mark -
+#pragma mark Loading and handling Facebook users
+
+- (void)loadAndHandleOtherFacebookUsers:(NSArray *)userIDs {
+    if(userIDs.count == 0){
+        return;
+    }
+    [[FBService shared] usersProfilesWithIDs:userIDs resultBlock:^(id result) {
+        NSMutableDictionary *searchResult = (FBGraphObject *)result;
+        NSMutableArray *users = [NSMutableArray arrayWithArray:[searchResult allValues]];
+        
+        NSMutableArray *quickbloxIDs = [[FBService shared] gettingAllIDsOfFacebookUsers:users];
+        if(quickbloxIDs.count == 0){
+            return;
+        }
+        // adding photos:
+        for (NSMutableDictionary *user in users) {
+            NSString *photoURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [user objectForKey:kId], [FBStorage shared].accessToken];
+            [user setObject:photoURL forKey:kPhoto];
+        }
+        // qb users will come here:
+        void (^block) (Result *) = ^(Result *result) {
+            if ([result isKindOfClass:[QBUUserPagedResult class]]) {
+                QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
+                NSArray *qbUsers = pagedResult.users;
+                // putting quickbloxIDs to facebook users:
+                [QBStorage shared].otherUsers = [[FBService shared] putQuickbBloxIDsToFacebookUsers:[QBStorage shared].otherUsers fromQuickbloxUsers:qbUsers];
+            }
+        };
+        // request for qb users:
+        [QBUsers usersWithFacebookIDs:quickbloxIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+        
+        [QBStorage shared].otherUsers = users;
+    }];
 }
 
 #pragma mark -
@@ -127,7 +166,6 @@
         NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
         NSMutableDictionary *aps = [[NSMutableDictionary alloc] init];
         aps[QBMPushMessageSoundKey] = @"default";
-        aps[QBMPushMessageBadgeKey] = [@(1) stringValue];
         aps[QBMPushMessageAlertKey] = message;
         payload[QBMPushMessageApsKey] = aps;
         QBMPushMessage *pushMessage = [[QBMPushMessage alloc] initWithPayload:payload];
@@ -140,7 +178,8 @@
 #pragma mark Operations
 
 - (void)chatCreateOrJoinRoomWithName:(NSString *)roomName andNickName:(NSString *)nickname {
-    [[QBChat instance] createOrJoinRoomWithName:roomName nickname:nickname membersOnly:NO persistent:YES];
+    NSString *encodedString = [Utilites urlencode:roomName];
+    [[QBChat instance] createOrJoinRoomWithName:encodedString nickname:nickname membersOnly:NO persistent:YES];
 }
 
 - (NSMutableDictionary *)findConversationToUserWithMessage:(QBChatMessage *)message {
@@ -217,6 +256,7 @@
     [room addUsers:@[@34]];
     [QBService defaultService].userIsJoinedChatRoom = YES;
     NSLog(@"Chat Room is opened");
+    
     [[QBStorage shared] setCurrentChatRoom:room];
     //get room
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:nil];

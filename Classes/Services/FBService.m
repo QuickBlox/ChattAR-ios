@@ -164,8 +164,6 @@
             }
         }
     }
-    
-    
     // if not return, create new conversation:
     NSMutableDictionary *newConversation = [[NSMutableDictionary alloc]init];
     // adding commnets to this conversation:
@@ -184,6 +182,28 @@
     [newConversation setObject:kto forKey:kTo];
     
     return newConversation;
+}
+
+- (NSMutableArray *)gettingAllIDsOfFacebookUsers:(NSMutableArray *)facebookUsers {
+    NSMutableArray *allUserIDs = [[NSMutableArray alloc] init];
+    for (NSMutableDictionary *user in facebookUsers) {
+        NSString *userID = user[kId];
+        [allUserIDs addObject:userID];
+    }
+    return allUserIDs;
+}
+
+- (NSMutableArray *)putQuickbBloxIDsToFacebookUsers:(NSMutableArray *)facebookUsers fromQuickbloxUsers:(NSArray *)quickbloxUsers {
+    for (NSMutableDictionary *facebookUser in facebookUsers) {
+        NSString *facebookUserID = facebookUser[kId];
+        for (QBUUser *quickbloxUser in quickbloxUsers) {
+            if ([quickbloxUser.facebookID isEqualToString:facebookUserID]) {
+                facebookUser[kQuickbloxID] = [@(quickbloxUser.ID) stringValue];
+                break;
+            }
+        }
+    }
+    return facebookUsers;
 }
 
 
@@ -229,6 +249,43 @@
     });
 }
 
+
+#pragma mark -
+#pragma mark Loading and handling Facebook users
+
+- (void)loadAndHandleDataAboutMeAndMyFriends
+{
+    // me:
+    [self userProfileWithResultBlock:^(id result) {
+        FBGraphObject *user = (FBGraphObject *)result;
+        [FBStorage shared].me = [user mutableCopy];
+    }];
+    
+    // getting my friends:
+    [self userFriendsUsingBlock:^(id result) {
+        // adding photo urls to facebook users:
+        NSMutableArray *myFriends = [(FBGraphObject *)result objectForKey:kData];
+        for (NSMutableDictionary *frend in myFriends) {
+            NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@",[frend objectForKey:kId],[FBStorage shared].accessToken];
+            [frend setValue:urlString forKey:kPhoto];
+        }
+        NSMutableArray *facebookUserIDs = [self gettingAllIDsOfFacebookUsers:myFriends];
+        // qb users will come here:
+        void (^block) (Result *) = ^(Result *result) {
+            if ([result isKindOfClass:[QBUUserPagedResult class]]) {
+                QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
+                NSArray *qbUsers = pagedResult.users;
+                // putting quickbloxIDs to facebook users:
+                [FBStorage shared].friends = [self putQuickbBloxIDsToFacebookUsers:[FBStorage shared].friends fromQuickbloxUsers:qbUsers];
+            }
+        };
+        // request for qb users:
+        [QBUsers usersWithFacebookIDs:facebookUserIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+        
+        
+        [[FBStorage shared] setFriends:myFriends];
+    }];
+}
 
 #pragma mark -
 #pragma mark Chat API
@@ -332,7 +389,7 @@
             objectForKey:kComments] objectForKey:kData] addObject:message];
     
     // post notification
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 @end

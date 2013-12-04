@@ -13,7 +13,6 @@
 #define IS_IOS_6 [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0f
 
 #define kNotificationDidLogin           @"kNotificationDidLogin"
-#define kNotificationRowSelected        @"rowSelected"
 #define kNotificationMessageReceived    @"NotificationMessageReceived"
 
 // QBCO Request keys:
@@ -27,6 +26,7 @@
 #define CAChatRoomDidReceiveOrSendMessageNotification       @"CAChatRoomDidReceiveOrSendMessageNotification"
 #define CAChatRoomDidEnterNotification                      @"CAChatRoomDidEnterNotification"
 #define CAChatDidReceiveSearchResults                       @"CAChatDidReceiveSearchResults"
+#define CAChatRoomDidCreateNotification                     @"CAChatRoomDidCreateNotification"
 
 // Table Tags:
 #define  kTrendingTableViewTag      1011

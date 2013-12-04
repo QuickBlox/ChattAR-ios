@@ -64,7 +64,7 @@
         self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     }
     self.colorBuble.image = self.bubleImage;
-    
+    [self.userPhoto setImage:[UIImage imageNamed:@"human.png"]];
     // user message
 
     // getting dictionary from JSON
@@ -111,6 +111,7 @@
         self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     }
     self.colorBuble.image = self.bubleImage;
+    [self.userPhoto setImage:[UIImage imageNamed:@"human.png"]];
     
     // user message
     NSString *userMessage = [message objectForKey:kMessage];

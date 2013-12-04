@@ -23,6 +23,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *trendingTableView;
 @property (strong, nonatomic) IBOutlet UITableView *locationTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UILabel *noMatchResultsLabel;
 
 @property (nonatomic, strong) NSArray *trendings;
 @property (nonatomic, strong) NSMutableArray *locals;
@@ -46,6 +47,7 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchForResults) name:CAChatDidReceiveSearchResults object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRoomCreated:) name:CAChatRoomDidCreateNotification object:nil];
     
     _trendings = [[NSArray alloc] initWithArray:[[ChatRoomStorage shared] allTrendingRooms]];
     _locals = [[NSMutableArray alloc] initWithArray:[[ChatRoomStorage shared] allLocalRooms]];
@@ -137,11 +139,25 @@
 }
 
 - (void)searchForResults {
+    self.noMatchResultsLabel.hidden = YES;
     self.trendings = [ChatRoomStorage shared].searchedRooms;
     self.trendingDataSource.chatRooms = [ChatRoomStorage shared].searchedRooms;
     [self.trendingTableView reloadData];
     self.trendingFooterLabel.text = nil;
+    
+    if ([[ChatRoomStorage shared].searchedRooms count] == 0) {
+        self.noMatchResultsLabel.hidden = NO;
+    }
     [self.searchIndicatorView stopAnimating];
+}
+
+- (void)newRoomCreated:(NSNotification *)notification {
+    QBCOCustomObject *room = notification.object;
+    [self.locals insertObject:room atIndex:0];
+    [ChatRoomStorage shared].allLocalRooms = self.locals;
+    self.locationDataSource.chatRooms = self.locals;
+    double_t distance = [self distanceFromNewRoom:room];
+    [self.locationDataSource.distances insertObject:[NSNumber numberWithDouble:distance] atIndex:0];
 }
 
 #pragma mark -
@@ -288,11 +304,9 @@
     QBCOCustomObject *currentRoom;
     if (tableView.tag == kTrendingTableViewTag) {
        currentRoom =  [_trendings objectAtIndex:[indexPath row]];
-    
-    }else if (tableView.tag == kLocalTableViewTag) {
+    } else if (tableView.tag == kLocalTableViewTag) {
        currentRoom = [[[ChatRoomStorage shared] allLocalRooms] objectAtIndex:[indexPath row]];
     }
-    
     // Open CHat Controller
     [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:currentRoom];
 }
@@ -315,10 +329,6 @@
 #pragma mark Actions
 
 - (IBAction)createChatRoom:(id)sender {
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Creating room" message:@"Name of Room:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
-//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [alert show];
-    
     [self performSegueWithIdentifier:kCreateChatRoomIdentifier sender:nil];
 }
 
@@ -329,44 +339,6 @@
         [names addObject:[object.fields objectForKey:kName]];
     }
     return names;
-}
-
-
-#pragma mark - 
-#pragma mark UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 1:
-            if (![[[alertView textFieldAtIndex:0] text] isEqual:@""]) {
-                NSString *alertText = [[alertView textFieldAtIndex:0] text];
-                NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
-                NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-
-                QBCOCustomObject *object = [QBCOCustomObject customObject];
-                object.className = kChatRoom;
-                [object.fields setObject:myLatitude forKey:kLatitude];
-                [object.fields setObject:myLongitude forKey:kLongitude];
-                [object.fields setObject:alertText forKey:kName];
-                [object.fields setObject:[NSNumber numberWithInt:0] forKey:kRank];
-                [QBCustomObjects createObject:object delegate:self];
-                [_locals insertObject:object atIndex:0];
-                _locals = [[ChatRoomStorage shared] sortingRoomsByDistance:[LocationService shared].myLocation toChatRooms:_locals];
-                [[ChatRoomStorage shared] setAllLocalRooms:_locals];
-                [[ChatRoomStorage shared].distances insertObject:[NSNumber numberWithInt:[self distanceFromNewRoom:object]] atIndex:0];
-                
-                // put to datasource
-                _locationDataSource.chatRooms = [[ChatRoomStorage shared] allLocalRooms];
-                _locationDataSource.distances = [[ChatRoomStorage shared] distances];
-                
-                [self performSegueWithIdentifier:kChatToChatRoomSegueIdentifier sender:object];
-                
-            }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 - (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
@@ -407,6 +379,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if ([searchText isEqualToString:@""]) {
+        self.noMatchResultsLabel.hidden = YES;
         self.trendings = [ChatRoomStorage shared].allTrendingRooms;
         self.trendingDataSource.chatRooms = _trendings;
         [self.trendingTableView reloadData];

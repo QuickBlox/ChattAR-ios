@@ -79,4 +79,18 @@
     self.userLoggedIn = YES;
 }
 
+
+#pragma mark -
+#pragma mark Escape symbols encoding
+
++(NSString*)urlencode:(NSString*)unencodedString{
+	NSString * encodedString = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( NULL, (CFStringRef)unencodedString, NULL, (CFStringRef)@"!-*|~'();:%@&=+$,/\?%#[]{}_^#<>£€¥•", kCFStringEncodingUTF8 ));
+	return encodedString;
+}
+
++(NSString*)urldecode:(NSString*)encodedString{
+	NSString* decodedString =CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding( NULL, (CFStringRef)encodedString, CFSTR(""), kCFStringEncodingUTF8));
+	return decodedString;
+}
+
 @end

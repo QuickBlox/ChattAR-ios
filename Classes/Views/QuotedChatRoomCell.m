@@ -94,6 +94,10 @@
 
 - (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath {
 
+    UIImage *defaultImage = [UIImage imageNamed:@"human.png"];
+    [self.qUserPhoto setImage:defaultImage];
+    [self.rUserPhoto setImage:defaultImage];
+    
     NSData *data = [message.text dataUsingEncoding:NSUTF8StringEncoding];
     // parsing JSON to dictionary
     NSDictionary *quoteDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];

@@ -24,10 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (!IS_HEIGHT_GTE_568){
-        _bottomButton.hidden = YES;
-        _bottomLabel.hidden = YES;
-    }
+
 }
 
 - (IBAction)gotoURL:(id)sender

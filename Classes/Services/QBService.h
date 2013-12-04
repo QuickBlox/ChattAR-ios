@@ -44,6 +44,12 @@
 
 
 #pragma mark -
+#pragma mark Loading and handling Facebook users
+
+- (void)loadAndHandleOtherFacebookUsers:(NSArray *)userIDs;
+
+
+#pragma mark -
 #pragma mark Archiving (JSON Parsing)
 
 - (NSString *)archiveMessageData:(NSMutableDictionary *)messageData;
