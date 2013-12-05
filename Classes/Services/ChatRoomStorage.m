@@ -34,8 +34,9 @@
     QBCOCustomObject *object = [QBCOCustomObject customObject];
     object.className = kChatRoom;
     
-    NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
-    NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
+    CLLocationCoordinate2D locate = [LocationService shared].myLocation.coordinate;
+    NSString *myLatitude = [@(locate.latitude) stringValue];
+    NSString *myLongitude = [@(locate.longitude) stringValue];
     
     [QBContent TUploadFile:imageData fileName:name contentType:@"image/jpg" isPublic:YES delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:^(Result *result) {
         // Upload file result
@@ -57,16 +58,24 @@
     object.fields[kLatitude] = myLatitude;
     object.fields[kLongitude] = myLongitude;
     object.fields[kName] = name;
-    object.fields[kRank] = [NSNumber numberWithInt:1];
+    object.fields[kRank] = @1;
 }
+
 
 #pragma mark -
 #pragma mark Options
 
 - (NSMutableArray *)sortingRoomsByDistance:(CLLocation *)me toChatRooms:(NSArray *)rooms {
     NSArray *sortedRooms = [rooms sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        CLLocation *room1 = [[CLLocation alloc] initWithLatitude:[[[obj1 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj1 fields] objectForKey:kLongitude] doubleValue]];
-        CLLocation *room2 = [[CLLocation alloc] initWithLatitude:[[[obj2 fields] objectForKey:kLatitude] doubleValue] longitude:[[[obj2 fields] objectForKey:kLongitude] doubleValue]];
+        // first location
+        double_t latitude = [[[obj1 fields] objectForKey:kLatitude] doubleValue];
+        double_t longitude = [[[obj1 fields] objectForKey:kLongitude] doubleValue];
+        CLLocation *room1 = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        // second location
+        latitude = [[[obj2 fields] objectForKey:kLatitude] doubleValue];
+        longitude = [[[obj2 fields] objectForKey:kLongitude] doubleValue];
+        CLLocation *room2 = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        // distances to both locations:
         NSInteger distance1 = [me distanceFromLocation:room1];
         NSInteger distance2 = [me distanceFromLocation:room2];
         

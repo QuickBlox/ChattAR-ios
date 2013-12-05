@@ -28,4 +28,6 @@
 - (void)handleParametersForCellWithMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath;
 + (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg;
 
+- (void)bubleImageForChatRoomWithUserID:(NSString *)currentID;
+
 @end

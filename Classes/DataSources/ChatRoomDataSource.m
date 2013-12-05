@@ -40,12 +40,15 @@
             cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
         }
         [(ChatRoomCell *)cell handleParametersForCellWithQBMessage:qbMessage andIndexPath:indexPath];
+        
+        [(ChatRoomCell *)cell bubleImageForChatRoomWithUserID:jsonDict[kId]];
     } else {
         cell = (QuotedChatRoomCell *)[tableView dequeueReusableCellWithIdentifier:quotedRoomCellIdentifier];
         if (cell == nil) {
             cell = [[QuotedChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quotedRoomCellIdentifier];
         }
         [(QuotedChatRoomCell *)cell handleParametersForCellWithMessage:qbMessage andIndexPath:indexPath];
+        [(QuotedChatRoomCell *)cell bubleImageForChatRoomWithUserID:jsonDict[kId]];
     }
     return cell;
 }

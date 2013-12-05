@@ -85,4 +85,13 @@
     return NO;
 }
 
+- (BOOL)isFacebookFriendWithID:(NSString *)ID {
+    for (NSMutableDictionary *friend in self.friends) {
+        if ([ID isEqualToString:[friend objectForKey:kId]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

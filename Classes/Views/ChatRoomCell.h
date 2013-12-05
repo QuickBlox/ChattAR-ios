@@ -16,11 +16,18 @@
 @property (nonatomic, strong) UILabel *userName;
 @property (nonatomic, strong) AsyncImageView *userPhoto;
 @property (nonatomic, strong) UILabel *postMessageDate;
-@property (nonatomic, strong) UIImage *bubleImage;
+@property (nonatomic, strong) UIImage *bubleImage;       // unuseful
 @property (nonatomic, strong) UILabel *distance;
 
 - (void)handleParametersForCellWithQBMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath;
 - (void)handleParametersForCellWithFBMessage:(NSDictionary *)message andIndexPath:(NSIndexPath *)indexPath;
 + (CGFloat)configureHeightForCellWithMessage:(NSString *)msg;
+
+
+#pragma mark -
+#pragma mark Drawing bubles
+
+- (void)bubleImageForChatRoomWithUserID:(NSString *)currentID;
+- (void)bubleImageForDialogWithUserID:(NSString *)currentID;
 
 @end

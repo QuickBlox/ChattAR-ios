@@ -136,10 +136,12 @@
 }
 
 - (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote {
-    NSString *myLatitude = [[NSString alloc] initWithFormat:@"%f",[[LocationService shared] getMyCoorinates].latitude];
-    NSString *myLongitude = [[NSString alloc] initWithFormat:@"%f", [[LocationService shared] getMyCoorinates].longitude];
-    NSString *userName =  [NSString stringWithFormat:@"%@ %@",[[FBStorage shared].me objectForKey:kFirstName], [[FBStorage shared].me objectForKey:kLastName]];
-    NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [[FBStorage shared].me objectForKey:kId], [FBStorage shared].accessToken];
+    CLLocationCoordinate2D currentLocation = [LocationService shared].myLocation.coordinate;
+    
+    NSString *myLatitude = [@(currentLocation.latitude) stringValue];
+    NSString *myLongitude = [@(currentLocation.longitude) stringValue];
+    NSString *userName =  [FBStorage shared].me[kName];
+    NSString *urlString = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", [FBStorage shared].me[kId], [FBStorage shared].accessToken];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:myLatitude forKey:kLatitude];

@@ -139,7 +139,10 @@
     self.dialogsDataSource.friends = self.friends;
     self.otherUsers = [[QBStorage shared].otherUsers mutableCopy];
     self.dialogsDataSource.otherUsers = self.otherUsers;
-    if ([searchText isEqualToString:@""]) {
+    
+    if ([self.friends count] == 0 && [self.otherUsers count] == 0) {
+        self.noResultsLabel.hidden = NO;
+    } else if ([searchText isEqualToString:@""]) {
         self.noResultsLabel.hidden = YES;
         [self.tableView reloadData];
     } else {

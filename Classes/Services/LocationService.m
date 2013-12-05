@@ -59,6 +59,7 @@
 }
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    //NSLog(@"%@", [locations lastObject]);
     _myLocation = [locations lastObject];
 }
 

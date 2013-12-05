@@ -30,7 +30,7 @@
         cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:roomCellIdentifier];
     }
     [cell handleParametersForCellWithFBMessage:message andIndexPath:indexPath];
-    
+    [cell bubleImageForDialogWithUserID:[message[kFrom] objectForKey:kId]];
     return cell;
 }
 

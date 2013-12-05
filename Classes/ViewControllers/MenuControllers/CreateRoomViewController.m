@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *roomNameField;
 @property (strong, nonatomic) IBOutlet AsyncImageView *roomImageView;
 @property (strong, nonatomic) IBOutlet UIButton *creatingRoomButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (IBAction)chooseImage:(id)sender;
 - (IBAction)createRoom:(id)sender;
@@ -71,11 +72,19 @@
         [alert show];
         return;
     }
+    [self.activityIndicator startAnimating];
+    self.creatingRoomButton.alpha = 0.4;
+    self.creatingRoomButton.enabled = NO;
+    
     NSData *imageData = UIImageJPEGRepresentation(self.roomImageView.image, 0.5);
     [[ChatRoomStorage shared] createChatRoomWithName:trimmedString imageData:imageData];
 }
 
 - (void)switchToRoom:(NSNotification *)notification {
+    [self.activityIndicator stopAnimating];
+    self.creatingRoomButton.enabled = YES;
+    self.creatingRoomButton.alpha = 1.0;
+    
     QBCOCustomObject *room = notification.object;
     [self performSegueWithIdentifier:kCreateRoomToChatRoomIdentifier sender:room];
 }
@@ -85,18 +94,26 @@
 #pragma mark UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [self.roomNameField resignFirstResponder];
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.delegate = self;
-        imagePickerController.allowsEditing = NO;
-        
-        if (buttonIndex == 0) {
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        } else if (buttonIndex == 1) {
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    if (buttonIndex != 2) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            [self.roomNameField resignFirstResponder];
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+            imagePickerController.allowsEditing = NO;
+            
+            switch (buttonIndex) {
+                case 0:
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    break;
+                case 1:
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+                    
+                default:
+                    break;
+            }
+            [self presentModalViewController:imagePickerController animated:YES];
         }
-        [self presentModalViewController:imagePickerController animated:YES];
     }
 }
 

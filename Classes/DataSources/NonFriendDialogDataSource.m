@@ -8,6 +8,7 @@
 
 #import "NonFriendDialogDataSource.h"
 #import "ChatRoomCell.h"
+#import "QBService.h"
 
 @implementation NonFriendDialogDataSource
 
@@ -28,7 +29,10 @@
     if (cell == nil) {
         cell = [[ChatRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    NSDictionary *dict = [[QBService defaultService] unarchiveMessageData:message.text];
+    
     [cell handleParametersForCellWithQBMessage:message andIndexPath:indexPath];
+    [cell bubleImageForDialogWithUserID:dict[kId]];
     return cell;
 }
 

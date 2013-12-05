@@ -57,15 +57,8 @@
 
 // HANDLE CELL FOR QB MESSAGE:
 - (void)handleParametersForCellWithQBMessage:(QBChatMessage *)message andIndexPath:(NSIndexPath *)indexPath {
-    // Buble
-    if ([indexPath row] % 2 == 0) {
-        self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    } else {
-        self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    }
-    self.colorBuble.image = self.bubleImage;
+    
     [self.userPhoto setImage:[UIImage imageNamed:@"human.png"]];
-    // user message
 
     // getting dictionary from JSON
     NSData *dictData = [message.text dataUsingEncoding:NSUTF8StringEncoding];
@@ -77,8 +70,8 @@
     
     //getting location of a message sender
     if (tempDict[kLatitude] != nil || tempDict[kLongitude] != nil) {
-        CGFloat latitude = [[tempDict objectForKey:kLatitude] floatValue];
-        CGFloat longitude = [[tempDict objectForKey:kLongitude] floatValue];
+        double_t latitude = [tempDict[kLatitude] doubleValue];
+        double_t longitude = [tempDict[kLongitude] doubleValue];
         CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
         CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
         self.distance.text = [[Utilites shared] distanceFormatter:distanceToMe];
@@ -104,13 +97,7 @@
 
 // HANDLE CELL FOR FB MESSAGE
 - (void)handleParametersForCellWithFBMessage:(NSDictionary *)message andIndexPath:(NSIndexPath *)indexPath {
-    // Buble
-    if ([indexPath row] % 2 == 0) {
-        self.bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    } else {
-        self.bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    }
-    self.colorBuble.image = self.bubleImage;
+
     [self.userPhoto setImage:[UIImage imageNamed:@"human.png"]];
     
     // user message
@@ -148,5 +135,29 @@
     size.height += padding*2;
     return size.height+10.0f;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+- (void)bubleImageForChatRoomWithUserID:(NSString *)currentID {
+    UIImage *bubleImage = nil;
+    if ([currentID isEqual:[FBStorage shared].me[kId]] || [[FBStorage shared] isFacebookFriendWithID:currentID]) {
+            bubleImage = [[UIImage imageNamed:@"blue_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    } else {
+            bubleImage = [[UIImage imageNamed:@"green_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    }
+    self.colorBuble.image = bubleImage;
+}
+
+- (void)bubleImageForDialogWithUserID:(NSString *)currentID {
+    UIImage *bubleImage = nil;
+    if ([currentID isEqual:[FBStorage shared].me[kId]]) {
+        bubleImage = [[UIImage imageNamed:@"blue_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    } else {
+        bubleImage = [[UIImage imageNamed:@"green_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    }
+    self.colorBuble.image = bubleImage;
+}
+
+
+
 
 @end

@@ -23,6 +23,7 @@
 #pragma mark Some Options
 
 - (BOOL)isFacebookFriend:(NSMutableDictionary *)user;
+- (BOOL)isFacebookFriendWithID:(NSString *)ID;
 - (NSMutableDictionary *)findUserWithMessage:(QBChatMessage *)message;
 
 

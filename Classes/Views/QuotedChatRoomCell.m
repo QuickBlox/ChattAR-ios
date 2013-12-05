@@ -8,6 +8,7 @@
 
 #import "QuotedChatRoomCell.h"
 #import "LocationService.h"
+#import "FBStorage.h"
 #import "Utilites.h"
 
 
@@ -115,12 +116,6 @@
     self.qDateTime.text = [quoted objectForKey:kDateTime];
     
     // REPLY:
-    //buble( Offset: y:50)
-    if ([indexPath row] % 2 == 0) {
-        self.rColorBuble.image = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    } else {
-        self.rColorBuble.image = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
-    }
     // getting avatar url
     NSString *uStr = [quoteDict objectForKey:kPhoto];
     NSURL *urlImg = [NSURL URLWithString:uStr];
@@ -129,8 +124,8 @@
     NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
     
     // getting location
-    CGFloat latutude = [[quoteDict objectForKey:kLatitude] floatValue];
-    CGFloat longitude = [[quoteDict objectForKey:kLongitude] floatValue];
+    double_t latutude = [quoteDict[kLatitude] doubleValue];
+    double_t longitude = [quoteDict[kLongitude] doubleValue];
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:latutude longitude:longitude];
     CLLocationDistance distanceToMe = [[LocationService shared].myLocation distanceFromLocation:userLocation];
     NSString *distance = [[Utilites shared] distanceFormatter:distanceToMe];
@@ -155,6 +150,16 @@
     CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     size.height += padding*2;
     return size.height + 10.0f + 50;
+}
+
+- (void)bubleImageForChatRoomWithUserID:(NSString *)currentID {
+    UIImage *bubleImage = nil;
+    if ([currentID isEqual:[FBStorage shared].me[kId]] || [[FBStorage shared] isFacebookFriendWithID:currentID]) {
+        bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    } else {
+        bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+    }
+    self.rColorBuble.image =bubleImage;
 }
 
 @end
