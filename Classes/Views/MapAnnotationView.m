@@ -13,7 +13,7 @@
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.avatar = [[UIImageView alloc] initWithFrame:CGRectMake(11, 13, 40, 40)];
+        self.avatar = [[AsyncImageView alloc] initWithFrame:CGRectMake(9, 9, 44, 44)];
         [self addSubview:_avatar];
     }
     return self;
@@ -34,7 +34,6 @@
     
     self.centerOffset = CGPointZero;
     self.image = [UIImage imageNamed:@"03_pin.png"];
-    self.avatar.image = [UIImage imageNamed:@"room.jpg"];
 }
 
 @end

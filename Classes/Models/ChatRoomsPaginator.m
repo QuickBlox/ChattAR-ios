@@ -19,7 +19,7 @@
     [extendedRequest setObject:[NSNumber numberWithInteger:pageSize] forKey:kLimit];
     [extendedRequest setObject:[NSNumber numberWithInteger:skipedRecords] forKey:kSkip];
     [extendedRequest setObject:kRank forKey:kSortDesc];
-    [extendedRequest setObject:@"name,rank,latitude,longitude" forKey:@"output"];
+    [extendedRequest setObject:@"name,rank,latitude,longitude,photo" forKey:@"output"];
     
     [QBCustomObjects objectsWithClassName:kChatRoom extendedRequest:extendedRequest delegate:self];
 }

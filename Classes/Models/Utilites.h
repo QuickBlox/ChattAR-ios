@@ -22,6 +22,7 @@
 - (BOOL)isUserLoggedIn;
 - (void)setUserLogIn;
 
+- (NSInteger)yearsFromDate:(NSString *)dateString;
 
 #pragma mark -
 #pragma mark Escape symbols encoding

@@ -7,10 +7,11 @@
 //
 
 #import <MapKit/MapKit.h>
+#import "AsyncImageView.h"
 
 @interface MapAnnotationView : MKAnnotationView
 
-@property (nonatomic, strong) UIImageView *avatar;
+@property (nonatomic, strong) AsyncImageView *avatar;
 @property (nonatomic, strong) QBCOCustomObject *chatRoom;
 
 - (void)handleAnnotationView;

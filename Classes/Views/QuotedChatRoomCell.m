@@ -155,9 +155,9 @@
 - (void)bubleImageForChatRoomWithUserID:(NSString *)currentID {
     UIImage *bubleImage = nil;
     if ([currentID isEqual:[FBStorage shared].me[kId]] || [[FBStorage shared] isFacebookFriendWithID:currentID]) {
-        bubleImage = [[UIImage imageNamed:@"01_blue_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+        bubleImage = [[UIImage imageNamed:@"blue_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     } else {
-        bubleImage = [[UIImage imageNamed:@"01_green_chat_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
+        bubleImage = [[UIImage imageNamed:@"green_bubble.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10) resizingMode:UIImageResizingModeStretch];
     }
     self.rColorBuble.image =bubleImage;
 }

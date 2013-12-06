@@ -1,5 +1,5 @@
 //
-//  ProfileCell.h
+//  DetailProfileCell.h
 //  ChattAR
 //
 //  Created by Igor Alefirenko on 06/12/2013.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *ProfileImage;
-@property (strong, nonatomic) IBOutlet UILabel *profileText;
+@interface DetailProfileCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UILabel *keyField;
+@property (strong, nonatomic) IBOutlet UILabel *valueField;
 
 - (void)handleCellWithContent:(NSDictionary *)content;
 

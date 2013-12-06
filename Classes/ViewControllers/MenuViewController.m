@@ -14,7 +14,7 @@
 #import "FBService.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MenuCell.h"
-#import "ProfileCell.h"
+#import "UserProfileCell.h"
 #import "FBStorage.h"
 #import "Utilites.h"
 

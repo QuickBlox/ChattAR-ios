@@ -20,6 +20,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *creatingRoomButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
+@property (weak, nonatomic) UIImage *cachedImage;
+
 - (IBAction)chooseImage:(id)sender;
 - (IBAction)createRoom:(id)sender;
 
@@ -73,15 +75,17 @@
         return;
     }
     [self.activityIndicator startAnimating];
+    self.roomNameField.enabled = NO;
     self.creatingRoomButton.alpha = 0.4;
     self.creatingRoomButton.enabled = NO;
     
-    NSData *imageData = UIImageJPEGRepresentation(self.roomImageView.image, 0.5);
+    NSData *imageData = UIImageJPEGRepresentation(self.cachedImage, 0.5);
     [[ChatRoomStorage shared] createChatRoomWithName:trimmedString imageData:imageData];
 }
 
 - (void)switchToRoom:(NSNotification *)notification {
     [self.activityIndicator stopAnimating];
+    self.roomNameField.enabled = YES;
     self.creatingRoomButton.enabled = YES;
     self.creatingRoomButton.alpha = 1.0;
     
@@ -131,6 +135,7 @@
     // crop image:
     UIImage *scaledImage =[image imageByScalingProportionallyToMinimumSize:CGSizeMake(200, 200)];
     self.roomImageView.image = scaledImage;
+    self.cachedImage = scaledImage;
     [self dismissModalViewControllerAnimated:YES];
     [self.roomNameField becomeFirstResponder];
 }

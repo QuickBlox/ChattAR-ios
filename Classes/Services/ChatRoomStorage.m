@@ -37,28 +37,33 @@
     CLLocationCoordinate2D locate = [LocationService shared].myLocation.coordinate;
     NSString *myLatitude = [@(locate.latitude) stringValue];
     NSString *myLongitude = [@(locate.longitude) stringValue];
-    
-    [QBContent TUploadFile:imageData fileName:name contentType:@"image/jpg" isPublic:YES delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:^(Result *result) {
-        // Upload file result
-        if(result.success && [result isKindOfClass:[QBCFileUploadTaskResult class]]){
-            // File uploaded, do something
-            QBCBlob *uploadedFile  = ((QBCFileUploadTaskResult *)result).uploadedBlob;
-            // File public url. Will be null if isPublic:NO in query
-            NSString *fileUrl = [uploadedFile publicUrl];
-            object.fields[kPhoto] = fileUrl;
-            
-            [QBCustomObjects createObject:object delegate:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidCreateNotification object:object];
-            
-        }else{
-            NSLog(@"errors=%@", result.errors);
-        }
-    }]];
-    
+
     object.fields[kLatitude] = myLatitude;
     object.fields[kLongitude] = myLongitude;
     object.fields[kName] = name;
     object.fields[kRank] = @1;
+    
+    if (imageData != nil) {
+        [QBContent TUploadFile:imageData fileName:name contentType:@"image/jpg" isPublic:YES delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:^(Result *result) {
+            // Upload file result
+            if(result.success && [result isKindOfClass:[QBCFileUploadTaskResult class]]){
+                // File uploaded, do something
+                QBCBlob *uploadedFile  = ((QBCFileUploadTaskResult *)result).uploadedBlob;
+                // File public url. Will be null if isPublic:NO in query
+                NSString *fileUrl = [uploadedFile publicUrl];
+                object.fields[kPhoto] = fileUrl;
+                
+                [QBCustomObjects createObject:object delegate:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidCreateNotification object:object];
+                
+            }else{
+                NSLog(@"errors=%@", result.errors);
+            }
+        }]];
+    } else {
+        [QBCustomObjects createObject:object delegate:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidCreateNotification object:object];
+    }
 }
 
 

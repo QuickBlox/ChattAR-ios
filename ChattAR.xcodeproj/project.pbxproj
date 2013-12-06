@@ -36,6 +36,14 @@
 		691AC02E184DDD2300BBEE4B /* pinicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691AC02A184DDD2300BBEE4B /* pinicon@2x.png */; };
 		691AC030184DEC9000BBEE4B /* loginButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691AC02F184DEC9000BBEE4B /* loginButton@2x.png */; };
 		6924A75C1802AD5400D61E5E /* MapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6924A75B1802AD5400D61E5E /* MapAnnotationView.m */; };
+		692F9D161851DEC4006ABE1D /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692F9D151851DEC4006ABE1D /* ProfileCell.m */; };
+		692F9D1E18520CE7006ABE1D /* 001_education.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1818520CE7006ABE1D /* 001_education.png */; };
+		692F9D1F18520CE7006ABE1D /* 001_education@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1918520CE7006ABE1D /* 001_education@2x.png */; };
+		692F9D2018520CE7006ABE1D /* 001_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1A18520CE7006ABE1D /* 001_location.png */; };
+		692F9D2118520CE7006ABE1D /* 001_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1B18520CE7006ABE1D /* 001_location@2x.png */; };
+		692F9D2218520CE7006ABE1D /* 001_work.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1C18520CE7006ABE1D /* 001_work.png */; };
+		692F9D2318520CE7006ABE1D /* 001_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 692F9D1D18520CE7006ABE1D /* 001_work@2x.png */; };
+		692F9D2618521B9B006ABE1D /* DetailProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692F9D2518521B9B006ABE1D /* DetailProfileCell.m */; };
 		69357E3817CCA58700EB3CDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69357E3717CCA58700EB3CDF /* Default-568h@2x.png */; };
 		69357E7117CCAC2100EB3CDF /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7017CCAC2100EB3CDF /* libresolv.dylib */; };
 		69357E7517CCB01600EB3CDF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69357E7417CCB01600EB3CDF /* libz.dylib */; };
@@ -240,7 +248,7 @@
 		69A477A617C513C100591A28 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69A477A517C513C100591A28 /* Security.framework */; };
 		69AE64DD18327D3A005A1AE4 /* FriendDialogDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AE64DC18327D3A005A1AE4 /* FriendDialogDataSource.m */; };
 		69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2C17E89EED00C94DB7 /* MenuCell.m */; };
-		69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* ProfileCell.m */; };
+		69B96E3217E89EED00C94DB7 /* UserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* UserProfileCell.m */; };
 		69C146E2184726C800FBCC86 /* DialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C146E1184726C800FBCC86 /* DialogsDataSource.m */; };
 		69C146E518473A6000FBCC86 /* ChatRoomDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C146E418473A6000FBCC86 /* ChatRoomDataSource.m */; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
@@ -302,6 +310,16 @@
 		691AC02F184DEC9000BBEE4B /* loginButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginButton@2x.png"; sourceTree = "<group>"; };
 		6924A75A1802AD5400D61E5E /* MapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotationView.h; sourceTree = "<group>"; };
 		6924A75B1802AD5400D61E5E /* MapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotationView.m; sourceTree = "<group>"; };
+		692F9D141851DEC4006ABE1D /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
+		692F9D151851DEC4006ABE1D /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
+		692F9D1818520CE7006ABE1D /* 001_education.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001_education.png; sourceTree = "<group>"; };
+		692F9D1918520CE7006ABE1D /* 001_education@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "001_education@2x.png"; sourceTree = "<group>"; };
+		692F9D1A18520CE7006ABE1D /* 001_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001_location.png; sourceTree = "<group>"; };
+		692F9D1B18520CE7006ABE1D /* 001_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "001_location@2x.png"; sourceTree = "<group>"; };
+		692F9D1C18520CE7006ABE1D /* 001_work.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001_work.png; sourceTree = "<group>"; };
+		692F9D1D18520CE7006ABE1D /* 001_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "001_work@2x.png"; sourceTree = "<group>"; };
+		692F9D2418521B9B006ABE1D /* DetailProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailProfileCell.h; sourceTree = "<group>"; };
+		692F9D2518521B9B006ABE1D /* DetailProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailProfileCell.m; sourceTree = "<group>"; };
 		69357E3717CCA58700EB3CDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		69357E7017CCAC2100EB3CDF /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		69357E7417CCB01600EB3CDF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -661,8 +679,8 @@
 		69AE64DC18327D3A005A1AE4 /* FriendDialogDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendDialogDataSource.m; sourceTree = "<group>"; };
 		69B96E2B17E89EED00C94DB7 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
 		69B96E2C17E89EED00C94DB7 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
-		69B96E2D17E89EED00C94DB7 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
-		69B96E2E17E89EED00C94DB7 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCell.m; sourceTree = "<group>"; };
+		69B96E2D17E89EED00C94DB7 /* UserProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileCell.h; sourceTree = "<group>"; };
+		69B96E2E17E89EED00C94DB7 /* UserProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileCell.m; sourceTree = "<group>"; };
 		69C146E0184726C800FBCC86 /* DialogsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogsDataSource.h; sourceTree = "<group>"; };
 		69C146E1184726C800FBCC86 /* DialogsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogsDataSource.m; sourceTree = "<group>"; };
 		69C146E318473A6000FBCC86 /* ChatRoomDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomDataSource.h; sourceTree = "<group>"; };
@@ -763,6 +781,19 @@
 				691A1B3917FDD9A100C2A87D /* room.jpg */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		692F9D1718520CE7006ABE1D /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				692F9D1818520CE7006ABE1D /* 001_education.png */,
+				692F9D1918520CE7006ABE1D /* 001_education@2x.png */,
+				692F9D1A18520CE7006ABE1D /* 001_location.png */,
+				692F9D1B18520CE7006ABE1D /* 001_location@2x.png */,
+				692F9D1C18520CE7006ABE1D /* 001_work.png */,
+				692F9D1D18520CE7006ABE1D /* 001_work@2x.png */,
+			);
+			path = profile;
 			sourceTree = "<group>";
 		};
 		6934A2D317CCCA6800D9A846 /* Resources */ = {
@@ -1625,6 +1656,7 @@
 				691AC02F184DEC9000BBEE4B /* loginButton@2x.png */,
 				6957A441184CF61B0087D135 /* human.png */,
 				69A4026817D740F900E7BE1F /* loginButton.png */,
+				692F9D1718520CE7006ABE1D /* profile */,
 				690A709818070B6900F3C584 /* AR */,
 				691A1B3617FDD9A100C2A87D /* Map */,
 				69ECC0B317E1AD9F00187CF8 /* chatroom */,
@@ -1724,8 +1756,8 @@
 			children = (
 				69B96E2B17E89EED00C94DB7 /* MenuCell.h */,
 				69B96E2C17E89EED00C94DB7 /* MenuCell.m */,
-				69B96E2D17E89EED00C94DB7 /* ProfileCell.h */,
-				69B96E2E17E89EED00C94DB7 /* ProfileCell.m */,
+				69B96E2D17E89EED00C94DB7 /* UserProfileCell.h */,
+				69B96E2E17E89EED00C94DB7 /* UserProfileCell.m */,
 				6924A75A1802AD5400D61E5E /* MapAnnotationView.h */,
 				6924A75B1802AD5400D61E5E /* MapAnnotationView.m */,
 				690A70921806E0AD00F3C584 /* ARMarkerView.h */,
@@ -1738,6 +1770,10 @@
 				6986DFA218463FA000F78FD9 /* ChatRoomCell.m */,
 				6986DFA318463FA000F78FD9 /* QuotedChatRoomCell.h */,
 				6986DFA418463FA000F78FD9 /* QuotedChatRoomCell.m */,
+				692F9D141851DEC4006ABE1D /* ProfileCell.h */,
+				692F9D151851DEC4006ABE1D /* ProfileCell.m */,
+				692F9D2418521B9B006ABE1D /* DetailProfileCell.h */,
+				692F9D2518521B9B006ABE1D /* DetailProfileCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1928,7 +1964,9 @@
 				695645651850831500F5BECD /* green_bubble.png in Resources */,
 				69A4029317D740F900E7BE1F /* chat_mnu@2x.png in Resources */,
 				69447BFB17F44CDF00E959DF /* 05_sendtn.png in Resources */,
+				692F9D1E18520CE7006ABE1D /* 001_education.png in Resources */,
 				69A4029417D740F900E7BE1F /* fb_mnu.png in Resources */,
+				692F9D2218520CE7006ABE1D /* 001_work.png in Resources */,
 				69A4029517D740F900E7BE1F /* fb_mnu@2x.png in Resources */,
 				69A4029617D740F900E7BE1F /* logout_mnu.png in Resources */,
 				69A4029717D740F900E7BE1F /* logout_mnu@2x.png in Resources */,
@@ -1943,12 +1981,15 @@
 				691AC02B184DDD2300BBEE4B /* pincallout.png in Resources */,
 				69A4029D17D740F900E7BE1F /* mrquick_mnu@2x.png in Resources */,
 				691AC030184DEC9000BBEE4B /* loginButton@2x.png in Resources */,
+				692F9D2018520CE7006ABE1D /* 001_location.png in Resources */,
 				69A4029E17D740F900E7BE1F /* qb_mnu_grey.png in Resources */,
 				69A4029F17D740F900E7BE1F /* qb_mnu_grey@2x.png in Resources */,
 				69A402A217D740F900E7BE1F /* create_room.png in Resources */,
+				692F9D1F18520CE7006ABE1D /* 001_education@2x.png in Resources */,
 				69A402A317D740F900E7BE1F /* create_room@2x.png in Resources */,
 				69A402A417D740F900E7BE1F /* mnubtn.png in Resources */,
 				69A402A517D740F900E7BE1F /* mnubtn@2x.png in Resources */,
+				692F9D2118520CE7006ABE1D /* 001_location@2x.png in Resources */,
 				69A402A617D740F900E7BE1F /* shadow_main.png in Resources */,
 				69A402A717D740F900E7BE1F /* shadow_main@2x.png in Resources */,
 				691AC02C184DDD2300BBEE4B /* pincallout@2x.png in Resources */,
@@ -1964,6 +2005,7 @@
 				69ECC0BF17E1AD9F00187CF8 /* 01_back@2x.png in Resources */,
 				693B5B1D180405FB000F5374 /* menu_btn_b.png in Resources */,
 				691A1B3B17FDD9A100C2A87D /* 03_pin@2x.png in Resources */,
+				692F9D2318520CE7006ABE1D /* 001_work@2x.png in Resources */,
 				69ECC0C317E1AD9F00187CF8 /* 01_grey_chat_bubble.png in Resources */,
 				6957A442184CF61B0087D135 /* human.png in Resources */,
 				691AC02E184DDD2300BBEE4B /* pinicon@2x.png in Resources */,
@@ -2056,6 +2098,7 @@
 				69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */,
 				693C7E9F17CCDCF300D7F0A9 /* XMPPvCardTempAdrTypes.m in Sources */,
 				693C7EA017CCDCF300D7F0A9 /* XMPPvCardTempBase.m in Sources */,
+				692F9D2618521B9B006ABE1D /* DetailProfileCell.m in Sources */,
 				693C7EA117CCDCF300D7F0A9 /* XMPPvCardTempEmail.m in Sources */,
 				693C7EA217CCDCF300D7F0A9 /* XMPPvCardTempLabel.m in Sources */,
 				693C7EA317CCDCF300D7F0A9 /* XMPPvCardTempModule.m in Sources */,
@@ -2074,6 +2117,7 @@
 				6986DFA518463FA000F78FD9 /* ChatRoomCell.m in Sources */,
 				693C7EAD17CCDCF300D7F0A9 /* XMPPDateTimeProfiles.m in Sources */,
 				693C7EAE17CCDCF300D7F0A9 /* XMPPMessage+XEP_0085.m in Sources */,
+				692F9D161851DEC4006ABE1D /* ProfileCell.m in Sources */,
 				693C7EAF17CCDCF300D7F0A9 /* XMPPTransports.m in Sources */,
 				693C7EB017CCDCF300D7F0A9 /* NSString+XEP_0106.m in Sources */,
 				693C7EB117CCDCF300D7F0A9 /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -2142,7 +2186,7 @@
 				69165AE3182A91D300486DA8 /* ProfileViewController.m in Sources */,
 				690A70911806B8AE00F3C584 /* ARGeoCoordinate.m in Sources */,
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
-				69B96E3217E89EED00C94DB7 /* ProfileCell.m in Sources */,
+				69B96E3217E89EED00C94DB7 /* UserProfileCell.m in Sources */,
 				694746461805A71600928ED4 /* FBService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

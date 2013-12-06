@@ -30,11 +30,23 @@
     return self;
 }
 
+- (NSInteger)yearsFromDate:(NSString *)dateString {
+    [self.dateFormatter setDateFormat:@"MM/dd/yyyy"];
+    NSDate *date = [self.dateFormatter dateFromString:dateString];
+    [self.dateFormatter setDateFormat:@"HH:mm"];
+    NSDate *todayDate = [NSDate date];
+    int seconds = [todayDate timeIntervalSinceDate:date];
+    
+    int allDays = (((seconds/60)/60)/24);
+    int days = allDays%365;
+    int years = (allDays-days)/365;
+    return years;
+}
 
 #pragma mark -
 #pragma mark Converter
 
-- (NSString *)distanceFormatter:(CLLocationDistance)distance{
+- (NSString *)distanceFormatter:(CLLocationDistance)distance {
     NSString *formatedDistance;
     NSInteger dist = round(distance);
     if (distance <=999) {

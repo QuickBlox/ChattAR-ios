@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM (NSUInteger, ProfileCellStyle) {
+    ProfileCellStyleImaged,
+    ProfileCellStyleWithoutImage
+};
+
 @interface ProfileViewController : UIViewController
 
 @property (nonatomic, strong) NSMutableDictionary *currentUser;

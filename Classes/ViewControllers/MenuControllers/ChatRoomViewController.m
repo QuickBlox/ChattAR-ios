@@ -341,6 +341,7 @@
 
 - (IBAction)share:(id)sender
 {
+    [self.indicatorView startAnimating];
     NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
     
     // Ask for publish_actions permissions in context

@@ -41,8 +41,8 @@
 - (void)setAnnotationsToMap:(NSArray *)chatRooms {
     for (QBCOCustomObject *room in self.chatRooms) {
         CLLocationCoordinate2D coord;
-        coord.latitude = [[room.fields valueForKey:kLatitude] floatValue];
-        coord.longitude = [[room.fields valueForKey:kLongitude] floatValue];
+        coord.latitude = [room.fields[kLatitude] doubleValue];
+        coord.longitude = [room.fields[kLongitude] doubleValue];
         MapAnnotation *pin = [[MapAnnotation alloc] initWithCoordinates:coord];
         pin.title = [room.fields valueForKey:kName];
         CLLocation *roomLocation = [[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude];
@@ -64,11 +64,20 @@
     if (aView == nil) {
         aView = [[MapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
         [aView handleAnnotationView];
+
         UIButton *button = (UIButton *)[aView.rightCalloutAccessoryView viewWithTag:kAnnotationButtonTag];
         [button addTarget:self action:@selector(selectRoom) forControlEvents:UIControlEventTouchUpInside];
     }
-    
     aView.chatRoom = annotation.room;
+    
+    // resest room avatar
+    aView.avatar.image = [UIImage imageNamed:@"room.jpg"];
+    
+    //set room avatar
+    NSString *imageURL = aView.chatRoom.fields[kPhoto];
+    if (imageURL != nil) {
+        [aView.avatar setImageURL:[NSURL URLWithString:imageURL]];
+    }
     
     return aView;
 }

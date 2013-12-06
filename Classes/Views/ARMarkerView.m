@@ -52,6 +52,10 @@
         // add Room Picture
 		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 40, 40)];
         userPhotoView.image = [UIImage imageNamed:@"room.jpg"];
+        NSString *imageURL = room.fields[kPhoto];
+        if (imageURL != nil) {
+            [userPhotoView setImageURL:[NSURL URLWithString:imageURL]];
+        }
 		[container addSubview: userPhotoView];
         [userPhotoView release];
         
