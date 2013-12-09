@@ -16,7 +16,8 @@
     #import <AudioToolbox/AudioToolbox.h>
     #import <CoreAudio/CoreAudioTypes.h>
     #import <MapKit/MapKit.h>
-
+    #import "Flurry.h"
+    #import "FlurryDefines.h"
     #import "Definitions.h"
     #import "Reachability.h"
     #import "QBEchoObject.h"

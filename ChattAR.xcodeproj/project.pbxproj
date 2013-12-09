@@ -188,6 +188,8 @@
 		694746461805A71600928ED4 /* FBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746401805A71600928ED4 /* FBService.m */; };
 		694746471805A71600928ED4 /* FBStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746421805A71600928ED4 /* FBStorage.m */; };
 		694746481805A71600928ED4 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 694746441805A71600928ED4 /* LocationService.m */; };
+		6953F9D51855CA9400A81C47 /* shadow_for_profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6953F9D41855CA9400A81C47 /* shadow_for_profile@2x.png */; };
+		6953F9D71855D12A00A81C47 /* libFlurry_4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6953F9D61855D12A00A81C47 /* libFlurry_4.3.0.a */; };
 		6954C42717CDD502003C6893 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42617CDD502003C6893 /* ChatViewController.m */; };
 		6954C42A17CDD53E003C6893 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C42917CDD53E003C6893 /* MapViewController.m */; };
 		6954C43317CDD579003C6893 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6954C43217CDD579003C6893 /* SettingsViewController.m */; };
@@ -602,6 +604,10 @@
 		694746421805A71600928ED4 /* FBStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBStorage.m; sourceTree = "<group>"; };
 		694746431805A71600928ED4 /* LocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
 		694746441805A71600928ED4 /* LocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
+		6953F9D41855CA9400A81C47 /* shadow_for_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shadow_for_profile@2x.png"; sourceTree = "<group>"; };
+		6953F9D61855D12A00A81C47 /* libFlurry_4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.3.0.a; path = "../../Downloads/Flurry iPhone SDK viPhone 4.3.0/Flurry-iOS-4.3.0/Flurry/libFlurry_4.3.0.a"; sourceTree = "<group>"; };
+		6953F9DB1855D2BA00A81C47 /* Flurry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Flurry.h; path = Flurry/Flurry.h; sourceTree = "<group>"; };
+		6953F9DE1855D85D00A81C47 /* FlurryDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryDefines.h; path = Flurry/FlurryDefines.h; sourceTree = "<group>"; };
 		6954C42517CDD502003C6893 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		6954C42617CDD502003C6893 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		6954C42817CDD53E003C6893 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -721,6 +727,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6953F9D71855D12A00A81C47 /* libFlurry_4.3.0.a in Frameworks */,
 				69F20FEA181181CA00452C55 /* Quickblox.framework in Frameworks */,
 				69A477A117C50AF800591A28 /* FacebookSDK.framework in Frameworks */,
 				690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */,
@@ -819,6 +826,7 @@
 		693C7D0017CCDCF200D7F0A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				6953F9DA1855D2AD00A81C47 /* Flurry */,
 				6986DF991845FC9600F78FD9 /* QBEchoObject */,
 				6947461E1805463F00928ED4 /* AsyncImageView */,
 				69CB6AD617FAC6EC0005A76C /* NMPaginator */,
@@ -1630,6 +1638,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		6953F9DA1855D2AD00A81C47 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				6953F9DB1855D2BA00A81C47 /* Flurry.h */,
+				6953F9DE1855D85D00A81C47 /* FlurryDefines.h */,
+			);
+			name = Flurry;
+			sourceTree = "<group>";
+		};
 		6986DF991845FC9600F78FD9 /* QBEchoObject */ = {
 			isa = PBXGroup;
 			children = (
@@ -1727,6 +1744,7 @@
 				69A4028317D740F900E7BE1F /* shadow_main@2x.png */,
 				69A4028417D740F900E7BE1F /* shadow_mnu.png */,
 				69A4028517D740F900E7BE1F /* shadow_mnu@2x.png */,
+				6953F9D41855CA9400A81C47 /* shadow_for_profile@2x.png */,
 			);
 			path = Shadows;
 			sourceTree = "<group>";
@@ -1858,6 +1876,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6953F9D61855D12A00A81C47 /* libFlurry_4.3.0.a */,
 				69F20FE9181181CA00452C55 /* Quickblox.framework */,
 				690A708A1806A5A100F3C584 /* CoreMotion.framework */,
 				691A1B3417FDB94000C2A87D /* MapKit.framework */,
@@ -1992,6 +2011,7 @@
 				692F9D2118520CE7006ABE1D /* 001_location@2x.png in Resources */,
 				69A402A617D740F900E7BE1F /* shadow_main.png in Resources */,
 				69A402A717D740F900E7BE1F /* shadow_main@2x.png in Resources */,
+				6953F9D51855CA9400A81C47 /* shadow_for_profile@2x.png in Resources */,
 				691AC02C184DDD2300BBEE4B /* pincallout@2x.png in Resources */,
 				69A402A817D740F900E7BE1F /* shadow_mnu.png in Resources */,
 				69A402A917D740F900E7BE1F /* shadow_mnu@2x.png in Resources */,
@@ -2287,7 +2307,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\"",
+					"\\\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\\\"",
+					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/Flurry",
+					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/FlurryAds",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -2296,7 +2318,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "CB996A42-B064-4159-A23B-438B4E53D0AE";
+				PROVISIONING_PROFILE = "4B1B1E94-B6E0-4E61-93B2-C288C29F3B99";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2306,8 +2328,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Taras Filatov (6AVH4TA956)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)/External\\\"",
@@ -2320,7 +2342,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\"",
+					"\\\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\\\"",
+					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/Flurry",
+					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/FlurryAds",
 				);
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-lxml2",
@@ -2328,7 +2352,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "CB996A42-B064-4159-A23B-438B4E53D0AE";
+				PROVISIONING_PROFILE = "4B1B1E94-B6E0-4E61-93B2-C288C29F3B99";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

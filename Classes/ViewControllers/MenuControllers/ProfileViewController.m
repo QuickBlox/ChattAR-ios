@@ -112,11 +112,7 @@
 
 - (void)configureCoverImageLayer
 {
-    self.coverView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.coverView.layer.shadowRadius = 5.0f;
-    self.coverView.layer.masksToBounds = NO;
-    self.coverView.layer.shadowOffset = CGSizeMake(0.0f, 2.0f);
-    self.coverView.layer.shadowOpacity = 1.0f;
+    self.coverView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
     self.coverView.layer.borderWidth = 0.1f;
 }
 

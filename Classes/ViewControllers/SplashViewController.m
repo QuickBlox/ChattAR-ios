@@ -222,6 +222,7 @@
 
 - (void)chatDidLogin
 {
+    //[Flurry logEvent:kFlurryEventUserWasLoggedIn];
     [self.activityIndicatior stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
 }

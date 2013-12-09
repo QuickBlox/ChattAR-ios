@@ -927,8 +927,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.68627452850341797" green="0.67843139171600342" blue="0.62352943420410156" alpha="1" colorSpace="deviceRGB"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_for_profile.png" id="nPy-0G-h7x">
+                                <rect key="frame" x="0.0" y="87" width="320" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" id="4tZ-7h-Ndf">
-                                <rect key="frame" x="12" y="97" width="90" height="90"/>
+                                <rect key="frame" x="14" y="97" width="90" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="WKw-uq-thU" customClass="AsyncImageView">
@@ -1225,6 +1229,7 @@
         <image name="map_mnu.png" width="30" height="26"/>
         <image name="messages_mnu.png" width="27" height="21"/>
         <image name="mrquick_mnu.png" width="235" height="64"/>
+        <image name="shadow_for_profile.png" width="568" height="14"/>
         <image name="shadow_main.png" width="14" height="505"/>
         <image name="trendings_icon.png" width="30" height="26"/>
         <image name="trendings_uicon.png" width="12" height="11"/>
