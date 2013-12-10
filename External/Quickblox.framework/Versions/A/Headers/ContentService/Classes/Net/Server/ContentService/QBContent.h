@@ -12,7 +12,7 @@
 /** Overview */
 /** This class is the main entry point to work with cloud stored files. */
 
-@interface QBContent : BaseService {
+@interface QBContent : QBBaseModule {
     
 }
 

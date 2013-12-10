@@ -41,9 +41,8 @@
     [QBSettings useProductionEnvironmentForPushNotifications:YES];
 #endif
     
-    // add Flurry:
-    [Flurry setCrashReportingEnabled:YES];
-    [Flurry startSession:@"JYCQ25SR3YKT29DSNYTR"];
+    //[Flurry setLogLevel:FlurryLogLevelDebug];
+    [Flurry startSession:@"B22M9PDJH4F4D2J2FVBB"];
     
     return YES;
 }

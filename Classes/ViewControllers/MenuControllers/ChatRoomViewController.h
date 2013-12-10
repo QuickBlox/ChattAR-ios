@@ -12,6 +12,7 @@
 
 @interface ChatRoomViewController : UIViewController 
 
+@property (weak, nonatomic) NSString *controllerName;
 @property (strong, nonatomic) IBOutlet UITableView *chatRoomTable;
 @property (strong, nonatomic) QBCOCustomObject *currentChatRoom;
 

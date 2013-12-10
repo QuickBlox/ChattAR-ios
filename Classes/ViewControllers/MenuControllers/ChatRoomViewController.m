@@ -28,6 +28,7 @@
 @property (strong, nonatomic) QBChatRoom *currentRoom;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
+@property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property (strong, nonatomic) NSMutableDictionary *dialogTo;
@@ -83,6 +84,9 @@
     self.inputTextView.layer.shadowOffset = CGSizeMake(0.0f, 4.0f);
     self.inputTextView.layer.shadowOpacity = 1.0f;
     self.inputTextView.layer.borderWidth = 0.1f;
+    
+    // button corner-radius
+    self.sendButton.layer.cornerRadius = 5.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,7 +134,7 @@
     if (![userID isEqual:[[FBStorage shared].me objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Go to dialog", @"View Profile", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Private message", @"View Profile", nil];
         [actionSheet showInView:self.view];
     }
 }
@@ -264,9 +268,10 @@
 }
 
 - (void)joinedRoom {
+    [Flurry logEvent:kFlurryEventRoomWasJoined withParameters:@{kFrom:self.controllerName}];
     self.currentRoom = [QBStorage shared].currentChatRoom;
     [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
-
+    
     [self.chatRoomTable reloadData];
     [self.indicatorView stopAnimating];
 }
@@ -323,6 +328,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:kChatToProfileSegieIdentifier]) {
+        ((ProfileViewController *)segue.destinationViewController).controllerTitle = @"room";   // info for Flurry analytics
         ((ProfileViewController *)segue.destinationViewController).currentUser = sender;
         return;
     }

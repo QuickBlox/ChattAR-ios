@@ -119,11 +119,11 @@
             <objects>
                 <viewController id="Vch-rc-7Oy" customClass="ChatRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2GZ-eo-kOd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="458"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -132,14 +132,15 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="4e0-Cg-koI">
-                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="458" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
                                         <rect key="frame" x="243" y="8" width="68" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                        <state key="normal" image="05_sendtn.png">
+                                        <color key="backgroundColor" red="0.048356958450000001" green="0.33541207699999998" blue="0.57593834919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Send">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -202,6 +203,7 @@
                         <outlet property="chatRoomTable" destination="FSd-Vp-dNN" id="ymo-E2-UZi"/>
                         <outlet property="inputMessageField" destination="mNm-br-NIt" id="aHl-X1-L0Y"/>
                         <outlet property="inputTextView" destination="4e0-Cg-koI" id="qoa-AS-Trn"/>
+                        <outlet property="sendButton" destination="lpw-hC-RxZ" id="7Mu-XC-4SK"/>
                         <segue destination="mwh-Ap-G2c" kind="custom" identifier="ChatToDialog" id="wsq-0v-N34"/>
                         <segue destination="aAt-Rt-nZY" kind="custom" identifier="ChatToProfile" id="7Mb-AF-cFY"/>
                     </connections>
@@ -875,7 +877,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VSK-ZH-OKR">
                                         <rect key="frame" x="243" y="7" width="68" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="05_sendtn.png">
+                                        <color key="backgroundColor" red="0.048356958450000001" green="0.33541207699999998" blue="0.57593834919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Send">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -906,6 +910,7 @@
                     <connections>
                         <outlet property="inputMessageField" destination="Xmh-Eq-eLE" id="0J6-TV-HSe"/>
                         <outlet property="inputTextView" destination="lxg-mX-Ufm" id="cwy-Ro-Rse"/>
+                        <outlet property="sendButton" destination="VSK-ZH-OKR" id="Ntc-qE-eV0"/>
                         <outlet property="tableView" destination="ha1-Js-jPc" id="qAn-qP-BkO"/>
                         <segue destination="aAt-Rt-nZY" kind="custom" identifier="DialogToProfile" id="gGZ-kD-fDC"/>
                     </connections>
@@ -922,14 +927,10 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dXk-aO-8a7" customClass="AsyncImageView">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_image.png" id="dXk-aO-8a7" customClass="AsyncImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.68627452850341797" green="0.67843139171600342" blue="0.62352943420410156" alpha="1" colorSpace="deviceRGB"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow_for_profile.png" id="nPy-0G-h7x">
-                                <rect key="frame" x="0.0" y="87" width="320" height="63"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="4tZ-7h-Ndf">
                                 <rect key="frame" x="14" y="97" width="90" height="90"/>
@@ -1215,11 +1216,11 @@
     <resources>
         <image name="01_back.png" width="12" height="20"/>
         <image name="01_share.png" width="20" height="22"/>
-        <image name="05_sendtn.png" width="68" height="29"/>
         <image name="Default-568h.png" width="640" height="1136"/>
         <image name="about_mnu.png" width="23" height="23"/>
         <image name="ar_mnu.png" width="31" height="17"/>
         <image name="chat_mnu.png" width="31" height="27"/>
+        <image name="cover_image.png" width="320" height="150"/>
         <image name="create_room.png" width="29" height="26"/>
         <image name="fb_mnu.png" width="20" height="19"/>
         <image name="human.png" width="126" height="126"/>
@@ -1229,7 +1230,6 @@
         <image name="map_mnu.png" width="30" height="26"/>
         <image name="messages_mnu.png" width="27" height="21"/>
         <image name="mrquick_mnu.png" width="235" height="64"/>
-        <image name="shadow_for_profile.png" width="568" height="14"/>
         <image name="shadow_main.png" width="14" height="505"/>
         <image name="trendings_icon.png" width="30" height="26"/>
         <image name="trendings_uicon.png" width="12" height="11"/>
@@ -1241,9 +1241,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="GXn-8Q-nrq"/>
-        <segue reference="K6Z-1q-k1N"/>
-        <segue reference="7Mb-AF-cFY"/>
+        <segue reference="i69-BF-qyq"/>
+        <segue reference="08e-u6-zeQ"/>
         <segue reference="wsq-0v-N34"/>
+        <segue reference="7Mb-AF-cFY"/>
     </inferredMetricsTieBreakers>
 </document>

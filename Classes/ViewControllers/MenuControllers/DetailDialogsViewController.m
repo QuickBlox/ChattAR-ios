@@ -23,6 +23,7 @@
 @property (nonatomic, assign) NSNumber *friendPosition;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;
+@property (strong, nonatomic) IBOutlet UIButton *sendButton;
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
 
 // Data Sources:
@@ -39,6 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Flurry logEvent:kFlurryEventDialogScreenWasOpened];
     [self configureInputTextViewLayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     self.title = [self.opponent objectForKey:kName];
@@ -69,6 +71,9 @@
     self.inputTextView.layer.shadowOffset = CGSizeMake(0.0f, 4.0f);
     self.inputTextView.layer.shadowOpacity = 1.0f;
     self.inputTextView.layer.borderWidth = 0.1f;
+    
+    // button corner-radius
+    self.sendButton.layer.cornerRadius = 5.0f;
 }
 
 // activating chat:
@@ -100,6 +105,7 @@
 #pragma mark Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((ProfileViewController *)segue.destinationViewController).controllerTitle = @"Dialog";
     ((ProfileViewController *)segue.destinationViewController).currentUser = self.opponent;
 }
 

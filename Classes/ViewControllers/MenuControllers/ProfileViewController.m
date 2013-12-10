@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Profile";
+    [Flurry logEvent:kFlurryEventProfileScreenWasOpened withParameters:@{kFrom:self.controllerTitle}];
     
     self.photoFrame.layer.borderColor = [[UIColor blackColor] CGColor];
     self.photoFrame.layer.borderWidth = 0.7f;
@@ -138,7 +138,9 @@
         NSData *jsonData = [string dataUsingEncoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
         NSString *coverPhotoURL = [[jsonDict objectForKey:@"cover"] objectForKey:@"source"];
-        [self.coverView setImageURL:[NSURL URLWithString:coverPhotoURL]];
+        if (coverPhotoURL != nil) {
+            [self.coverView setImageURL:[NSURL URLWithString:coverPhotoURL]];
+        }
     } ];
 }
 

@@ -48,7 +48,7 @@
 #pragma mark Loading and handling Facebook users
 
 - (void)loadAndHandleOtherFacebookUsers:(NSArray *)userIDs {
-    if(userIDs.count == 0){
+    if([userIDs count] == 0){
         return;
     }
     [[FBService shared] usersProfilesWithIDs:userIDs resultBlock:^(id result) {
@@ -118,6 +118,7 @@
     msg.text = jsonString;
     
     [[QBChat instance] sendMessage:msg];
+    [Flurry logEvent:kFlurryEventDialogMessageWasSent withParameters:@{@"type":@"QuickBlox"}];
     [self cachingMessage:msg forUserID:option];
 }
 
@@ -148,7 +149,10 @@
     [dict setValue:myLongitude forKey:kLongitude];
     [dict setValue:urlString forKey:kPhoto];
     [dict setValue:userName forKey:kUserName];
+    
+    NSString *isQuoted = @"No";
     if (quote != nil) {
+        isQuoted = @"Yes";
         [dict setValue:quote forKey:kQuote];
         quote = nil;
     }
@@ -160,6 +164,7 @@
     NSString* jsonString = [[QBService defaultService] archiveMessageData:dict];
     
     [[QBChat instance] sendMessage:jsonString toRoom:room];
+    [Flurry logEvent:kFlurryEventRoomMessageWasSent withParameters:@{@"room_name":room.name, kQuote:isQuoted}];
 }
 
 - (void)sendPushNotificationWithMessage:(NSString *)message toUser:(NSMutableDictionary *)user {
@@ -272,6 +277,10 @@
 - (void)chatRoomDidLeave:(NSString *)roomName {
     NSLog(@"Did  Leave worked");
     //[[QBStorage shared] setCurrentChatRoom:nil];
+}
+
+- (void)chatRoomDidCreate:(NSString *)roomName {
+    
 }
 
 @end

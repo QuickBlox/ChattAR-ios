@@ -88,8 +88,10 @@
     self.roomNameField.enabled = YES;
     self.creatingRoomButton.enabled = YES;
     self.creatingRoomButton.alpha = 1.0;
-    
     QBCOCustomObject *room = notification.object;
+    
+    //[Flurry logEvent:kFlurryEventNewRoomWasCreated withParameters:params];
+    
     [self performSegueWithIdentifier:kCreateRoomToChatRoomIdentifier sender:room];
 }
 
@@ -151,6 +153,7 @@
 #pragma mark Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ((ChatRoomViewController *)segue.destinationViewController).controllerName = @"Create Room View";
     ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
 }
 

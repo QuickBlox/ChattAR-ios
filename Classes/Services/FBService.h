@@ -49,9 +49,10 @@
 
 
 #pragma mark -
-#pragma mark Loading and handling Facebook users
+#pragma mark Loading and handling
 
 - (void)loadAndHandleDataAboutMeAndMyFriends;
+- (NSMutableDictionary *)handleFacebookHistoryConversation:(NSMutableArray *)conversation;
 
 
 #pragma mark -

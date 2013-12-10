@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Flurry logEvent:KFlurryEventDialogsScreenWasOpened];
     self.dialogsDataSource = [[DialogsDataSource alloc] init];
     self.tableView.dataSource = self.dialogsDataSource;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];

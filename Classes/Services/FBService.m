@@ -86,7 +86,7 @@
 - (void)sendMessage:(NSString *)messageText toUserWithID:(NSString *)userID {
     // send message to facebook:
     [[FBService shared] sendMessage:messageText toFacebookWithFriendID:userID];
-    
+    [Flurry logEvent:kFlurryEventDialogMessageWasSent withParameters:@{@"type":@"Facebook"}];
     // create message object
     NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
     [facebookMessage setValue:messageText forKey:kMessage];
@@ -138,6 +138,7 @@
         } else {
             alertText = [NSString stringWithFormat:
                          @"Posted successfull"];
+            [Flurry logEvent:kFlurryEventRoomWasSharedToFacebook];
         }
         // Show the result in an alert
         [[[UIAlertView alloc] initWithTitle:@"Result"
@@ -251,7 +252,7 @@
 
 
 #pragma mark -
-#pragma mark Loading and handling Facebook users
+#pragma mark Loading and handling
 
 - (void)loadAndHandleDataAboutMeAndMyFriends
 {
@@ -270,21 +271,54 @@
             [frend setValue:urlString forKey:kPhoto];
         }
         NSMutableArray *facebookUserIDs = [self gettingAllIDsOfFacebookUsers:myFriends];
-        // qb users will come here:
-        void (^block) (Result *) = ^(Result *result) {
-            if ([result isKindOfClass:[QBUUserPagedResult class]]) {
-                QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
-                NSArray *qbUsers = pagedResult.users;
-                // putting quickbloxIDs to facebook users:
-                [FBStorage shared].friends = [self putQuickbBloxIDsToFacebookUsers:[FBStorage shared].friends fromQuickbloxUsers:qbUsers];
-            }
-        };
-        // request for qb users:
-        [QBUsers usersWithFacebookIDs:facebookUserIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+        if ([facebookUserIDs count] != 0) {
         
-        
-        [[FBStorage shared] setFriends:myFriends];
+            // qb users will come here:
+            void (^block) (Result *) = ^(Result *result) {
+                if ([result isKindOfClass:[QBUUserPagedResult class]]) {
+                    QBUUserPagedResult *pagedResult = (QBUUserPagedResult *)result;
+                    NSArray *qbUsers = pagedResult.users;
+                    // putting quickbloxIDs to facebook users:
+                    [FBStorage shared].friends = [self putQuickbBloxIDsToFacebookUsers:[FBStorage shared].friends fromQuickbloxUsers:qbUsers];
+                }
+            };
+            // request for qb users:
+            [QBUsers usersWithFacebookIDs:facebookUserIDs delegate:[QBEchoObject instance] context:[QBEchoObject makeBlockForEchoObject:block]];
+            
+            
+            [[FBStorage shared] setFriends:myFriends];
+        }
     }];
+}
+
+
+- (NSMutableDictionary *)handleFacebookHistoryConversation:(NSMutableArray *)conversation {
+    NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
+    for (NSMutableDictionary *dict in conversation) {
+        NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
+        // if only me and opponent:
+        if ([array count] <= 2) {
+            for (NSMutableDictionary *element in array) {
+                if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
+                    [history setObject:dict forKey:[element objectForKey:kId]];
+                    break;
+                }
+            }
+        } else {
+            // if not only me and opponent:
+            NSArray *messages = (dict[kComments])[kData];
+            NSString *myID = [FBStorage shared].me[kId];
+            for (NSDictionary *message in messages){
+                NSString *opponentID = (message[kFrom])[kId];
+                if ([opponentID isEqualToString:myID]) {
+                    history[opponentID] = dict;
+                    break;
+                }
+            }
+            
+        }
+    }
+    return history;
 }
 
 #pragma mark -

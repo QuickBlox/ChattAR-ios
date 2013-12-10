@@ -107,15 +107,7 @@
             // Get FB Chat history
             [[FBService shared] inboxMessagesWithBlock:^(id result) {
                 NSMutableArray *resultData = [result objectForKey:kData];
-                NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
-                for (NSMutableDictionary *dict in resultData) {
-                    NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
-                    for (NSMutableDictionary *element in array) {
-                        if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
-                            [history setObject:dict forKey:[element objectForKey:kId]];
-                        }
-                    }
-                }
+                NSMutableDictionary *history = [[FBService shared] handleFacebookHistoryConversation:resultData];
                 [FBStorage shared].allFriendsHistoryConversation = history;
             }];
             
@@ -132,15 +124,7 @@
             // Get FB Chat history
             [[FBService shared] inboxMessagesWithBlock:^(id result) {
                 NSMutableArray *resultData = [result objectForKey:kData];
-                NSMutableDictionary *history = [[NSMutableDictionary alloc] init];
-                for (NSMutableDictionary *dict in resultData) {
-                    NSArray *array = [[dict objectForKey:kTo] objectForKey:kData];
-                    for (NSMutableDictionary *element in array) {
-                        if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
-                            [history setObject:dict forKey:[element objectForKey:kId]];
-                        }
-                    }
-                }
+                NSMutableDictionary *history = [[FBService shared] handleFacebookHistoryConversation:resultData];
                 [FBStorage shared].allFriendsHistoryConversation = history;
             }];
         }];
@@ -222,7 +206,7 @@
 
 - (void)chatDidLogin
 {
-    //[Flurry logEvent:kFlurryEventUserWasLoggedIn];
+    [Flurry logEvent:kFlurryEventUserWasLoggedIn];
     [self.activityIndicatior stopAnimating];
     [self dismissModalViewControllerAnimated:YES];
 }

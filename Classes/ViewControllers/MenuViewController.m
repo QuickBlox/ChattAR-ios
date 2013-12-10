@@ -86,6 +86,7 @@
 
 // action
 - (void)gotoQBSite {
+    [Flurry logEvent:kFlurryEventQuickbloxButtonWasPressed];
     NSString* urlString = @"http://quickblox.com";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
@@ -224,6 +225,7 @@
     [QBAuth destroySessionWithDelegate:nil];
     [[FBStorage shared] setAccessToken:nil];
     [[FBStorage shared] setMe:nil];
+    [Flurry logEvent:kFlurryEventUserWasLoggedOut];
 }
 
 @end

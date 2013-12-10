@@ -54,7 +54,7 @@
  
  @param error Error code from QBChatServiceError enum
  */
-- (void)chatDidFailWithError:(int)code;
+- (void)chatDidFailWithError:(NSInteger)code;
 
 /**
  Called in case receiving presence
@@ -258,10 +258,10 @@
 // TDB
 - (void)chatTURNServerDidDisconnect;
 - (void)chatTURNServerdidFailWithError:(NSError *)error;
-- (void)chatDidPassConnectionStep:(int)step totalSteps:(int)totalSteps;
+- (void)chatDidPassConnectionStep:(NSUInteger)step totalSteps:(NSUInteger)totalSteps;
 
-- (void)chatDidEexceedWriteVideoQueueMaxOperationsThresholdWithCount:(int)operationsInQueue;
-- (void)chatDidEexceedWriteAudioQueueMaxOperationsThresholdWithCount:(int)operationsInQueue;
+- (void)chatDidEexceedWriteVideoQueueMaxOperationsThresholdWithCount:(NSUInteger)operationsInQueue;
+- (void)chatDidEexceedWriteAudioQueueMaxOperationsThresholdWithCount:(NSUInteger)operationsInQueue;
 
 #pragma mark -
 #pragma mark Custom audio session

@@ -25,7 +25,7 @@
 	NSDate *minCreatedAt;
 	NSDate *maxCreatedAt;
 	struct QBLGeoDataRect geoRect;
-	NSInteger radius;
+	NSUInteger radius;
 	
 	// Sorting
 	BOOL sortAsc;
@@ -67,7 +67,7 @@
 @property (nonatomic) struct QBLGeoDataRect geoRect;
 
 /** With 'current_position' describes GeoCircle - "circle" on the earth's surface, given the coordinates 'current_position' and this distance in meters ('radius'). */
-@property (nonatomic) NSInteger radius;
+@property (nonatomic) NSUInteger radius;
 
 
 #pragma mark -

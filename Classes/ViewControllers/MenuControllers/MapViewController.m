@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [Flurry logEvent:kFlurryEventMapScreenWasOpened];
     self.view.tag = kMapViewControllerTag;
     _mapView.mapType = MKMapTypeStandard;
 }
@@ -71,11 +72,11 @@
     aView.chatRoom = annotation.room;
     
     // resest room avatar
-    aView.avatar.image = [UIImage imageNamed:@"room.jpg"];
+    aView.avatar.image = [UIImage imageNamed:@"room_image@2x.png"];
     
     //set room avatar
-    NSString *imageURL = aView.chatRoom.fields[kPhoto];
-    if (imageURL != nil) {
+    id imageURL = aView.chatRoom.fields[kPhoto];
+    if (imageURL != nil && imageURL != [NSNull null]) {
         [aView.avatar setImageURL:[NSURL URLWithString:imageURL]];
     }
     
@@ -95,6 +96,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MapToChatRoom"]){
         // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).controllerName = @"Map";
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
 }

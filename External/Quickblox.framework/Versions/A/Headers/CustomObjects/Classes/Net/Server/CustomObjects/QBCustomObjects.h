@@ -10,7 +10,7 @@
 /** Overview */
 /** This class is the main entry point to work with Quickblox Custom Objects module. */
 
-@interface QBCustomObjects : BaseService
+@interface QBCustomObjects : QBBaseModule
 
 
 #pragma mark -
@@ -168,5 +168,47 @@
  */
 + (NSObject<Cancelable> *)permissionsForObjectWithClassName:(NSString *)className ID:(NSString *)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate;
 + (NSObject<Cancelable> *)permissionsForObjectWithClassName:(NSString *)className ID:(NSString *)ID delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
+
+
+#pragma mark -
+#pragma mark Files
+
+/**
+ Upload file
+ 
+ @param file File
+ @param className Name of class
+ @param objectID Identifier of object to which file will be uploaded
+ @param fileFieldName Name of file field
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of Result class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable> *)uploadFile:(QBCOFile *)file className:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate;
++ (NSObject<Cancelable> *)uploadFile:(QBCOFile *)file className:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
+
+/**
+ Download file
+ 
+ @param className Name of class
+ @param objectID Identifier of object which file will be downloaded
+ @param fileFieldName Name of file field
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of QBCOFileDownloadResult class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable> *)downloadFileFromClassName:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate;
++ (NSObject<Cancelable> *)downloadFileFromClassName:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
+
+
+/**
+ Delete file
+ 
+ @param className Name of class
+ @param objectID Identifier of object form which file will be deleted
+ @param fileFieldName Name of file field
+ @param delegate An object for callback, must adopt QBActionStatusDelegate protocol. The delegate is retained.  Upon finish of the request, result will be an instance of Result class.
+ @return An instance, which conforms Cancelable protocol. Use this instance to cancel the operation.
+ */
++ (NSObject<Cancelable> *)deleteFileFromClassName:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate;
++ (NSObject<Cancelable> *)deleteFileFromClassName:(NSString *)className objectID:(NSString *)objectID fileFieldName:(NSString *)fileFieldName delegate:(NSObject<QBActionStatusDelegate> *)delegate context:(void *)context;
 
 @end

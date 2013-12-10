@@ -54,6 +54,7 @@
                 object.fields[kPhoto] = fileUrl;
                 
                 [QBCustomObjects createObject:object delegate:nil];
+                [Flurry logEvent:kFlurryEventNewRoomWasCreated withParameters:@{kName:object.fields[kName], @"avatar":@"Yes"}];
                 [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidCreateNotification object:object];
                 
             }else{
@@ -62,6 +63,7 @@
         }]];
     } else {
         [QBCustomObjects createObject:object delegate:nil];
+        [Flurry logEvent:kFlurryEventNewRoomWasCreated withParameters:@{kName:object.fields[kName], @"avatar":@"No"}];
         [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidCreateNotification object:object];
     }
 }

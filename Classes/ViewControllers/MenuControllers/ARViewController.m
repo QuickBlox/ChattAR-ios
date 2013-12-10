@@ -147,6 +147,7 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    [Flurry logEvent:kFlurryEventARScreenWasOpened];
 	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
 	[self.view bringSubviewToFront:distanceSlider];
@@ -303,6 +304,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:kARToChatSegueIdentifier]){
         // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).controllerName = @"AR";
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
 }

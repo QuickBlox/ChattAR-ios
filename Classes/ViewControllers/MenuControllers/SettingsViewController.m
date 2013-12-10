@@ -24,7 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [Flurry logEvent:kFlurryEventAboutScreenWasOpened];
 }
 
 - (IBAction)gotoURL:(id)sender

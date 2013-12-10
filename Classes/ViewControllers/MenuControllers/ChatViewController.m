@@ -33,6 +33,7 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *trendingActivityIndicator;
 @property (nonatomic, strong) UILabel *trendingFooterLabel;
+@property (nonatomic, weak) NSString *tableName;
 
 @end
 
@@ -45,6 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [Flurry logEvent:kFlurryEventChatScreenWasOpened];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchForResults) name:CAChatDidReceiveSearchResults object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadRooms) name:kNotificationDidLogin object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRoomCreated:) name:CAChatRoomDidCreateNotification object:nil];
@@ -288,6 +291,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:kChatToChatRoomSegueIdentifier]){
         // passcurrent room to Chat Room controller
+        ((ChatRoomViewController *)segue.destinationViewController).controllerName = self.tableName;
         ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
     }
 }
@@ -303,8 +307,10 @@
     // get current chat room
     QBCOCustomObject *currentRoom;
     if (tableView.tag == kTrendingTableViewTag) {
+        self.tableName = @"Trending";
        currentRoom =  [_trendings objectAtIndex:[indexPath row]];
     } else if (tableView.tag == kLocalTableViewTag) {
+        self.tableName = @"Local";
        currentRoom = [[[ChatRoomStorage shared] allLocalRooms] objectAtIndex:[indexPath row]];
     }
     // Open CHat Controller
