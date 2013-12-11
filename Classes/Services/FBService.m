@@ -130,23 +130,8 @@
     
     postParams[kMessage] = message;
     [FBRequestConnection startWithGraphPath:@"me/feed" parameters:postParams HTTPMethod:@"POST" completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        NSString *alertText;
-        if (error) {
-            alertText = [NSString stringWithFormat:
-                         @"error: domain = %@, code = %d",
-                         error.domain, error.code];
-        } else {
-            alertText = [NSString stringWithFormat:
-                         @"Posted successfull"];
-            [Flurry logEvent:kFlurryEventRoomWasSharedToFacebook];
-        }
-        // Show the result in an alert
-        [[[UIAlertView alloc] initWithTitle:@"Result"
-                                    message:alertText
-                                   delegate:self
-                          cancelButtonTitle:@"OK!"
-                          otherButtonTitles:nil]
-         show];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:CARoomDidPublishedToFacebookNotification object:error];
     }];
 }
 
@@ -301,7 +286,6 @@
             for (NSMutableDictionary *element in array) {
                 if ([element objectForKey:kId] != [[FBStorage shared].me objectForKey:kId]) {
                     [history setObject:dict forKey:[element objectForKey:kId]];
-                    break;
                 }
             }
         } else {

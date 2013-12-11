@@ -14,6 +14,7 @@
 @property (nonatomic, strong) AsyncImageView *avatar;
 @property (nonatomic, strong) QBCOCustomObject *chatRoom;
 
+
 - (void)handleAnnotationView;
 
 @end

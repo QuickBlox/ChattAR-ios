@@ -274,6 +274,7 @@
 		69F20FE41811376300452C55 /* TrendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F20FE31811376300452C55 /* TrendingCell.m */; };
 		69F20FE71811672000452C55 /* about_mnu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE51811672000452C55 /* about_mnu@2x.png */; };
 		69F20FE81811672000452C55 /* about_mnu.png in Resources */ = {isa = PBXBuildFile; fileRef = 69F20FE61811672000452C55 /* about_mnu.png */; };
+		69F5A5001858CF620005143F /* GILockedInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F5A4FF1858CF620005143F /* GILockedInterface.m */; };
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
@@ -724,6 +725,8 @@
 		69F20FE31811376300452C55 /* TrendingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingCell.m; sourceTree = "<group>"; };
 		69F20FE51811672000452C55 /* about_mnu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_mnu@2x.png"; sourceTree = "<group>"; };
 		69F20FE61811672000452C55 /* about_mnu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_mnu.png; sourceTree = "<group>"; };
+		69F5A4FE1858CF620005143F /* GILockedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GILockedInterface.h; sourceTree = "<group>"; };
+		69F5A4FF1858CF620005143F /* GILockedInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GILockedInterface.m; sourceTree = "<group>"; };
 		7B8C3FDE15D8D55800E42A41 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -838,6 +841,7 @@
 		693C7D0017CCDCF200D7F0A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				69F5A4FD1858CF620005143F /* GILockedInterface */,
 				6953F9DF1855EDB200A81C47 /* XMPPFramework */,
 				6953F9DA1855D2AD00A81C47 /* Flurry */,
 				6986DF991845FC9600F78FD9 /* QBEchoObject */,
@@ -1856,6 +1860,15 @@
 			path = chatroom;
 			sourceTree = "<group>";
 		};
+		69F5A4FD1858CF620005143F /* GILockedInterface */ = {
+			isa = PBXGroup;
+			children = (
+				69F5A4FE1858CF620005143F /* GILockedInterface.h */,
+				69F5A4FF1858CF620005143F /* GILockedInterface.m */,
+			);
+			path = GILockedInterface;
+			sourceTree = "<group>";
+		};
 		7B8C3FCF15D8D55800E42A41 = {
 			isa = PBXGroup;
 			children = (
@@ -2166,6 +2179,7 @@
 				6953FB5A1855EDB300A81C47 /* XMPPStringPrep.m in Sources */,
 				6988F6B2181A62E000E1B30A /* QBService.m in Sources */,
 				69601BDA181FBB8700E842C8 /* DialogsViewController.m in Sources */,
+				69F5A5001858CF620005143F /* GILockedInterface.m in Sources */,
 				6953FB5C1855EDB300A81C47 /* DDAbstractDatabaseLogger.m in Sources */,
 				6953FB511855EDB300A81C47 /* XMPPMessage+XEP_0224.m in Sources */,
 				69D5F66A1848DEAD00BDA9AB /* UIImage+Cropper.m in Sources */,

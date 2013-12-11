@@ -40,10 +40,6 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:NO];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
     NSString *firstLastName = [[FBStorage shared].me objectForKey:kName];
@@ -78,7 +74,9 @@
     if (IS_HEIGHT_GTE_568) {
         qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height+30), img.size.width, img.size.height);
     } else {
+        if (!IS_IOS_6) {
         qbButton.frame = CGRectMake(40, _menuTable.frame.size.height - (img.size.height+5), img.size.width, img.size.height);
+        }
     }
     [qbButton addTarget:self action:@selector(gotoQBSite) forControlEvents:UIControlEventTouchUpInside];
     [self.menuTable addSubview:qbButton];

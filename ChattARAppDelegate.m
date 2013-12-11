@@ -29,6 +29,7 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:-1];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMemory)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification object:nil];

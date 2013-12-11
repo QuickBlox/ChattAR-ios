@@ -10,7 +10,7 @@
 #define ChattAR_Definitions_h
 
 #define IS_HEIGHT_GTE_568 [[UIScreen mainScreen ] bounds].size.height >= 568.0f
-#define IS_IOS_6 [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0f
+#define IS_IOS_6 ([[[UIDevice currentDevice] systemVersion] floatValue] <= 6.1f)
 
 #define kNotificationDidLogin           @"kNotificationDidLogin"
 #define kNotificationMessageReceived    @"NotificationMessageReceived"
@@ -27,6 +27,7 @@
 #define CAChatRoomDidEnterNotification                      @"CAChatRoomDidEnterNotification"
 #define CAChatDidReceiveSearchResults                       @"CAChatDidReceiveSearchResults"
 #define CAChatRoomDidCreateNotification                     @"CAChatRoomDidCreateNotification"
+#define CARoomDidPublishedToFacebookNotification            @"CARoomDidPublishedToFacebook"
 
 // Table Tags:
 #define  kTrendingTableViewTag      1011

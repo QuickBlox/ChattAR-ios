@@ -58,6 +58,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPublished:) name:CARoomDidPublishedToFacebookNotification object:nil];
     [self setSpinner];
     [self configureInputTextViewLayer];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
@@ -71,7 +72,9 @@
         self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         self.indicatorView.frame = CGRectMake(self.chatRoomTable.frame.size.width/2 - 10, self.chatRoomTable.frame.size.height/2 -10, 20 , 20);
         [self.indicatorView hidesWhenStopped];
-        [self.chatRoomTable addSubview:self.indicatorView];
+        self.indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.indicatorView.color = [UIColor blackColor];
+        [self.view addSubview:self.indicatorView];
     }
     [self.indicatorView startAnimating];
 }
@@ -280,6 +283,28 @@
     self.chatHistory = [QBStorage shared].chatHistory;
     self.chatRoomDataSource.chatHistory = self.chatHistory;
     [self resetTableView];
+}
+
+- (void)recordPublished:(NSNotification *)aNotification {
+    [self.indicatorView stopAnimating];
+    NSError *error = aNotification.object;
+    NSString *alertText;
+    if (error) {
+        alertText = [NSString stringWithFormat:
+                     @"error: domain = %@, code = %d",
+                     error.domain, error.code];
+    } else {
+        alertText = [NSString stringWithFormat:
+                     @"Posted successfull"];
+        [Flurry logEvent:kFlurryEventRoomWasSharedToFacebook];
+    }
+    // Show the result in an alert
+    [[[UIAlertView alloc] initWithTitle:@"Result"
+                                message:alertText
+                               delegate:self
+                      cancelButtonTitle:@"OK!"
+                      otherButtonTitles:nil]
+     show];
 }
 
 

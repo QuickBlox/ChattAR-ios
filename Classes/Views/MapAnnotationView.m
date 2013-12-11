@@ -22,9 +22,12 @@
 - (void)handleAnnotationView {
     self.canShowCallout = YES;
     
-    UIButton *accessoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    UIButton *accessoryButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     [accessoryButton setAdjustsImageWhenHighlighted:NO];
-    [accessoryButton setImage:[UIImage imageNamed:@"pincallout.png"] forState:UIControlStateNormal];
+    CGFloat value = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (!IS_IOS_6) {
+        [accessoryButton setImage:[UIImage imageNamed:@"pincallout.png"] forState:UIControlStateNormal];
+    }
     accessoryButton.tag = kAnnotationButtonTag;
     self.rightCalloutAccessoryView = accessoryButton;
     

@@ -79,7 +79,6 @@
     if (imageURL != nil && imageURL != [NSNull null]) {
         [aView.avatar setImageURL:[NSURL URLWithString:imageURL]];
     }
-    
     return aView;
 }
 
