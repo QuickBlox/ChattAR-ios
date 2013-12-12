@@ -72,8 +72,11 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[QBChat instance] loginWithUser:[QBStorage shared].me];
-    [[QBStorage shared] loadHistory];
+    QBUUser *me = [QBStorage shared].me;
+    if (me) {
+        [[QBChat instance] loginWithUser:me];
+        [[QBStorage shared] loadHistory];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
