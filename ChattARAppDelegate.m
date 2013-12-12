@@ -40,6 +40,7 @@
     [QBSettings setAuthorizationSecret:@"KcfDYJFY7x3r5HR"];
 #ifndef DEBUG
     [QBSettings useProductionEnvironmentForPushNotifications:YES];
+    [QBSettings setLogLevel:QBLogLevelNothing];
 #endif
     
     //[Flurry setLogLevel:FlurryLogLevelDebug];

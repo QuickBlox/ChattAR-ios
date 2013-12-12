@@ -10,7 +10,7 @@
 
 @interface FBService : NSObject
 {
-    NSTimer     *presenceTimer;
+    //NSTimer     *presenceTimer;
 	XMPPStream	*xmppStream;
 }
 @property (nonatomic, strong) NSTimer *presenceTimer;

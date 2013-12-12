@@ -17,6 +17,7 @@
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
 #import "ChatRoomDataSource.h"
+#import "MBProgressHUD.h"
 
 
 @interface ChatRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, SASlideMenuDelegate>
@@ -32,6 +33,7 @@
 @property (strong, nonatomic) NSMutableArray *chatHistory;
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property (strong, nonatomic) NSMutableDictionary *dialogTo;
+@property (strong, nonatomic) MBProgressHUD *progressHUD;
 
 @property CGFloat cellSize;
 
@@ -59,7 +61,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPublished:) name:CARoomDidPublishedToFacebookNotification object:nil];
-    [self setSpinner];
+    //[self setSpinner];
+    _progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self configureInputTextViewLayer];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     self.title = roomName;
@@ -274,19 +277,21 @@
     [Flurry logEvent:kFlurryEventRoomWasJoined withParameters:@{kFrom:self.controllerName}];
     self.currentRoom = [QBStorage shared].currentChatRoom;
     [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
-    
     [self.chatRoomTable reloadData];
-    [self.indicatorView stopAnimating];
+    //[self.indicatorView stopAnimating];
+     [_progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
 }
 
 - (void)messageReceived {
     self.chatHistory = [QBStorage shared].chatHistory;
     self.chatRoomDataSource.chatHistory = self.chatHistory;
     [self resetTableView];
+    [NSObject cancelPreviousPerformRequestsWithTarget:_progressHUD selector:@selector(hide:) object:nil];
+    [_progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
 }
 
 - (void)recordPublished:(NSNotification *)aNotification {
-    [self.indicatorView stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSError *error = aNotification.object;
     NSString *alertText;
     if (error) {
@@ -372,7 +377,8 @@
 
 - (IBAction)share:(id)sender
 {
-    [self.indicatorView startAnimating];
+    //[self.indicatorView startAnimating];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
     
     // Ask for publish_actions permissions in context

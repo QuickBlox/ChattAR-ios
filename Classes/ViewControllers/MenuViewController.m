@@ -17,6 +17,7 @@
 #import "UserProfileCell.h"
 #import "FBStorage.h"
 #import "Utilites.h"
+#import "QBService.h"
 
 
 @implementation MenuViewController
@@ -218,6 +219,7 @@
 
     //log out from QBChat
     [[QBChat instance] logout];
+    [QBService defaultService].presenceTimer = nil;
 
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];

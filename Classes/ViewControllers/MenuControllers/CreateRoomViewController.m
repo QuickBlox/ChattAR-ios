@@ -11,6 +11,7 @@
 #import "AsyncImageView.h"
 #import "ChatRoomStorage.h"
 #import "ChatRoomViewController.h"
+#import "MBProgressHUD.h"
 
 
 @interface CreateRoomViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, QBActionStatusDelegate>
@@ -18,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *roomNameField;
 @property (strong, nonatomic) IBOutlet AsyncImageView *roomImageView;
 @property (strong, nonatomic) IBOutlet UIButton *creatingRoomButton;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) MBProgressHUD *progressHUD;
 
 @property (weak, nonatomic) UIImage *cachedImage;
 
@@ -74,7 +75,16 @@
         [alert show];
         return;
     }
-    [self.activityIndicator startAnimating];
+    if (trimmedString.length > 30) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Too long name"
+                                                        message:@"Please, choose another name"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    self.progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.roomNameField.enabled = NO;
     self.creatingRoomButton.alpha = 0.4;
     self.creatingRoomButton.enabled = NO;
@@ -84,7 +94,7 @@
 }
 
 - (void)switchToRoom:(NSNotification *)notification {
-    [self.activityIndicator stopAnimating];
+    [self.progressHUD hide:YES];
     self.roomNameField.enabled = YES;
     self.creatingRoomButton.enabled = YES;
     self.creatingRoomButton.alpha = 1.0;

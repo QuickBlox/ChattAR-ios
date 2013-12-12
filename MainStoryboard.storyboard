@@ -41,7 +41,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="room name" minimumFontSize="18" id="ixK-w2-Fbb">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" borderStyle="roundedRect" placeholder="room name(max 30 characters)" minimumFontSize="18" id="ixK-w2-Fbb">
                                 <rect key="frame" x="10" y="12" width="300" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText"/>
@@ -79,11 +79,6 @@
                                     <action selector="createRoom:" destination="Nnt-bn-raz" eventType="touchUpInside" id="nBD-Ki-pUL"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="4Gc-Wn-WGg">
-                                <rect key="frame" x="142" y="102" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.91764712333679199" green="0.91764712333679199" blue="0.92549026012420654" alpha="1" colorSpace="deviceRGB"/>
                     </view>
@@ -103,7 +98,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="4Gc-Wn-WGg" id="vKD-sh-KII"/>
                         <outlet property="creatingRoomButton" destination="HDm-0j-cBF" id="lLm-D3-Avx"/>
                         <outlet property="roomImageView" destination="RpN-lu-fTV" id="gkl-Ek-5Kr"/>
                         <outlet property="roomNameField" destination="ixK-w2-Fbb" id="L2I-H7-ULg"/>
@@ -119,11 +113,11 @@
             <objects>
                 <viewController id="Vch-rc-7Oy" customClass="ChatRoomViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2GZ-eo-kOd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="458"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -132,7 +126,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="4e0-Cg-koI">
-                                <rect key="frame" x="0.0" y="458" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="522" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
@@ -1242,7 +1236,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="i69-BF-qyq"/>
-        <segue reference="08e-u6-zeQ"/>
+        <segue reference="OPF-p4-raF"/>
         <segue reference="YmU-iS-597"/>
         <segue reference="gGZ-kD-fDC"/>
     </inferredMetricsTieBreakers>

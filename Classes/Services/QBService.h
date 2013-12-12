@@ -11,6 +11,7 @@
 @interface QBService : NSObject <QBChatDelegate, QBActionStatusDelegate>
 
 @property (nonatomic, assign) BOOL userIsJoinedChatRoom;
+@property (nonatomic, strong) NSTimer *presenceTimer;
 
 + (instancetype)defaultService;
 

@@ -334,7 +334,7 @@
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     NSLog(@"Facebook XMPP authenticated");
-    presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
+    _presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self
                                                     selector:@selector(sendPresence) 
                                                     userInfo:nil repeats:YES];
 }
@@ -349,7 +349,7 @@
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
-    presenceTimer = nil;
+    _presenceTimer = nil;
     NSLog(@"XMPP disconnected");
     
     // reconnect if disconnected

@@ -127,13 +127,22 @@
     if (temporary != nil) {
         NSMutableArray *messages = [temporary objectForKey:kMessage];
         [messages addObject:message];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
     } else {
         NSMutableArray *messages = [[NSMutableArray alloc] initWithObjects:message, nil];
         temporary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:messages,kMessage, nil];
         [[QBStorage shared].allQuickBloxHistoryConversation setObject:temporary forKey:userID];
+        // load user:
+        [[FBService shared] userProfileWithID:userID withBlock:^(id result) {
+            //
+            NSMutableDictionary *newUser = (FBGraphObject *)result;
+            NSString *photoURL = [[NSString alloc] initWithFormat:@"https://graph.facebook.com/%@/picture?access_token=%@", userID, [FBStorage shared].accessToken];
+            newUser[kPhoto] = photoURL;
+            newUser[kQuickbloxID] = [@(message.senderID) stringValue];
+            [[QBStorage shared].otherUsers addObject:newUser];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
+        }];
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
 }
 
 - (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote {
@@ -235,7 +244,7 @@
 
 - (void)chatDidLogin {
     NSLog(@"Chat login success");
-    [FBService shared].presenceTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
+    self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
     
@@ -279,7 +288,7 @@
     //[[QBStorage shared] setCurrentChatRoom:nil];
 }
 
-- (void)chatRoomDidCreate:(NSString *)roomName {
+- (void)chatDidNotLogin {
     
 }
 
