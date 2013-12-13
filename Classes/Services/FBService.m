@@ -12,7 +12,9 @@
 #import "FBStorage.h"
 #import "Utilites.h"
 
-@implementation FBService
+@implementation FBService{
+    NSTimer *_presenceTimer;
+}
 
 #pragma mark -
 #pragma mark Singletone

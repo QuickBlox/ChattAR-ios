@@ -26,7 +26,6 @@
 @property (strong, nonatomic) UIActivityIndicatorView *indicatorView;
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
 @property (strong, nonatomic) NSMutableDictionary *quote;
-@property (strong, nonatomic) QBChatRoom *currentRoom;
 @property (strong, nonatomic) IBOutlet UIView *inputTextView;
 @property (strong, nonatomic) IBOutlet UITextField *inputMessageField;
 @property (strong, nonatomic) IBOutlet UIButton *sendButton;
@@ -241,23 +240,30 @@
 // back button
 - (IBAction)backToRooms:(id)sender
 {
-    [QBStorage shared].currentChatRoom = nil;
+    [QBStorage shared].joinedChatRoom = nil;
     [QBService defaultService].userIsJoinedChatRoom = NO;
+    
     [[QBStorage shared].chatHistory removeAllObjects];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 // action message button
 - (IBAction)sendMessageButton:(id)sender
 {
+    // trim chat message
     NSString *trimmedString = [self.inputMessageField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if ([trimmedString isEqual:@""]) {
-        //don't send
+    
+    // don't send if empty message
+    if (trimmedString.length == 0) {
         [self.inputMessageField resignFirstResponder];
         return;
     }
-        [[QBService defaultService] sendmessage:trimmedString toChatRoom:self.currentRoom quote:quote];
-        self.inputMessageField.text = @"";
+    
+    // Send message to chat room
+    [[QBService defaultService] sendMessage:trimmedString toChatRoom:[QBStorage shared].joinedChatRoom quote:quote];
+    
+    self.inputMessageField.text = @"";
     [self.chatRoomTable reloadData];
     [self.inputMessageField resignFirstResponder];
 }
@@ -275,9 +281,10 @@
 
 - (void)joinedRoom {
     [Flurry logEvent:kFlurryEventRoomWasJoined withParameters:@{kFrom:self.controllerName}];
-    self.currentRoom = [QBStorage shared].currentChatRoom;
+    
     [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
     [self.chatRoomTable reloadData];
+    
     //[self.indicatorView stopAnimating];
      [_progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
 }

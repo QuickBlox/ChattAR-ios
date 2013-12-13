@@ -25,7 +25,7 @@
 #pragma  mark Messages
 
 - (void)sendMessage:(NSString *)message toUser:(NSUInteger)userID option:(id)option;
-- (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote;
+- (void)sendMessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote;
 - (void)sendPushNotificationWithMessage:(NSString *)message toUser:(NSMutableDictionary *)user;
 
 

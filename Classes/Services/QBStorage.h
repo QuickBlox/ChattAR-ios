@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSMutableArray        *chatHistory;
 @property (nonatomic, strong) NSMutableDictionary   *allQuickBloxHistoryConversation;
-@property (nonatomic, strong) QBChatRoom            *currentChatRoom;
+@property (nonatomic, strong) QBChatRoom            *joinedChatRoom;
 @property (nonatomic, strong) QBUUser               *me;
 @property (nonatomic, strong) NSMutableArray        *otherUsers;
 @property (nonatomic, strong) NSString              *chatRoomName;

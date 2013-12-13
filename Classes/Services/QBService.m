@@ -145,7 +145,7 @@
     }
 }
 
-- (void)sendmessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote {
+- (void)sendMessage:(NSString *)message toChatRoom:(QBChatRoom *)room quote:(id)quote {
     CLLocationCoordinate2D currentLocation = [LocationService shared].myLocation.coordinate;
     
     NSString *myLatitude = [@(currentLocation.latitude) stringValue];
@@ -270,10 +270,11 @@
 - (void)chatRoomDidEnter:(QBChatRoom *)room
 {
     [room addUsers:@[@34]];
+    
     [QBService defaultService].userIsJoinedChatRoom = YES;
     NSLog(@"Chat Room is opened");
     
-    [[QBStorage shared] setCurrentChatRoom:room];
+    [[QBStorage shared] setJoinedChatRoom:room];
     //get room
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatRoomDidEnterNotification object:nil];
 }
@@ -285,7 +286,7 @@
 
 - (void)chatRoomDidLeave:(NSString *)roomName {
     NSLog(@"Did  Leave worked");
-    //[[QBStorage shared] setCurrentChatRoom:nil];
+    [[QBStorage shared] setJoinedChatRoom:nil];
 }
 
 - (void)chatDidNotLogin {
