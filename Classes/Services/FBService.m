@@ -104,13 +104,18 @@
     
     // save message to history
     NSMutableDictionary *conversation = [[FBStorage shared].allFriendsHistoryConversation objectForKey:userID];
-    NSMutableArray *data = [[conversation objectForKey:kComments] objectForKey:kData];
-    if (data ==nil) {
-        data = [[NSMutableArray alloc] initWithObjects:@[facebookMessage], nil];
-        NSMutableDictionary *comments = [[NSMutableDictionary alloc] initWithObjects:@[data] forKeys:@[kData]];
-        [conversation setObject:comments forKey:kComments];
+    if (conversation == nil) {
+        conversation = [[NSMutableDictionary alloc] init];
     }
-    [data addObject:facebookMessage];
+    NSMutableArray *data = [(conversation[kComments])[kData] mutableCopy];
+    if (data ==nil) {
+        data = [@[facebookMessage] mutableCopy];
+    } else {
+        [data addObject:facebookMessage];
+    }
+    NSMutableDictionary *comments = [@{kData: data} mutableCopy];
+    [conversation setObject:comments forKey:kComments];
+    
     [[FBStorage shared].allFriendsHistoryConversation setObject:conversation forKey:userID];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];

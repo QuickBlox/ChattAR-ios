@@ -12,6 +12,8 @@
 #import "FBService.h"
 #import "QBService.h"
 #import "QBStorage.h"
+#import "MBProgressHUD.h"
+#import "Utilites.h"
 
 @implementation ChattARAppDelegate
 
@@ -76,6 +78,7 @@
     if (me) {
         [[QBChat instance] loginWithUser:me];
         [[QBStorage shared] loadHistory];
+        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     }
 }
 

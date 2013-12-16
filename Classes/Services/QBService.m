@@ -11,6 +11,7 @@
 #import "FBStorage.h"
 #import "QBStorage.h"
 #import "Utilites.h"
+#import "MBProgressHUD.h"
 #import "LocationService.h"
 #import "ChatRoomStorage.h"
 
@@ -247,9 +248,11 @@
     self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
     [[LocationService shared] startUpdateLocation];
+    [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     
     if ([QBService defaultService].userIsJoinedChatRoom) {
         [[QBService defaultService] loginToChatFromBackground];
+        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
         return;
     }
     

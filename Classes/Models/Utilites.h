@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class MBProgressHUD;
+
 @interface Utilites : NSObject
 
 @property (nonatomic, assign) BOOL userLoggedIn;
 @property (assign, nonatomic) BOOL isArNotAvailable;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (strong, nonatomic) MBProgressHUD *progressHUD;
 
 + (instancetype)shared;
 + (BOOL)deviceSupportsAR;

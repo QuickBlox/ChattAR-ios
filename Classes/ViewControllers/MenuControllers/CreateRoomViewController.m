@@ -84,7 +84,7 @@
         [alert show];
         return;
     }
-    self.progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     self.roomNameField.enabled = NO;
     self.creatingRoomButton.alpha = 0.4;
     self.creatingRoomButton.enabled = NO;

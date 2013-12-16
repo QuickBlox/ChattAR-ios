@@ -96,6 +96,7 @@
 		6986DFA018463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */; };
 		6986DFA518463FA000F78FD9 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA218463FA000F78FD9 /* ChatRoomCell.m */; };
 		6986DFA618463FA000F78FD9 /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA418463FA000F78FD9 /* QuotedChatRoomCell.m */; };
+		6988D444185EFDFB0053530E /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6988D443185EFDFB0053530E /* Quickblox.framework */; };
 		6988F6B2181A62E000E1B30A /* QBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6988F6B1181A62E000E1B30A /* QBService.m */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
@@ -277,7 +278,6 @@
 		BF00035C185A2FDF00F83907 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0002E8185A2FDF00F83907 /* DDXMLNode.m */; };
 		BF00035D185A2FDF00F83907 /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = BF0002EC185A2FDF00F83907 /* build-libidn.sh */; };
 		BF00035E185A2FDF00F83907 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF0002EE185A2FDF00F83907 /* libidn.a */; };
-		BF000360185A329400F83907 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF00035F185A329400F83907 /* Quickblox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -415,6 +415,7 @@
 		6986DFA218463FA000F78FD9 /* ChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomCell.m; sourceTree = "<group>"; };
 		6986DFA318463FA000F78FD9 /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
 		6986DFA418463FA000F78FD9 /* QuotedChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotedChatRoomCell.m; sourceTree = "<group>"; };
+		6988D443185EFDFB0053530E /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
 		6988F6B0181A62E000E1B30A /* QBService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBService.h; sourceTree = "<group>"; };
 		6988F6B1181A62E000E1B30A /* QBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBService.m; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
@@ -730,7 +731,6 @@
 		BF0002EE185A2FDF00F83907 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		BF0002EF185A2FDF00F83907 /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		BF0002F0185A2FDF00F83907 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPFramework.h; sourceTree = "<group>"; };
-		BF00035F185A329400F83907 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = "../SDK-ios/Framework/build/Framework/Quickblox.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -752,7 +752,7 @@
 				6911FB3317D6229D00FEADB4 /* MobileCoreServices.framework in Frameworks */,
 				6911FB2717D61F7A00FEADB4 /* CoreAudio.framework in Frameworks */,
 				6911FB2117D61DF800FEADB4 /* AudioToolbox.framework in Frameworks */,
-				BF000360185A329400F83907 /* Quickblox.framework in Frameworks */,
+				6988D444185EFDFB0053530E /* Quickblox.framework in Frameworks */,
 				6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */,
 				693C7CFF17CCD9D400D7F0A9 /* CFNetwork.framework in Frameworks */,
 				693C7CF917CCD8A200D7F0A9 /* CoreLocation.framework in Frameworks */,
@@ -1220,7 +1220,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BF00035F185A329400F83907 /* Quickblox.framework */,
+				6988D443185EFDFB0053530E /* Quickblox.framework */,
 				BF0001D3185A2FC800F83907 /* libFlurry_4.3.0.a */,
 				69D4BC6C185A1F3900A31373 /* FacebookSDK.framework */,
 				690A708A1806A5A100F3C584 /* CoreMotion.framework */,
@@ -1953,7 +1953,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Stefano Antonelli";
 			};
-			buildConfigurationList = 7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "Chattar" */;
+			buildConfigurationList = 7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "ChattAR" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2318,10 +2318,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Taras Filatov (6AVH4TA956)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/External\\\\\\\"",
-					"/Users/nightstep/TASKS/ChattAR-ios/External",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External",
-					"/Users/igorkhomenko/workspace/SDK-ios/Framework/build/Framework",
+					"$(SRCROOT)/External",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
@@ -2331,13 +2328,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/Flurry",
-					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/FlurryAds",
-					"/Users/nightstep/TASKS/ChattAR-ios/External/XMPPFramework/Vendor/libidn",
-					"/Users/nightstep/TASKS/ChattAR-ios/External/Flurry",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External/Flurry",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External/XMPPFramework/Vendor/libidn",
+					"$(SRCROOT)/**",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -2346,7 +2337,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "4DCE8884-7E22-4496-A242-FD833A86DAC0";
+				PROVISIONING_PROFILE = "CB996A42-B064-4159-A23B-438B4E53D0AE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2360,10 +2351,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/External\\\\\\\"",
-					"/Users/nightstep/TASKS/ChattAR-ios/External",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External",
-					"/Users/igorkhomenko/workspace/SDK-ios/Framework/build/Framework",
+					"$(SRCROOT)/External",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
@@ -2372,13 +2360,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/External/XMPPFramework/Vendor/libidn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
-					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/Flurry",
-					"/Users/nightstep/Downloads/Flurry\\ iPhone\\ SDK\\ viPhone\\ 4.3.0/Flurry-iOS-4.3.0/FlurryAds",
-					"/Users/nightstep/TASKS/ChattAR-ios/External/XMPPFramework/Vendor/libidn",
-					"/Users/nightstep/TASKS/ChattAR-ios/External/Flurry",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External/Flurry",
-					"/Users/igorkhomenko/workspace/ChattAR-ios/External/XMPPFramework/Vendor/libidn",
+					"$(SRCROOT)/**",
 				);
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-lxml2",
@@ -2386,7 +2368,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "4DCE8884-7E22-4496-A242-FD833A86DAC0";
+				PROVISIONING_PROFILE = "CB996A42-B064-4159-A23B-438B4E53D0AE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2394,7 +2376,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "Chattar" */ = {
+		7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "ChattAR" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B8C3FF615D8D55800E42A41 /* Debug */,
