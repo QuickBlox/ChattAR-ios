@@ -12,8 +12,14 @@
 
 + (void)configureDialogsCell:(DialogsCell *)cell forIndexPath:(NSIndexPath *)indexPath forFriend:(NSDictionary *)aFriend
 {
+    // cancel previous user's avatar loading
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:cell.asyncView];
     [cell.asyncView setImage:[UIImage imageNamed:@"human.png"]];
+    
+    // load user's avatar
     [cell.asyncView setImageURL:[NSURL URLWithString:[aFriend objectForKey:kPhoto]]];
+    
+    // set user's text
     cell.name.text = [aFriend objectForKey:kName];
 }
 

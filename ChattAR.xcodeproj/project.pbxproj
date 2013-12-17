@@ -35,6 +35,7 @@
 		691AC02D184DDD2300BBEE4B /* pinicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 691AC029184DDD2300BBEE4B /* pinicon.png */; };
 		691AC02E184DDD2300BBEE4B /* pinicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691AC02A184DDD2300BBEE4B /* pinicon@2x.png */; };
 		691AC030184DEC9000BBEE4B /* loginButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 691AC02F184DEC9000BBEE4B /* loginButton@2x.png */; };
+		6922209A1860B51D002744D3 /* MKMapView+Zoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 692220991860B51D002744D3 /* MKMapView+Zoom.m */; };
 		6924A75C1802AD5400D61E5E /* MapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6924A75B1802AD5400D61E5E /* MapAnnotationView.m */; };
 		692F9D161851DEC4006ABE1D /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692F9D151851DEC4006ABE1D /* ProfileCell.m */; };
 		692F9D2618521B9B006ABE1D /* DetailProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 692F9D2518521B9B006ABE1D /* DetailProfileCell.m */; };
@@ -315,6 +316,8 @@
 		691AC029184DDD2300BBEE4B /* pinicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinicon.png; sourceTree = "<group>"; };
 		691AC02A184DDD2300BBEE4B /* pinicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pinicon@2x.png"; sourceTree = "<group>"; };
 		691AC02F184DEC9000BBEE4B /* loginButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginButton@2x.png"; sourceTree = "<group>"; };
+		692220981860B51D002744D3 /* MKMapView+Zoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Zoom.h"; sourceTree = "<group>"; };
+		692220991860B51D002744D3 /* MKMapView+Zoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Zoom.m"; sourceTree = "<group>"; };
 		6924A75A1802AD5400D61E5E /* MapAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotationView.h; sourceTree = "<group>"; };
 		6924A75B1802AD5400D61E5E /* MapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotationView.m; sourceTree = "<group>"; };
 		692F9D141851DEC4006ABE1D /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCell.h; sourceTree = "<group>"; };
@@ -988,6 +991,8 @@
 		6986DF9D18463A8D00F78FD9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				692220981860B51D002744D3 /* MKMapView+Zoom.h */,
+				692220991860B51D002744D3 /* MKMapView+Zoom.m */,
 				6986DF9E18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.h */,
 				6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */,
 				69D5F6681848DEAD00BDA9AB /* UIImage+Cropper.h */,
@@ -2174,6 +2179,7 @@
 				BF000304185A2FDF00F83907 /* XMPPGoogleSharedStatus.m in Sources */,
 				BF0002F8185A2FDF00F83907 /* NSNumber+XMPP.m in Sources */,
 				69D5F66A1848DEAD00BDA9AB /* UIImage+Cropper.m in Sources */,
+				6922209A1860B51D002744D3 /* MKMapView+Zoom.m in Sources */,
 				6924A75C1802AD5400D61E5E /* MapAnnotationView.m in Sources */,
 				69F20FE41811376300452C55 /* TrendingCell.m in Sources */,
 				BF000303185A2FDF00F83907 /* XMPPCoreDataStorage.m in Sources */,
@@ -2325,7 +2331,7 @@
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Supporting files/ChattARStatic-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",
@@ -2357,7 +2363,7 @@
 				GCC_PREFIX_HEADER = "Supporting files/ChattARStatic-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = "Supporting files/ChattARStatic-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",

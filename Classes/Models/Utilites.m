@@ -7,6 +7,7 @@
 //
 
 #import "Utilites.h"
+#import "MBProgressHUD.h"
 
 @implementation Utilites
 

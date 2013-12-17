@@ -24,7 +24,6 @@
     
     UIButton *accessoryButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     [accessoryButton setAdjustsImageWhenHighlighted:NO];
-    CGFloat value = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (!IS_IOS_6) {
         [accessoryButton setImage:[UIImage imageNamed:@"pincallout.png"] forState:UIControlStateNormal];
     }

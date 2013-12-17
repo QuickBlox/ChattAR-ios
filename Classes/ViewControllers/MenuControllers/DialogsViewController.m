@@ -81,8 +81,9 @@
     switch (indexPath.section) {
         case 0:
         {
-            user = [self.friends objectAtIndex:indexPath.row];
+            user = self.friends[indexPath.row];
             conversation = [FBService findFBConversationWithFriend:user];
+            NSDictionary *terminate = [FBStorage shared].allFriendsHistoryConversation;
             ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = YES;
         }
             break;

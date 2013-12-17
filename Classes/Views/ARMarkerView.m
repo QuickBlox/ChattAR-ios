@@ -60,7 +60,7 @@
         [userPhotoView release];
         
         // add userName
-        userName = [[UILabel alloc] initWithFrame:CGRectMake(47, 5, container.frame.size.width-43, container.frame.size.height/2 - 5)];
+        userName = [[UILabel alloc] initWithFrame:CGRectMake(47, 5, 100, container.frame.size.height/2 - 5)];
         [userName setBackgroundColor:[UIColor clearColor]];
         [userName setText:[room.fields objectForKey:kName]];
         [userName setFont:[UIFont boldSystemFontOfSize:14]];

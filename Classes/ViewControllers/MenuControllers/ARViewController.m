@@ -100,7 +100,6 @@
     
 	distanceSlider = [[UISlider alloc] init];
 	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
-    
 	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
 	distanceSlider.minimumValue =  0;
 	distanceSlider.maximumValue = [sliderNumbers count]-1;
@@ -114,7 +113,6 @@
     [distanceLabel setBackgroundColor:[UIColor clearColor]];
     [distanceLabel setFont:[UIFont systemFontOfSize:12]];
     [distanceLabel setTextColor:[UIColor whiteColor]];
-    
     distanceLabel.text = [NSString stringWithFormat:@"%d km", [[sliderNumbers objectAtIndex:distanceSlider.value] intValue]/1000];
     [self.view addSubview:distanceLabel];
     [distanceLabel release];

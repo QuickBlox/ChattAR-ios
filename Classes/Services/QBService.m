@@ -247,12 +247,13 @@
     NSLog(@"Chat login success");
     self.presenceTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:[QBChat instance] selector:@selector(sendPresence) userInfo:nil repeats:YES];
     //start getting location:
+    //UIWindow *currentWindow = [[UIApplication sharedApplication].windows lastObject];
     [[LocationService shared] startUpdateLocation];
-    [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil];
     
     if ([QBService defaultService].userIsJoinedChatRoom) {
         [[QBService defaultService] loginToChatFromBackground];
-        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+        [[Utilites shared].progressHUD performSelector:@selector(show:) withObject:nil];
         return;
     }
     

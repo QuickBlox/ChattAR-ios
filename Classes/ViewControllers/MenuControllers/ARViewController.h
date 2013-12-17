@@ -15,10 +15,7 @@
 @interface ARViewController : UIViewController <UIAccelerometerDelegate, CLLocationManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UIActionSheetDelegate> {
 @private
 	NSMutableArray		*coordinates;
-    
-    CGRect viewFrame;
 	int switchedDistance;
-    
     NSMutableArray *sliderNumbers;
 }
 

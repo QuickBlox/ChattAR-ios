@@ -12,6 +12,7 @@
 #import "ChatRoomStorage.h"
 #import "LocationService.h"
 #import "ChatRoomViewController.h"
+#import "MKMapView+Zoom.h"
 
 
 @interface MapViewController ()
@@ -36,6 +37,8 @@
     _chatRooms = [[ChatRoomStorage shared] allLocalRooms];
     // setting local rooms at the map:
     [self setAnnotationsToMap:_chatRooms];
+    
+    [_mapView zoomToFitAnnotations];
     [super viewWillAppear:NO];
 }
 

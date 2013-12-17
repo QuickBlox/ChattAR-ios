@@ -75,10 +75,20 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     QBUUser *me = [QBStorage shared].me;
-    if (me) {
-        [[QBChat instance] loginWithUser:me];
-        [[QBStorage shared] loadHistory];
-        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    UIWindow *currentWindow = [[UIApplication sharedApplication].windows lastObject];
+    if (me == nil) {
+        return;
+    }
+    [[QBChat instance] loginWithUser:me];
+    [[QBStorage shared] loadHistory];
+    
+    MBProgressHUD *currentHUD = [MBProgressHUD HUDForView:currentWindow];
+    if (currentHUD == nil) {
+        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:currentWindow animated:YES];
+        return;
+    }
+    if (!currentHUD.taskInProgress) {
+        [currentHUD performSelector:@selector(show:) withObject:nil];
     }
 }
 

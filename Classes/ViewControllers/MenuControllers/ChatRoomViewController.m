@@ -34,6 +34,8 @@
 @property (strong, nonatomic) NSIndexPath *cellPath;
 @property (strong, nonatomic) NSMutableDictionary *dialogTo;
 
+@property (strong, nonatomic) UIWindow *currentWindow;
+
 @property CGFloat cellSize;
 
 - (IBAction)textEditDone:(id)sender;
@@ -60,25 +62,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPublished:) name:CARoomDidPublishedToFacebookNotification object:nil];
+    
+    self.currentWindow = [[UIApplication sharedApplication].windows lastObject];
+    MBProgressHUD *currentHUD = [MBProgressHUD HUDForView:self.currentWindow];
+    if (currentHUD == nil) {
+        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:self.currentWindow animated:YES];
+    } else {
+        [[Utilites shared].progressHUD performSelector:@selector(show:) withObject:nil];
+    }
  
-    [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     [self configureInputTextViewLayer];
     NSString *roomName = [_currentChatRoom.fields objectForKey:kName];
     self.title = roomName;
     [self creatingOrJoiningRoom];
-}
-
-- (void)setSpinner
-{
-    if (!self.indicatorView) {
-        self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.indicatorView.frame = CGRectMake(self.chatRoomTable.frame.size.width/2 - 10, self.chatRoomTable.frame.size.height/2 -10, 20 , 20);
-        [self.indicatorView hidesWhenStopped];
-        self.indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-        self.indicatorView.color = [UIColor blackColor];
-        [self.view addSubview:self.indicatorView];
-    }
-    [self.indicatorView startAnimating];
 }
 
 - (void)configureInputTextViewLayer
@@ -285,19 +281,22 @@
     [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
     [self.chatRoomTable reloadData];
     
-     [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
 }
 
 - (void)messageReceived {
     self.chatHistory = [QBStorage shared].chatHistory;
     self.chatRoomDataSource.chatHistory = self.chatHistory;
     [self resetTableView];
-    [NSObject cancelPreviousPerformRequestsWithTarget:[Utilites shared].progressHUD selector:@selector(hide:) object:nil];
-    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
+    
+    MBProgressHUD *currentHUD = [Utilites shared].progressHUD;
+    [NSObject cancelPreviousPerformRequestsWithTarget:currentHUD selector:@selector(hide:) object:nil];
+    [currentHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
 }
 
 - (void)recordPublished:(NSNotification *)aNotification {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
     NSError *error = aNotification.object;
     NSString *alertText;
     if (error) {
@@ -383,8 +382,7 @@
 
 - (IBAction)share:(id)sender
 {
-    //[self.indicatorView startAnimating];
-    [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
     
     // Ask for publish_actions permissions in context

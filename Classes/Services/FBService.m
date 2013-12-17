@@ -148,15 +148,11 @@
 
 + (NSMutableDictionary *)findFBConversationWithFriend:(NSMutableDictionary *)aFriend {
     
-    NSArray *users = [[FBStorage shared].allFriendsHistoryConversation allValues];
-    for (NSMutableDictionary *user in users) {
-        NSArray *to = [[user objectForKey:kTo] objectForKey:kData];
-        for (NSDictionary *t in to) {
-            if ([[t objectForKey:kId] isEqual:[aFriend objectForKey:kId]]) {
-                return user;
-            }
-        }
+    NSMutableDictionary *conversation = [FBStorage shared].allFriendsHistoryConversation[aFriend[kId]] ;
+    if (conversation != nil) {
+        return conversation;
     }
+    
     // if not return, create new conversation:
     NSMutableDictionary *newConversation = [[NSMutableDictionary alloc]init];
     // adding commnets to this conversation:

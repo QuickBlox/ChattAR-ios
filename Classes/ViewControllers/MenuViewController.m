@@ -225,6 +225,7 @@
 
     //Destroy QBSession
     [QBAuth destroySessionWithDelegate:nil];
+    
     [[FBStorage shared] setAccessToken:nil];
     [[FBStorage shared] setMe:nil];
     [Flurry logEvent:kFlurryEventUserWasLoggedOut];
