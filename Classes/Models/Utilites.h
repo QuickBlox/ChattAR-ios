@@ -16,6 +16,7 @@
 @property (assign, nonatomic) BOOL isArNotAvailable;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) MBProgressHUD *progressHUD;
+@property (strong, nonatomic) NSDictionary *fullTimePassedFormat;
 
 + (instancetype)shared;
 + (BOOL)deviceSupportsAR;
@@ -25,7 +26,13 @@
 - (BOOL)isUserLoggedIn;
 - (void)setUserLogIn;
 
+
+#pragma mark -
+#pragma mark Date Formatter
+
 - (NSInteger)yearsFromDate:(NSString *)dateString;
+- (NSString *)fullFormatPassedTimeFromDate:(NSDate *)date;
+
 
 #pragma mark -
 #pragma mark Escape symbols encoding

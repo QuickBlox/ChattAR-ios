@@ -121,7 +121,7 @@
     NSURL *urlImg = [NSURL URLWithString:uStr];
     
     // date formatter
-    NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
+    NSString *time = [[Utilites shared] fullFormatPassedTimeFromDate:message.datetime];
     
     // getting location
     double_t latutude = [quoteDict[kLatitude] doubleValue];

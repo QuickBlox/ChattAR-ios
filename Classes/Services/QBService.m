@@ -134,6 +134,12 @@
         temporary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:messages,kMessage, nil];
         [[QBStorage shared].allQuickBloxHistoryConversation setObject:temporary forKey:userID];
         // load user:
+        NSMutableDictionary *opponent = [self findUserWithID:userID];
+        if (opponent != nil) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
+            return;
+        }
+        
         [[FBService shared] userProfileWithID:userID withBlock:^(id result) {
             //
             NSMutableDictionary *newUser = (FBGraphObject *)result;
@@ -220,6 +226,18 @@
         [conversation setObject:messages forKey:kMessage];
     }
     return conversation;
+}
+
+- (NSMutableDictionary *)findUserWithID:(NSString *)ID {
+    NSArray *users = [QBStorage shared].otherUsers;
+    NSMutableDictionary *currentUser = nil;
+    for (NSMutableDictionary *user in users) {
+        if ([ID isEqualToString:user[kId]]) {
+            currentUser = user;
+            break;
+        }
+    }
+    return currentUser;
 }
 
 

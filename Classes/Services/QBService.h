@@ -42,6 +42,7 @@
 
 - (NSMutableDictionary *)findConversationToUserWithMessage:(QBChatMessage *)message;
 - (NSMutableDictionary *)findConversationWithFriend:(NSMutableDictionary *)aFriend;
+- (NSMutableDictionary *)findUserWithID:(NSString *)ID;
 
 
 #pragma mark -

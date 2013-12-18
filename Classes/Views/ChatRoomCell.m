@@ -78,7 +78,7 @@
     }
     
     // post message date
-    NSString *time = [[Utilites shared].dateFormatter stringFromDate:message.datetime];
+    NSString *time = [[Utilites shared] fullFormatPassedTimeFromDate:message.datetime];
     
     // putting data to fields
     [self.userPhoto setImageURL:url];
@@ -112,7 +112,7 @@
     [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
 	NSDate *timeStamp = [[Utilites shared].dateFormatter dateFromString:date];
     [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
-    NSString *time = [[Utilites shared].dateFormatter stringFromDate:timeStamp];
+    NSString *time = [[Utilites shared] fullFormatPassedTimeFromDate:timeStamp];
     
     // putting data to fields
     [self.userPhoto setImageURL:url];

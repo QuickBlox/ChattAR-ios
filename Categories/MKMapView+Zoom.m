@@ -3,14 +3,16 @@
 //
 
 #import "MKMapView+Zoom.h"
+#import "ChatRoomStorage.h"
 
-#define MINIMUM_MAP_ZOOM 7000
+#define MINIMUM_MAP_ZOOM 20000
 
 @implementation MKMapView (Zoom)
 
 - (void)zoomToFitAnnotations
 {
-    if (self.annotations.count < 1) {
+    NSArray *rooms = [ChatRoomStorage shared].allLocalRooms;
+    if ([rooms count] < 1) {
         return;
     }
     
@@ -20,13 +22,16 @@
 
     // for each annotation, decrease the top left longitude, increase the latitude
     // for each annotation, increase the bot right longitude, decrease the latitude
-    
-    for(id <MKAnnotation> annotation in self.annotations) {
-        topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude);
-        topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude);
+    int i;
+    for(i=0; i<3; i++) {
+        double_t roomLongitude = [((QBCOCustomObject *)rooms[i]).fields[kLongitude] doubleValue];
+        double_t roomLatitude = [((QBCOCustomObject *)rooms[i]).fields[kLatitude] doubleValue];
         
-        bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude);
-        bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude);
+        topLeftCoord.longitude = fmin(topLeftCoord.longitude, roomLongitude);
+        topLeftCoord.latitude = fmax(topLeftCoord.latitude, roomLatitude);
+        
+        bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, roomLongitude);
+        bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, roomLatitude);
     }
     
     // Now we turn the Core Location Coordinates (which are real world GPS coordinates) into MKMapView points (which are points on a View)
@@ -55,7 +60,7 @@
     mapRect.size = MKMapSizeMake(mapWidth, mapHeight);
     
     //You can then futher padd the map, and it will return a rect that fits based on it's bounds
-    MKMapRect adjustedRect = [self mapRectThatFits:mapRect edgePadding:UIEdgeInsetsMake(40.0, 40.0, 40.0, 40.0)];
+    MKMapRect adjustedRect = [self mapRectThatFits:mapRect edgePadding:UIEdgeInsetsMake(40.0, 40.0, 40.0, 40.0)];   // 40 40 40 40
 
     [self setVisibleMapRect:adjustedRect animated:YES];
 }
