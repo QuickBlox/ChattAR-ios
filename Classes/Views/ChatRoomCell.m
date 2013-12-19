@@ -25,21 +25,22 @@
         self.message = [[UILabel alloc] init];
         self.message.textColor = [UIColor whiteColor];
         self.message.backgroundColor = [UIColor clearColor];
+        self.message.font = [UIFont systemFontOfSize:15.0f];
         self.message.numberOfLines = 0;
         [self.contentView addSubview:self.message];
         
-        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 180, 20)];
+        self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 155, 20)];
         self.userName.textColor = [UIColor whiteColor];
-        self.userName.font = [UIFont boldSystemFontOfSize:18.0];
+        self.userName.font = [UIFont boldSystemFontOfSize:16.0];
         self.userName.textAlignment = UITextAlignmentLeft;
         self.userName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.userName];
         // date time of message
-        self.postMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(245.0f, 20.0f, 55.0f, 20.0f)];
+        self.postMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(235.0f, 20.0f, 65.0f, 20.0f)];
         self.postMessageDate.textAlignment = UITextAlignmentRight;
         self.postMessageDate.textColor = [UIColor whiteColor];
         self.postMessageDate.backgroundColor = [UIColor clearColor];
-        self.postMessageDate.font = [UIFont systemFontOfSize:13.0f];
+        self.postMessageDate.font = [UIFont systemFontOfSize:10.0f];
         [self.contentView addSubview:self.postMessageDate];
         
         // Distance to user label
@@ -89,7 +90,7 @@
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };
-    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     
     [self.message setFrame:CGRectMake(75, 43, 225, size.height)];
     [self.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
@@ -109,9 +110,7 @@
     
     // post message date
     NSString *date = [message objectForKey:kCreatedTime];
-    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
 	NSDate *timeStamp = [[Utilites shared].dateFormatter dateFromString:date];
-    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
     NSString *time = [[Utilites shared] fullFormatPassedTimeFromDate:timeStamp];
     
     // putting data to fields
@@ -122,7 +121,7 @@
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };
-    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [[self.message text] sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     
     [self.message setFrame:CGRectMake(75, 43, 225, size.height)];
     [self.colorBuble setFrame:CGRectMake(55, 10, 255, size.height+padding*2)];
@@ -131,7 +130,7 @@
 + (CGFloat)configureHeightForCellWithMessage:(NSString *)msg {
     CGSize textSize = { 225.0, 10000.0 };
     //changing hight
-    CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     size.height += padding*2;
     return size.height+10.0f;
 }

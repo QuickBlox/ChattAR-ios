@@ -35,13 +35,14 @@
         
         self.qUserName = [[UILabel alloc] initWithFrame:CGRectMake(128, 20, 132, 20)];
         self.qUserName.textColor = [UIColor darkGrayColor];
-        self.qUserName.font = [UIFont boldSystemFontOfSize:18.0];
+        self.qUserName.font = [UIFont boldSystemFontOfSize:16.0];
         self.qUserName.textAlignment = UITextAlignmentLeft;
         self.qUserName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.qUserName];
         
         self.qMessage = [[UILabel alloc] initWithFrame:CGRectMake(128, 40, 182, 20)];
         self.qMessage.textColor = [UIColor darkGrayColor];
+        self.qMessage.font = [UIFont systemFontOfSize:15.0f];
         self.qMessage.backgroundColor = [UIColor clearColor];
         self.qMessage.numberOfLines = 1;
         [self.contentView addSubview:self.qMessage];
@@ -50,7 +51,7 @@
         self.qDateTime.textAlignment = UITextAlignmentRight;
         self.qDateTime.textColor = [UIColor darkGrayColor];
         self.qDateTime.backgroundColor = [UIColor clearColor];
-        self.qDateTime.font = [UIFont systemFontOfSize:13.0f];
+        self.qDateTime.font = [UIFont systemFontOfSize:10.0f];
         [self.contentView addSubview:self.qDateTime];
         
         // REPLY:
@@ -67,9 +68,9 @@
         self.rColorBuble = [[UIImageView alloc] init];
         [self.contentView addSubview:self.rColorBuble];
         
-        self.rUserName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20+50, 180, 20)];
+        self.rUserName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20+50, 155, 20)];
         self.rUserName.textColor = [UIColor whiteColor];
-        self.rUserName.font = [UIFont boldSystemFontOfSize:18.0];
+        self.rUserName.font = [UIFont boldSystemFontOfSize:16.0];
         self.rUserName.textAlignment = UITextAlignmentLeft;
         self.rUserName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.rUserName];
@@ -77,14 +78,15 @@
         self.rMessage = [[UILabel alloc] init];
         self.rMessage.textColor = [UIColor whiteColor];
         self.rMessage.backgroundColor = [UIColor clearColor];
+        self.rMessage.font = [UIFont systemFontOfSize:15.0f];
         self.rMessage.numberOfLines = 0;
         [self.contentView addSubview:self.rMessage];
         
-        self.rDateTime = [[UILabel alloc] initWithFrame:CGRectMake(245.0f, 20 + 50, 55.0f, 20.0f)];
+        self.rDateTime = [[UILabel alloc] initWithFrame:CGRectMake(235.0f, 20 + 50, 65.0f, 20.0f)];
         self.rDateTime.textAlignment = UITextAlignmentRight;
         self.rDateTime.textColor = [UIColor whiteColor];
         self.rDateTime.backgroundColor = [UIColor clearColor];
-        self.rDateTime.font = [UIFont systemFontOfSize:13.0f];
+        self.rDateTime.font = [UIFont systemFontOfSize:10.0f];
         [self.contentView addSubview:self.rDateTime];
         
         // set selection style: none
@@ -113,7 +115,12 @@
     // getting data from dictionary
     self.qUserName.text = [quoted objectForKey:kUserName];
     self.qMessage.text = [quoted objectForKey:kMessage];
-    self.qDateTime.text = [quoted objectForKey:kDateTime];
+    
+    NSString *dateTime = quoted[kDateTime];
+    NSDate *date =[[Utilites shared].dateFormatter dateFromString:dateTime];
+    NSString *currentDate = [[Utilites shared] fullFormatPassedTimeFromDate:date];
+    
+    self.qDateTime.text = currentDate;
     
     // REPLY:
     // getting avatar url
@@ -132,7 +139,7 @@
     
     //changing hight
     CGSize textSize = { 225.0, 10000.0 };
-    CGSize size = [[quoteDict objectForKey:kMessage] sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [[quoteDict objectForKey:kMessage] sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     
     [self.rMessage setFrame:CGRectMake(75, 43+50, 225, size.height)];
     [self.rColorBuble setFrame:CGRectMake(55, 10+50, 255, size.height+padding*2)];
@@ -147,7 +154,7 @@
 + (CGFloat)configureHeightForCellWithDictionary:(NSString *)msg {
     CGSize textSize = { 225.0, 10000.0 };
     //changing hight
-    CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:17.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [msg sizeWithFont:[UIFont systemFontOfSize:15.0f] constrainedToSize:textSize lineBreakMode:NSLineBreakByWordWrapping];
     size.height += padding*2;
     return size.height + 10.0f + 50;
 }

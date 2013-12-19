@@ -40,4 +40,10 @@
 +(NSString*)urlencode:(NSString*)unencodedString;
 +(NSString*)urldecode:(NSString*)encodedString;
 
+
+#pragma mark -
+#pragma mark AVAudioPlayer
+
++ (void)playSound;
+
 @end

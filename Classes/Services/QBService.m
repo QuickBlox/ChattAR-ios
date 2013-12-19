@@ -282,6 +282,7 @@
     NSMutableDictionary *messageData = [self unarchiveMessageData:message.text];
     NSString *facebookID = [messageData objectForKey:kId];
     [self cachingMessage:message forUserID:facebookID];
+    [Utilites playSound];
 }
 
 - (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName {

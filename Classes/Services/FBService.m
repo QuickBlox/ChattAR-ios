@@ -93,10 +93,9 @@
     NSMutableDictionary *facebookMessage = [[NSMutableDictionary alloc] init];
     [facebookMessage setValue:messageText forKey:kMessage];
     NSDate *date = [NSDate date];
-    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
+    //[[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
     NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
     [facebookMessage setValue:createdTime forKey:kCreatedTime];
-    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
     NSMutableDictionary *from = [[NSMutableDictionary alloc] init];
     [from setValue:[[FBStorage shared].me objectForKey:kId] forKey:kId];
     [from setValue:[[FBStorage shared].me objectForKey:kName] forKey:kName];
@@ -400,10 +399,8 @@
     
     // sate datetime
     NSDate *date = [NSDate date];
-    [[Utilites shared].dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
     NSString *createdTime = [[Utilites shared].dateFormatter stringFromDate:date];
     [message setValue:createdTime forKey:kCreatedTime];
-    [[Utilites shared].dateFormatter setDateFormat:@"HH:mm"];
     
     // save message to history
     [[[[[FBStorage shared].allFriendsHistoryConversation objectForKey:fromID]
@@ -411,6 +408,7 @@
     
     // post notification
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
+    [Utilites playSound];
 }
 
 @end

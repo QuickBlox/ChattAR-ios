@@ -37,17 +37,15 @@
         container.clipsToBounds = YES;
         [container setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:container];
-        [container release];
         
         UIImageView *arrow = [[UIImageView alloc] initWithFrame:CGRectMake(148, 13, 8, 14)];
         arrow.image = [UIImage imageNamed:@"pincallout@2x.png"];
         [container addSubview:arrow];
-        [arrow release];
         
         UIImageView *locationImage = [[UIImageView alloc] initWithFrame:CGRectMake(47, 23, 6, 9)];
         locationImage.image = [UIImage imageNamed:@"pinicon@2x.png"];
         [container addSubview:locationImage];
-        [arrow release];
+
         
         // add Room Picture
 		userPhotoView = [[AsyncImageView alloc] initWithFrame: CGRectMake(0, 0, 40, 40)];
@@ -57,7 +55,6 @@
             [userPhotoView setImageURL:[NSURL URLWithString:imageURL]];
         }
 		[container addSubview: userPhotoView];
-        [userPhotoView release];
         
         // add userName
         userName = [[UILabel alloc] initWithFrame:CGRectMake(47, 5, 100, container.frame.size.height/2 - 5)];
@@ -66,7 +63,6 @@
         [userName setFont:[UIFont boldSystemFontOfSize:14]];
         [userName setTextColor:[UIColor blackColor]];
         [container addSubview:userName];
-        [userName release];
         
         // add userStatus
         userStatus = [[UILabel alloc] initWithFrame:CGRectMake(56, 20, container.frame.size.width-43, container.frame.size.height/2 -5)];
@@ -74,7 +70,6 @@
         [userStatus setBackgroundColor:[UIColor clearColor]];
         [userStatus setTextColor:[UIColor darkGrayColor]];
         [container addSubview:userStatus];
-        [userStatus release];
 	}
 	
     return self;
@@ -84,7 +79,6 @@
     CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:[[_currentRoom.fields objectForKey:kLatitude] doubleValue] longitude:[[_currentRoom.fields objectForKey:kLongitude] doubleValue]];
     //NSLog(@"Loc: %f %f", newOriginLocation.coordinate.latitude, newOriginLocation.coordinate.longitude);
     CLLocationDistance _distance = [pointLocation distanceFromLocation:newOriginLocation];
-    [pointLocation release];
     
     if(_distance < 0){
         [userStatus setHidden:YES];

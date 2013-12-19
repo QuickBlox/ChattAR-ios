@@ -25,6 +25,12 @@ static const CGFloat kWeek = 604800.0f;
 static const CGFloat kMonth = 2419200.0f;
 static const CGFloat kYear = 29030400.0f;
 
+// Player
+
+static AVAudioPlayer *audioPlayer;
+
+
+
 #import "Utilites.h"
 #import "MBProgressHUD.h"
 
@@ -42,7 +48,7 @@ static const CGFloat kYear = 29030400.0f;
 - (id)init {
     if (self = [super init]) {
         self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setDateFormat:@"HH:mm"];
+        [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
         [self.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
         self.userLoggedIn = NO;
         self.isArNotAvailable = NO;
@@ -53,7 +59,7 @@ static const CGFloat kYear = 29030400.0f;
 - (NSInteger)yearsFromDate:(NSString *)dateString {
     [self.dateFormatter setDateFormat:@"MM/dd/yyyy"];
     NSDate *date = [self.dateFormatter dateFromString:dateString];
-    [self.dateFormatter setDateFormat:@"HH:mm"];
+    [self.dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"];
     NSDate *todayDate = [NSDate date];
     int seconds = [todayDate timeIntervalSinceDate:date];
     
@@ -81,20 +87,21 @@ static const CGFloat kYear = 29030400.0f;
 
 # pragma mark -
 #pragma mark Time
+
 - (NSDictionary *)fullTimePassedFormat
 {
 	if (_fullTimePassedFormat == nil) {
-		_fullTimePassedFormat = @{kSecondsKey : @"%d sec. ago",
-								  kMinutesKey : @"%d min. ago",
-								  kHoursKey : @"%d hr. ago",
-                                  kDayKey : @"%d days ago",
-                                  kDaysKey : @"%d days ago",
-                                  kWeekKey : @"%d week ago",
-								  kWeeksKey : @"%d weeks ago",
-                                  kMonthKey : @"%d month ago",
-								  kMonthsKey : @"%d months ago",
-                                  kYearKey : @"%d year ago",
-								  kYearsKey : @"%d years ago"};
+		_fullTimePassedFormat = @{kSecondsKey : @"%d s. ago",
+								   kMinutesKey : @"%d min. ago",
+								   kHoursKey : @"%d h. ago",
+								   kDaysKey : @"%d d. ago",
+								   kDayKey : @"%d d. ago",
+								   kWeeksKey : @"%d w. ago",
+								   kWeekKey : @"%d w. ago",
+								   kMonthsKey : @"%d m. ago",
+								   kMonthKey : @"%d m. ago",
+								   kYearsKey : @"%d y. ago",
+								   kYearKey : @"%d y. ago",};
 	}
 	return _fullTimePassedFormat;
 }
@@ -220,6 +227,25 @@ static const CGFloat kYear = 29030400.0f;
 +(NSString*)urldecode:(NSString*)encodedString{
 	NSString* decodedString =CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding( NULL, (CFStringRef)encodedString, CFSTR(""), kCFStringEncodingUTF8));
 	return decodedString;
+}
+
+
+#pragma mark -
+#pragma mark AVPlayer
+
++ (void)playSound {
+    if (audioPlayer == nil) {
+        //Get the filename of the sound file:
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"sound" ofType:@"mp3"];
+		
+        //Get a URL for the sound file
+        NSURL *filePath = [NSURL fileURLWithPath:path];
+		
+        audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:filePath error:nil];
+        audioPlayer.volume = 1.0;
+        
+    }
+    [audioPlayer play];
 }
 
 @end
