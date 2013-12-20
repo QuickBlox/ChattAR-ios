@@ -214,7 +214,7 @@
     [[FBService shared] logOutChat];
 
     //log out from facebook
-    if ([FBSession activeSession].state == FBSessionStateOpen) {
+    if ([FBSession activeSession].state == FBSessionStateOpen || [FBSession activeSession].state == FBSessionStateOpenTokenExtended) {
         [[FBSession activeSession] closeAndClearTokenInformation];
     }
 

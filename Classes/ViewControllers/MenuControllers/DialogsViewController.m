@@ -83,7 +83,6 @@
         {
             user = self.friends[indexPath.row];
             conversation = [FBService findFBConversationWithFriend:user];
-            NSDictionary *terminate = [FBStorage shared].allFriendsHistoryConversation;
             ((DetailDialogsViewController *)segue.destinationViewController).isChatWithFacebookFriend = YES;
         }
             break;

@@ -92,7 +92,7 @@
 		696B59F717E99EF900D60537 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 696B59F517E99EF900D60537 /* Icon@2x.png */; };
 		6981247817DDFF2C00974C6A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247617DDFF2C00974C6A /* Default.png */; };
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
-		69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69864D39180D2CD700AAA554 /* ARViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69864D39180D2CD700AAA554 /* ARViewController.m */; };
 		6986DF9C1845FC9600F78FD9 /* QBEchoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9B1845FC9600F78FD9 /* QBEchoObject.m */; };
 		6986DFA018463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */; };
 		6986DFA518463FA000F78FD9 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA218463FA000F78FD9 /* ChatRoomCell.m */; };

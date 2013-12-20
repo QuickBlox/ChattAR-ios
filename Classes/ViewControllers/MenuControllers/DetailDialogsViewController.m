@@ -175,16 +175,22 @@
 #pragma mark Show/Hide Keyboard
 
 - (void)showKeyboard {
+    CGRect tableFrame = self.tableView.frame;
+    tableFrame.size.height -= 215;
+    
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
-        self.tableView.transform = CGAffineTransformMakeTranslation(0, -215);
+        self.tableView.frame = tableFrame;
     }];
 }
 
 - (void)hideKeyboard {
+    CGRect tableFrame = self.tableView.frame;
+    tableFrame.size.height += 215;
+    
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformIdentity;
-        self.tableView.transform = CGAffineTransformIdentity;
+        self.tableView.frame = tableFrame;
     }];
 }
 

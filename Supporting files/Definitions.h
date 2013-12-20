@@ -125,6 +125,12 @@
 #define minARMarkerAlpha 0.6f
 #define alphaStep() (1-minARMarkerAlpha)/countOfScaledChunks
 
+#define kFilteringFactor 0.05
+#define degreesToRadian(x) (M_PI * (x) / 180.0)
+#define radianToDegrees(x) ((x) * 180.0/M_PI)
+
+#define canvasFrame CGRectMake(0, 0, 320, 480)
+
 #define kFilename @"data"
 
 typedef void (^FBResultBlock) (id);

@@ -325,7 +325,9 @@
 {
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
-        self.chatRoomTable.transform = CGAffineTransformMakeTranslation(0, -215);
+        CGRect tableFrame = self.chatRoomTable.frame;
+        tableFrame.size.height -= 215;
+        self.chatRoomTable.frame = tableFrame;
     }];
 }
 
@@ -333,7 +335,9 @@
 {
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformIdentity;
-        self.chatRoomTable.transform = CGAffineTransformIdentity;;
+        CGRect tableFrame = self.chatRoomTable.frame;
+        tableFrame.size.height += 215;
+        self.chatRoomTable.frame = tableFrame;
     }];
 }
 
