@@ -233,7 +233,8 @@ static AVAudioPlayer *audioPlayer;
 #pragma mark -
 #pragma mark AVPlayer
 
-+ (void)playSound {
++ (void)playSound:(BOOL)played vibrate:(BOOL)vibrated {
+    if (played) {
     if (audioPlayer == nil) {
         //Get the filename of the sound file:
         NSString *path = [[NSBundle mainBundle] pathForResource:@"sound" ofType:@"mp3"];
@@ -246,6 +247,10 @@ static AVAudioPlayer *audioPlayer;
         
     }
     [audioPlayer play];
+    }
+    if (vibrated) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
 }
 
 @end

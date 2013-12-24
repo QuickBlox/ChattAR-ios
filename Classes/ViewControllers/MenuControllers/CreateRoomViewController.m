@@ -150,11 +150,13 @@
     self.cachedImage = scaledImage;
     [self dismissModalViewControllerAnimated:YES];
     [self.roomNameField becomeFirstResponder];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
     [self.roomNameField becomeFirstResponder];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 

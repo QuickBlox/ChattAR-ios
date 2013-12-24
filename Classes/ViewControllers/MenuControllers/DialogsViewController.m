@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     [Flurry logEvent:KFlurryEventDialogsScreenWasOpened];
+    self.searchBar.autocorrectionType= UITextAutocorrectionTypeNo;
     self.dialogsDataSource = [[DialogsDataSource alloc] init];
     self.tableView.dataSource = self.dialogsDataSource;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillTableView) name:CAChatDidReceiveOrSendMessageNotification object:nil];
@@ -51,6 +52,7 @@
 
 - (void)fillTableView {
     self.otherUsers = [QBStorage shared].otherUsers;
+    self.dialogsDataSource.otherUsers = self.otherUsers;
     [self.tableView reloadData];
 }
 

@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "LocationService.h"
 #import "ChatRoomStorage.h"
+#import "AppSettingsService.h"
 
 
 @implementation QBService
@@ -282,7 +283,10 @@
     NSMutableDictionary *messageData = [self unarchiveMessageData:message.text];
     NSString *facebookID = [messageData objectForKey:kId];
     [self cachingMessage:message forUserID:facebookID];
-    [Utilites playSound];
+    
+    // play sound and vibrate:
+    AppSettingsService *settingService = [AppSettingsService shared];
+    [Utilites playSound:settingService.soundEnabled vibrate:settingService.vibrationEnabled];
 }
 
 - (void)chatRoomDidReceiveMessage:(QBChatMessage *)message fromRoom:(NSString *)roomName {

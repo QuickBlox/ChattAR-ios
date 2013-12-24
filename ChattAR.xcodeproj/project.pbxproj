@@ -99,6 +99,9 @@
 		6986DFA618463FA000F78FD9 /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA418463FA000F78FD9 /* QuotedChatRoomCell.m */; };
 		6988D444185EFDFB0053530E /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6988D443185EFDFB0053530E /* Quickblox.framework */; };
 		6988F6B2181A62E000E1B30A /* QBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6988F6B1181A62E000E1B30A /* QBService.m */; };
+		698BB9D3186987F00000C1C9 /* CaptureSessionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 698BB9D2186987F00000C1C9 /* CaptureSessionService.m */; };
+		698BB9D51869942A0000C1C9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 698BB9D41869942A0000C1C9 /* Settings.bundle */; };
+		698BB9D8186996000000C1C9 /* AppSettingsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 698BB9D7186996000000C1C9 /* AppSettingsService.m */; };
 		698FFE29186347A50033D8EC /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 698FFE28186347A50033D8EC /* sound.mp3 */; };
 		69A4028B17D740F900E7BE1F /* local_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026417D740F900E7BE1F /* local_icon.png */; };
 		69A4028C17D740F900E7BE1F /* local_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69A4026517D740F900E7BE1F /* local_icon@2x.png */; };
@@ -422,6 +425,11 @@
 		6988D443185EFDFB0053530E /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = External/Quickblox.framework; sourceTree = "<group>"; };
 		6988F6B0181A62E000E1B30A /* QBService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBService.h; sourceTree = "<group>"; };
 		6988F6B1181A62E000E1B30A /* QBService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBService.m; sourceTree = "<group>"; };
+		698BB9D1186987F00000C1C9 /* CaptureSessionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureSessionService.h; sourceTree = "<group>"; };
+		698BB9D2186987F00000C1C9 /* CaptureSessionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureSessionService.m; sourceTree = "<group>"; };
+		698BB9D41869942A0000C1C9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		698BB9D6186996000000C1C9 /* AppSettingsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSettingsService.h; sourceTree = "<group>"; };
+		698BB9D7186996000000C1C9 /* AppSettingsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSettingsService.m; sourceTree = "<group>"; };
 		698FFE28186347A50033D8EC /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 		69A4026117D7374E00E7BE1F /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		69A4026417D740F900E7BE1F /* local_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = local_icon.png; sourceTree = "<group>"; };
@@ -948,6 +956,10 @@
 		6947463C1805A71600928ED4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				698BB9D1186987F00000C1C9 /* CaptureSessionService.h */,
+				698BB9D2186987F00000C1C9 /* CaptureSessionService.m */,
+				698BB9D6186996000000C1C9 /* AppSettingsService.h */,
+				698BB9D7186996000000C1C9 /* AppSettingsService.m */,
 				694746431805A71600928ED4 /* LocationService.h */,
 				694746441805A71600928ED4 /* LocationService.m */,
 				6947463D1805A71600928ED4 /* ChatRoomStorage.h */,
@@ -1228,6 +1240,7 @@
 		7B8C3FDD15D8D55800E42A41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				698BB9D41869942A0000C1C9 /* Settings.bundle */,
 				6988D443185EFDFB0053530E /* Quickblox.framework */,
 				BF0001D3185A2FC800F83907 /* libFlurry_4.3.0.a */,
 				69D4BC6C185A1F3900A31373 /* FacebookSDK.framework */,
@@ -2060,6 +2073,7 @@
 				69D721DC185A22980075ABEB /* cover_image@2x.png in Resources */,
 				69ECC0C417E1AD9F00187CF8 /* 01_grey_chat_bubble@2x.png in Resources */,
 				691AC02D184DDD2300BBEE4B /* pinicon.png in Resources */,
+				698BB9D51869942A0000C1C9 /* Settings.bundle in Resources */,
 				69ECC0C517E1AD9F00187CF8 /* 01_share.png in Resources */,
 				69ECC0C617E1AD9F00187CF8 /* 01_share@2x.png in Resources */,
 				BF00035D185A2FDF00F83907 /* build-libidn.sh in Resources */,
@@ -2092,6 +2106,7 @@
 				BF000336185A2FDF00F83907 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				BF000350185A2FDF00F83907 /* GCDAsyncSocket.m in Sources */,
 				69D5B57C1831345C001EA4FE /* NonFriendDialogDataSource.m in Sources */,
+				698BB9D3186987F00000C1C9 /* CaptureSessionService.m in Sources */,
 				BF000333185A2FDF00F83907 /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				693C7E5C17CCDCF300D7F0A9 /* SASlideMenuLeftMenuSegue.m in Sources */,
 				693C7E5D17CCDCF300D7F0A9 /* SASlideMenuNavigationController.m in Sources */,
@@ -2233,6 +2248,7 @@
 				69B96E3117E89EED00C94DB7 /* MenuCell.m in Sources */,
 				BF00033A185A2FDF00F83907 /* XMPPvCardAvatarModule.m in Sources */,
 				BF0002F2185A2FDF00F83907 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
+				698BB9D8186996000000C1C9 /* AppSettingsService.m in Sources */,
 				69B96E3217E89EED00C94DB7 /* UserProfileCell.m in Sources */,
 				BF000315185A2FDF00F83907 /* XMPPLastActivity.m in Sources */,
 				694746461805A71600928ED4 /* FBService.m in Sources */,
@@ -2324,9 +2340,9 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Khomenko Igor (67859YS754)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Khomenko Igor (67859YS754)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Khomenko Igor (67859YS754)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/External",
@@ -2348,7 +2364,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "6FEA5496-FFBF-4739-BDF9-3BB9C8D4265E";
+				PROVISIONING_PROFILE = "4B1B1E94-B6E0-4E61-93B2-C288C29F3B99";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2358,7 +2374,7 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Khomenko Igor (67859YS754)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/External",
@@ -2378,7 +2394,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "6FEA5496-FFBF-4739-BDF9-3BB9C8D4265E";
+				PROVISIONING_PROFILE = "4B1B1E94-B6E0-4E61-93B2-C288C29F3B99";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

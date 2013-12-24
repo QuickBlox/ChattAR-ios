@@ -13,6 +13,7 @@
 #import "LocationService.h"
 #import "QBService.h"
 #import "QBStorage.h"
+#import "AppSettingsService.h"
 
 
 @interface SplashViewController () <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>

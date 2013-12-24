@@ -9,6 +9,7 @@
 #import "ChattARAppDelegate.h"
 #import "AppDelegate+MemoryWarnings.h"
 #import "LocationService.h"
+#import "AppSettingsService.h"
 #import "FBService.h"
 #import "QBService.h"
 #import "QBStorage.h"
@@ -47,6 +48,8 @@
     
     //[Flurry setLogLevel:FlurryLogLevelDebug];
     [Flurry startSession:@"B22M9PDJH4F4D2J2FVBB"];
+    
+    [AppSettingsService shared];
     
     return YES;
 }
@@ -94,7 +97,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -11,6 +11,7 @@
 #import "XMPPStream.h"
 #import "FBStorage.h"
 #import "Utilites.h"
+#import "AppSettingsService.h"
 
 @implementation FBService{
     NSTimer *_presenceTimer;
@@ -408,7 +409,10 @@
     
     // post notification
     [[NSNotificationCenter defaultCenter] postNotificationName:CAChatDidReceiveOrSendMessageNotification object:nil];
-    [Utilites playSound];
+    
+    // play sound and vibrate:
+    AppSettingsService *service = [AppSettingsService shared];
+    [Utilites playSound:service.soundEnabled vibrate:service.vibrationEnabled];
 }
 
 @end

@@ -182,6 +182,7 @@
         self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
         self.tableView.frame = tableFrame;
     }];
+    [self scrollContentAccordingToChatHistory];
 }
 
 - (void)hideKeyboard {
@@ -194,6 +195,17 @@
     }];
 }
 
+-(void)scrollContentAccordingToChatHistory {
+    if (self.isChatWithFacebookFriend) {
+        if ([(_facebookDataSource.conversation[kComments])[kData] count] > 2) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[(_facebookDataSource.conversation[kComments])[kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            return;
+        }
+    }
+    if ([_quickBloxDataSource.conversation[kMessage] count] >2) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_quickBloxDataSource.conversation[kMessage] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
 
 #pragma mark -
 #pragma mark UITextField

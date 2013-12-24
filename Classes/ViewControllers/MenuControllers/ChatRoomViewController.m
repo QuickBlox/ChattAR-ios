@@ -281,7 +281,7 @@
     [[ChatRoomStorage shared] increaseRankOfRoom:self.currentChatRoom];
     [self.chatRoomTable reloadData];
     
-    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:2.0];
 }
 
 - (void)messageReceived {
@@ -291,12 +291,12 @@
     
     MBProgressHUD *currentHUD = [Utilites shared].progressHUD;
     [NSObject cancelPreviousPerformRequestsWithTarget:currentHUD selector:@selector(hide:) object:nil];
-    [currentHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
+    [currentHUD performSelector:@selector(hide:) withObject:nil afterDelay:2.0];
 }
 
 - (void)recordPublished:(NSNotification *)aNotification {
 
-    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:1.0];
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:2.0];
     NSError *error = aNotification.object;
     NSString *alertText;
     if (error) {
@@ -328,6 +328,9 @@
         CGRect tableFrame = self.chatRoomTable.frame;
         tableFrame.size.height -= 215;
         self.chatRoomTable.frame = tableFrame;
+        if ([_chatHistory count] > 2) {
+            [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        }
     }];
 }
 

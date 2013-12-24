@@ -6,10 +6,8 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-#import <AVFoundation/AVFoundation.h>
-#import <CoreMedia/CoreMedia.h>
-#import <CoreVideo/CoreVideo.h>
 
+#import <CoreMotion/CoreMotion.h>
 #import "ARViewController.h"
 #import "ChatRoomViewController.h"
 #import "ARCoordinate.h"
@@ -17,6 +15,7 @@
 #import "ARMarkerView.h"
 #import "LocationService.h"
 #import "ChatRoomStorage.h"
+#import "CaptureSessionService.h"
 
 
 @interface ARViewController () <UIAccelerometerDelegate, CLLocationManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UIActionSheetDelegate>
@@ -33,7 +32,7 @@
 @property (nonatomic, assign) double latestHeading;
 @property (nonatomic, assign) float  viewAngle;
 
-@property (nonatomic, strong) UIAccelerometer         *accelerometerManager;
+@property (nonatomic, strong) CMMotionManager         *motionManager;
 @property (nonatomic, strong) ARCoordinate            *centerCoordinate;
 @property (nonatomic, strong) CLLocation              *centerLocation;
 @property (nonatomic, strong) UIImageView             *displayView;
@@ -44,12 +43,6 @@
 
 @property (nonatomic, strong) NSMutableArray *coordinates;
 @property (retain) NSMutableArray *coordinateViews;
-
-
-/*!
- @brief	The capture session takes the input from the camera and capture it
- */
-@property (nonatomic, retain) AVCaptureSession *captureSession;
 
 - (void) updateCenterCoordinate;
 - (void) startListening;
@@ -66,16 +59,16 @@
     NSArray *sliderNumbers;
 }
 
-@synthesize accelerometerManager, displayView, centerCoordinate, scaleViewsBasedOnDistance, isFirstUpdateLocation,transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
+@synthesize displayView, centerCoordinate, scaleViewsBasedOnDistance, isFirstUpdateLocation,transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
 @synthesize latestHeading, viewAngle, coordinateViews;
-@synthesize captureSession;
 @synthesize distanceSlider, distanceLabel;
 
 
 #pragma mark - 
-#pragma mark Init & dealloc 
+#pragma mark Display Configuration
 
-- (void)configureOptions {
+- (void)configureOptions
+{
 	coordinates		= [[NSMutableArray alloc] init];
 	coordinateViews	= [[NSMutableArray alloc] init];
 	latestHeading	= -1.0f;
@@ -96,47 +89,66 @@
     sliderNumbers = @[@1000, @5000, @10000, @50000, @150000, @500000, @1000000, @(maxARDistance)];
 }
 
-- (void)initDisplay{
+- (void)initDisplay
+{
     displayView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen]  bounds]];
     [displayView setUserInteractionEnabled:YES];
     displayView.clipsToBounds = YES;
+    [displayView setBackgroundColor:[UIColor clearColor]];
     self.view = displayView;
 }
 
-- (void)loadSomeOptions {
-    [self initDisplay];
-    [self configureOptions];
-    
-	distanceSlider = [[UISlider alloc] init];
+
+- (void)configureDistanceSlider
+{
+    distanceSlider = [[UISlider alloc] init];
 	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
 	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
 	distanceSlider.minimumValue =  0;
 	distanceSlider.maximumValue = [sliderNumbers count]-1;
     distanceSlider.continuous = YES;
-    [self.view addSubview:distanceSlider];
 	[distanceSlider setValue:2 animated:NO];
     
+    if(IS_HEIGHT_GTE_568){
+        CGRect distanceSliderFrame = self.distanceSlider.frame;
+        distanceSliderFrame.origin.y += 44;
+        [self.distanceSlider setFrame:distanceSliderFrame];
+    }
+    [self.displayView addSubview:distanceSlider];
+}
+
+- (void)configureDistanceLabel
+{
     distanceLabel = [[UILabel alloc] init];
     [distanceLabel setFrame:CGRectMake(19, 335, 100, 20)];
     [distanceLabel setBackgroundColor:[UIColor clearColor]];
     [distanceLabel setFont:[UIFont systemFontOfSize:12]];
     [distanceLabel setTextColor:[UIColor whiteColor]];
     distanceLabel.text = [NSString stringWithFormat:@"%d km", [[sliderNumbers objectAtIndex:distanceSlider.value] intValue]/1000];
-    [self.view addSubview:distanceLabel];
-    
-    // set dist
-    NSUInteger index = distanceSlider.value;
-    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
     
     if(IS_HEIGHT_GTE_568){
-        CGRect distanceSliderFrame = self.distanceSlider.frame;
-        distanceSliderFrame.origin.y += 44;
-        [self.distanceSlider setFrame:distanceSliderFrame];
-        
         CGRect distanceLabelFrame = self.distanceLabel.frame;
         distanceLabelFrame.origin.y += 44;
         [self.distanceLabel setFrame:distanceLabelFrame];
     }
+    [self.displayView addSubview:distanceLabel];
+}
+
+- (void)loadOptions
+{
+    [self initDisplay];
+    [self displayAR];
+    [self configureOptions];
+
+    // display Slider and label:
+    [self configureDistanceSlider];
+    [self configureDistanceLabel];
+    
+    
+    // set default distance
+    NSUInteger index = distanceSlider.value;
+    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+
 }
 
 - (void)distanceDidChanged:(UISlider *)slider
@@ -152,27 +164,21 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    [self loadSomeOptions];
+    
+    [self loadOptions];
     
     [Flurry logEvent:kFlurryEventARScreenWasOpened];
 	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
 	distanceSlider.transform = trans;
-	[self.view bringSubviewToFront:distanceSlider];
-    [self.view bringSubviewToFront:distanceLabel];
+	//[self.view bringSubviewToFront:distanceSlider];
+    //[self.view bringSubviewToFront:distanceLabel];
 	self.centerLocation = [[LocationService shared] myLocation];
-	[displayView setBackgroundColor:[UIColor blackColor]];
-    [self displayAR];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:NO];
+    
     [self refreshWithNewRooms:[[ChatRoomStorage shared] allLocalRooms]];
 }
 
 - (void)dealloc {
-    self.accelerometerManager.delegate = nil;
     [LocationService shared].myLocationManager.delegate = [LocationService shared];
-	
 	self.coordinateViews = nil;
 }
 
@@ -189,8 +195,12 @@
 
 // This is needed to start showing the Camera of the Augemented Reality Toolkit.
 - (void)displayAR {
-	
-    [self initCapture];
+    
+    // show Camera capture preview
+    CGRect layerRect = [[self.displayView layer] bounds];
+    [[CaptureSessionService shared].prewiewLayer setBounds:layerRect];
+    [[CaptureSessionService shared].prewiewLayer setPosition:CGPointMake(CGRectGetMidX(layerRect),CGRectGetMidY(layerRect))];
+    [self.displayView.layer addSublayer:[CaptureSessionService shared].prewiewLayer];
     
 	[self startListening];
 }
@@ -198,14 +208,44 @@
 
 
 - (void)startListening {
-    
+    // Core Location:
     [[LocationService shared].myLocationManager setDelegate:self];
     
-	if (!self.accelerometerManager) {
-		self.accelerometerManager = [UIAccelerometer sharedAccelerometer];
-		self.accelerometerManager.updateInterval = 0.1;
-		self.accelerometerManager.delegate = self;
-	}
+    // Accelerometr:
+        self.motionManager = [[CMMotionManager alloc] init];
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+        if (self.motionManager.accelerometerAvailable) {
+            self.motionManager.accelerometerUpdateInterval = 1.0/10.0;
+            
+            [self.motionManager startAccelerometerUpdatesToQueue:queue withHandler:
+             ^(CMAccelerometerData *accelerometerData, NSError *error) {
+                 NSString *str;
+                 if(error) {
+                     [self.motionManager stopAccelerometerUpdates];
+                     str = [NSString stringWithFormat:@"Accelerometer error: %@", error];
+                 } else {
+                 
+                     switch (currentOrientation) {
+                         case UIDeviceOrientationLandscapeLeft:
+                             viewAngle = atan2(accelerometerData.acceleration.x, accelerometerData.acceleration.z);
+                             break;
+                         case UIDeviceOrientationLandscapeRight:
+                             viewAngle = atan2(-accelerometerData.acceleration.x, accelerometerData.acceleration.z);
+                             break;
+                         case UIDeviceOrientationPortrait:
+                             viewAngle = atan2(accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                             break;
+                         case UIDeviceOrientationPortraitUpsideDown:
+                             viewAngle = atan2(-accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                             break;	
+                         default:
+                             break;
+                     }
+                     
+                     [self updateCenterCoordinate];
+                 }
+             }];
+    }
 	
 	if (!self.centerCoordinate) 
 		self.centerCoordinate = [ARCoordinate coordinateWithRadialDistance:1.0 inclination:0 azimuth:0];
@@ -225,7 +265,7 @@
 	
     
     // add new
-    [self addPoints:newRooms ];
+    [self addPoints:newRooms];
 }
 
 - (void)clear {
@@ -261,12 +301,12 @@
     UIView *markerView = [self viewForAnnotation:roomAnnotation];
     
     // create marker location
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:[[roomAnnotation.fields objectForKey:kLatitude] doubleValue]
-                                                      longitude:[[roomAnnotation.fields objectForKey:kLongitude] doubleValue]];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[roomAnnotation.fields[kLatitude] doubleValue]
+                                                      longitude:[roomAnnotation.fields[kLongitude] doubleValue]];
     
     // create AR coordinate
     ARCoordinate *coordinateForUser = [ARGeoCoordinate coordinateWithLocation:location
-                                                                locationTitle:[roomAnnotation.fields objectForKey:kName]];
+                                                                locationTitle:roomAnnotation.fields[kName]];
     
 	[self addCoordinate:coordinateForUser augmentedView:markerView animated:NO];
 }
@@ -358,32 +398,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 	
-}
-
-
-#pragma mark - 
-#pragma mark UIAccelerometerDelegate 
-
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-	
-	switch (currentOrientation) {
-		case UIDeviceOrientationLandscapeLeft:
-			viewAngle = atan2(acceleration.x, acceleration.z);
-			break;
-		case UIDeviceOrientationLandscapeRight:
-			viewAngle = atan2(-acceleration.x, acceleration.z);
-			break;
-		case UIDeviceOrientationPortrait:
-			viewAngle = atan2(acceleration.y, acceleration.z);
-			break;
-		case UIDeviceOrientationPortraitUpsideDown:
-			viewAngle = atan2(-acceleration.y, acceleration.z);
-			break;	
-		default:
-			break;
-	}
-	
-	[self updateCenterCoordinate];
 }
 
 
@@ -555,8 +569,8 @@
             
 			//if we don't have a superview, set it up.
 			if (!([viewToDraw superview])) {
-				[self.displayView addSubview:viewToDraw];
-				[self.displayView sendSubviewToBack:viewToDraw];
+				[self.view addSubview:viewToDraw];
+				//[self.view sendSubviewToBack:viewToDraw];
 			}
             
             // save max distance
@@ -571,6 +585,7 @@
             
         } else{ 
 			[viewToDraw removeFromSuperview];
+            viewToDraw = nil;
         }
 		
 		index++;
@@ -623,89 +638,6 @@
                 viewToDraw.alpha = alpha;
             }
         }
-    }
-}
-
-
-#pragma mark -
-#pragma mark Capture
-
-- (void)initCapture {
-    
-	/*We setup the input*/
-	AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput 
-										  deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo] 
-										  error:nil];
-	/*We setupt the output*/
-	AVCaptureVideoDataOutput *captureOutput = [[AVCaptureVideoDataOutput alloc] init];
-	/*While a frame is processes in -captureOutput:didOutputSampleBuffer:fromConnection: delegate methods no other frames are added in the queue.
-	 If you don't want this behaviour set the property to NO */
-	captureOutput.alwaysDiscardsLateVideoFrames = YES; 
-	/*We specify a minimum duration for each frame (play with this settings to avoid having too many frames waiting
-	 in the queue because it can cause memory issues). It is similar to the inverse of the maximum framerate.
-	 In this example we set a min frame duration of 1/10 seconds so a maximum framerate of 10fps. We say that
-	 we are not able to process more than 10 frames per second.*/
-	captureOutput.minFrameDuration = CMTimeMake(1, 15);
-	
-	/*We create a serial queue to handle the processing of our frames*/
-	dispatch_queue_t queue;
-	queue = dispatch_queue_create("cameraQueue", NULL);
-	[captureOutput setSampleBufferDelegate:self queue:queue];
-	dispatch_release(queue);
-	// Set the video output to store frame in BGRA (It is supposed to be faster)
-	NSString* key = (NSString*)kCVPixelBufferPixelFormatTypeKey; 
-	NSNumber* value = [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA]; 
-	NSDictionary* videoSettings = [NSDictionary dictionaryWithObject:value forKey:key]; 
-	[captureOutput setVideoSettings:videoSettings];
-
-	/*And we create a capture session*/
-	captureSession = [[AVCaptureSession alloc] init];
-	/*We add input and output*/
-	[self.captureSession addInput:captureInput];
-	[self.captureSession addOutput:captureOutput];
-	
-	/*We start the capture*/
-	[self.captureSession startRunning];
-}
-
-
-#pragma mark -
-#pragma mark AVCaptureSession delegate
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
-{
-    @autoreleasepool {
-
-        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        /*Lock the image buffer*/
-        CVPixelBufferLockBaseAddress(imageBuffer,0);
-        /*Get information about the image*/
-        uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
-        size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-        size_t width = CVPixelBufferGetWidth(imageBuffer);
-        size_t height = CVPixelBufferGetHeight(imageBuffer);
-        
-        /*Create a CGImageRef from the CVImageBufferRef*/
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef newContext = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-        //	CGContextRotateCTM(newContext, -angleInRadians);
-        CGImageRef newImage = CGBitmapContextCreateImage(newContext);
-        
-        /*We release some components*/
-        CGContextRelease(newContext);
-        CGColorSpaceRelease(colorSpace);
-
-        /*We display the result on the image view (We need to change the orientation of the image so that the video is displayed correctly).
-         Same thing as for the CALayer we are not in the main thread so ...*/
-        UIImage *image= [UIImage imageWithCGImage:newImage scale:1 orientation:UIImageOrientationRight];
-
-        /*We relase the CGImageRef*/
-        CGImageRelease(newImage);
-        
-        [displayView performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:YES];
-        
-        /*We unlock the  image buffer*/
-        CVPixelBufferUnlockBaseAddress(imageBuffer,0);
     }
 }
 

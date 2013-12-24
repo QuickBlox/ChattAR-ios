@@ -44,6 +44,6 @@
 #pragma mark -
 #pragma mark AVAudioPlayer
 
-+ (void)playSound;
++ (void)playSound:(BOOL)played vibrate:(BOOL)vibrated;
 
 @end
