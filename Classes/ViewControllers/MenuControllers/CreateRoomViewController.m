@@ -12,6 +12,7 @@
 #import "ChatRoomStorage.h"
 #import "ChatRoomViewController.h"
 #import "MBProgressHUD.h"
+#import "CaptureSessionService.h"
 
 
 @interface CreateRoomViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, QBActionStatusDelegate>
@@ -35,6 +36,9 @@
 {
     [super viewDidLoad];
     self.creatingRoomButton.layer.cornerRadius = 5.0f;
+    
+//    UIGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImage:)];
+//    [self.roomImageView addGestureRecognizer:tapGesture];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToRoom:) name:CAChatRoomDidCreateNotification object:nil];
 
 }
@@ -111,6 +115,11 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != 2) {
+        
+        // stop AR video session:
+        [[CaptureSessionService shared] enableCaptureSession:NO];
+        
+        // Image Picker call:
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             [self.roomNameField resignFirstResponder];
             UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -128,7 +137,8 @@
                 default:
                     break;
             }
-            [self presentModalViewController:imagePickerController animated:YES];
+            
+            [self presentViewController:imagePickerController animated:YES completion:nil];
         }
     }
 }
@@ -137,10 +147,6 @@
 #pragma mark - 
 #pragma mark UIImagePickerControllerDelegate
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo {
-    
-}
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     // receiving image from delegate:
     UIImage *image = info[@"UIImagePickerControllerOriginalImage"];
@@ -148,17 +154,25 @@
     UIImage *scaledImage =[image imageByScalingProportionallyToMinimumSize:CGSizeMake(200, 200)];
     self.roomImageView.image = scaledImage;
     self.cachedImage = scaledImage;
-    [self dismissModalViewControllerAnimated:YES];
-    [self.roomNameField becomeFirstResponder];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[CaptureSessionService shared] enableCaptureSession:YES];
+        
+        [self.roomNameField becomeFirstResponder];
+    }];
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:YES];
-    [self.roomNameField becomeFirstResponder];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[CaptureSessionService shared] enableCaptureSession:YES];
+        
+        [self.roomNameField becomeFirstResponder];
+    }];
+
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
-
 
 
 #pragma mark -

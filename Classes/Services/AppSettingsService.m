@@ -37,12 +37,6 @@ static NSString *kVibrationEnabled = @"vibro_enabled";
     return self;
 }
 
-//- (void)checkSettings {
-//    self.soundEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSoundEnabled];
-//    self.vibrationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kVibrationEnabled];
-//    NSLog(@"Done");
-//}
-
 - (void)registerDefaultsFromSettingsBundle {
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
     if(!settingsBundle) {

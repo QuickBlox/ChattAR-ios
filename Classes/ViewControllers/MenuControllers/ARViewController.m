@@ -6,24 +6,22 @@
 //  Copyright (c) 2012 QuickBlox. All rights reserved.
 //
 
-
 #import <CoreMotion/CoreMotion.h>
+
 #import "ARViewController.h"
-#import "ChatRoomViewController.h"
 #import "ARCoordinate.h"
 #import "ARGeoCoordinate.h"
 #import "ARMarkerView.h"
+#import "ChatRoomViewController.h"
 #import "LocationService.h"
 #import "ChatRoomStorage.h"
 #import "CaptureSessionService.h"
 
-
-@interface ARViewController () <UIAccelerometerDelegate, CLLocationManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, UIActionSheetDelegate>
+@interface ARViewController () <CLLocationManagerDelegate>
 
 @property (nonatomic, assign) BOOL scaleViewsBasedOnDistance;
 @property (nonatomic, assign) BOOL transparenViewsBasedOnDistance;
 @property (nonatomic, assign) BOOL rotateViewsBasedOnPerspective;
-@property (nonatomic, assign) BOOL isFirstUpdateLocation;
 
 @property (nonatomic, assign) double maximumScaleDistance;
 @property (nonatomic, assign) double minimumScaleFactor;
@@ -36,119 +34,121 @@
 @property (nonatomic, strong) ARCoordinate            *centerCoordinate;
 @property (nonatomic, strong) CLLocation              *centerLocation;
 @property (nonatomic, strong) UIImageView             *displayView;
-@property (nonatomic, assign) UIDeviceOrientation	  currentOrientation;
 
 @property (nonatomic, strong) UISlider* distanceSlider;
 @property (nonatomic, strong) UILabel* distanceLabel;
 
-@property (nonatomic, strong) NSMutableArray *coordinates;
-@property (retain) NSMutableArray *coordinateViews;
+@property (strong) NSMutableArray *coordinates;
+@property (strong) NSMutableArray *coordinateViews;
 
-- (void) updateCenterCoordinate;
-- (void) startListening;
-- (double) findDeltaOfRadianCenter:(double*)centerAzimuth coordinateAzimuth:(double)pointAzimuth betweenNorth:(BOOL*) isBetweenNorth;
-- (CGPoint) pointInView:(UIView *)realityView withView:(UIView *)viewToDraw forCoordinate:(ARCoordinate *)coordinate;
-- (BOOL) viewportContainsView:(UIView *)viewToDraw forCoordinate:(ARCoordinate *)coordinate;
+@property (nonatomic, assign) int switchedDistance;
+@property (nonatomic, strong) NSArray *sliderNumbers;
 
 @end
 
-#pragma mark -
 
-@implementation ARViewController{
-    int switchedDistance;
-    NSArray *sliderNumbers;
-}
+@implementation ARViewController
 
-@synthesize displayView, centerCoordinate, scaleViewsBasedOnDistance, isFirstUpdateLocation,transparenViewsBasedOnDistance, rotateViewsBasedOnPerspective, maximumScaleDistance, minimumScaleFactor, maximumRotationAngle, centerLocation, coordinates, currentOrientation, degreeRange;
-@synthesize latestHeading, viewAngle, coordinateViews;
-@synthesize distanceSlider, distanceLabel;
+#pragma mark
+#pragma mark Init
 
-
-#pragma mark - 
-#pragma mark Display Configuration
-
-- (void)configureOptions
-{
-	coordinates		= [[NSMutableArray alloc] init];
-	coordinateViews	= [[NSMutableArray alloc] init];
-	latestHeading	= -1.0f;
+- (void) viewDidLoad {
+    [super viewDidLoad];
     
-	self.maximumScaleDistance = 1.3;
-	self.minimumScaleFactor = 0.3;
+    // Create background view
+    _displayView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen]  bounds]];
+    [_displayView setUserInteractionEnabled:YES];
+    _displayView.clipsToBounds = YES;
+    [_displayView setBackgroundColor:[UIColor clearColor]];
+    self.view = _displayView;
     
-    self.isFirstUpdateLocation = YES;
-	self.scaleViewsBasedOnDistance = YES;
-    self.transparenViewsBasedOnDistance = YES;
-	self.rotateViewsBasedOnPerspective = NO;
-    
-	self.maximumRotationAngle = M_PI / 6.0;
-    
-    self.currentOrientation = UIDeviceOrientationPortrait; 
-    self.degreeRange = displayView.frame.size.width / 12;
-    
-    sliderNumbers = @[@1000, @5000, @10000, @50000, @150000, @500000, @1000000, @(maxARDistance)];
-}
-
-- (void)initDisplay
-{
-    displayView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen]  bounds]];
-    [displayView setUserInteractionEnabled:YES];
-    displayView.clipsToBounds = YES;
-    [displayView setBackgroundColor:[UIColor clearColor]];
-    self.view = displayView;
-}
-
-
-- (void)configureDistanceSlider
-{
-    distanceSlider = [[UISlider alloc] init];
-	[distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
-	[distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
-	distanceSlider.minimumValue =  0;
-	distanceSlider.maximumValue = [sliderNumbers count]-1;
-    distanceSlider.continuous = YES;
-	[distanceSlider setValue:2 animated:NO];
-    
-    if(IS_HEIGHT_GTE_568){
-        CGRect distanceSliderFrame = self.distanceSlider.frame;
-        distanceSliderFrame.origin.y += 44;
-        [self.distanceSlider setFrame:distanceSliderFrame];
-    }
-    [self.displayView addSubview:distanceSlider];
-}
-
-- (void)configureDistanceLabel
-{
-    distanceLabel = [[UILabel alloc] init];
-    [distanceLabel setFrame:CGRectMake(19, 335, 100, 20)];
-    [distanceLabel setBackgroundColor:[UIColor clearColor]];
-    [distanceLabel setFont:[UIFont systemFontOfSize:12]];
-    [distanceLabel setTextColor:[UIColor whiteColor]];
-    distanceLabel.text = [NSString stringWithFormat:@"%d km", [[sliderNumbers objectAtIndex:distanceSlider.value] intValue]/1000];
-    
-    if(IS_HEIGHT_GTE_568){
-        CGRect distanceLabelFrame = self.distanceLabel.frame;
-        distanceLabelFrame.origin.y += 44;
-        [self.distanceLabel setFrame:distanceLabelFrame];
-    }
-    [self.displayView addSubview:distanceLabel];
-}
-
-- (void)loadOptions
-{
-    [self initDisplay];
-    [self displayAR];
     [self configureOptions];
-
+    
     // display Slider and label:
     [self configureDistanceSlider];
     [self configureDistanceLabel];
     
     
     // set default distance
-    NSUInteger index = distanceSlider.value;
-    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+    NSUInteger index = _distanceSlider.value;
+    _switchedDistance = [[_sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+    
+    [Flurry logEvent:kFlurryEventARScreenWasOpened];
+	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
+	_distanceSlider.transform = trans;
+	self.centerLocation = [[LocationService shared] myLocation];
+    
+    [self refreshWithNewRooms:[[ChatRoomStorage shared] allLocalRooms]];
+}
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self displayAR];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [self dismissAR];
+}
+
+- (void)dealloc {
+    [LocationService shared].myLocationManager.delegate = [LocationService shared];
+}
+
+- (void)configureOptions
+{
+	_coordinates = [[NSMutableArray alloc] init];
+	_coordinateViews = [[NSMutableArray alloc] init];
+	_latestHeading	= -1.0f;
+    
+	self.maximumScaleDistance = 1.3;
+	self.minimumScaleFactor = 0.3;
+    
+	self.scaleViewsBasedOnDistance = YES;
+    self.transparenViewsBasedOnDistance = YES;
+	self.rotateViewsBasedOnPerspective = NO;
+    
+	self.maximumRotationAngle = M_PI / 6.0;
+    self.degreeRange = _displayView.frame.size.width / 12;
+    
+    _sliderNumbers = @[@1000, @5000, @10000, @50000, @150000, @500000, @1000000, @(maxARDistance)];
+}
+
+- (void)configureDistanceSlider
+{
+    _distanceSlider = [[UISlider alloc] init];
+	[_distanceSlider setFrame:CGRectMake(-127, 160, 300, 30)];
+	[_distanceSlider addTarget:self action:@selector(distanceDidChanged:) forControlEvents:UIControlEventValueChanged];
+	_distanceSlider.minimumValue =  0;
+	_distanceSlider.maximumValue = [_sliderNumbers count]-1;
+    _distanceSlider.continuous = YES;
+	[_distanceSlider setValue:2 animated:NO];
+    
+    if(IS_HEIGHT_GTE_568){
+        CGRect distanceSliderFrame = self.distanceSlider.frame;
+        distanceSliderFrame.origin.y += 44;
+        [self.distanceSlider setFrame:distanceSliderFrame];
+    }
+    [self.displayView addSubview:_distanceSlider];
+}
+
+- (void)configureDistanceLabel
+{
+    _distanceLabel = [[UILabel alloc] init];
+    [_distanceLabel setFrame:CGRectMake(19, 335, 100, 20)];
+    [_distanceLabel setBackgroundColor:[UIColor clearColor]];
+    [_distanceLabel setFont:[UIFont systemFontOfSize:12]];
+    [_distanceLabel setTextColor:[UIColor whiteColor]];
+    _distanceLabel.text = [NSString stringWithFormat:@"%d km", [[_sliderNumbers objectAtIndex:_distanceSlider.value] intValue]/1000];
+    
+    if(IS_HEIGHT_GTE_568){
+        CGRect distanceLabelFrame = self.distanceLabel.frame;
+        distanceLabelFrame.origin.y += 44;
+        [self.distanceLabel setFrame:distanceLabelFrame];
+    }
+    [self.displayView addSubview:_distanceLabel];
 }
 
 - (void)distanceDidChanged:(UISlider *)slider
@@ -157,29 +157,16 @@
     [slider setValue:index animated:NO];
     
     // set dist
-    switchedDistance = [[sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
+    _switchedDistance = [[_sliderNumbers objectAtIndex:index] intValue]; // <-- This is the number you want.
     
-    distanceLabel.text = [NSString stringWithFormat:@"%d km", switchedDistance/1000];
+    _distanceLabel.text = [NSString stringWithFormat:@"%d km", _switchedDistance/1000];
 }
 
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    
-    [self loadOptions];
-    
-    [Flurry logEvent:kFlurryEventARScreenWasOpened];
-	CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * 0.5);
-	distanceSlider.transform = trans;
-	//[self.view bringSubviewToFront:distanceSlider];
-    //[self.view bringSubviewToFront:distanceLabel];
-	self.centerLocation = [[LocationService shared] myLocation];
-    
-    [self refreshWithNewRooms:[[ChatRoomStorage shared] allLocalRooms]];
-}
-
-- (void)dealloc {
-    [LocationService shared].myLocationManager.delegate = [LocationService shared];
-	self.coordinateViews = nil;
+- (void)setCenterLocation:(CLLocation *)newLocation {
+	_centerLocation = newLocation;
+	
+    // update markers positions
+    [self updateMarkersPositionsForCenterLocation:newLocation];
 }
 
 // touch on marker
@@ -205,112 +192,9 @@
 	[self startListening];
 }
 
-
-
-- (void)startListening {
-    // Core Location:
-    [[LocationService shared].myLocationManager setDelegate:self];
-    
-    // Accelerometr:
-        self.motionManager = [[CMMotionManager alloc] init];
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        if (self.motionManager.accelerometerAvailable) {
-            self.motionManager.accelerometerUpdateInterval = 1.0/10.0;
-            
-            [self.motionManager startAccelerometerUpdatesToQueue:queue withHandler:
-             ^(CMAccelerometerData *accelerometerData, NSError *error) {
-                 NSString *str;
-                 if(error) {
-                     [self.motionManager stopAccelerometerUpdates];
-                     str = [NSString stringWithFormat:@"Accelerometer error: %@", error];
-                 } else {
-                 
-                     switch (currentOrientation) {
-                         case UIDeviceOrientationLandscapeLeft:
-                             viewAngle = atan2(accelerometerData.acceleration.x, accelerometerData.acceleration.z);
-                             break;
-                         case UIDeviceOrientationLandscapeRight:
-                             viewAngle = atan2(-accelerometerData.acceleration.x, accelerometerData.acceleration.z);
-                             break;
-                         case UIDeviceOrientationPortrait:
-                             viewAngle = atan2(accelerometerData.acceleration.y, accelerometerData.acceleration.z);
-                             break;
-                         case UIDeviceOrientationPortraitUpsideDown:
-                             viewAngle = atan2(-accelerometerData.acceleration.y, accelerometerData.acceleration.z);
-                             break;	
-                         default:
-                             break;
-                     }
-                     
-                     [self updateCenterCoordinate];
-                 }
-             }];
-    }
-	
-	if (!self.centerCoordinate) 
-		self.centerCoordinate = [ARCoordinate coordinateWithRadialDistance:1.0 inclination:0 azimuth:0];
+- (void)dismissAR {
+    [[CaptureSessionService shared].prewiewLayer removeFromSuperlayer];
 }
-
-- (void)refreshWithNewRooms:(NSArray *)newRooms {
-	// remove old
-	for (UIView* view in displayView.subviews){
-		if (view == distanceLabel || view == distanceSlider){
-			continue;
-		}
-        
-		[view removeFromSuperview];
-	}
-	[self.coordinates removeAllObjects];
-	[coordinateViews removeAllObjects];
-	
-    
-    // add new
-    [self addPoints:newRooms];
-}
-
-- (void)clear {
-    [self.coordinates removeAllObjects];
-	[coordinateViews removeAllObjects];
-}
-
-/*
- Add users' annotations to AR environment
- */
-- (void)addPoints:(NSArray *)newRooms {
-    // add new
-    if([newRooms count] > 0){
-        for(QBCOCustomObject *room in newRooms){
-            // add user annotation
-			if ([room isKindOfClass:[QBCOCustomObject class]]){
-				[self addPoint:room];
-			}
-        }
-    }
-    
-    // update markers positions
-    [self updateMarkersPositionsForCenterLocation:centerLocation];
-}
-
-/*
- Add user's annotation to AR environment
- */
-- (void)addPoint:(QBCOCustomObject *)roomAnnotation {
-    
-    // add marker
-    // get view for annotation
-    UIView *markerView = [self viewForAnnotation:roomAnnotation];
-    
-    // create marker location
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:[roomAnnotation.fields[kLatitude] doubleValue]
-                                                      longitude:[roomAnnotation.fields[kLongitude] doubleValue]];
-    
-    // create AR coordinate
-    ARCoordinate *coordinateForUser = [ARGeoCoordinate coordinateWithLocation:location
-                                                                locationTitle:roomAnnotation.fields[kName]];
-    
-	[self addCoordinate:coordinateForUser augmentedView:markerView animated:NO];
-}
-
 
 /*
  Return view for new user annotation
@@ -330,20 +214,95 @@
     }
 }
 
-
-#pragma mark -
-#pragma mark Marker Action
+- (void)startListening {
+    // Core Location:
+    [[LocationService shared].myLocationManager setDelegate:self];
+    
+    self.motionManager = [[CMMotionManager alloc] init];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    if (self.motionManager.accelerometerAvailable) {
+        self.motionManager.accelerometerUpdateInterval = 1.0/10.0;
+        
+        __weak ARViewController *this = self;
+        [self.motionManager startAccelerometerUpdatesToQueue:queue withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+             if(error) {
+                 [this.motionManager stopAccelerometerUpdates];
+             } else {
+                 _viewAngle = atan2(accelerometerData.acceleration.y, accelerometerData.acceleration.z);
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [this updateCenterCoordinate];
+                 });
+             }
+        }];
+    }
+	
+	if (self.centerCoordinate == nil){
+		self.centerCoordinate = [ARCoordinate coordinateWithRadialDistance:1.0 inclination:0 azimuth:0];
+    }
+}
 
 - (void)touchOnMarker:(ARMarkerView *)marker {
     QBCOCustomObject *room = [marker currentRoom];
     [self performSegueWithIdentifier:kARToChatSegueIdentifier sender:room];
 }
-/*
- Return view for exist user annotation
- */
 
-/*Add AR coordinate
- */
+
+#pragma mark
+#pragma mark Points management
+
+- (void)addPoints:(NSArray *)newRooms {
+    // add new
+    if([newRooms count] > 0){
+        for(QBCOCustomObject *room in newRooms){
+            // add user annotation
+			if ([room isKindOfClass:[QBCOCustomObject class]]){
+				[self addPoint:room];
+			}
+        }
+    }
+    
+    // update markers positions
+    [self updateMarkersPositionsForCenterLocation:_centerLocation];
+}
+
+- (void)addPoint:(QBCOCustomObject *)roomAnnotation {
+    
+    // add marker
+    // get view for annotation
+    UIView *markerView = [self viewForAnnotation:roomAnnotation];
+    
+    // create marker location
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[roomAnnotation.fields[kLatitude] doubleValue]
+                                                      longitude:[roomAnnotation.fields[kLongitude] doubleValue]];
+    
+    // create AR coordinate
+    ARCoordinate *coordinateForUser = [ARGeoCoordinate coordinateWithLocation:location
+                                                                locationTitle:roomAnnotation.fields[kName]];
+    
+	[self addCoordinate:coordinateForUser augmentedView:markerView animated:NO];
+}
+
+- (void)refreshWithNewRooms:(NSArray *)newRooms {
+	// remove old
+	for (UIView* view in _displayView.subviews){
+		if (view == _distanceLabel || view == _distanceSlider){
+			continue;
+		}
+        
+		[view removeFromSuperview];
+	}
+	[self.coordinates removeAllObjects];
+	[self.coordinateViews removeAllObjects];
+	
+    
+    // add new
+    [self addPoints:newRooms];
+}
+
+
+#pragma mark
+#pragma mark Coordinates management
+
 - (void)addCoordinate:(ARCoordinate *)coordinate augmentedView:(UIView *)agView animated:(BOOL)animated {
 	[self.coordinates addObject:coordinate];
 	
@@ -351,49 +310,43 @@
 		self.maximumScaleDistance = coordinate.radialDistance;
     }
 	
-	[coordinateViews addObject:agView];
+	[self.coordinateViews addObject:agView];
 }
 
-/*
- Remove AR coordinate
- */
 - (void)removeCoordinate:(ARCoordinate *)coordinate {
 	[self removeCoordinate:coordinate animated:YES];
 }
 
 - (void)removeCoordinate:(ARCoordinate *)coordinate animated:(BOOL)animated {
-	NSUInteger indexToRemove = [coordinates indexOfObject:coordinate];
+	NSUInteger indexToRemove = [self.coordinates indexOfObject:coordinate];
     [self.coordinates	 removeObjectAtIndex:indexToRemove];
-    [coordinateViews removeObjectAtIndex:indexToRemove];
+    [self.coordinateViews removeObjectAtIndex:indexToRemove];
 }
 
-- (void)removeCoordinates:(NSArray *)coordinateArray {	
-	// remove coordinates
+- (void)removeCoordinates:(NSArray *)coordinateArray {
 	for (ARCoordinate *coordinateToRemove in coordinateArray) {
 		[self removeCoordinate:coordinateToRemove animated:NO];
 	}
 }
 
 
-#pragma mark - 
+#pragma mark
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
-	latestHeading = degreesToRadian(newHeading.magneticHeading);
+	_latestHeading = degreesToRadian(newHeading.magneticHeading);
 	[self updateCenterCoordinate];
 }
-
 
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
 	return YES;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-	// set new own location
-    if (isFirstUpdateLocation){
-		self.centerLocation = newLocation;
-        self.isFirstUpdateLocation = NO;
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        self.centerLocation = newLocation;
+    });
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -401,22 +354,14 @@
 }
 
 
-#pragma mark - 
-#pragma mark  Private methods 
+#pragma mark
+#pragma mark Private methods
 
 // called when updating acceleration or locationHeading 
 - (void)updateCenterCoordinate {
-	double adjustment = 0;
-	
-	if (currentOrientation == UIDeviceOrientationLandscapeLeft)
-		adjustment = degreesToRadian(270); 
-	else if (currentOrientation == UIDeviceOrientationLandscapeRight)
-		adjustment = degreesToRadian(90);
-	else if (currentOrientation == UIDeviceOrientationPortraitUpsideDown)
-		adjustment = degreesToRadian(180);
+	self.centerCoordinate.azimuth = _latestHeading;
     
-	self.centerCoordinate.azimuth = latestHeading - adjustment;
-	[self updateLocations];
+	[self updateMarkersPositions];
 }
 
 // called by the two next methods 
@@ -459,7 +404,7 @@
 	else
 		point.x = (realityBounds.size.width / 2) - ((deltaAzimuth / degreesToRadian(1)) * 12);	// Left side of Azimuth
 	
-	point.y = (realityBounds.size.height / 2) + (radianToDegrees(M_PI_2 + viewAngle)  * 2.0);
+	point.y = (realityBounds.size.height / 2) + (radianToDegrees(M_PI_2 + _viewAngle)  * 2.0);
 	
 	return point;
 }
@@ -478,66 +423,44 @@
 	return result;
 }
 
-
-#pragma mark - 
-#pragma mark Properties
-
-- (void)setCenterLocation:(CLLocation *)newLocation {
-	centerLocation = newLocation;
-	
-    // update markers positions
-    [self updateMarkersPositionsForCenterLocation:newLocation];
-}
-
-- (void)updateMarkersPositionsForCenterLocation:(CLLocation *)_centerLocation 
+- (void)updateMarkersPositionsForCenterLocation:(CLLocation *)__centerLocation
 {
-    int index			= 0;
+    if([self.coordinates count] == 0){
+        return;
+    }
 
-    if([self.coordinates count]){
-        for (ARGeoCoordinate *geoLocation in self.coordinates) 
-        {
-		
-            if ([geoLocation isKindOfClass:[ARGeoCoordinate class]]) {
-                [geoLocation calibrateUsingOrigin:_centerLocation];
-			
-                if (geoLocation.radialDistance > self.maximumScaleDistance) {
-                    self.maximumScaleDistance = geoLocation.radialDistance;
-                }
+    [self.coordinates enumerateObjectsUsingBlock:^(ARGeoCoordinate *geoLocation, NSUInteger idx, BOOL *stop) {
+        if ([geoLocation isKindOfClass:[ARGeoCoordinate class]]) {
+            [geoLocation calibrateUsingOrigin:__centerLocation];
+            
+            if (geoLocation.radialDistance > self.maximumScaleDistance) {
+                self.maximumScaleDistance = geoLocation.radialDistance;
             }
-        
-            // update distance
-            ARMarkerView *marker = [coordinateViews objectAtIndex:index];
-            [marker updateDistance:_centerLocation];
-        
-            ++index;
         }
-    
-        //NSLog(@"%f %f",[[self.coordinates lastObject] ] );
-    
-        // sort markers by distance
-        int i,j;
-        UIView *temp;
-        int n = [coordinateViews count];
-        for (i=0; i<n-1; i++) {
-            for (j=0; j<n-1-i; j++) {
-                if ([[coordinateViews objectAtIndex:j] getDistance] > [[coordinateViews objectAtIndex:j+1] getDistance]) {
-                    temp = [coordinateViews objectAtIndex:j];
-                    [coordinateViews replaceObjectAtIndex:j withObject:[coordinateViews objectAtIndex:j+1]];
-                    [coordinateViews replaceObjectAtIndex:j+1 withObject:temp];
-                }
+        
+        // update distance
+        ARMarkerView *marker = [self.coordinateViews objectAtIndex:idx];
+        [marker updateDistance:__centerLocation];
+    }];
+
+    // sort markers by distance
+    int i,j;
+    UIView *temp;
+    int n = [self.coordinateViews count];
+    for (i=0; i<n-1; i++) {
+        for (j=0; j<n-1-i; j++) {
+            if ([[self.coordinateViews objectAtIndex:j] getDistance] > [[self.coordinateViews objectAtIndex:j+1] getDistance]) {
+                temp = [self.coordinateViews objectAtIndex:j];
+                [self.coordinateViews replaceObjectAtIndex:j withObject:[self.coordinateViews objectAtIndex:j+1]];
+                [self.coordinateViews replaceObjectAtIndex:j+1 withObject:temp];
             }
         }
     }
 }
 
-
-#pragma mark -
-#pragma mark Public methods 
-
-
-- (void)updateLocations {
+- (void)updateMarkersPositions {
 	
-	if (!coordinateViews || [coordinateViews count] == 0) {
+	if (!self.coordinateViews || [self.coordinateViews count] == 0) {
 		return;
     }
 	
@@ -551,9 +474,9 @@
     
 	for (ARCoordinate *item in self.coordinates) {
 		
-		ARMarkerView *viewToDraw = [coordinateViews objectAtIndex:index];
+		ARMarkerView *viewToDraw = [self.coordinateViews objectAtIndex:index];
 
-		if ([self viewportContainsView:viewToDraw forCoordinate:item] && (viewToDraw.distance < switchedDistance)) {
+		if ([self viewportContainsView:viewToDraw forCoordinate:item] && (viewToDraw.distance < _switchedDistance)) {
 			
             // mraker location
 			CGPoint locCenter = [self pointInView:self.displayView withView:viewToDraw forCoordinate:item];
@@ -639,6 +562,9 @@
             }
         }
     }
+    
+    [self.view bringSubviewToFront:_distanceSlider];
+    [self.view bringSubviewToFront:_distanceLabel];
 }
 
 @end

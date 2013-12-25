@@ -210,7 +210,7 @@
     footerView.backgroundColor = [UIColor clearColor];
     _trendingFooterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _trendingTableView.frame.size.width, 44.0f)];
     _trendingFooterLabel.backgroundColor = [UIColor clearColor];
-    _trendingFooterLabel.textAlignment = UITextAlignmentCenter;
+    _trendingFooterLabel.textAlignment = NSTextAlignmentCenter;
     _trendingFooterLabel.textColor = [UIColor lightGrayColor];
     _trendingFooterLabel.font = [UIFont systemFontOfSize:16];
     [footerView addSubview:_trendingFooterLabel];

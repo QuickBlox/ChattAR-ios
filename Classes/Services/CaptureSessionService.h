@@ -16,4 +16,6 @@
 
 + (instancetype)shared;
 
+- (void)enableCaptureSession:(BOOL)isEnabled;
+
 @end

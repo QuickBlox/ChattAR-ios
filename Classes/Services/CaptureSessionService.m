@@ -39,5 +39,16 @@
     return self;
 }
 
+- (void)enableCaptureSession:(BOOL)isEnabled{
+    if(isEnabled){
+        if(![self.captureSession isRunning]){
+            [self.captureSession startRunning];
+        }
+    }else{
+        if([self.captureSession isRunning]){
+            [self.captureSession stopRunning];
+        }
+    }
+}
 
 @end

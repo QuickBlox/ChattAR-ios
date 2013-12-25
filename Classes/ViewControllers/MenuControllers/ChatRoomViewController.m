@@ -323,10 +323,11 @@
 
 - (void)showKeyboard
 {
+    CGRect tableFrame = self.chatRoomTable.frame;
+    tableFrame.size.height -= 215;
+    
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
-        CGRect tableFrame = self.chatRoomTable.frame;
-        tableFrame.size.height -= 215;
         self.chatRoomTable.frame = tableFrame;
         if ([_chatHistory count] > 2) {
             [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
@@ -336,10 +337,11 @@
 
 - (void)hideKeyboard
 {
+    CGRect tableFrame = self.chatRoomTable.frame;
+    tableFrame.size.height += 215;
+    
     [UIView animateWithDuration:0.275 animations:^{
         self.inputTextView.transform = CGAffineTransformIdentity;
-        CGRect tableFrame = self.chatRoomTable.frame;
-        tableFrame.size.height += 215;
         self.chatRoomTable.frame = tableFrame;
     }];
 }

@@ -209,7 +209,7 @@
 {
     [Flurry logEvent:kFlurryEventUserWasLoggedIn];
     [self.activityIndicatior stopAnimating];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

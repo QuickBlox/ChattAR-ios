@@ -116,6 +116,7 @@
 // options:
 - (BOOL)searchingString:(NSString *)source inString:(NSString *)searchString {
     BOOL answer;
+    source = [source stringByReplacingOccurrencesOfString:@"  " withString:@" "];
     NSRange range = [source rangeOfString:searchString options:NSCaseInsensitiveSearch];
     if (range.location == NSNotFound) {
         answer = NO;

@@ -32,12 +32,12 @@
         self.userName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20, 155, 20)];
         self.userName.textColor = [UIColor whiteColor];
         self.userName.font = [UIFont boldSystemFontOfSize:16.0];
-        self.userName.textAlignment = UITextAlignmentLeft;
+        self.userName.textAlignment = NSTextAlignmentLeft;
         self.userName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.userName];
         // date time of message
         self.postMessageDate = [[UILabel alloc] initWithFrame:CGRectMake(235.0f, 20.0f, 65.0f, 20.0f)];
-        self.postMessageDate.textAlignment = UITextAlignmentRight;
+        self.postMessageDate.textAlignment = NSTextAlignmentRight;
         self.postMessageDate.textColor = [UIColor whiteColor];
         self.postMessageDate.backgroundColor = [UIColor clearColor];
         self.postMessageDate.font = [UIFont systemFontOfSize:10.0f];
@@ -48,7 +48,7 @@
         self.distance.font = [UIFont systemFontOfSize:11.0f];
         self.distance.textColor = [UIColor darkGrayColor];
         self.distance.backgroundColor = [UIColor clearColor];
-        self.distance.textAlignment = UITextAlignmentLeft;
+        self.distance.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.distance];
         // set selection style: none
         self.selectionStyle = UITableViewCellSelectionStyleNone;

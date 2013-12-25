@@ -36,7 +36,7 @@
         self.qUserName = [[UILabel alloc] initWithFrame:CGRectMake(128, 20, 132, 20)];
         self.qUserName.textColor = [UIColor darkGrayColor];
         self.qUserName.font = [UIFont boldSystemFontOfSize:16.0];
-        self.qUserName.textAlignment = UITextAlignmentLeft;
+        self.qUserName.textAlignment = NSTextAlignmentLeft;
         self.qUserName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.qUserName];
         
@@ -48,7 +48,7 @@
         [self.contentView addSubview:self.qMessage];
         
         self.qDateTime = [[UILabel alloc] initWithFrame:CGRectMake(245.0f, 20.0f, 55.0f, 20.0f)];
-        self.qDateTime.textAlignment = UITextAlignmentRight;
+        self.qDateTime.textAlignment = NSTextAlignmentRight;
         self.qDateTime.textColor = [UIColor darkGrayColor];
         self.qDateTime.backgroundColor = [UIColor clearColor];
         self.qDateTime.font = [UIFont systemFontOfSize:10.0f];
@@ -62,7 +62,7 @@
         self.rDistance.font = [UIFont systemFontOfSize:11.0f];
         self.rDistance.textColor = [UIColor darkGrayColor];
         self.rDistance.backgroundColor = [UIColor clearColor];
-        self.rDistance.textAlignment = UITextAlignmentLeft;
+        self.rDistance.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.rDistance];
         // Reply message buble:(Blue or Green)
         self.rColorBuble = [[UIImageView alloc] init];
@@ -71,7 +71,7 @@
         self.rUserName = [[UILabel alloc] initWithFrame:CGRectMake(75, 20+50, 155, 20)];
         self.rUserName.textColor = [UIColor whiteColor];
         self.rUserName.font = [UIFont boldSystemFontOfSize:16.0];
-        self.rUserName.textAlignment = UITextAlignmentLeft;
+        self.rUserName.textAlignment = NSTextAlignmentLeft;
         self.rUserName.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.rUserName];
         
@@ -83,7 +83,7 @@
         [self.contentView addSubview:self.rMessage];
         
         self.rDateTime = [[UILabel alloc] initWithFrame:CGRectMake(235.0f, 20 + 50, 65.0f, 20.0f)];
-        self.rDateTime.textAlignment = UITextAlignmentRight;
+        self.rDateTime.textAlignment = NSTextAlignmentRight;
         self.rDateTime.textColor = [UIColor whiteColor];
         self.rDateTime.backgroundColor = [UIColor clearColor];
         self.rDateTime.font = [UIFont systemFontOfSize:10.0f];
