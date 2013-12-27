@@ -50,7 +50,9 @@
 
 - (IBAction)back:(id)sender {
     [sender resignFirstResponder];
-    [[CaptureSessionService shared] enableCaptureSession:YES];
+    if ([Utilites deviceSupportsAR]) {
+        [[CaptureSessionService shared] enableCaptureSession:YES];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -85,7 +87,9 @@
         return;
     }
     [self activateHUD];
-    [[CaptureSessionService shared] enableCaptureSession:YES];
+    if ([Utilites deviceSupportsAR]) {
+        [[CaptureSessionService shared] enableCaptureSession:YES];
+    }
     self.roomNameField.enabled = NO;
     self.creatingRoomButton.alpha = 0.4;
     self.creatingRoomButton.enabled = NO;
