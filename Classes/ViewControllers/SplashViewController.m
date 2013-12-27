@@ -14,6 +14,7 @@
 #import "QBService.h"
 #import "QBStorage.h"
 #import "AppSettingsService.h"
+#import "CaptureSessionService.h"
 
 
 @interface SplashViewController () <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>

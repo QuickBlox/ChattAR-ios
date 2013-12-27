@@ -14,6 +14,6 @@
 @property (nonatomic, assign) BOOL vibrationEnabled;
 
 + (instancetype)shared;
-//- (void)checkSettings;
+- (void)checkSoundAndVibration;
 
 @end

@@ -182,13 +182,16 @@
 
 // This is needed to start showing the Camera of the Augemented Reality Toolkit.
 - (void)displayAR {
-    
+//    [[CaptureSessionService shared].captureSession stopRunning];
+//    [[CaptureSessionService shared].captureSession startRunning];
+
     // show Camera capture preview
     CGRect layerRect = [[self.displayView layer] bounds];
     [[CaptureSessionService shared].prewiewLayer setBounds:layerRect];
     [[CaptureSessionService shared].prewiewLayer setPosition:CGPointMake(CGRectGetMidX(layerRect),CGRectGetMidY(layerRect))];
-    [self.displayView.layer addSublayer:[CaptureSessionService shared].prewiewLayer];
-    
+    //[self.displayView.layer addSublayer:[CaptureSessionService shared].prewiewLayer];
+    [self.displayView.layer insertSublayer:[CaptureSessionService shared].prewiewLayer atIndex:0];
+     NSLog(@"Session: %hhd",[[CaptureSessionService shared].captureSession isRunning]);
 	[self startListening];
 }
 

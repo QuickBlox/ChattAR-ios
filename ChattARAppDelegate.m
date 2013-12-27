@@ -88,11 +88,16 @@
     MBProgressHUD *currentHUD = [MBProgressHUD HUDForView:currentWindow];
     if (currentHUD == nil) {
         [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:currentWindow animated:YES];
+        [[Utilites shared].progressHUD setLabelText:@"Reconnecting..."];
         return;
     }
     if (!currentHUD.taskInProgress) {
+        if (![Utilites shared].isShared) {
+            [currentHUD setLabelText:@"Reconnecting..."];
+        }
         [currentHUD performSelector:@selector(show:) withObject:nil];
     }
+    [[AppSettingsService shared] checkSoundAndVibration];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

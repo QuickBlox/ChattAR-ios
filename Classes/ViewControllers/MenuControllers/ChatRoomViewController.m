@@ -62,13 +62,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(joinedRoom) name:CAChatRoomDidEnterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageReceived) name:CAChatRoomDidReceiveOrSendMessageNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recordPublished:) name:CARoomDidPublishedToFacebookNotification object:nil];
+    // KEYBOARD NOTIFICATIONS
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showKeyboard) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:UIKeyboardWillHideNotification object:nil];
     
     self.currentWindow = [[UIApplication sharedApplication].windows lastObject];
     MBProgressHUD *currentHUD = [MBProgressHUD HUDForView:self.currentWindow];
     if (currentHUD == nil) {
         [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:self.currentWindow animated:YES];
+        [[Utilites shared].progressHUD setLabelText:@"Joining room..."];
     } else {
-        [[Utilites shared].progressHUD performSelector:@selector(show:) withObject:nil];
+        [currentHUD setLabelText:@"Joining room..."];
+        [currentHUD performSelector:@selector(show:) withObject:nil];
     }
  
     [self configureInputTextViewLayer];
@@ -296,6 +301,7 @@
 
 - (void)recordPublished:(NSNotification *)aNotification {
 
+    [Utilites shared].isShared = NO;
     [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil afterDelay:2.0];
     NSError *error = aNotification.object;
     NSString *alertText;
@@ -340,7 +346,7 @@
     CGRect tableFrame = self.chatRoomTable.frame;
     tableFrame.size.height += 215;
     
-    [UIView animateWithDuration:0.275 animations:^{
+    [UIView animateWithDuration:0.250 animations:^{
         self.inputTextView.transform = CGAffineTransformIdentity;
         self.chatRoomTable.frame = tableFrame;
     }];
@@ -353,16 +359,6 @@
 - (IBAction)textEditDone:(id)sender
 {
     [sender resignFirstResponder];
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self showKeyboard];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [self hideKeyboard];
 }
 
 
@@ -391,7 +387,9 @@
 
 - (IBAction)share:(id)sender
 {
-    [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [Utilites shared].isShared = YES;
+    [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:self.currentWindow animated:YES];
+    [[Utilites shared].progressHUD setLabelText:@"Sharing..."];
     NSString *initialText = [NSString stringWithFormat:@"Hi! I use ChattAR app - Chat in Augmented Reality. Join me in a cool chat room \"%@\"!  #chattar #facebook", [_currentChatRoom.fields objectForKey:kName]];
     
     // Ask for publish_actions permissions in context

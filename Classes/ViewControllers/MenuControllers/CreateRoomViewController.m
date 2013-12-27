@@ -21,7 +21,7 @@
 @property (strong, nonatomic) IBOutlet AsyncImageView *roomImageView;
 @property (strong, nonatomic) IBOutlet UIButton *creatingRoomButton;
 @property (strong, nonatomic) MBProgressHUD *progressHUD;
-
+@property (strong, nonatomic) UIImagePickerController *imagePickerController;
 @property (weak, nonatomic) UIImage *cachedImage;
 
 - (IBAction)chooseImage:(id)sender;
@@ -35,12 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.creatingRoomButton.layer.cornerRadius = 5.0f;
-    
-//    UIGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseImage:)];
-//    [self.roomImageView addGestureRecognizer:tapGesture];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(switchToRoom:) name:CAChatRoomDidCreateNotification object:nil];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,6 +50,7 @@
 
 - (IBAction)back:(id)sender {
     [sender resignFirstResponder];
+    [[CaptureSessionService shared] enableCaptureSession:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -88,7 +84,8 @@
         [alert show];
         return;
     }
-    self.progressHUD = [MBProgressHUD showHUDAddedTo:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [self activateHUD];
+    [[CaptureSessionService shared] enableCaptureSession:YES];
     self.roomNameField.enabled = NO;
     self.creatingRoomButton.alpha = 0.4;
     self.creatingRoomButton.enabled = NO;
@@ -97,14 +94,27 @@
     [[ChatRoomStorage shared] createChatRoomWithName:trimmedString imageData:imageData];
 }
 
+-(void)activateHUD {
+    UIWindow *currentWindow = [[UIApplication sharedApplication].windows lastObject];
+    MBProgressHUD *currentHUD = [MBProgressHUD HUDForView:currentWindow];
+    if (currentHUD == nil) {
+        [Utilites shared].progressHUD = [MBProgressHUD showHUDAddedTo:currentWindow animated:YES];
+        [[Utilites shared].progressHUD setLabelText:@"Uploading avatar..."];
+    } else {
+        [currentHUD setLabelText:@"Uploading avatar..."];
+        [currentHUD performSelector:@selector(show:) withObject:nil];
+    }
+}
+
+#pragma mark -
+#pragma mark Notifications
+
 - (void)switchToRoom:(NSNotification *)notification {
-    [self.progressHUD hide:YES];
+    [[Utilites shared].progressHUD performSelector:@selector(hide:) withObject:nil];
     self.roomNameField.enabled = YES;
     self.creatingRoomButton.enabled = YES;
     self.creatingRoomButton.alpha = 1.0;
     QBCOCustomObject *room = notification.object;
-    
-    //[Flurry logEvent:kFlurryEventNewRoomWasCreated withParameters:params];
     
     [self performSegueWithIdentifier:kCreateRoomToChatRoomIdentifier sender:room];
 }
@@ -118,27 +128,26 @@
         
         // stop AR video session:
         [[CaptureSessionService shared] enableCaptureSession:NO];
-        
         // Image Picker call:
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             [self.roomNameField resignFirstResponder];
-            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-            imagePickerController.delegate = self;
-            imagePickerController.allowsEditing = NO;
+            _imagePickerController = [[UIImagePickerController alloc] init];
+            _imagePickerController.delegate = self;
+            _imagePickerController.allowsEditing = NO;
             
             switch (buttonIndex) {
                 case 0:
-                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
                     break;
                 case 1:
-                    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                     break;
                     
                 default:
                     break;
             }
             
-            [self presentViewController:imagePickerController animated:YES completion:nil];
+            [self presentViewController:_imagePickerController animated:YES completion:nil];
         }
     }
 }
@@ -154,23 +163,18 @@
     UIImage *scaledImage =[image imageByScalingProportionallyToMinimumSize:CGSizeMake(200, 200)];
     self.roomImageView.image = scaledImage;
     self.cachedImage = scaledImage;
-    
     [self dismissViewControllerAnimated:YES completion:^{
-        [[CaptureSessionService shared] enableCaptureSession:YES];
-        
+        _imagePickerController = nil;
         [self.roomNameField becomeFirstResponder];
     }];
-    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:^{
-        [[CaptureSessionService shared] enableCaptureSession:YES];
-        
+        _imagePickerController = nil;
         [self.roomNameField becomeFirstResponder];
     }];
-
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
@@ -179,7 +183,7 @@
 #pragma mark Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ((ChatRoomViewController *)segue.destinationViewController).controllerName = @"Create Room View";
+    ((ChatRoomViewController *)segue.destinationViewController).controllerName = @"Create Room View";    //Flurry tracking
     ((ChatRoomViewController *)segue.destinationViewController).currentChatRoom = sender;
 }
 

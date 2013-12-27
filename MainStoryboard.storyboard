@@ -31,7 +31,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4r5-SS-30D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2852" y="-1447"/>
+            <point key="canvasLocation" x="-2732" y="-2023"/>
         </scene>
         <!--Create Room View Controller - New Chatroom-->
         <scene sceneID="jyp-1D-IWb">
@@ -45,7 +45,7 @@
                                 <rect key="frame" x="10" y="12" width="300" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="back:" destination="Nnt-bn-raz" eventType="editingDidEndOnExit" id="utv-Tf-Bsf"/>
                                 </connections>
@@ -65,9 +65,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HDm-0j-cBF">
                                 <rect key="frame" x="10" y="147" width="300" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.18431372940540314" green="0.364705890417099" blue="0.59215688705444336" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="Create">
+                                <state key="normal" title="Create" backgroundImage="create_btn.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -115,7 +114,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-204" y="-3010"/>
+            <point key="canvasLocation" x="-84" y="-3586"/>
         </scene>
         <!--Chat Room View Controller-->
         <scene sceneID="KcF-fe-sHD">
@@ -125,7 +124,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FSd-Vp-dNN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,10 +140,12 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lpw-hC-RxZ">
                                         <rect key="frame" x="243" y="8" width="68" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.048356958450000001" green="0.33541207699999998" blue="0.57593834919999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Send">
+                                        <state key="normal" title="Send" backgroundImage="btn.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.89546488667582413" green="0.89546488667582413" blue="0.89546488667582413" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="sendMessageButton:" destination="Vch-rc-7Oy" eventType="touchUpInside" id="Sr4-hu-SPN"/>
@@ -154,7 +155,7 @@
                                         <rect key="frame" x="10" y="8" width="225" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         <connections>
                                             <action selector="textEditDone:" destination="Vch-rc-7Oy" eventType="editingDidEndOnExit" id="qqb-ve-poS"/>
                                             <outlet property="delegate" destination="Vch-rc-7Oy" id="XhS-VJ-jN7"/>
@@ -213,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2g-Wd-Tl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="226" y="-2258"/>
+            <point key="canvasLocation" x="346" y="-2834"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="iug-PX-dnV">
@@ -258,7 +259,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q3U-QH-eD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1576" y="-3738"/>
+            <point key="canvasLocation" x="-1456" y="-4314"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="0pQ-K8-zlO">
@@ -458,7 +459,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L1Z-u4-a1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2316" y="-1454"/>
+            <point key="canvasLocation" x="-2196" y="-2030"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bZ3-Hh-inT">
@@ -486,7 +487,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="keK-8N-Xs6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1244" y="-3010"/>
+            <point key="canvasLocation" x="-1124" y="-3586"/>
         </scene>
         <!--Chat View Controller - Rooms-->
         <scene sceneID="iFg-Ki-Uxm">
@@ -676,7 +677,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9zX-p0-MWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-774" y="-3010"/>
+            <point key="canvasLocation" x="-654" y="-3586"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1bs-EI-xmB">
@@ -697,7 +698,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PmC-ed-kt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-590" y="-1414"/>
+            <point key="canvasLocation" x="-470" y="-1990"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VmR-Dj-S6u">
@@ -720,7 +721,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSr-DZ-dpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-812" y="-2258"/>
+            <point key="canvasLocation" x="-692" y="-2834"/>
         </scene>
         <!--Map View Controller - Map-->
         <scene sceneID="73w-vS-Yma">
@@ -750,7 +751,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="osR-NV-VvG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-348" y="-2258"/>
+            <point key="canvasLocation" x="-228" y="-2834"/>
         </scene>
         <!--View Controller - AR-->
         <scene sceneID="3Xd-6J-ylE">
@@ -768,7 +769,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hld-U0-TVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-126" y="-1414"/>
+            <point key="canvasLocation" x="-6" y="-1990"/>
         </scene>
         <!--Dialogs View Controller - Dialogs-->
         <scene sceneID="pPM-Jo-I4D">
@@ -844,7 +845,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-358" y="-571"/>
+            <point key="canvasLocation" x="-238" y="-1147"/>
         </scene>
         <!--Detail Dialogs View Controller-->
         <scene sceneID="qSz-9W-hAz">
@@ -854,7 +855,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ha1-Js-jPc">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ha1-Js-jPc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -871,19 +872,21 @@
                                         <rect key="frame" x="10" y="7" width="225" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         <connections>
                                             <action selector="textEditDone:" destination="mwh-Ap-G2c" eventType="editingDidEndOnExit" id="4bX-8F-OhC"/>
                                             <outlet property="delegate" destination="mwh-Ap-G2c" id="trK-cQ-DwX"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="VSK-ZH-OKR">
-                                        <rect key="frame" x="243" y="7" width="68" height="29"/>
+                                        <rect key="frame" x="243" y="7" width="68" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.048356958450000001" green="0.33541207699999998" blue="0.57593834919999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Send">
+                                        <state key="normal" title="Send" backgroundImage="btn.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.89546488670000002" green="0.89546488670000002" blue="0.89546488670000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="sendMessage:" destination="mwh-Ap-G2c" eventType="touchUpInside" id="eFR-2D-atd"/>
@@ -920,7 +923,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="haI-Jd-J2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="-571"/>
+            <point key="canvasLocation" x="259" y="-1147"/>
         </scene>
         <!--Profile View Controller - Profile-->
         <scene sceneID="mkN-U2-kdb">
@@ -1046,7 +1049,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vBT-i8-EDz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="579" y="-571"/>
+            <point key="canvasLocation" x="699" y="-1147"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="33s-Ul-ehf">
@@ -1067,7 +1070,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SGd-bm-xTF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-828" y="-571"/>
+            <point key="canvasLocation" x="-708" y="-1147"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nwr-U9-G4l">
@@ -1087,7 +1090,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpi-ed-BqF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1172" y="208"/>
+            <point key="canvasLocation" x="-1052" y="-368"/>
         </scene>
         <!--Settings View Controller - About-->
         <scene sceneID="Bwq-c6-cFV">
@@ -1213,7 +1216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l4E-JA-uFL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-708" y="208"/>
+            <point key="canvasLocation" x="-588" y="-368"/>
         </scene>
     </scenes>
     <resources>
@@ -1222,8 +1225,10 @@
         <image name="Default-568h.png" width="640" height="1136"/>
         <image name="about_mnu.png" width="23" height="23"/>
         <image name="ar_mnu.png" width="31" height="17"/>
+        <image name="btn.png" width="70" height="30"/>
         <image name="chat_mnu.png" width="31" height="27"/>
         <image name="cover_image.png" width="320" height="150"/>
+        <image name="create_btn.png" width="300" height="40"/>
         <image name="create_room.png" width="29" height="26"/>
         <image name="fb_mnu.png" width="20" height="19"/>
         <image name="human.png" width="126" height="126"/>
@@ -1244,9 +1249,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="GXn-8Q-nrq"/>
+        <segue reference="HFt-fQ-707"/>
+        <segue reference="i69-BF-qyq"/>
         <segue reference="YmU-iS-597"/>
         <segue reference="gGZ-kD-fDC"/>
-        <segue reference="OPF-p4-raF"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -24,17 +24,17 @@ static NSString *kVibrationEnabled = @"vibro_enabled";
 
 - (id)init {
     if (self = [super init]) {
+        [self registerDefaultsFromSettingsBundle];
         self.soundEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSoundEnabled];
         self.vibrationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kVibrationEnabled];
-        
-        if (_soundEnabled == NO && _vibrationEnabled == NO) {
-            [self registerDefaultsFromSettingsBundle];
-            
-            self.soundEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSoundEnabled];
-            self.vibrationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kVibrationEnabled];
-        }
     }
     return self;
+}
+
+- (void)checkSoundAndVibration {
+    [self registerDefaultsFromSettingsBundle];
+    self.soundEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSoundEnabled];
+    self.vibrationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kVibrationEnabled];
 }
 
 - (void)registerDefaultsFromSettingsBundle {

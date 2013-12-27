@@ -55,6 +55,10 @@
 
     self.navigationItem.rightBarButtonItem = profile;
     [self chooseKindOfChat];
+    
+    // KEYBOARD NOTIFICATIONS
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showKeyboard) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideKeyboard) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -207,19 +211,12 @@
     }
 }
 
+
 #pragma mark -
 #pragma mark UITextField
 
 - (IBAction)textEditDone:(id)sender {
     [sender resignFirstResponder];
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self showKeyboard];
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    [self hideKeyboard];
 }
 
 

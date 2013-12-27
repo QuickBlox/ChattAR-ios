@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign) BOOL userLoggedIn;
 @property (assign, nonatomic) BOOL isArNotAvailable;
+@property (nonatomic, assign) BOOL isShared;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 @property (strong, nonatomic) MBProgressHUD *progressHUD;
 @property (strong, nonatomic) NSDictionary *fullTimePassedFormat;

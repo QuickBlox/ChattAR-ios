@@ -18,7 +18,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Sound Enabled</string>
+			<string>Sound</string>
 			<key>Key</key>
 			<string>sound_enabled</string>
 			<key>DefaultValue</key>
@@ -28,7 +28,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Vibration Enabled</string>
+			<string>Vibration</string>
 			<key>Key</key>
 			<string>vibro_enabled</string>
 			<key>DefaultValue</key>
