@@ -10,6 +10,7 @@
 #import "ChatRoomCell.h"
 #import "ChatRoomStorage.h"
 #import "QuotedChatRoomCell.h"
+#import "AsyncImageView.h"
 #import "FBStorage.h"
 #import "FBService.h"
 #import "QBService.h"
@@ -158,7 +159,6 @@
             QBChatMessage *msg = [_chatHistory objectAtIndex:[cellPath row]];
             
             NSString *string = msg.text;
-            cellPath = nil;
             // JSON parsing
             NSDictionary *jsonDict = [[QBService defaultService] unarchiveMessageData:string];
             
@@ -173,7 +173,13 @@
             [quote setValue:[jsonDict objectForKey:kMessage] forKey:kMessage];
             [quote setValue:time forKey:kDateTime];
             
+            // user's replay image
+            AsyncImageView *imgView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+            [imgView setImageURL:[NSURL URLWithString:jsonDict[kPhoto]]];
+            self.inputMessageField.rightView = imgView;
+            self.inputMessageField.rightViewMode = UITextFieldViewModeWhileEditing;
             [self.inputMessageField becomeFirstResponder];
+            
             break;
         }
         case 1:
@@ -332,17 +338,29 @@
     CGRect tableFrame = self.chatRoomTable.frame;
     tableFrame.size.height -= 215;
     
-    [UIView animateWithDuration:0.275 animations:^{
+    
+    [UIView animateWithDuration:0.250 animations:^{
         self.inputTextView.transform = CGAffineTransformMakeTranslation(0, -215);
         self.chatRoomTable.frame = tableFrame;
-        if ([_chatHistory count] > 2) {
-            [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        if ([_chatHistory count] < 2) {
+            return;
         }
+        if (cellPath != nil) {
+            [self.chatRoomTable scrollToRowAtIndexPath:cellPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            cellPath = nil;
+            return;
+        }
+        [self.chatRoomTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_chatHistory count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }];
 }
 
+
 - (void)hideKeyboard
 {
+    // if quote is cancelled:
+    quote = nil;
+    self.inputMessageField.rightView = nil;
+    
     CGRect tableFrame = self.chatRoomTable.frame;
     tableFrame.size.height += 215;
     

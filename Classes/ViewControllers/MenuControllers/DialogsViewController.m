@@ -128,11 +128,18 @@
 
 - (NSMutableArray *)objectsToDeleteFromArray:(NSMutableArray *)array text:(NSString *)text {
     NSMutableArray *deleted = [[NSMutableArray alloc] init];
-    for (NSDictionary *user in array) {
-        if (![self searchingString:[user objectForKey:kName] inString:text]) {
-            [deleted addObject:user];
+//    for (NSDictionary *user in array) {
+//        if (![self searchingString:[user objectForKey:kName] inString:text]) {
+//            [deleted addObject:user];
+//        }
+//    }
+//    return deleted;
+
+    [array enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (![self searchingString:obj[kName] inString:text]) {
+            [deleted addObject:obj];
         }
-    }
+    }];
     return deleted;
 }
 
@@ -159,6 +166,19 @@
         }
         [self.tableView reloadData];
     }
+    
+//   // boolFlag = YES;
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//        // sort
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            // NO
+//            [self.tableView reloadData];
+//        });
+//    });
+    
+    [self.tableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar {
