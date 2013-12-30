@@ -28,6 +28,19 @@
                     }];
 }
 
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSDictionary *aps = userInfo[@"aps"];
+    NSString *opponentID = aps[kId];
+    // find User:
+    NSDictionary *opponent = [[FBService shared] findFriendWithID:opponentID];
+    if (opponent == nil) {
+        opponent = [[QBService defaultService] findUserWithID:opponentID];
+    }
+    // find Conversation:
+    
+    
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.

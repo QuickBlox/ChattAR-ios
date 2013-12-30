@@ -191,6 +191,8 @@
         NSMutableDictionary *aps = [[NSMutableDictionary alloc] init];
         aps[QBMPushMessageSoundKey] = @"default";
         aps[QBMPushMessageAlertKey] = message;
+        aps[kId] = user[kId];
+        
         payload[QBMPushMessageApsKey] = aps;
         QBMPushMessage *pushMessage = [[QBMPushMessage alloc] initWithPayload:payload];
         [QBMessages TSendPush:pushMessage toUsers:userID delegate:nil];

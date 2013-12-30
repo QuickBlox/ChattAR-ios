@@ -195,6 +195,16 @@
     return facebookUsers;
 }
 
+- (NSDictionary *)findFriendWithID:(NSString *)facebookID {
+    NSArray *friends = [FBStorage shared].friends;
+    for (NSDictionary *friend in friends) {
+        if ([friend[kId] isEqualToString:facebookID]) {
+            return friend;
+        }
+    }
+    return nil;
+}
+
 
 #pragma mark -
 #pragma mark XMPP Chat
