@@ -16,6 +16,7 @@
 @property (nonatomic, strong) QBUUser               *me;
 @property (nonatomic, strong) NSMutableArray        *otherUsers;
 @property (nonatomic, strong) NSString              *chatRoomName;
+@property (nonatomic, strong)   NSDictionary          *pushNotification;
 
 + (instancetype)shared;
 

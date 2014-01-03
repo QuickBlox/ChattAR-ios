@@ -40,7 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [Flurry logEvent:kFlurryEventDialogScreenWasOpened];
+    
     [self configureInputTextViewLayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveMessage) name:CAChatDidReceiveOrSendMessageNotification object:nil];
     self.title = [self.opponent objectForKey:kName];
@@ -64,7 +66,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
+    [ControllerStateService shared].isInDialog = YES;
     [self reloadTableView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [ControllerStateService shared].isInDialog = NO;
+    [super viewWillDisappear:NO];
 }
 
 - (void)configureInputTextViewLayer

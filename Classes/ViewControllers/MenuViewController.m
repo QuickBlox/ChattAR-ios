@@ -39,7 +39,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureQButton];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,19 +108,23 @@
 
 // This is the indexPath selected at start-up
 - (NSIndexPath*)selectedIndexPath {
+    [[ControllerStateService shared] setControllerIndex:2];
     return [NSIndexPath indexPathForRow:2 inSection:0];
 }
 
 - (NSString*)segueIdForIndexPath:(NSIndexPath *)indexPath {
-    NSString *segue = [NSString string];
+    NSString *segue = nil;
     switch ([indexPath row]) {
         case 2:
+            [[ControllerStateService shared] setControllerIndex:2];
             segue = kChatSegueIdentifier;
             break;
         case 3:
+            [[ControllerStateService shared] setControllerIndex:3];
             segue = kMapSegueIdentifier;
             break;
         case 4:
+            [[ControllerStateService shared] setControllerIndex:4];
             if (![Utilites shared].isArNotAvailable) {
                 segue = kARSegueIdentifier;
             } else {
@@ -129,6 +132,7 @@
             }
             break;
         case 5:
+            [[ControllerStateService shared] setControllerIndex:5];
             if (![Utilites shared].isArNotAvailable) {
                 segue = kDialogsSegueIdentifier;
             } else {
@@ -136,6 +140,7 @@
             }
             break;
         case 6:
+            [[ControllerStateService shared] setControllerIndex:6];
             segue = kAboutSegueIdentifier;
             break;
             

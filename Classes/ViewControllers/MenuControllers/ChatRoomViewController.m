@@ -56,6 +56,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[ControllerStateService shared] setIsInChatRoom:YES];
     self.chatRoomDataSource = [[ChatRoomDataSource alloc] init];
     self.chatRoomTable.dataSource = self.chatRoomDataSource;
     self.chatRoomDataSource.chatHistory = self.chatHistory;

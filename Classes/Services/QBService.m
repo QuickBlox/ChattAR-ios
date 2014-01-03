@@ -15,6 +15,7 @@
 #import "LocationService.h"
 #import "ChatRoomStorage.h"
 #import "AppSettingsService.h"
+#import "ChattARAppDelegate+PushNotifications.h"
 
 
 @implementation QBService
@@ -192,6 +193,7 @@
         aps[QBMPushMessageSoundKey] = @"default";
         aps[QBMPushMessageAlertKey] = message;
         aps[kId] = user[kId];
+        aps[kQuickbloxID] = user[kQuickbloxID];
         
         payload[QBMPushMessageApsKey] = aps;
         QBMPushMessage *pushMessage = [[QBMPushMessage alloc] initWithPayload:payload];
@@ -276,6 +278,11 @@
         [[QBService defaultService] loginToChatFromBackground];
         [[Utilites shared].progressHUD performSelector:@selector(show:) withObject:nil];
         return;
+    }
+    
+    if ([QBStorage shared].pushNotification != nil && ![ControllerStateService shared].isInDialog) {
+        [ (ChattARAppDelegate *)[UIApplication sharedApplication].delegate processRemoteNotification:[QBStorage shared].pushNotification];
+        [QBStorage shared].pushNotification = nil;
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidLogin object:nil];

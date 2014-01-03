@@ -16,6 +16,8 @@
 #import "AppSettingsService.h"
 #import "CaptureSessionService.h"
 
+#import "ChattARAppDelegate+PushNotifications.h"
+
 
 @interface SplashViewController () <FBLoginViewDelegate, QBActionStatusDelegate, QBChatDelegate>
 
@@ -210,7 +212,12 @@
 {
     [Flurry logEvent:kFlurryEventUserWasLoggedIn];
     [self.activityIndicatior stopAnimating];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSDictionary *userInfo = [QBStorage shared].pushNotification;
+        if (userInfo != nil) {
+            [(ChattARAppDelegate *)[UIApplication sharedApplication].delegate processRemoteNotification: userInfo];
+        }
+    }];
 }
 
 @end

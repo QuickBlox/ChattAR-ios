@@ -94,7 +94,7 @@
 		6981247917DDFF2C00974C6A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6981247717DDFF2C00974C6A /* Default@2x.png */; };
 		69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69864D39180D2CD700AAA554 /* ARViewController.m */; };
 		6986DF9C1845FC9600F78FD9 /* QBEchoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9B1845FC9600F78FD9 /* QBEchoObject.m */; };
-		6986DFA018463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */; };
+		6986DFA018463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DF9F18463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.m */; };
 		6986DFA518463FA000F78FD9 /* ChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA218463FA000F78FD9 /* ChatRoomCell.m */; };
 		6986DFA618463FA000F78FD9 /* QuotedChatRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6986DFA418463FA000F78FD9 /* QuotedChatRoomCell.m */; };
 		6988D444185EFDFB0053530E /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6988D443185EFDFB0053530E /* Quickblox.framework */; };
@@ -148,6 +148,8 @@
 		69B96E3217E89EED00C94DB7 /* UserProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B96E2E17E89EED00C94DB7 /* UserProfileCell.m */; };
 		69C146E2184726C800FBCC86 /* DialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C146E1184726C800FBCC86 /* DialogsDataSource.m */; };
 		69C146E518473A6000FBCC86 /* ChatRoomDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C146E418473A6000FBCC86 /* ChatRoomDataSource.m */; };
+		69C1C29D187578A200C7D137 /* ControllerStateService.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C1C29C187578A200C7D137 /* ControllerStateService.m */; };
+		69C1C2A01875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C1C29F1875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.m */; };
 		69CB6AD917FAC7040005A76C /* NMPaginator.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CB6AD817FAC7040005A76C /* NMPaginator.m */; };
 		69D4BC6D185A1F3900A31373 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D4BC6C185A1F3900A31373 /* FacebookSDK.framework */; };
 		69D5B57C1831345C001EA4FE /* NonFriendDialogDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D5B57B1831345C001EA4FE /* NonFriendDialogDataSource.m */; };
@@ -420,8 +422,8 @@
 		69864D39180D2CD700AAA554 /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
 		6986DF9A1845FC9600F78FD9 /* QBEchoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBEchoObject.h; sourceTree = "<group>"; };
 		6986DF9B1845FC9600F78FD9 /* QBEchoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBEchoObject.m; sourceTree = "<group>"; };
-		6986DF9E18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+MemoryWarnings.h"; sourceTree = "<group>"; };
-		6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+MemoryWarnings.m"; sourceTree = "<group>"; };
+		6986DF9E18463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChattARAppDelegate+MemoryWarnings.h"; sourceTree = "<group>"; };
+		6986DF9F18463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChattARAppDelegate+MemoryWarnings.m"; sourceTree = "<group>"; };
 		6986DFA118463FA000F78FD9 /* ChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomCell.h; sourceTree = "<group>"; };
 		6986DFA218463FA000F78FD9 /* ChatRoomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomCell.m; sourceTree = "<group>"; };
 		6986DFA318463FA000F78FD9 /* QuotedChatRoomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotedChatRoomCell.h; sourceTree = "<group>"; };
@@ -488,6 +490,10 @@
 		69C146E1184726C800FBCC86 /* DialogsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogsDataSource.m; sourceTree = "<group>"; };
 		69C146E318473A6000FBCC86 /* ChatRoomDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatRoomDataSource.h; sourceTree = "<group>"; };
 		69C146E418473A6000FBCC86 /* ChatRoomDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatRoomDataSource.m; sourceTree = "<group>"; };
+		69C1C29B187578A200C7D137 /* ControllerStateService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllerStateService.h; sourceTree = "<group>"; };
+		69C1C29C187578A200C7D137 /* ControllerStateService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllerStateService.m; sourceTree = "<group>"; };
+		69C1C29E1875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChattARAppDelegate+PushNotifications.h"; sourceTree = "<group>"; };
+		69C1C29F1875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChattARAppDelegate+PushNotifications.m"; sourceTree = "<group>"; };
 		69CB6AD717FAC7040005A76C /* NMPaginator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMPaginator.h; sourceTree = "<group>"; };
 		69CB6AD817FAC7040005A76C /* NMPaginator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMPaginator.m; sourceTree = "<group>"; };
 		69D4BC6C185A1F3900A31373 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = External/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -966,6 +972,8 @@
 			children = (
 				698BB9D1186987F00000C1C9 /* CaptureSessionService.h */,
 				698BB9D2186987F00000C1C9 /* CaptureSessionService.m */,
+				69C1C29B187578A200C7D137 /* ControllerStateService.h */,
+				69C1C29C187578A200C7D137 /* ControllerStateService.m */,
 				698BB9D6186996000000C1C9 /* AppSettingsService.h */,
 				698BB9D7186996000000C1C9 /* AppSettingsService.m */,
 				694746431805A71600928ED4 /* LocationService.h */,
@@ -1016,10 +1024,12 @@
 			children = (
 				692220981860B51D002744D3 /* MKMapView+Zoom.h */,
 				692220991860B51D002744D3 /* MKMapView+Zoom.m */,
-				6986DF9E18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.h */,
-				6986DF9F18463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m */,
+				6986DF9E18463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.h */,
+				6986DF9F18463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.m */,
 				69D5F6681848DEAD00BDA9AB /* UIImage+Cropper.h */,
 				69D5F6691848DEAD00BDA9AB /* UIImage+Cropper.m */,
+				69C1C29E1875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.h */,
+				69C1C29F1875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2170,7 +2180,7 @@
 				69C146E2184726C800FBCC86 /* DialogsDataSource.m in Sources */,
 				BF000348185A2FDF00F83907 /* XMPPMessage+XEP_0308.m in Sources */,
 				BF00031A185A2FDF00F83907 /* XMPPvCardCoreDataStorageObject.m in Sources */,
-				6986DFA018463A8D00F78FD9 /* AppDelegate+MemoryWarnings.m in Sources */,
+				6986DFA018463A8D00F78FD9 /* ChattARAppDelegate+MemoryWarnings.m in Sources */,
 				BF000322185A2FDF00F83907 /* XMPPvCardTempModule.m in Sources */,
 				694746471805A71600928ED4 /* FBStorage.m in Sources */,
 				BF000310185A2FDF00F83907 /* XMPPSystemInputActivityMonitor.m in Sources */,
@@ -2183,6 +2193,7 @@
 				BF000318185A2FDF00F83907 /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				69864D3A180D2CD700AAA554 /* ARViewController.m in Sources */,
 				BF00035A185A2FDF00F83907 /* DDXMLDocument.m in Sources */,
+				69C1C2A01875AE0D00C7D137 /* ChattARAppDelegate+PushNotifications.m in Sources */,
 				BF000329185A2FDF00F83907 /* XMPPIQ+XEP_0066.m in Sources */,
 				692F9D2618521B9B006ABE1D /* DetailProfileCell.m in Sources */,
 				BF000326185A2FDF00F83907 /* XMPPIQ+XEP_0060.m in Sources */,
@@ -2250,6 +2261,7 @@
 				BF00034E185A2FDF00F83907 /* XMPPSRVResolver.m in Sources */,
 				BF000317185A2FDF00F83907 /* XMPPvCard.xcdatamodeld in Sources */,
 				BF00032B185A2FDF00F83907 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
+				69C1C29D187578A200C7D137 /* ControllerStateService.m in Sources */,
 				BF00033E185A2FDF00F83907 /* XMPPMessageDeliveryReceipts.m in Sources */,
 				BF0002F3185A2FDF00F83907 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				BF00035C185A2FDF00F83907 /* DDXMLNode.m in Sources */,

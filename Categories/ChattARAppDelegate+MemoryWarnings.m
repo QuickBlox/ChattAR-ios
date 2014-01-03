@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 QuickBlox. All rights reserved.
 //
 
-#import "AppDelegate+MemoryWarnings.h"
+#import "ChattARAppDelegate+MemoryWarnings.h"
 
 #import <sys/sysctl.h>
 #import <mach/mach_host.h>

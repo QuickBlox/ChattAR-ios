@@ -7,7 +7,8 @@
 //
 
 #import "ChattARAppDelegate.h"
-#import "AppDelegate+MemoryWarnings.h"
+#import "ChattARAppDelegate+PushNotifications.h"
+#import "ChattARAppDelegate+MemoryWarnings.h"
 #import "LocationService.h"
 #import "AppSettingsService.h"
 #import "FBService.h"
@@ -15,6 +16,8 @@
 #import "QBStorage.h"
 #import "MBProgressHUD.h"
 #import "Utilites.h"
+
+
 
 @implementation ChattARAppDelegate
 
@@ -28,21 +31,22 @@
                     }];
 }
 
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSDictionary *aps = userInfo[@"aps"];
-    NSString *opponentID = aps[kId];
-    // find User:
-    NSDictionary *opponent = [[FBService shared] findFriendWithID:opponentID];
-    if (opponent == nil) {
-        opponent = [[QBService defaultService] findUserWithID:opponentID];
-    }
-    // find Conversation:
-    
-    
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [QBStorage shared].pushNotification = userInfo;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+//    UIApplicationLaunchOptionsRemoteNotificationKey =     {
+//        aps =         {
+//            alert = "Oleg Svarovski: lllllloololol";
+//            id = 100003078678033;
+//            sound = default;
+//        };
+//    };
+    
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:-1];
@@ -64,6 +68,9 @@
     
     [AppSettingsService shared];
     
+    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    [QBStorage shared].pushNotification = userInfo;
+
     return YES;
 }
 							
@@ -115,12 +122,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

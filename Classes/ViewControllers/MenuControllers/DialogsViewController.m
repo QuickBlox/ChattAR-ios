@@ -128,12 +128,6 @@
 
 - (NSMutableArray *)objectsToDeleteFromArray:(NSMutableArray *)array text:(NSString *)text {
     NSMutableArray *deleted = [[NSMutableArray alloc] init];
-//    for (NSDictionary *user in array) {
-//        if (![self searchingString:[user objectForKey:kName] inString:text]) {
-//            [deleted addObject:user];
-//        }
-//    }
-//    return deleted;
 
     [array enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (![self searchingString:obj[kName] inString:text]) {
