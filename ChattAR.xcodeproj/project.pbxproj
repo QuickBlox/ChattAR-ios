@@ -178,6 +178,8 @@
 		7BDBF46C166CDEB100FDA327 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FDE15D8D55800E42A41 /* UIKit.framework */; };
 		7BDBF46D166CDEB100FDA327 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE015D8D55800E42A41 /* Foundation.framework */; };
 		7BDBF46E166CDEB100FDA327 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */; };
+		A730BE6D187B508000779DDC /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A730BE6C187B508000779DDC /* VideoCallViewController.m */; };
+		A7ED64561880AD62001595F7 /* ringing.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7ED64551880AD62001595F7 /* ringing.wav */; };
 		BF0001D4185A2FC800F83907 /* libFlurry_4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF0001D3185A2FC800F83907 /* libFlurry_4.3.0.a */; };
 		BF0002F1185A2FDF00F83907 /* XMPPAnonymousAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0001D9185A2FDE00F83907 /* XMPPAnonymousAuthentication.m */; };
 		BF0002F2185A2FDF00F83907 /* XMPPDeprecatedDigestAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0001DC185A2FDE00F83907 /* XMPPDeprecatedDigestAuthentication.m */; };
@@ -531,6 +533,9 @@
 		7B8C3FE015D8D55800E42A41 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7BDBF46A166CDEB100FDA327 /* ChattAR 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChattAR 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A730BE6B187B508000779DDC /* VideoCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoCallViewController.h; sourceTree = "<group>"; };
+		A730BE6C187B508000779DDC /* VideoCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoCallViewController.m; sourceTree = "<group>"; };
+		A7ED64551880AD62001595F7 /* ringing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringing.wav; sourceTree = "<group>"; };
 		BF0001D3185A2FC800F83907 /* libFlurry_4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_4.3.0.a; path = External/Flurry/libFlurry_4.3.0.a; sourceTree = "<group>"; };
 		BF0001D8185A2FDE00F83907 /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
 		BF0001D9185A2FDE00F83907 /* XMPPAnonymousAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPAnonymousAuthentication.m; sourceTree = "<group>"; };
@@ -765,6 +770,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */,
 				690A708B1806A5A100F3C584 /* CoreMotion.framework in Frameworks */,
 				BF0001D4185A2FC800F83907 /* libFlurry_4.3.0.a in Frameworks */,
 				691A1B3517FDB94000C2A87D /* MapKit.framework in Frameworks */,
@@ -780,7 +786,6 @@
 				6911FB2717D61F7A00FEADB4 /* CoreAudio.framework in Frameworks */,
 				6911FB2117D61DF800FEADB4 /* AudioToolbox.framework in Frameworks */,
 				6988D444185EFDFB0053530E /* Quickblox.framework in Frameworks */,
-				6911FB1B17D61CCD00FEADB4 /* AVFoundation.framework in Frameworks */,
 				693C7CFF17CCD9D400D7F0A9 /* CFNetwork.framework in Frameworks */,
 				693C7CF917CCD8A200D7F0A9 /* CoreLocation.framework in Frameworks */,
 				693C7CF717CCD88E00D7F0A9 /* CoreData.framework in Frameworks */,
@@ -833,6 +838,7 @@
 		6934A2D317CCCA6800D9A846 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A7ED64551880AD62001595F7 /* ringing.wav */,
 				698FFE28186347A50033D8EC /* sound.mp3 */,
 				69A4026217D740F900E7BE1F /* images */,
 			);
@@ -907,6 +913,7 @@
 		693C7F0317CCFDB400D7F0A9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A730BE6A187B4D6900779DDC /* VideoController */,
 				693C7F0717CCFDB400D7F0A9 /* SplashViewController.h */,
 				693C7F0817CCFDB400D7F0A9 /* SplashViewController.m */,
 				69A402AE17D7431D00E7BE1F /* MenuViewController.h */,
@@ -1299,6 +1306,15 @@
 				7B8C3FE215D8D55800E42A41 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A730BE6A187B4D6900779DDC /* VideoController */ = {
+			isa = PBXGroup;
+			children = (
+				A730BE6B187B508000779DDC /* VideoCallViewController.h */,
+				A730BE6C187B508000779DDC /* VideoCallViewController.m */,
+			);
+			path = VideoController;
 			sourceTree = "<group>";
 		};
 		BF0001D5185A2FDE00F83907 /* XMPPFramework */ = {
@@ -2003,8 +2019,13 @@
 				CLASSPREFIX = SASlideMenu;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Stefano Antonelli";
+				TargetAttributes = {
+					7BDBF469166CDEB100FDA327 = {
+						DevelopmentTeam = X3363SFXT5;
+					};
+				};
 			};
-			buildConfigurationList = 7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "ChattAR" */;
+			buildConfigurationList = 7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "Chattar" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2096,6 +2117,7 @@
 				6981247817DDFF2C00974C6A /* Default.png in Resources */,
 				69D721D5185A22980075ABEB /* 001_education.png in Resources */,
 				6981247917DDFF2C00974C6A /* Default@2x.png in Resources */,
+				A7ED64561880AD62001595F7 /* ringing.wav in Resources */,
 				69D721DA185A22980075ABEB /* 001_work@2x.png in Resources */,
 				69D721DB185A22980075ABEB /* cover_image.png in Resources */,
 				69ECC0BE17E1AD9F00187CF8 /* 01_back.png in Resources */,
@@ -2259,6 +2281,7 @@
 				6911FB1917D5E3B000FEADB4 /* Reachability.m in Sources */,
 				BF000316185A2FDF00F83907 /* XMPPPrivacy.m in Sources */,
 				BF00034E185A2FDF00F83907 /* XMPPSRVResolver.m in Sources */,
+				A730BE6D187B508000779DDC /* VideoCallViewController.m in Sources */,
 				BF000317185A2FDF00F83907 /* XMPPvCard.xcdatamodeld in Sources */,
 				BF00032B185A2FDF00F83907 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				69C1C29D187578A200C7D137 /* ControllerStateService.m in Sources */,
@@ -2376,9 +2399,9 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Khomenko Igor (67859YS754)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Khomenko Igor (67859YS754)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Khomenko Igor (67859YS754)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/External",
@@ -2400,7 +2423,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "6FEA5496-FFBF-4739-BDF9-3BB9C8D4265E";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2410,7 +2433,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Injoit LTD (8885H5G2YX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/External",
@@ -2430,7 +2454,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "ChattAR 2";
-				PROVISIONING_PROFILE = "6FEA5496-FFBF-4739-BDF9-3BB9C8D4265E";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2438,7 +2462,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "ChattAR" */ = {
+		7B8C3FD415D8D55800E42A41 /* Build configuration list for PBXProject "Chattar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7B8C3FF615D8D55800E42A41 /* Debug */,

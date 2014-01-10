@@ -65,6 +65,7 @@
 #define kDialogToProfileSegueIdentifier     @"DialogToProfile"
 #define kCreateChatRoomIdentifier           @"CreateChatRoomIdentifier"
 #define kCreateRoomToChatRoomIdentifier     @"CreateRoomToChatRoom"
+#define kDialogToVideoCallSegueIdentifier   @"DialogToVideoCall"
 
 #define padding           20.0
 #define kAnnotationButtonTag 1542

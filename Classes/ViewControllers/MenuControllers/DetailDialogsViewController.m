@@ -8,6 +8,7 @@
 
 #import "DetailDialogsViewController.h"
 #import "ProfileViewController.h"
+#import "VideoCallViewController.h"
 #import "NonFriendDialogDataSource.h"
 #import "FriendDialogDataSource.h"
 #import "ChatRoomCell.h"
@@ -18,7 +19,7 @@
 #import "Utilites.h"
 #import "AsyncImageView.h"
 
-@interface DetailDialogsViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate>
+@interface DetailDialogsViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBActionStatusDelegate, QBChatDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, assign) NSNumber *friendPosition;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -117,8 +118,13 @@
 #pragma mark Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ((ProfileViewController *)segue.destinationViewController).controllerTitle = @"Dialog";
-    ((ProfileViewController *)segue.destinationViewController).currentUser = self.opponent;
+    if ([segue.identifier isEqualToString:kDialogToProfileSegueIdentifier]) {
+        ((ProfileViewController *)segue.destinationViewController).controllerTitle = @"Dialog";
+        ((ProfileViewController *)segue.destinationViewController).currentUser = self.opponent;
+    } else if ([segue.identifier isEqualToString:kDialogToVideoCallSegueIdentifier]) {
+        ((VideoCallViewController *)segue.destinationViewController).controllerTitle = @"Video Call";
+        ((VideoCallViewController *)segue.destinationViewController).destinationUser = self.opponent;
+    }
 }
 
 
@@ -166,7 +172,8 @@
 }
 
 - (void)viewProfilePage {
-    [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
+    
+    [[[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"View Profile" otherButtonTitles:@"Start Video Call", nil] showInView:self.view];
 }
 //FB
 - (void)reloadTableView {
@@ -262,6 +269,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - ActionSheet Delegate 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
+    } else {
+        [self performSegueWithIdentifier:kDialogToVideoCallSegueIdentifier sender:nil];
+    }
 }
 
 @end
