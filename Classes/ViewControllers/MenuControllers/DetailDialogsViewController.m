@@ -173,7 +173,7 @@
 
 - (void)viewProfilePage {
     
-    [[[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"View Profile" otherButtonTitles:@"Start Video Call", nil] showInView:self.view];
+    [[[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"View Profile", @"Start Video Call", nil] showInView:self.view];
 }
 //FB
 - (void)reloadTableView {
@@ -214,7 +214,7 @@
     }];
 }
 
--(void)scrollContentAccordingToChatHistory {
+- (void)scrollContentAccordingToChatHistory {
     if (self.isChatWithFacebookFriend) {
         if ([(_facebookDataSource.conversation[kComments])[kData] count] > 2) {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[(_facebookDataSource.conversation[kComments])[kData] count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
@@ -274,10 +274,13 @@
 #pragma mark - ActionSheet Delegate 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.destructiveButtonIndex) {
-        [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
-    } else {
-        [self performSegueWithIdentifier:kDialogToVideoCallSegueIdentifier sender:nil];
+    switch (buttonIndex) {
+        case 0: {
+            [self performSegueWithIdentifier:kDialogToProfileSegueIdentifier sender:nil];
+        } break;
+        case 1: {
+            [self performSegueWithIdentifier:kDialogToVideoCallSegueIdentifier sender:nil];
+        } break;
     }
 }
 

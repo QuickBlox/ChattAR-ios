@@ -20,6 +20,7 @@
 #import "ChatRoomDataSource.h"
 #import "Utilites.h"
 #import "MBProgressHUD.h"
+#import "VideoCallViewController.h"
 
 
 @interface ChatRoomViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, QBChatDelegate, QBActionStatusDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, SASlideMenuDelegate>
@@ -142,7 +143,7 @@
     if (![userID isEqual:[[FBStorage shared].me objectForKey:kId]]) {
         cellPath = indexPath;
         NSString *title = [[NSString alloc] initWithFormat:@"What do you want?"];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Private message", @"View Profile", nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reply", @"Private message", @"View Profile", @"Start Video Call", nil];
         [actionSheet showInView:self.view];
     }
 }
@@ -207,6 +208,9 @@
             [self performSegueWithIdentifier:kChatToProfileSegieIdentifier sender:currentFriend];
             break;
         }
+        case 3: {
+            [self performSegueWithIdentifier:kDialogToVideoCallSegueIdentifier sender:nil];
+        } break;
     }
 }
 
@@ -391,6 +395,12 @@
         ((ProfileViewController *)segue.destinationViewController).currentUser = sender;
         return;
     }
+    if ([segue.identifier isEqualToString:kDialogToVideoCallSegueIdentifier]) {
+        ((VideoCallViewController *)segue.destinationViewController).controllerTitle = @"Video Call";
+        ((VideoCallViewController *)segue.destinationViewController).destinationUser = sender;
+        return;
+    }
+
     ((DetailDialogsViewController *)segue.destinationViewController).opponent = sender;
     ((DetailDialogsViewController *)segue.destinationViewController).conversation = self.dialogTo;
     if ([[FBStorage shared] isFacebookFriend:sender]) {

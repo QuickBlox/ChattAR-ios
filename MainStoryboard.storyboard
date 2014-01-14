@@ -210,6 +210,7 @@
                         <outlet property="sendButton" destination="lpw-hC-RxZ" id="7Mu-XC-4SK"/>
                         <segue destination="mwh-Ap-G2c" kind="custom" identifier="ChatToDialog" id="wsq-0v-N34"/>
                         <segue destination="aAt-Rt-nZY" kind="custom" identifier="ChatToProfile" id="7Mb-AF-cFY"/>
+                        <segue destination="awL-eP-UAm" kind="modal" identifier="DialogToVideoCall" id="pYr-wC-GDn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2g-Wd-Tl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1050,7 +1051,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vBT-i8-EDz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="533" y="-2367"/>
+            <point key="canvasLocation" x="509" y="-2355"/>
         </scene>
         <!--Video Call View Controller-->
         <scene sceneID="ds2-g8-4Jz">
@@ -1158,7 +1159,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Xh-qi-cNb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="533" y="-1491"/>
+            <point key="canvasLocation" x="1469" y="-2334"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="33s-Ul-ehf">
@@ -1358,9 +1359,10 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="i69-BF-qyq"/>
         <segue reference="08e-u6-zeQ"/>
+        <segue reference="i69-BF-qyq"/>
+        <segue reference="7Mb-AF-cFY"/>
         <segue reference="wsq-0v-N34"/>
-        <segue reference="gGZ-kD-fDC"/>
+        <segue reference="pYr-wC-GDn"/>
     </inferredMetricsTieBreakers>
 </document>
