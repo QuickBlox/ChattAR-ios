@@ -29,7 +29,7 @@ Note: you can also watch our [video turotial](http://youtu.be/AgJZYBoxKz0) on Yo
 4) create a new app <br />
 5) click on the app title in the list to reveal app details:<br />
 
-![App credentials](http://image.quickblox.com/592aa599660a52a97be4e478e3e6.injoit.png)
+![App credentials](http://files.quickblox.com/app_credentials.png)
 
 6) copy credentials (App ID, Authorization key, Authorization secret) into your ChattAR project code in /Chattar/FB_Radar/AppDelegate.m<br />
 7) Enjoy!
