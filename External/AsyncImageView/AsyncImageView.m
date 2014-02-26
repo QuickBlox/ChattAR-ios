@@ -639,7 +639,7 @@ NSString *const AsyncImageErrorKey = @"error";
 {
 	_showActivityIndicator = (self.image == nil);
 	_activityIndicatorStyle = UIActivityIndicatorViewStyleGray;
-    _crossfadeImages = YES;
+    _crossfadeImages = NO;
 	_crossfadeDuration = 0.4;
 }
 
@@ -695,8 +695,11 @@ NSString *const AsyncImageErrorKey = @"error";
         objc_msgSend(animation, @selector(setDuration:), _crossfadeDuration);
         objc_msgSend(self.layer, @selector(addAnimation:forKey:), animation, nil);
     }
-    super.image = image;
-    [_activityView stopAnimating];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        super.image = image;
+        [_activityView stopAnimating];
+    });
 }
 
 - (void)dealloc
