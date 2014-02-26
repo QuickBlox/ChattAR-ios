@@ -5,18 +5,18 @@ This is an iOS build, integrated QuickBlox components are described below:
 
 <strong>Location Based Chat (MapChat) for iOS</strong>:
 This blox allows to see users POIs and content over GoogleMap
-![Location based Chat iOS](https://s3.amazonaws.com/qbprod/fea932728c264a5e98771f74802a00fb00)
+![Location based Chat iOS](https://s3.amazonaws.com/qbprod/dc607d44dd3a467bba3e9f95bdae003e00)
 
 
 Augmented Reality Chat (AR Chat) for iOS
 This blox allows to see users' POIs and content in Augmented Reality world (phone camera overlay)
 
-![Augmented Reality Chat iOS](https://s3.amazonaws.com/qbprod/a21483310ab4458bbd2ddca95913d54200) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ![AR Chat](http://image.quickblox.com/ef09e72520ae22cafcd3c9fb2d4c.injoit.png)
+![Augmented Reality Chat iOS](https://s3.amazonaws.com/qbprod/e3b37058ea324fcabf829767d7fd641400) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 Group Chat (Local Chat room) for iOS
 This blox allows to connect local users in a group chat room
-![Group Chat room iOS](https://s3.amazonaws.com/qbprod/d6bb197fa2b741268d26ca001b83f01c00)
+![Group Chat room iOS](https://s3.amazonaws.com/qbprod/e012f5f920304a83b67782834227e28f00)
 
 
 <h3>Important - how to build your own Augmented Reality Chat app</h3>
