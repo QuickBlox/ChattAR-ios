@@ -31,6 +31,6 @@ Note: you can also watch our [video turotial](http://youtu.be/AgJZYBoxKz0) on Yo
 
 ![App credentials](http://files.quickblox.com/app_credentials.png)
 
-6) copy credentials (App ID, Authorization key, Authorization secret) into your ChattAR project code in /Chattar/FB_Radar/AppDelegate.m<br />
+6) copy credentials (App ID, Authorization key, Authorization secret) into your ChattAR project code in ChattARAppDelegate.m<br />
 7) Enjoy!
 
